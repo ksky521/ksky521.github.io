@@ -1,0 +1,509 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HTMl5的sessionStorage和localStorage - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="html5中的Web Storage包括了两种存储方式：sessionStorage和localStorage。
+sessionStorage用于本地存储一个会话（session）中的数据，这些数据只有在同一个会话中的页面才能访问并且当会话结束后数据也随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。
+而localStorage用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。
+web storage和cookie的区别
+Web Storage的概念和cookie相似，区别是它是为了更大容量存储设计的。Cookie的大小是受限的，并且每次你请求一个新的页面的时候Cookie都会被发送过去，这样无形中浪费了带宽，另外cookie还需要指定作用域，不可以跨域调用。
+除此之外，Web Storage拥有setItem,getItem,removeItem,clear等方法，不像cookie需要前端开发者自己封装setCookie，getCookie。
+但是Cookie也是不可以或缺的：Cookie的作用是与服务器进行交互，作为HTTP规范的一部分而存在 ，而Web Storage仅仅是为了在本地“存储”数据而生（来自@otakustay 的纠正）
+html5 web storage的浏览器支持情况
+浏览器的支持除了IE７及以下不支持外，其他标准浏览器都完全支持(ie及FF需在web服务器里运行)，值得一提的是IE总是办好事，例如IE7、IE6中的UserData其实就是javascript本地存储的解决方案。通过简单的代码封装可以统一到所有的浏览器都支持web storage。
+要判断浏览器是否支持localStorage可以使用下面的代码：
+1
+2
+3
+4
+5
+6
+7
+8
+9
+if(window.localStorage){
+    alert(&quot;浏览支持localStorage&quot;)
+}else{
+   alert(&quot;浏览暂不支持localStorage&quot;)
+}
+//或者
+if(typeof window.localStorage == 'undefined'){
+	alert(&quot;浏览暂不支持localStorage&quot;)
+}
+
+
+localStorage和sessionStorage操作
+localStorage和sessionStorage都具有相同的操作方法，例如setItem、getItem和removeItem等
+localStorage和sessionStorage的方法
+setItem存储value
+用途：将value存储到key字段用法：.setItem( key, value)
+代码示例：
+1
+2
+sessionStorage.setItem(&quot;key&quot;, &quot;value&quot;);
+localStorage.setItem(&quot;site&quot;, &quot;js8.in&quot;);">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="HTMl5的sessionStorage和localStorage"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">HTMl5的sessionStorage和localStorage</h1>
+  
+
+      <time datetime="2011-10-18T14:05:53.000Z"><a href="/2011/10/18/html5的sessionstorage和localstorage/">2011年10月18日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>html5中的Web Storage包括了两种存储方式：sessionStorage和localStorage。</p>
+<p><strong>sessionStorage</strong>用于本地存储一个会话（session）中的数据，这些数据只有在同一个会话中的页面才能访问并且当会话结束后数据也随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。</p>
+<p>而<strong>localStorage</strong>用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。</p>
+<h2>web storage和cookie的区别</h2>
+<p>Web Storage的概念和cookie相似，区别是它是为了更大容量存储设计的。Cookie的大小是受限的，并且每次你请求一个新的页面的时候Cookie都会被发送过去，这样无形中浪费了带宽，另外cookie还需要指定作用域，不可以跨域调用。</p>
+<p>除此之外，<strong>Web Storage</strong>拥有setItem,getItem,removeItem,clear等方法，不像cookie需要前端开发者自己封装setCookie，getCookie。</p>
+<p>但是Cookie也是不可以或缺的：Cookie的作用是与服务器进行交互，作为HTTP规范的一部分而存在 ，而Web Storage仅仅是为了在本地“存储”数据而生（来自@otakustay 的纠正）</p>
+<h2>html5 web storage的浏览器支持情况</h2>
+<p>浏览器的支持除了IE７及以下不支持外，其他标准浏览器都完全支持(ie及FF需在web服务器里运行)，值得一提的是IE总是办好事，例如IE7、IE6中的UserData其实就是<strong>javascript本地存储</strong>的解决方案。通过简单的代码封装可以统一到所有的浏览器都支持web storage。</p>
+<p>要判断浏览器是否支持localStorage可以使用下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="keyword">if</span>(window.localStorage){
+    alert(<span class="string">"浏览支持localStorage"</span>)
+}<span class="keyword">else</span>{
+   alert(<span class="string">"浏览暂不支持localStorage"</span>)
+}
+<span class="comment">//或者</span>
+<span class="keyword">if</span>(<span class="keyword">typeof</span> window.localStorage == <span class="string">'undefined'</span>){
+	alert(<span class="string">"浏览暂不支持localStorage"</span>)
+}
+</pre></td></tr></table></figure>
+
+<h2>localStorage和sessionStorage操作</h2>
+<p>localStorage和sessionStorage都具有相同的操作方法，例如setItem、getItem和removeItem等</p>
+<h3>localStorage和sessionStorage的方法</h3>
+<h4>setItem存储value</h4>
+<p>用途：将value存储到key字段<br>用法：.setItem( key, value)</p>
+<p>代码示例：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>sessionStorage.setItem(<span class="string">"key"</span>, <span class="string">"value"</span>);
+localStorage.setItem(<span class="string">"site"</span>, <span class="string">"js8.in"</span>);
+</pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h4>getItem获取value</h4>
+<p>用途：获取指定key本地存储的值<br>用法：.getItem(key)<br>代码示例：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="keyword">var</span> value = sessionStorage.getItem(<span class="string">"key"</span>);
+<span class="keyword">var</span> site = localStorage.getItem(<span class="string">"site"</span>);
+</pre></td></tr></table></figure>
+
+<h4>removeItem删除key</h4>
+<p>用途：删除指定key本地存储的值<br>用法：.removeItem(key)<br>代码示例：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>sessionStorage.removeItem(<span class="string">"key"</span>);
+localStorage.removeItem(<span class="string">"site"</span>);
+</pre></td></tr></table></figure>
+
+<h4>clear清除所有的key/value</h4>
+<p>用途：清除所有的key/value<br>用法：.clear()<br>代码示例：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>sessionStorage.clear();
+localStorage.clear();
+</pre></td></tr></table></figure>
+
+<h4>其他操作方法：点操作和[]</h4>
+<p>web Storage不但可以用自身的setItem,getItem等方便存取，也可以像普通对象一样用点(.)操作符，及[]的方式进行数据存储，像如下的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> storage = window.localStorage;
+storage.key1 = <span class="string">"hello"</span>;
+storage[<span class="string">"key2"</span>] = <span class="string">"world"</span>;
+console.log(storage.key1);
+console.log(storage[<span class="string">"key2"</span>]);
+</pre></td></tr></table></figure>
+
+<h4>localStorage和sessionStorage的key和length属性实现遍历</h4>
+<p>sessionStorage和localStorage提供的key()和length可以方便的实现存储的数据遍历，例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="keyword">var</span> storage = window.localStorage;
+<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>, len = storage.length; i  &lt;  len; i++){
+    <span class="keyword">var</span> key = storage.key(i);
+    <span class="keyword">var</span> value = storage.getItem(key);
+    console.log(key + <span class="string">"="</span> + value);
+}
+</pre></td></tr></table></figure>
+
+<h3>storage事件</h3>
+<p>storage还提供了<strong>storage事件</strong>，当键值改变或者clear的时候，就可以触发storage事件，如下面的代码就添加了一个storage事件改变的监听：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="keyword">if</span>(window.addEventListener){
+	window.addEventListener(<span class="string">"storage"</span>,handle_storage,<span class="literal">false</span>);
+}<span class="keyword">else</span> <span class="keyword">if</span>(window.attachEvent){
+	window.attachEvent(<span class="string">"onstorage"</span>,handle_storage);
+}
+<span class="function"><span class="keyword">function</span> <span class="title">handle_storage</span><span class="params">(e)</span>{</span>
+	<span class="keyword">if</span>(!e){e=window.event;}
+}
+</pre></td></tr></table></figure>
+
+<h2>Web Storage Demo</h2>
+<p><a href="http://html5demos.com/storage" target="_blank">HTML5 Demos: Storage</a> &nbsp;&nbsp;&nbsp;&nbsp;<a href="http://people.opera.com/shwetankd/external/demos/webstorage_demo.htm" target="_blank">Web Storage Example</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/storage/">storage</a><a href="/tags/javascript/">javascript</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2011/10/19/javascript嵌套函数的效率问题/" class="prev" title="javascript嵌套函数的效率问题">javascript嵌套函数的效率问题</a>
+ 
+ 
+	<a href="/2011/09/29/基于expresssocket-io的nodejs聊天室/" class="next" title="基于express+socket.io的nodejs聊天室">基于express+socket.io的nodejs聊天室</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="HTMl5的sessionStorage和localStorage"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

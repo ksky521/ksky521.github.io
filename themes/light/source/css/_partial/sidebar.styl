@@ -1,0 +1,76 @@
+#sidebar
+  width 270px
+  line-height 1.8em
+  @media screen and (max-width: 900px)
+    float none
+    width 100%
+  .widget
+    background #fff
+    box-shadow 1px 2px 3px #ddd
+    margin-bottom 30px
+    word-wrap break-word
+    .title
+      padding 15px 20px
+      font-size 16px
+      border-bottom 1px solid color-border
+      font-weight normal
+
+    .entry
+      font-size 0.9em
+      padding 15px 20px
+
+    ul, ol, dl
+      list-style none
+      ul, ol, dl
+        list-style disc
+        margin-left 20px
+
+  .search
+    margin-bottom 30px
+    input
+      background #fff
+      font-family font-title
+      font-style italic
+      font-size 1em
+      padding 10px 15px
+      border 1px solid color-border
+      width 100%
+      box-sizing border-box
+      color color-meta
+      &:focus
+        color color-font
+
+  .tag
+    small
+      margin-left 15px
+      color color-meta
+      &:before
+        content '('
+      &:after
+        content ')'
+
+
+  .tagcloud
+    .entry
+      padding-right 5px
+    li
+      float left
+    a
+      color #a4a2a3
+      display block
+      float left
+      margin 0.3125em 0.3125em
+      padding 0.125em 0.3125em
+      background #e7e7e7
+    a:hover
+      background color-link
+      color white
+      text-decoration none
+    sup
+      font-size 75%
+      line-height 0
+      position relative
+      vertical-align baseline
+      top -0.5em
+
+

@@ -1,0 +1,497 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[转]利用跨域资源共享（CORS）实现ajax跨域调用 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="前几天看了一篇E文说部署CORS的文章，CORS是一中跨域的方式，于是上网找了下Nicholas C. Zakas 的文章《Cross-domain Ajax with Cross-Origin Resource Sharing》，并且找到了中文的翻译，感觉不错，转来分享之。
+几年前，网站开发者都因为ajax的同源策略而撞了南墙。当我们惊叹于XMLHttpRequest对象跨浏览器支持所带来的巨大进步时，我们很快发现没有一个方法可以使我们用JavaScript实现请求跨域访问，对此我们哀叹不已。每个人在他们自己的网站上建立代理（which was the onset of a new host of open redirect problems）来摆脱这种限制。虽然开发者利用服务器代理和其它技巧避开了这种限制，而在社区的抗议者允许ajax在本地跨域调用。许多人还没意识到当前几乎所有的浏览器（Internet Explorer 8+， Firefox 3.5+， Safari 4+和 Chrome）都可通过名为Cross-Origin Resource Sharing的协议支持ajax跨域调用。
+跨域资源共享（CORS）
+Cross-Origin Resource Sharing (CORS)是W3c工作草案，它定义了在跨域访问资源时浏览器和服务器之间如何通信。CORS背后的基本思想是使用自定义的HTTP头部允许浏览器和服务器相互了解对方，从而决定请求或响应成功与否。
+对一个简单的请求，没有自定义头部，要么使用GET，要么使用POST，它的主体是text/plain,请求用一个名叫Orgin的额外的头部发送。Origin头部包含请求页面的头部（协议，域名，端口），这样服务器可以很容易的决定它是否应该提供响应。
+
+Origin: http://www.nczonline.net
+
+如果服务器确定请求被通过，它将发送一个Access-Control-Allow-Origin头部响应发送请求的同一个源，如果是一个公共资源，则返回“*”。如：
+
+Access-Control-Allow-Origin: http://www.nczonline.net">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="[转]利用跨域资源共享（CORS）实现ajax跨域调用"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">[转]利用跨域资源共享（CORS）实现ajax跨域调用</h1>
+  
+
+      <time datetime="2011-04-25T18:18:45.000Z"><a href="/2011/04/26/转利用跨域资源共享（cors）实现ajax跨域调用/">2011年4月26日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前几天看了一篇E文说部署<strong>CORS</strong>的<a href="http://feedproxy.google.com/~r/remysharp/~3/b5_CQ7MoWNU/" target="_blank">文章</a>，CORS是一中跨域的方式，于是上网找了下Nicholas C. Zakas 的文章《<a href="http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/" target="_blank">Cross-domain Ajax with Cross-Origin Resource Sharing</a>》，并且找到了中文的翻译，感觉不错，转来分享之。</p>
+<p>几年前，网站开发者都因为ajax的<a href="https://developer.mozilla.org/en/Same_origin_policy_for_JavaScript" target="_blank">同源策略</a>而撞了南墙。当我们惊叹于XMLHttpRequest对象跨浏览器支持所带来的巨大进步时，我们很快发现没有一个方法可以使我们用<strong>JavaScript实现请求跨域</strong>访问，对此我们哀叹不已。每个人在他们自己的网站上建立代理（which was the onset of a new host of open redirect problems）来摆脱这种限制。虽然开发者利用服务器代理和其它技巧避开了这种限制，而在社区的抗议者允许ajax在本地跨域调用。许多人还没意识到当前几乎所有的浏览器（Internet Explorer 8+， Firefox 3.5+， Safari 4+和 Chrome）都可通过名为<strong>Cross-Origin Resource Sharing</strong>的协议支持ajax跨域调用。</p>
+<h3>跨域资源共享（CORS）</h3>
+<p><a href="http://www.w3.org/TR/access-control/" target="_blank">Cross-Origin Resource Sharing</a> (<strong>CORS</strong>)是W3c工作草案，它定义了在跨域访问资源时浏览器和服务器之间如何通信。CORS背后的基本思想是使用自定义的HTTP头部允许浏览器和服务器相互了解对方，从而决定请求或响应成功与否。</p>
+<p>对一个简单的请求，没有自定义头部，要么使用GET，要么使用POST，它的主体是text/plain,请求用一个名叫Orgin的额外的头部发送。Origin头部包含请求页面的头部（协议，域名，端口），这样服务器可以很容易的决定它是否应该提供响应。</p>
+<blockquote>
+<p>Origin: <a href="http://www.nczonline.net" target="_blank">http://www.nczonline.net</a></p>
+</blockquote>
+<p>如果服务器确定请求被通过，它将发送一个Access-Control-Allow-Origin头部响应发送请求的同一个源，如果是一个公共资源，则返回“*”。如：</p>
+<blockquote>
+<p>Access-Control-Allow-Origin: <a href="http://www.nczonline.net" target="_blank">http://www.nczonline.net</a><br><a id="more"></a></p>
+</blockquote>
+<p>如果头部丢失，或者源不匹配，那么浏览器将拒绝请求。如果一切顺利，浏览器将处理请求。注意，请求和响应都不包括cookie信息。</p>
+<p>先前提到的所有浏览器都支持这些简单的请求。FF3.5 +，Safari 4和chrome通过使用XMLHttpRequest对象支持其使用。当尝试在不同域打开一个资源时，不需任何代码，这个行为会自动触发。如：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>
+<span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();
+xhr.open(<span class="string">"get"</span>, <span class="string">"http://www.nczonline.net/some_resource/"</span>, <span class="literal">true</span>);
+xhr.onload = <span class="keyword">function</span>(){  <span class="comment">//instead of onreadystatechange</span>
+    <span class="comment">//do something</span>
+};
+xhr.send(<span class="literal">null</span>);
+</pre></td></tr></table></figure>
+
+<p>在IE8中也是一样，用同样的方式你需要使用<a href="http://msdn.microsoft.com/en-us/library/cc288060%28VS.85%29.aspx" target="_blank">XDomainRequest object</a>。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>
+<span class="keyword">var</span> xdr = <span class="keyword">new</span> XDomainRequest();
+xdr.open(<span class="string">"get"</span>, <span class="string">"http://www.nczonline.net/some_resource/"</span>);
+xdr.onload = <span class="keyword">function</span>(){
+    <span class="comment">//do something</span>
+};
+xdr.send();
+</pre></td></tr></table></figure>
+
+<p>Mozilla小组在他们关于<a href="http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/" target="_blank">CORS的留言</a>中建议应该检查withCredentials属性的存在性，从而决定浏览器是否通过XHR支持CORS。你可以合并<strong>XDomainRequest </strong>对象的存在性来支持所有的浏览器：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre>
+<span class="function"><span class="keyword">function</span> <span class="title">createCORSRequest</span><span class="params">(method, url)</span>{</span>
+    <span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();
+    <span class="keyword">if</span> (<span class="string">"withCredentials"</span> <span class="keyword">in</span> xhr){
+        xhr.open(method, url, <span class="literal">true</span>);
+    } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> XDomainRequest != <span class="string">"undefined"</span>){
+        xhr = <span class="keyword">new</span> XDomainRequest();
+        xhr.open(method, url);
+    } <span class="keyword">else</span> {
+        xhr = <span class="literal">null</span>;
+    }
+    <span class="keyword">return</span> xhr;
+}
+
+<span class="keyword">var</span> request = createCORSRequest(<span class="string">"get"</span>, <span class="string">"http://www.nczonline.net/"</span>);
+<span class="keyword">if</span> (request){
+    request.onload = <span class="keyword">function</span>(){
+        <span class="comment">//do something with request.responseText</span>
+    };
+    request.send();
+}
+</pre></td></tr></table></figure>
+
+<p>Firefox, Safari, 和Chrome的XMLHttpRequest对象与IE的XDomainRequest对象有着相似的充分的接口，这些模式运行的很好。常见的接口属性/方法:</p>
+<ul>
+<li>abort()——用来终止已在进程中请求。</li>
+<li>Onerror()——替代onreadystatechange方法来探测错误。</li>
+<li>Onload()——替代onreadystatechange方法来探测成功。</li>
+<li>responseText——用来取得响应地文本。</li>
+<li>send()——用来发送请求。</li>
+</ul>
+<h3>Preflighted请求</h3>
+<p>除了GET或POST，通过一种称之为<strong>preflighted</strong>请求的服务器透明验证机制，CORS允许使用自定义的头部和方法，以及不同主体内容类型。当你尝试使用高级选项中的一个来试着建立一个请求时，这时就建立了一个preflighted请求。该请求使用可选的方法，并发送如下头部：</p>
+<ul>
+<li>Origin——与简单请求相同。</li>
+<li>Access-Control-Request-Method——请求将要使用的方法。</li>
+<li>Access-Control-Request-Headers——（可选）一个逗号分开的正被使用的自定义头部列表。</li>
+</ul>
+<p>例子假定一个头部自定义为NCZ的POST请求：</p>
+<blockquote>
+<p>Origin: <a href="http://www.nczonline.net" target="_blank">http://www.nczonline.net</a><br>Access-Control-Request-Method: POST<br>Access-Control-Request-Headers: NCZ</p>
+</blockquote>
+<p>在请求期间，服务器能决定是否允许这类请求。服务器通过在响应中发送以下头部来与浏览器通信。</p>
+<ul>
+<li>Access-Control-Allow-Origin——与简单请求相同。</li>
+<li>Access-Control-Allow-Methods——用逗号分开的可接受的方法列表。</li>
+<li>Access-Control-Allow-Headers——用逗号分开的服务器可接受的头部列表。</li>
+<li>Access-Control-Max-Age——preflighted 请求应该被缓存的时间。</li>
+</ul>
+<p>如：</p>
+<blockquote>
+<p>Access-Control-Allow-Origin: <a href="http://www.nczonline.net" target="_blank">http://www.nczonline.net</a><br>Access-Control-Allow-Methods: POST, GET<br>Access-Control-Allow-Headers: NCZ<br>Access-Control-Max-Age: 1728000</p>
+</blockquote>
+<p>preflighted 请求一旦作出，结果将按响应中规定的时间缓存下来；第一次做出这样的请求，你将引发一次额外的HTTP请求。</p>
+<p>Firefox 3.5+, Safari 4+和Chrome都支持preflighted 请求，IE8则不支持。</p>
+<h3>Credentialed请求</h3>
+<p>默认状态下，跨域请求不提供证书（cookie、HTTP身份验证、客户端SSL证书）。你可以规定一个请求应该通过设置withCredentials属性为true来发送证书。如果服务器允许credentialed请求，那么它将用下面的头部作出响应：</p>
+<p>如果一个<strong>credentialed</strong>请求被发送，这个头部不会作为响应地一部分被发送。浏览器不会将响应传递给JavaScript(responseText是一个空字符串，状态为0，onerror()被调用)。注意，服务器也能发送这个HTTP头部作为preflight响应的一部分，以此来表明该源允许发送credentialed请求。</p>
+<blockquote>
+<p>Access-Control-Allow-Credentials: true</p>
+</blockquote>
+<p><p style="margin-top: 0px; margin-right: 0px; margin-bottom: 10px; margin-left: 0px; text-indent: 2em; padding: 0px;">IE8不支持withCredentials属性，Firefox 3.5+, Safari 4+和Chrome都支持它。</p>
+<p><strong>结论</strong></p>
+<p>在现代web浏览器中对跨域AJAX调用有许多可靠地支持，然而，大多数开发者仍没意识这些强大的功能力。只需在JavaScript和服务器端做一点额外的工作以保证正确的头部被发送即可使用它。在允许高级请求和credentialed请求方面，IE8的执行有些滞后，但希望它对CORS的支持将会继续改进。如果你想了解更多，我强烈建议你检查<a href="http://arunranga.com/examples/access-control/" target="_blank">Arun Ranganathan的示例页</a>。</p>
+<h3>相关阅读</h3>
+<ul>
+<li><a href="http://www.nczonline.net/blog/2008/04/27/cross-domain-xhr-removed-from-firefox-3/" title="Cross-domain XHR removed from Firefox 3" target="_blank">Cross-domain XHR removed from Firefox 3</a></li>
+<li><a href="http://www.nczonline.net/blog/2009/07/09/firefox-35firebug-xmlhttprequest-and-readystatechange-bug/" title="Firefox 3.5/Firebug XMLHttpRequest and readystatechange bug" target="_blank">Firefox 3.5/Firebug XMLHttpRequest and readystatechange bug</a></li>
+<li><a href="http://www.nczonline.net/blog/2008/07/05/mentioned-in-microsoft-whitepaper/" title="Mentioned in Microsoft whitepaper" target="_blank">Mentioned in Microsoft whitepaper</a></li>
+<li><a href="http://www.nczonline.net/blog/2006/03/14/xmlhttp-requests-for-ajax/" title="XMLHttp Requests For Ajax" target="_blank">XMLHttp Requests For Ajax</a></li>
+<li><a href="http://www.nczonline.net/blog/2006/03/05/firebug/" title="Firebug" target="_blank">Firebug</a></li>
+<li><a href="http://www.nczonline.net/blog/2009/09/29/web-definitions-dom-ajax-and-more/" title="Web definitions: DOM, Ajax, and more" target="_blank">Web definitions: DOM, Ajax, and more</a></li>
+</ul>
+<p><strong>原文地址：</strong><a href="http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/" target="_blank">http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/</a><br><strong>转载地址：</strong> <a href="http://www.denisdeng.com/?p=1024" target="_blank">http://www.denisdeng.com/?p=1024</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2011/05/13/ie6下javascript不能隐藏select标签的bug/" class="prev" title="IE6下javascript不能隐藏select标签的bug">IE6下javascript不能隐藏select标签的bug</a>
+ 
+ 
+	<a href="/2011/04/22/使用javascript将xml解析为json/" class="next" title="使用javascript将XML解析为JSON">使用javascript将XML解析为JSON</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="[转]利用跨域资源共享（CORS）实现ajax跨域调用"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

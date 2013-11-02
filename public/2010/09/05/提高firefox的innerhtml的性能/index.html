@@ -1,0 +1,412 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>提高Firefox的innerHTML()的性能 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="Firefox 下innerHTML在操作量大了以后性能下降很厉害,有人写了个提高innhtml性能的代替方法：
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+function replaceHtml(el, html) {
+var oldEl = typeof el === &quot;string&quot; ? document.getElementById(el) : el;
+/*@cc_on // 原始的 innerHTML 在 IE 中的性能好一点
+oldEl.innerHTML = html;
+return oldEl;
+@*/
+var newEl = oldEl.cloneNode(false);
+newEl.innerHTML = html;
+oldEl.parentNode.replaceChild(newEl, oldEl);
+/* 一旦我们从 DOM 上移除老的元素，则返回新的元素引用。*/
+return newEl;
+};
+
+
+可以直接用el=replaceHtml(el, newHtml)代替el.innerHTML=newHtml。
+速度到底有多大提升，还得测试说话。作者提供了一个测试页面：http://stevenlevithan.com/demo/replaceHtml.html
+此方法大大提高了 innerHTML 在 Firefox 和 Safari 上的性能。replaceHtml() 在 Firefox 2.0.0.6 里 destroy 与 replace 的速度各快了 473 倍以及 50 倍。而在 Safari 3.0.3 beta 上则是 create 100 倍，replace 50 倍。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="提高Firefox的innerHTML()的性能"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">提高Firefox的innerHTML()的性能</h1>
+  
+
+      <time datetime="2010-09-05T15:59:33.000Z"><a href="/2010/09/05/提高firefox的innerhtml的性能/">2010年9月5日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>Firefox 下<strong>innerHTML</strong>在操作量大了以后性能下降很厉害,有人写了个提高innhtml性能的代替方法：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">replaceHtml</span><span class="params">(el, html)</span> {</span>
+<span class="keyword">var</span> oldEl = <span class="keyword">typeof</span> el === <span class="string">"string"</span> ? document.getElementById(el) : el;
+<span class="comment">/*@cc_on // 原始的 innerHTML 在 IE 中的性能好一点
+oldEl.innerHTML = html;
+return oldEl;
+@*/</span>
+<span class="keyword">var</span> newEl = oldEl.cloneNode(<span class="literal">false</span>);
+newEl.innerHTML = html;
+oldEl.parentNode.replaceChild(newEl, oldEl);
+<span class="comment">/* 一旦我们从 DOM 上移除老的元素，则返回新的元素引用。*/</span>
+<span class="keyword">return</span> newEl;
+};
+</pre></td></tr></table></figure>
+
+<p>可以直接用<code>el=replaceHtml(el, newHtml)</code>代替<code>el.innerHTML=newHtml</code>。</p>
+<p>速度到底有多大提升，还得测试说话。作者提供了一个测试页面：<a href="http://stevenlevithan.com/demo/replaceHtml.html" target="_blank">http://stevenlevithan.com/demo/replaceHtml.html</a></p>
+<p>此方法大大提高了 innerHTML 在 Firefox 和 Safari 上的性能。replaceHtml() 在 Firefox 2.0.0.6 里 destroy 与 replace 的速度各快了 473 倍以及 50 倍。而在 Safari 3.0.3 beta 上则是 create 100 倍，replace 50 倍。<br><a id="more"></a><br>对于 Opera 也依然有性能提高，只是提高幅度没有上面两种浏览器惊人而已，</p>
+<p>唯在 IE 中，则原始的 <strong>innerHTML </strong>的方法更效率点。</p>
+<p>扩展阅读：</p>
+<p>《<a href="http://blog.stevenlevithan.com/archives/faster-than-innerhtml" target="_blank">When innerHTML isn’t Fast Enoug</a>h》| 《<a href="http://www.dustindiaz.com/innerhtml-vs-dom-methods/" target="_blank">innerHTML and DOM Methods</a>》| <a href="http://www.planabc.net/2008/03/04/innerhtml_and_dom_methods/" target="_blank">原文链接</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/javascript/">javascript</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2010/09/06/关于wbox-iframe回调关闭问题的解决方案/" class="prev" title="关于wBox iFrame回调关闭问题的解决方案">关于wBox iFrame回调关闭问题的解决方案</a>
+ 
+ 
+	<a href="/2010/09/03/使用php把excelxls文件导入mysql数据库/" class="next" title="使用PHP把excel(xls)文件导入mysql数据库">使用PHP把excel(xls)文件导入mysql数据库</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="提高Firefox的innerHTML()的性能"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

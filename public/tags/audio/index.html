@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>audio - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">audio</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/11/08/开源个html5播放器/">开源个html5播放器</a></h1>
+  
+
+      <time datetime="2012-11-07T20:53:15.000Z"><a href="/2012/11/08/开源个html5播放器/">2012年11月8日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前言：人家都说没有几个项目在github，都不好意思说自己混前端的……</p>
+<p>好吧，看见越来越多的人都推自己的github主页，我也把自己的之前写的一些东西整理下，从sae的svn迁移到github上，开了几个项目，虽然说代码的确乱糟糟的，但是也凑凑数吧，今天开源的是html5音乐播放器</p>
+<h2>html5音乐播放器</h2>
+<ul>
+<li>github地址：<a href="https://github.com/ksky521/player" target="_blank"><a href="https://github.com/ksky521/player">https://github.com/ksky521/player</a></a></li>
+<li>在线演示地址：<a href="http://4.qdemo.sinaapp.com/html5/chrome/" target="_blank"><a href="http://4.qdemo.sinaapp.com/html5/chrome/">http://4.qdemo.sinaapp.com/html5/chrome/</a></a></li>
+</ul>
+<p>截图如下：<br><img src="http://ww2.sinaimg.cn/bmiddle/796f423btw1dvbr7xm7xdj.jpg" alt="" title="html5 player"></p>
+<p>之前放出的是jquery版本的，见文章《<a href="http://js8.in/1023.html">写了一个html5音乐播放器</a>》也整理到了<a href="https://github.com/ksky521/player" target="_blank">这个项目</a>中，文件夹是<code>withjQuery</code>内。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/11/08/开源个html5播放器/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/06/15/写了一个html5音乐播放器/">写了一个html5音乐播放器</a></h1>
+  
+
+      <time datetime="2012-06-15T08:25:26.000Z"><a href="/2012/06/15/写了一个html5音乐播放器/">2012年6月15日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>昨天查了一些audio资料，自己写了个html5音乐播放器，后来写上瘾了，晚上折腾了一下加上了多首音乐支持、添加了循环模式，添加了进度，歌词等功能，界面仿得亦歌，可是一些icon还是比较难看，毕竟自己不会设计，呵呵，上面的歌曲都是通过goldwave转的ogg格式。访问地址：<a href="http://4.qdemo.sinaapp.com/html5/audio/player.html" target="_blank">html5音乐播放器</a>.</p>
+<center><iframe src="http://4.qdemo.sinaapp.com/html5/audio/player.html" width="290" height="370" scrolling='no' frameborder="0"></iframe></center>
+
+<p><a href="http://4.qdemo.sinaapp.com/html5/audio/player.html" target="_blank">html5音乐播放器</a></p>
+<p>代码还算简洁，javascript只用了400行左右，css和html也不是很多，后期如果找个视觉帮忙设计下界面就帅了，哈哈</p>
+<p>主要功能：</p>
+<ol>
+<li>支持音乐列表</li>
+<li>支持歌词滚动</li>
+<li>歌词实时显示到title</li>
+<li>支持列表循环和单曲循环循环模式</li>
+<li>支持音量调节</li>
+<li>支持拖动改变播放进度</li>
+<li>更多功能等你去发现哦</li>
+</ol>
+<p>写的比较仓促，所有功能都是在一天内完成的，难免会有bug，欢迎拍砖</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

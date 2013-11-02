@@ -1,0 +1,33 @@
+title: "使用windows7的virtual PC打造原装IE6、IE7、IE8测试环境"
+id: 688
+date: 2011-05-18 04:38:49
+tags: 
+categories: 
+- windows7技巧
+---
+
+公司使用的是windows7操作系统，自己之前一直使用IETester来测试页面在IE6~IE8下的兼容性，可是在测试js的时候还是会出现实际使用的还是windows7的IE8内核问题。
+所以自己想通过**virtual PC**来搭建个虚拟的测试环境，为什么选择virtual PC呢？
+1、windows 7系统自带，并且xp mode就可以直接安装上xp系统
+2、windows 7支持自动发布功能，即不启动虚拟机的情况也可以在xp下运行相应的程序，节省内存开销
+
+### 安装虚拟机
+
+第一步是安装xp MODE，这个网上很多教程，很简单我们就安装了带有IE6的xp系统了，并且可以把IE6发布到windows7上去运行
+第二步是创建第二个虚拟机，也就是带IE7的xp虚拟机，我先找了个sp2的xp安装上了（可以在设置里面添加ISO），可是不支持自动发布，当我查看帮助文件的时候发现原来只用sp3以上的系统才支持自动发布，于是先升级sp3,。
+升级sp3的时候悲剧了，因为一开始设置的虚拟硬盘大小是3G，导致sp3升级包升级的时候显示磁盘不足，试了很多扩展虚拟硬盘的方法都是不行，只有重新删除硬盘再次创建一个大点的硬盘，这次我创建的虚拟硬盘大小是5G，安装sp2，然后安装sp3，之后就是安装集成系统。
+一切就绪了，可是还是不支持自动发布功能，后来在帮助里面发现了原来sp3还是要安装一个补丁的，即（[Windows® XP SP3 用于启用 RemoteApp™ 的更新](http://www.microsoft.com/downloads/zh-cn/details.aspx?FamilyID=e5433d88-685f-4036-b435-570ff53598cd&amp;displaylang=zh-cn) ）
+安装补丁之后终于可以了！
+下面是截图：
+
+[caption id="attachment_687" align="aligncenter" width="300" caption="使用windows7的virtual PC打造原装IE6、IE7、IE8环境"][![使用windows7的virtual PC打造原装IE6、IE7、IE8环境](http://js8.in/wp-content/uploads/2011/05/2011-05-18_101406-300x191.png "使用windows7的virtual PC打造原装IE6、IE7、IE8环境")](http://js8.in/688.html/2011-05-18_101406)[/caption]
+<!--more-->
+
+### 总结一下
+
+1、创建虚拟机方法：打开管理→工具栏上部有个“创建虚拟机”→设置放入ISO安装
+2、如果你有sp3的安装iso最好，我的是悲催的sp2，以后只好升级了
+3、推荐使用原版的安装方法，不要使用ghost之类的，原因太大，毕竟我们使用也就是用用IE7、IE6没有必要大材小用
+4、记得安装Windows® XP SP3 用于启用 RemoteApp™ 的更新
+5、记得启用集成功能，虚拟机顶部设置“安装集成”！
+6、自动发布使用方法，进入全部用户的文件夹（可以在开始菜单右键→浏览全部用户文件）把想要在win7下运行的软件快捷方式复制过去即可

@@ -1,0 +1,877 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端必须熟悉的10个CSS3属性 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="随着Css3和html5的风靡，越来越多的前端人员开始学习Css3，今天的文章就是来说说前端应该掌握10个Css3属性。  上篇博文提到了《前端必须掌握30个CSS3选择器》，但是对于Css3的新属性，你又了解多少呢？虽然大多数的css3属性在很多流行的浏览器中不支持，但是我们鼓励在前端开发中要学会并且运行这些css3属性，因为这是未来的趋势。  关键是首先确定你是否对各个浏览器之间的细微的差别有所了解，你能肯定的说IE显示的90度的角就不圆滑嘛？这取决于你的决定。但是要永远记住，网站设计不必看到所有浏览器的不同。在文章的最后，我们将显示一个有趣的最终的案例。
+1、border-radius
+
+border-radius是一大堆CSS3属性中最受欢迎的一种，border-radius是CSS3中级别最高的一个属性。当设计者害怕一个层在将在不同的浏览器之间以不同的方式显示时，CSS圆角，一个很初级的知识，将引导他们开始学习。  我们为移动浏览器提供一个备用的观看体验的想法都非常好。奇怪的是，当这种方法出现在桌面浏览器上时，他们却又不这么认为。  border-radius是一大堆CSS3属性中最受欢迎的一种，border-radius是CSS3中级别最高的一个属性。当设计者害怕一个层在将在不同的浏览器之间以不同的方式显示时，CSS圆角，一个很初级的知识，将引导他们开始学习。  我们为移动浏览器提供一个备用的观看体验的想法都非常好。奇怪的是，当这种方法出现在桌面浏览器上时，他们却又不这么认为。
+1
+2
+3
+4
+
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+
+
+注意：请在Safari 5 和 IE9浏览器中执行”border-radius”语法。 圆许多读者也许不会意识到我们可以用这个属性来做一个圆。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="前端必须熟悉的10个CSS3属性"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">前端必须熟悉的10个CSS3属性</h1>
+  
+
+      <time datetime="2010-12-29T10:59:57.000Z"><a href="/2010/12/29/前端必须熟悉的10个css3属性/">2010年12月29日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>随着Css3和html5的风靡，越来越多的前端人员开始学习Css3，今天的文章就是来说说前端应该掌握10个Css3属性。  上篇博文提到了《<a href="http://js8.in/647.html" title="前端必须掌握30个CSS3选择器">前端必须掌握30个CSS3选择器</a>》，但是对于Css3的新属性，你又了解多少呢？虽然大多数的css3属性在很多流行的浏览器中不支持，但是我们鼓励在前端开发中要学会并且运行这些css3属性，因为这是未来的趋势。  关键是首先确定你是否对各个浏览器之间的细微的差别有所了解，你能肯定的说IE显示的90度的角就不圆滑嘛？这取决于你的决定。但是要永远记住，网站设计不必看到所有浏览器的不同。在文章的最后，我们将显示一个有趣的最终的案例。</p>
+<h3>1、border-radius</h3>
+<p><a href="http://js8.in/648.html/attachment/201012220003115125"><img src="/uploads/2010/12/201012220003115125.png" alt="border-radius" title="border-radius"></a></p>
+<p><strong>border-radius</strong>是一大堆CSS3属性中最受欢迎的一种，border-radius是CSS3中级别最高的一个属性。当设计者害怕一个层在将在不同的浏览器之间以不同的方式显示时，CSS圆角，一个很初级的知识，将引导他们开始学习。  我们为移动浏览器提供一个备用的观看体验的想法都非常好。奇怪的是，当这种方法出现在桌面浏览器上时，他们却又不这么认为。  border-radius是一大堆CSS3属性中最受欢迎的一种，border-radius是CSS3中级别最高的一个属性。当设计者害怕一个层在将在不同的浏览器之间以不同的方式显示时，CSS圆角，一个很初级的知识，将引导他们开始学习。  我们为移动浏览器提供一个备用的观看体验的想法都非常好。奇怪的是，当这种方法出现在桌面浏览器上时，他们却又不这么认为。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+-<span class="tag">webkit</span>-<span class="tag">border</span>-<span class="tag">radius</span>: 4<span class="tag">px</span>;
+-<span class="tag">moz</span>-<span class="tag">border</span>-<span class="tag">radius</span>: 4<span class="tag">px</span>;
+<span class="tag">border</span>-<span class="tag">radius</span>: 4<span class="tag">px</span>;
+</pre></td></tr></table></figure>
+
+<p>注意：请在Safari 5 和 IE9浏览器中执行”border-radius”语法。<br> <strong>圆</strong><br>许多读者也许不会意识到我们可以用这个属性来做一个圆。<br><a id="more"></a></p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+-<span class="tag">moz</span>-<span class="tag">border</span>-<span class="tag">radius</span>: 50<span class="tag">px</span>;
+-<span class="tag">webkit</span>-<span class="tag">border</span>-<span class="tag">radius</span>: 50<span class="tag">px</span>;
+ <span class="tag">border</span>-<span class="tag">radius</span>: 50<span class="tag">px</span>;
+</pre></td></tr></table></figure>
+
+<p><a href="http://js8.in/648.html/201012220003115125-2"><img src="/uploads/2010/12/2010122200031151251.png" alt="圆" title="圆"></a></p>
+<p>如果想再添加点效果，我们可以利用Flexible Box Model（详情在8中）来使得文字在垂直在水平方向都居中。这需要加点代码，但这仅仅是对不同浏览器的补偿。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre>
+<span class="tag">display</span>: -<span class="tag">moz</span>-<span class="tag">box</span>;
+<span class="tag">display</span>: -<span class="tag">webkit</span>-<span class="tag">box</span>;
+<span class="tag">display</span>: <span class="tag">box</span>;
+-<span class="tag">moz</span>-<span class="tag">box</span>-<span class="tag">orient</span>: <span class="tag">horizontal</span>; <span class="comment">/* the default, so not really necessary here */</span>
+-<span class="tag">webkit</span>-<span class="tag">box</span>-<span class="tag">orient</span>: <span class="tag">horizontal</span>;
+<span class="tag">box</span>-<span class="tag">orient</span>: <span class="tag">horizontal</span>;
+-<span class="tag">moz</span>-<span class="tag">box</span>-<span class="tag">pack</span>: <span class="tag">center</span>;
+-<span class="tag">moz</span>-<span class="tag">box</span>-<span class="tag">align</span>: <span class="tag">center</span>;
+-<span class="tag">webkit</span>-<span class="tag">box</span>-<span class="tag">pack</span>: <span class="tag">center</span>;
+-<span class="tag">webkit</span>-<span class="tag">box</span>-<span class="tag">align</span>: <span class="tag">center</span>;
+<span class="tag">box</span>-<span class="tag">pack</span>: <span class="tag">center</span>;
+<span class="tag">box</span>-<span class="tag">align</span>: <span class="tag">center</span>;
+</pre></td></tr></table></figure>
+
+<h3>2、 box-shadow</h3>
+<p><a href="http://js8.in/648.html/201012220003115125-3"><img src="/uploads/2010/12/2010122200031151252-254x300.jpg" alt="box-shadow" title="box-shadow"></a></p>
+<p>接下来是非常普遍的<strong>box-shadow</strong>，可以使你的元素立即美化，只是记得不要把值设得太离谱。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+-<span class="tag">webkit</span>-<span class="tag">box</span>-<span class="tag">shadow</span>: 1<span class="tag">px</span> 1<span class="tag">px</span> 3<span class="tag">px</span> <span class="id">#292929</span>;
+-<span class="tag">moz</span>-<span class="tag">box</span>-<span class="tag">shadow</span>: 1<span class="tag">px</span> 1<span class="tag">px</span> 3<span class="tag">px</span> <span class="id">#292929</span>;
+<span class="tag">box</span>-<span class="tag">shadow</span>: 1<span class="tag">px</span> 1<span class="tag">px</span> 3<span class="tag">px</span> <span class="id">#292929</span>;
+</pre></td></tr></table></figure>
+
+<p>box-shadow的四个参数</p>
+<ol>
+<li>x-offset x轴偏移</li>
+<li>y-offset y轴偏移</li>
+<li>blur 模糊值</li>
+<li>color of shadow 阴影颜色<br>现在，许多人不知道可以一次运用多个box-shadows，这样做会产生一些有趣的效果。在下图中，我使用蓝色和绿色阴影来放大一下效果。</li>
+</ol>
+<p><a href="http://js8.in/648.html/201012220003115125-4"><img src="/uploads/2010/12/2010122200031151253-300x242.jpg" alt="box-shadow" title="box-shadow"></a></p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+-<span class="tag">webkit</span>-<span class="tag">box</span>-<span class="tag">shadow</span>: 1<span class="tag">px</span> 1<span class="tag">px</span> 3<span class="tag">px</span> <span class="tag">green</span>, -1<span class="tag">px</span> -1<span class="tag">px</span> <span class="tag">blue</span>;
+-<span class="tag">moz</span>-<span class="tag">box</span>-<span class="tag">shadow</span>: 1<span class="tag">px</span> 1<span class="tag">px</span> 3<span class="tag">px</span> <span class="tag">green</span>,-1<span class="tag">px</span> -1<span class="tag">px</span> <span class="tag">blue</span>;
+<span class="tag">box</span>-<span class="tag">shadow</span>: 1<span class="tag">px</span> 1<span class="tag">px</span> 3<span class="tag">px</span> <span class="tag">green</span>, -1<span class="tag">px</span> -1<span class="tag">px</span> <span class="tag">blue</span>;
+</pre></td></tr></table></figure>
+
+<p><strong>Clever Shadows </strong></p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"box"</span>&gt;</span>
+   ![Tuts](tuts.jpg)
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p><strong>The CSS</strong></p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre>
+<span class="class">.box</span><span class="pseudo">:after</span> <span class="rules">{
+   <span class="rule"><span class="attribute">content</span>:<span class="value"> <span class="string">''</span>;</span></span>
+   <span class="rule"><span class="attribute">position</span>:<span class="value"> absolute;</span></span>
+
+   <span class="rule"><span class="attribute">z-index</span>:<span class="value"> -<span class="number">1</span>;</span></span> <span class="comment">/* hide shadow behind image */</span>
+
+   <span class="comment">/* The Shadow */</span>
+   <span class="rule"><span class="attribute">-webkit-box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">15</span>px <span class="number">20</span>px <span class="function">rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.3</span>)</span>;</span></span>
+   <span class="rule"><span class="attribute">-moz-box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">15</span>px <span class="number">20</span>px <span class="function">rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.3</span>)</span>;</span></span>
+   <span class="rule"><span class="attribute">-box-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">15</span>px <span class="number">20</span>px <span class="function">rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.3</span>)</span>;</span></span>                
+
+   <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">70</span>%;</span></span>
+   <span class="rule"><span class="attribute">left</span>:<span class="value"> <span class="number">15</span>%;</span></span> <span class="comment">/* one half of the remaining 30% (see width above) */</span>
+
+   <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100</span>px;</span></span>
+   <span class="rule"><span class="attribute">bottom</span>:<span class="value">  <span class="number">0</span>;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p><a href="http://js8.in/648.html/201012220003115125-5"><img src="/uploads/2010/12/2010122200031151254-300x187.png" alt="box-shadow" title="box-shadow"></a></p>
+<h3>3、 text-shadow</h3>
+<p><a href="http://js8.in/648.html/201012220003115125-6"><img src="/uploads/2010/12/2010122200031151255-300x123.jpg" alt="text-shadow" title="text-shadow"></a></p>
+<p><strong>text-shadow</strong>是我们可以省略前缀的几个CSS属性之一，类似的还有box-shadow，它必须应用于文本，并它们有相同的四个参数：</p>
+<ol>
+<li>x-offset 水平位移</li>
+<li>y-offest 垂直位移</li>
+<li>blur 模糊值</li>
+<li>color of shadow 阴影颜色</li>
+</ol>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+ <span class="tag">h1</span> <span class="rules">{
+    <span class="rule"><span class="attribute">text-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> white;</span></span>
+    <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#292929</span>;</span></span>
+ <span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p><strong>Text-Outline</strong> 和box-shadow一样，它可以设置多个阴影通过逗号分隔符。例如，我们创建文本框的轮廓，当webkit不支持stroke效果，我们可以使用下面的代码让更多的浏览器支持（虽然不是很美观）。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>
+<span class="tag">body</span> <span class="rules">{ <span class="rule"><span class="attribute">background</span>:<span class="value"> white;</span></span> <span class="rule">}</span></span>
+
+<span class="tag">h1</span> <span class="rules">{
+   <span class="rule"><span class="attribute">text-shadow</span>:<span class="value"> <span class="number">0</span> <span class="number">1</span>px <span class="number">0</span> black, <span class="number">0</span> -<span class="number">1</span>px <span class="number">0</span> black, <span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> black, -<span class="number">1</span>px <span class="number">0</span> <span class="number">0</span> black;</span></span>
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> white;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p><a href="http://js8.in/648.html/201012220003115125-7"><img src="/uploads/2010/12/2010122200031151256-300x89.jpg" alt="Text-Outline" title="Text-Outline"></a></p>
+<h3>4、 Text-Stroke</h3>
+<p><a href="http://js8.in/648.html/201012220003115125-8"><img src="/uploads/2010/12/2010122200031151257-300x103.jpg" alt="Text-Stroke" title="Text-Stroke"></a></p>
+<p>使用这个方法时要注意了，只有webkit（Safari， Chrome， iPhone）在最后的几年内还支持这个属性。其实，虽然我可能是错的，<strong>text-stroke</strong>还不属于CSS3范畴的一部分。在这种情况下，使用白 色字体时，firefox会显示一个空白页面。要解决此问题，你即可以使用Javascript，也可以通过使用一种不同于背景颜色的文字颜色。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+<span class="tag">h1</span> <span class="rules">{
+   <span class="rule"><span class="attribute">-webkit-text-stroke</span>:<span class="value"> <span class="number">3</span>px black;</span></span>
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> white;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p><strong>Feature Detection</strong> 我们如何为firefox提供一组可用的样式，和为另外的一组Safari或Chrome？解决办法就是多做测试。  通过feature detection，我们可以利用JavaScript来测试某属性是否可用，如果不行，我可就要采用备用的。  再回到text-stroke的问题上，为不支持此属性的浏览器设定一个备用黑色（目前的除webkit外）。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>
+<span class="keyword">var</span> h1 = document.createElement(<span class="string">'h1'</span>);
+<span class="keyword">if</span> ( !( <span class="string">'webkitTextStroke'</span> <span class="keyword">in</span> h1.style ) ) {
+   <span class="keyword">var</span> heading = document.getElementsByTagName(<span class="string">'h1'</span>)[<span class="number">0</span>];
+   heading.style.color = <span class="string">'black'</span>;
+}
+</pre></td></tr></table></figure>
+
+<p>首先我们设定一个h1元素，然后执行，通过样式属性以确定-webkit-text-stroke是否支持此元素。如果不支持，我们会把标题由白色设置成黑色。</p>
+<h3>5、 Multiple Backgrounds</h3>
+<p><a href="http://js8.in/648.html/201012220003115125-9"><img src="/uploads/2010/12/2010122200031151258-300x192.jpg" alt="Multiple Backgrounds" title="Multiple Backgrounds"></a></p>
+<p><strong>Background</strong>属性在CSS3样式中已经彻底改革，开始支持多背景图片。  举个简单的例子，如果没和合适的图像，我们将使用两个教程的图像作为我们的背景，当然在程序中你可能会用纹理，也许是渐变作为图像。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+<span class="class">.box</span> <span class="rules">{
+<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="function">url(image/path.jpg)</span> <span class="number">0</span> <span class="number">0</span> no-repeat,
+ <span class="function">url(image2/path.jpg)</span> <span class="number">100</span>% <span class="number">0</span> no-repeat;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>以上，通过逗号分隔符，插入了两张背景图像，第一个的定位是（0，0），第二个的定位是（100%，0）。  要确定你对不支持的浏览器使用了备用图片，否则，它将跳此属性，使背景图像留空。  <strong>对旧浏览器的补偿</strong> 要添加一张单独的图像给老浏览器用，像IE7。要定义两遍background，一遍是为老浏览器，另一遍是重写。或者你可以再次查看下Modernizr。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>
+<span class="class">.box</span> <span class="rules">{
+<span class="comment">/* fallback */</span>
+<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="function">url(image/path.jpg)</span> no-repeat;</span></span>
+
+<span class="comment">/* modern browsers */</span>
+<span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="function">url(image/path.jpg)</span> <span class="number">0</span> <span class="number">0</span> no-repeat,
+ <span class="function">url(image2/path.jpg)</span> <span class="number">100</span>% <span class="number">0</span> no-repeat;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<h3>6、 background-size</h3>
+<p>目前我们已经可以使用这种比较灵活的方式去重定义背景图像的大小。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>
+background: url(path/to/image.jpg) no-repeat;
+background-size: 100% 100%;
+</pre></td></tr></table></figure>
+
+<p>上面的代码使得背景图像已经占据了整个可用空间。但是，如果我们使用一个特殊的图片去占据body元素的整个空间而无论窗口有多宽，那又怎么做？</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>
+<span class="tag">body</span>, <span class="tag">html</span> <span class="rules">{ <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100</span>%;</span></span> <span class="rule">}</span></span>
+
+<span class="tag">body</span> <span class="rules">{
+ <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="function">url(path/to/image.jpg)</span> no-repeat;</span></span>
+ <span class="rule"><span class="attribute">background-size</span>:<span class="value"> <span class="number">100</span>% <span class="number">100</span>%;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>对，就是这么做，分别定义background-size的x，y参数。 最新版本的Chrome 和 Safari支持此属性，但我们还是要用旧的方法支持旧的浏览器。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>
+<span class="tag">body</span> <span class="rules">{
+ <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="function">url(path/to/image.jpg)</span> no-repeat;</span></span>
+ <span class="rule"><span class="attribute">-moz-background-size</span>:<span class="value"> <span class="number">100</span>% <span class="number">100</span>%;</span></span>
+ <span class="rule"><span class="attribute">-o-background-size</span>:<span class="value"> <span class="number">100</span>% <span class="number">100</span>%;</span></span>
+ <span class="rule"><span class="attribute">-webkit-background-size</span>:<span class="value"> <span class="number">100</span>% <span class="number">100</span>%;</span></span>
+ <span class="rule"><span class="attribute">background-size</span>:<span class="value"> <span class="number">100</span>% <span class="number">100</span>%;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<h3>7、 text-overflow</h3>
+<p>浏览器最初开发文本溢出属性可以设定两个值：clip ellipsis 此属性支持切断容器中的文本，而且也给出了一个省略号的特性。</p>
+<p><a href="http://js8.in/648.html/201012220003115125-10"><img src="/uploads/2010/12/2010122200031151259-300x221.png" alt="text-overflow" title="text-overflow"></a></p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre>
+<span class="class">.box</span> <span class="rules">{
+   <span class="rule"><span class="attribute">-o-text-overflow</span>:<span class="value"> ellipsis;</span></span>
+   <span class="rule"><span class="attribute">text-overflow</span>:<span class="value">ellipsis;</span></span>
+   <span class="rule"><span class="attribute">overflow</span>:<span class="value">hidden;</span></span>
+   <span class="rule"><span class="attribute">white-space</span>:<span class="value">nowrap;</span></span>
+   <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid black;</span></span>
+   <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">400</span>px;</span></span>
+   <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">20</span>px;</span></span>
+   <span class="rule"><span class="attribute">cursor</span>:<span class="value"> pointer;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>或许你会考虑当鼠标经过时显示全部的文本内容。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>
+<span class="id">#box</span><span class="pseudo">:hover</span> <span class="rules">{
+  <span class="rule"><span class="attribute">white-space</span>:<span class="value"> normal;</span></span>
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="function">rgba(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>)</span>;</span></span>
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#e3e3e3</span>;</span></span>
+  <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid <span class="hexcolor">#666</span>;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>有点奇怪，这看起来并不像是重置text-overflow属性或是停用它，使之生效，在on:hover中我们可以使得white-space的normal属性。现在正常了。  知道吗？您还可以指定自己的字符串，应使用省略号的位置。这样做来修饰要显示的文本字符串。</p>
+<h3>8、 Flexible Box Model</h3>
+<p>Flexible Box Model将最终使我们远离类似float的困扰。虽然是要给你的头部换一个新的属性，但一旦你这么做了，将终身受益。 做个演示，创建简单的两列布局。</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span>
+ <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"main"</span>&gt;</span> Main content here <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+ <span class="tag">&lt;<span class="title">aside</span>&gt;</span> Aside content here <span class="tag">&lt;/<span class="title">aside</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>首先我们要设定一个容器，然后指定它的宽和高，即便是没有实质性的内容在里面。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre>
+<span class="id">#container</span> <span class="rules">{
+    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">960</span>px;</span></span>
+    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">500</span>px;</span></span> <span class="comment">/* just for demo */</span>
+
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#e3e3e3</span>;</span></span>
+    <span class="rule"><span class="attribute">margin</span>:<span class="value"> auto;</span></span>
+
+    <span class="rule"><span class="attribute">display</span>:<span class="value"> -moz-box;</span></span>
+    <span class="rule"><span class="attribute">display</span>:<span class="value"> -webkit-box;</span></span>
+    <span class="rule"><span class="attribute">display</span>:<span class="value"> box;</span></span>
+</pre></td></tr></table></figure>
+
+<p>接下来分别定义#main和aside的背景色</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>
+<span class="id">#main</span> <span class="rules">{
+   <span class="rule"><span class="attribute">background</span>:<span class="value"> yellow;</span></span>
+<span class="rule">}</span></span>   
+
+<span class="tag">aside</span> <span class="rules">{
+   <span class="rule"><span class="attribute">background</span>:<span class="value"> red;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>到目前为了还没有看出什么效果来。</p>
+<p><dl></p>
+<p><dt><a href="http://js8.in/648.html/201012220003115125-11"><img src="/uploads/2010/12/20101222000311512510-300x176.png" alt="Flexible Box Model" title="Flexible Box Model"></a></dt> <dd style="font-size: 11px; line-height: 17px; padding-top: 0px; padding-right: 4px; padding-bottom: 5px; padding-left: 4px; margin: 0px;"> </dd></dl><br>值得一提的是，虽然我们设置了display:box模型，它的子元素会占据整个垂直空间。这就是它的默认box-align属性stretch。  看看有什么效果产生，当我们设置了#main的宽度后。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+<span class="id">#main</span> <span class="rules">{
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> yellow;</span></span>
+  <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">800</span>px;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p><a href="http://js8.in/648.html/201012220003115125-12"><img src="/uploads/2010/12/20101222000311512511-300x159.png" alt="Flexible Box Model" title="Flexible Box Model"></a></p>
+<p>但是我们仍有个疑问，为什么aside不占据剩余的全部空间呢？我们可以用新属性box-flex来试下。  box-flex 使得元素占据整个空间。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>
+<span class="tag">aside</span> <span class="rules">{
+    <span class="rule"><span class="attribute">display</span>:<span class="value"> block;</span></span> <span class="comment">/* cause is HTML5 element */</span>
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> red;</span></span>
+
+   <span class="comment">/* take up all available space */</span>
+    <span class="rule"><span class="attribute">-moz-box-flex</span>:<span class="value"> <span class="number">1</span>;</span></span>
+    <span class="rule"><span class="attribute">-webkit-box-flex</span>:<span class="value"> <span class="number">1</span>;</span></span>
+    <span class="rule"><span class="attribute">box-flex</span>:<span class="value"> <span class="number">1</span>;</span></span>
+ <span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>使用这个属性后，不管#main有多宽，aside都将占据整个可用的空间。同时你也不必担心诸如float等产生的问题，像使得元素被排挤到下一行。</p>
+<p><a href="http://js8.in/648.html/201012220003115125-13"><img src="/uploads/2010/12/20101222000311512512-300x158.png" alt="Flexible Box Model" title="Flexible Box Model"></a></p>
+<p>我只是在这儿肤浅的说一下，请参阅保罗爱尔兰优秀文章的详细信息。然而，使用此方法的时候也应注意一下兼容问题，例如老的浏览器应该先测试下，并且提供必要的备注。</p>
+<h3>9、 Resize</h3>
+<p>只有Firefox 4和Safari 3支持此属性。Resize是CSS3 UI模型中的一部分，可用于重定义textarea的大小。</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>
+<span class="tag">&lt;<span class="title">textarea</span> <span class="attribute">name</span>=<span class="value">"elem"</span> <span class="attribute">id</span>=<span class="value">"elem"</span> <span class="attribute">rows</span>=<span class="value">"5"</span> <span class="attribute">cols</span>=<span class="value">"50"</span>&gt;</span><span class="tag">&lt;/<span class="title">textarea</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>默认情况下webkit浏览器和Firefox 4支持水平和垂直方向上的重定义。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>
+<span class="tag">textarea</span> <span class="rules">{
+   <span class="rule"><span class="attribute">-moz-resize</span>:<span class="value"> vertical;</span></span>
+   <span class="rule"><span class="attribute">-webkit-resize</span>:<span class="value"> vertical;</span></span>
+   <span class="rule"><span class="attribute">resize</span>:<span class="value"> vertical;</span></span>
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>可能的值：</p>
+<ol>
+<li>both： 重定义水平和垂直方向</li>
+<li>horizontal： 水平调整大小限制</li>
+<li>vertical： 垂直调整大小限制</li>
+<li>none： 不支持重定义<br><a href="http://js8.in/648.html/201012220003115125-14"><img src="/uploads/2010/12/20101222000311512513-300x106.png" alt="Resize" title="Resize"></a></li>
+</ol>
+<h3>10、 Transition</h3>
+<p>也许CSS3最令人兴奋的增补，就是在没有 JavaScript 的元素的情况下产生动画。  好像IE9还不支持此功能，但这并不代表你不能使用这个功能，关键是在于提高技能。  现在模仿一个效果，当鼠标滑过右侧链接时，文本向右滑动。<br><strong>The HTML</strong></p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>
+
+*   [ Hover Over Me ](#)
+*   [ Hover Over Me ](#)
+*   [ Hover Over Me ](#)
+*   [ Hover Over Me ](#)
+</pre></td></tr></table></figure>
+
+<p><strong>The CSS</strong></p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre>
+<span class="tag">ul</span> <span class="tag">a</span> <span class="rules">{
+    <span class="rule"><span class="attribute">-webkit-transition</span>:<span class="value"> padding .<span class="number">4</span>s;</span></span>
+    <span class="rule"><span class="attribute">-moz-transition</span>:<span class="value"> padding .<span class="number">4</span>s;</span></span>
+    <span class="rule"><span class="attribute">-o-transition</span>:<span class="value"> padding .<span class="number">4</span>s;</span></span>
+    <span class="rule"><span class="attribute">transition</span>:<span class="value"> padding .<span class="number">4</span>s;</span></span>
+ <span class="rule">}</span></span>
+
+ <span class="tag">a</span><span class="pseudo">:hover</span> <span class="rules">{
+    <span class="rule"><span class="attribute">padding-left</span>:<span class="value"> <span class="number">6</span>px;</span></span>
+ <span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>transition 有三个参数：</p>
+<ol>
+<li>The property to transition. （Set this value to all if needed） 转换属性。（设置此值为所有如有需要）</li>
+<li>The duration 持续时间</li>
+<li>The easing type 缓动类型<br>为什么我们不将transition直接应用到hover上呢？是因为我们只是在mouseover时生效，当mouseout时元素将立即返回到其最初的状态。 因为我们对效果做了调整，所有对旧的浏览器不会产生任何影响。 接下来是通过文章所学，我们来建立的一个简洁的效果。大家可以通过查看源码来学习来。具体如何创建我就不翻译了。</li>
+</ol>
+<p><a href="http://js8.in/648.html/201012220003115125-15"><img src="/uploads/2010/12/20101222000311512514-300x249.png" alt="实例" title="实例"></a></p>
+<p>原文地址：<a href="http://net.tutsplus.com/tutorials/html-css-techniques/10-css3-properties-you-need-to-be-familiar-with/" target="_blank">10 CSS3 Properties you Need to be Familiar with</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/css/">css</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2011/01/14/iframe自适用高度代码/" class="prev" title="iframe自适用高度代码">iframe自适用高度代码</a>
+ 
+ 
+	<a href="/2010/12/28/前端必须掌握30个css3选择器/" class="next" title="前端必须掌握30个CSS3选择器">前端必须掌握30个CSS3选择器</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="前端必须熟悉的10个CSS3属性"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

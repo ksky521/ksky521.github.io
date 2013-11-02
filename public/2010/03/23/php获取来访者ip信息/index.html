@@ -1,0 +1,815 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>php获取来访者IP信息 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="前几天幼学笔记写了一篇《可以在前端实现的几个地理位置小功能》里面提到了我使用的QQ ip接口，其实我们也可以在PHP端实现根据IP定位用户地理位置，方法就是根据纯真的IP库来获取IP地理信息。我一个Google map API逆经纬度查询结合IP数据库接口的demo[点击查看]，其实使用的方法就是A">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="php获取来访者IP信息"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">php获取来访者IP信息</h1>
+  
+
+      <time datetime="2010-03-22T21:25:34.000Z"><a href="/2010/03/23/php获取来访者ip信息/">2010年3月23日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前几天幼学笔记写了一篇《<a href="http://www.oncoding.cn/2010/geo-location-frontend/" target="_blank">可以在前端实现的几个地理位置小功能</a>》里面提到了我使用的QQ ip接口，其实我们也可以在PHP端实现根据IP定位用户<strong>地理位置</strong>，方法就是根据纯真的IP库来获取IP地理信息。我一个<strong>Google map API</strong>逆经纬度查询结合IP数据库接口的demo<a href="http://js8.in/mywork/ipsearch/">[点击查看</a>]，其实使用的方法就是Ajax过去IP，通过QQ IP接口查询出来地理信息，然后调用Google map API逆经纬度查询经纬度信息，然后在Google地图上标注地理位置。</p>
+<h3>1、PHP获取来访者IP函数getIP()</h3>
+<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">getIP</span><span class="params">()</span>
+{</span> 
+        <span class="keyword">if</span>(getenv(<span class="string">"HTTP_CLIENT_IP"</span>) && strcasecmp(getenv(<span class="string">"HTTP_CLIENT_IP"</span>), <span class="string">"unknown"</span>)) 
+                <span class="variable">$ip</span> = getenv(<span class="string">"HTTP_CLIENT_IP"</span>); 
+        <span class="keyword">elseif</span>(getenv(<span class="string">"HTTP_X_FORWARDED_FOR"</span>) && strcasecmp(getenv(<span class="string">"HTTP_X_FORWARDED_FOR"</span>), <span class="string">"unknown"</span>)) 
+                <span class="variable">$ip</span> = getenv(<span class="string">"HTTP_X_FORWARDED_FOR"</span>); 
+        <span class="keyword">elseif</span> (getenv(<span class="string">"REMOTE_ADDR"</span>) && strcasecmp(getenv(<span class="string">"REMOTE_ADDR"</span>), <span class="string">"unknown"</span>)) 
+                <span class="variable">$ip</span> = getenv(<span class="string">"REMOTE_ADDR"</span>); 
+        <span class="keyword">elseif</span> (<span class="keyword">isset</span>(<span class="variable">$_SERVER</span>[<span class="string">'REMOTE_ADDR'</span>]) && <span class="variable">$_SERVER</span>[<span class="string">'REMOTE_ADDR'</span>] && strcasecmp(<span class="variable">$_SERVER</span>[<span class="string">'REMOTE_ADDR'</span>], <span class="string">"unknown"</span>)) 
+                <span class="variable">$ip</span> = <span class="variable">$_SERVER</span>[<span class="string">'REMOTE_ADDR'</span>]; 
+        <span class="keyword">else</span> 
+                <span class="variable">$ip</span> = <span class="string">"0.0.0.0"</span>; 
+        <span class="keyword">return</span> <span class="variable">$ip</span>;
+}```&lt;!--more--&gt;
+
+<span class="comment">### 2、查询纯真IP库PHP类IpLocation</span>
+
+
+```php
+<span class="class"><span class="keyword">class</span> <span class="title">IpLocation</span> {</span>
+    <span class="comment">/**
+     * QQWry.Dat文件指针
+     *
+     *<span class="phpdoc"> @var</span> resource
+     */</span>
+    <span class="keyword">var</span> <span class="variable">$fp</span>;
+    <span class="comment">/**
+    * 第一条IP记录的偏移地址
+     *
+    *<span class="phpdoc"> @var</span> int
+       */</span>
+       <span class="keyword">var</span> <span class="variable">$firstip</span>;
+         <span class="comment">/**
+        * 最后一条IP记录的偏移地址
+        *
+        *<span class="phpdoc"> @var</span> int
+        */</span>
+       <span class="keyword">var</span> <span class="variable">$lastip</span>;
+        <span class="comment">/**
+        * IP记录的总条数（不包含版本信息记录）
+        *
+        *<span class="phpdoc"> @var</span> int
+        */</span>
+       <span class="keyword">var</span> <span class="variable">$totalip</span>;
+         <span class="comment">/**
+        * 返回读取的长整型数
+        *
+       *<span class="phpdoc"> @access</span> private
+        *<span class="phpdoc"> @return</span> int
+        */</span>
+       <span class="function"><span class="keyword">function</span> <span class="title">getlong</span><span class="params">()</span> {</span>
+           <span class="comment">//将读取的little-endian编码的4个字节转化为长整型数</span>
+           <span class="variable">$result</span> = unpack(<span class="string">'Vlong'</span>, fread(<span class="variable">$this</span>-&gt;fp, <span class="number">4</span>));
+           <span class="keyword">return</span> <span class="variable">$result</span>[<span class="string">'long'</span>];
+       }
+         <span class="comment">/**
+        * 返回读取的3个字节的长整型数
+        *
+        *<span class="phpdoc"> @access</span> private
+        *<span class="phpdoc"> @return</span> int
+       */</span>
+       <span class="function"><span class="keyword">function</span> <span class="title">getlong3</span><span class="params">()</span> {</span>
+           <span class="comment">//将读取的little-endian编码的3个字节转化为长整型数</span>
+           <span class="variable">$result</span> = unpack(<span class="string">'Vlong'</span>, fread(<span class="variable">$this</span>-&gt;fp, <span class="number">3</span>).chr(<span class="number">0</span>));
+           <span class="keyword">return</span> <span class="variable">$result</span>[<span class="string">'long'</span>];
+       }
+    <span class="comment">/**
+     * 返回压缩后可进行比较的IP地址
+     *
+       *<span class="phpdoc"> @access</span> private
+        *<span class="phpdoc"> @param</span> string $ip
+        *<span class="phpdoc"> @return</span> string
+        */</span>
+       <span class="function"><span class="keyword">function</span> <span class="title">packip</span><span class="params">(<span class="variable">$ip</span>)</span> {</span>
+           <span class="comment">// 将IP地址转化为长整型数，如果在PHP5中，IP地址错误，则返回False，</span>
+        <span class="comment">// 这时intval将Flase转化为整数-1，之后压缩成big-endian编码的字符串</span>
+        <span class="keyword">return</span> pack(<span class="string">'N'</span>, intval(ip2long(<span class="variable">$ip</span>)));
+    }
+    <span class="comment">/**
+     * 返回读取的字符串
+        *
+        *<span class="phpdoc"> @access</span> private
+        *<span class="phpdoc"> @param</span> string $data
+        *<span class="phpdoc"> @return</span> string
+     */</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">getstring</span><span class="params">(<span class="variable">$data</span> = <span class="string">""</span>)</span> {</span>
+        <span class="variable">$char</span> = fread(<span class="variable">$this</span>-&gt;fp, <span class="number">1</span>);
+        <span class="keyword">while</span> (ord(<span class="variable">$char</span>) &gt; <span class="number">0</span>) {        <span class="comment">// 字符串按照C格式保存，以\0结束</span>
+            <span class="variable">$data</span> .= <span class="variable">$char</span>;             <span class="comment">// 将读取的字符连接到给定字符串之后</span>
+            <span class="variable">$char</span> = fread(<span class="variable">$this</span>-&gt;fp, <span class="number">1</span>);
+        }
+           <span class="keyword">return</span> <span class="variable">$data</span>;
+       }
+      <span class="comment">/**
+     * 返回地区信息
+     *
+     *<span class="phpdoc"> @access</span> private
+     *<span class="phpdoc"> @return</span> string
+     */</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">getarea</span><span class="params">()</span> {</span>
+        <span class="variable">$byte</span> = fread(<span class="variable">$this</span>-&gt;fp, <span class="number">1</span>);    <span class="comment">// 标志字节</span>
+           <span class="keyword">switch</span> (ord(<span class="variable">$byte</span>)) {
+            <span class="keyword">case</span> <span class="number">0</span>:                     <span class="comment">// 没有区域信息</span>
+                 <span class="variable">$area</span> = <span class="string">""</span>;
+                 <span class="keyword">break</span>;
+             <span class="keyword">case</span> <span class="number">1</span>:
+             <span class="keyword">case</span> <span class="number">2</span>:                     <span class="comment">// 标志字节为1或2，表示区域信息被重定向</span>
+                 fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$this</span>-&gt;getlong3());
+                 <span class="variable">$area</span> = <span class="variable">$this</span>-&gt;getstring();
+                 <span class="keyword">break</span>;
+             <span class="keyword">default</span>:                    <span class="comment">// 否则，表示区域信息没有被重定向</span>
+                 <span class="variable">$area</span> = <span class="variable">$this</span>-&gt;getstring(<span class="variable">$byte</span>);
+                <span class="keyword">break</span>;
+        }
+        <span class="keyword">return</span> <span class="variable">$area</span>;
+    }
+    <span class="comment">/**
+     * 根据所给 IP 地址或域名返回所在地区信息
+     *
+     *<span class="phpdoc"> @access</span> public
+     *<span class="phpdoc"> @param</span> string $ip
+     *<span class="phpdoc"> @return</span> array
+      */</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">getlocation</span><span class="params">(<span class="variable">$ip</span>)</span> {</span>
+        <span class="keyword">if</span> (!<span class="variable">$this</span>-&gt;fp) <span class="keyword">return</span> <span class="keyword">null</span>;            <span class="comment">// 如果数据文件没有被正确打开，则直接返回空</span>
+        <span class="variable">$location</span>[<span class="string">'ip'</span>] = gethostbyname(<span class="variable">$ip</span>);   <span class="comment">// 将输入的域名转化为IP地址</span>
+        <span class="variable">$ip</span> = <span class="variable">$this</span>-&gt;packip(<span class="variable">$location</span>[<span class="string">'ip'</span>]);   <span class="comment">// 将输入的IP地址转化为可比较的IP地址</span>
+                                               <span class="comment">// 不合法的IP地址会被转化为255</span>
+        <span class="comment">// 对分搜索</span>
+        <span class="variable">$l</span> = <span class="number">0</span>;                         <span class="comment">// 搜索的下边界</span>
+        <span class="variable">$u</span> = <span class="variable">$this</span>-&gt;totalip;            <span class="comment">// 搜索的上边界</span>
+        <span class="variable">$findip</span> = <span class="variable">$this</span>-&gt;lastip;        <span class="comment">// 如果没有找到就返回最后一条IP记录（QQWry.Dat的版本信息）</span>
+         <span class="keyword">while</span> (<span class="variable">$l</span> &lt;= <span class="variable">$u</span>) {              <span class="comment">// 当上边界小于下边界时，查找失败</span>
+             <span class="variable">$i</span> = floor((<span class="variable">$l</span> + <span class="variable">$u</span>) / <span class="number">2</span>);  <span class="comment">// 计算近似中间记录</span>
+            fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$this</span>-&gt;firstip + <span class="variable">$i</span> * <span class="number">7</span>);
+            <span class="variable">$beginip</span> = strrev(fread(<span class="variable">$this</span>-&gt;fp, <span class="number">4</span>));     <span class="comment">// 获取中间记录的开始IP地址</span>
+            <span class="comment">// strrev函数在这里的作用是将little-endian的压缩IP地址转化为big-endian的格式</span>
+            <span class="comment">// 以便用于比较，后面相同。</span>
+            <span class="keyword">if</span> (<span class="variable">$ip</span> &lt; <span class="variable">$beginip</span>) {       <span class="comment">// 用户的IP小于中间记录的开始IP地址时</span>
+                <span class="variable">$u</span> = <span class="variable">$i</span> - <span class="number">1</span>;            <span class="comment">// 将搜索的上边界修改为中间记录减一</span>
+            }
+            <span class="keyword">else</span> {
+                 fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$this</span>-&gt;getlong3());
+                 <span class="variable">$endip</span> = strrev(fread(<span class="variable">$this</span>-&gt;fp, <span class="number">4</span>));   <span class="comment">// 获取中间记录的结束IP地址</span>
+                 <span class="keyword">if</span> (<span class="variable">$ip</span> &gt; <span class="variable">$endip</span>) {     <span class="comment">// 用户的IP大于中间记录的结束IP地址时</span>
+                    <span class="variable">$l</span> = <span class="variable">$i</span> + <span class="number">1</span>;        <span class="comment">// 将搜索的下边界修改为中间记录加一</span>
+                }
+                <span class="keyword">else</span> {                  <span class="comment">// 用户的IP在中间记录的IP范围内时</span>
+                    <span class="variable">$findip</span> = <span class="variable">$this</span>-&gt;firstip + <span class="variable">$i</span> * <span class="number">7</span>;
+                    <span class="keyword">break</span>;              <span class="comment">// 则表示找到结果，退出循环</span>
+                }
+            }
+         }
+         <span class="comment">//获取查找到的IP地理位置信息</span>
+         fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$findip</span>);
+         <span class="variable">$location</span>[<span class="string">'beginip'</span>] = long2ip(<span class="variable">$this</span>-&gt;getlong());   <span class="comment">// 用户IP所在范围的开始地址</span>
+        <span class="variable">$offset</span> = <span class="variable">$this</span>-&gt;getlong3();
+        fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$offset</span>);
+        <span class="variable">$location</span>[<span class="string">'endip'</span>] = long2ip(<span class="variable">$this</span>-&gt;getlong());     <span class="comment">// 用户IP所在范围的结束地址</span>
+        <span class="variable">$byte</span> = fread(<span class="variable">$this</span>-&gt;fp, <span class="number">1</span>);    <span class="comment">// 标志字节</span>
+        <span class="keyword">switch</span> (ord(<span class="variable">$byte</span>)) {
+             <span class="keyword">case</span> <span class="number">1</span>:                     <span class="comment">// 标志字节为1，表示国家和区域信息都被同时重定向</span>
+                 <span class="variable">$countryOffset</span> = <span class="variable">$this</span>-&gt;getlong3();         <span class="comment">// 重定向地址</span>
+                 fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$countryOffset</span>);
+                 <span class="variable">$byte</span> = fread(<span class="variable">$this</span>-&gt;fp, <span class="number">1</span>);    <span class="comment">// 标志字节</span>
+                 <span class="keyword">switch</span> (ord(<span class="variable">$byte</span>)) {
+                    <span class="keyword">case</span> <span class="number">2</span>:             <span class="comment">// 标志字节为2，表示国家信息又被重定向</span>
+                        fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$this</span>-&gt;getlong3());
+                        <span class="variable">$location</span>[<span class="string">'country'</span>] = <span class="variable">$this</span>-&gt;getstring();
+                        fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$countryOffset</span> + <span class="number">4</span>);
+                        <span class="variable">$location</span>[<span class="string">'area'</span>] = <span class="variable">$this</span>-&gt;getarea();
+                         <span class="keyword">break</span>;
+                     <span class="keyword">default</span>:            <span class="comment">// 否则，表示国家信息没有被重定向</span>
+                         <span class="variable">$location</span>[<span class="string">'country'</span>] = <span class="variable">$this</span>-&gt;getstring(<span class="variable">$byte</span>);
+                         <span class="variable">$location</span>[<span class="string">'area'</span>] = <span class="variable">$this</span>-&gt;getarea();
+                         <span class="keyword">break</span>;
+                 }
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">2</span>:                     <span class="comment">// 标志字节为2，表示国家信息被重定向</span>
+                fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$this</span>-&gt;getlong3());
+                <span class="variable">$location</span>[<span class="string">'country'</span>] = <span class="variable">$this</span>-&gt;getstring();
+                 fseek(<span class="variable">$this</span>-&gt;fp, <span class="variable">$offset</span> + <span class="number">8</span>);
+                 <span class="variable">$location</span>[<span class="string">'area'</span>] = <span class="variable">$this</span>-&gt;getarea();
+                 <span class="keyword">break</span>;
+             <span class="keyword">default</span>:                    <span class="comment">// 否则，表示国家信息没有被重定向</span>
+                 <span class="variable">$location</span>[<span class="string">'country'</span>] = <span class="variable">$this</span>-&gt;getstring(<span class="variable">$byte</span>);
+                 <span class="variable">$location</span>[<span class="string">'area'</span>] = <span class="variable">$this</span>-&gt;getarea();
+                 <span class="keyword">break</span>;
+        }
+        <span class="keyword">if</span> (<span class="variable">$location</span>[<span class="string">'country'</span>] == <span class="string">" CZNET"</span>) {  <span class="comment">// CZNET表示没有有效信息</span>
+            <span class="variable">$location</span>[<span class="string">'country'</span>] = <span class="string">"未知"</span>;
+         }
+         <span class="keyword">if</span> (<span class="variable">$location</span>[<span class="string">'area'</span>] == <span class="string">" CZNET"</span>) {
+             <span class="variable">$location</span>[<span class="string">'area'</span>] = <span class="string">""</span>;
+         }
+         <span class="keyword">return</span> <span class="variable">$location</span>;
+     }
+     <span class="comment">/**
+     * 构造函数，打开 QQWry.Dat 文件并初始化类中的信息
+     *
+       *<span class="phpdoc"> @param</span> string $filename
+       *<span class="phpdoc"> @return</span> IpLocation
+       */</span>
+      <span class="function"><span class="keyword">function</span> <span class="title">IpLocation</span><span class="params">(<span class="variable">$filename</span> = <span class="string">"QQWry.Dat"</span>)</span> {</span>
+          <span class="variable">$this</span>-&gt;fp = <span class="number">0</span>;
+          <span class="keyword">if</span> ((<span class="variable">$this</span>-&gt;fp = @fopen(<span class="variable">$filename</span>, <span class="string">'rb'</span>)) !== <span class="keyword">false</span>) {
+              <span class="variable">$this</span>-&gt;firstip = <span class="variable">$this</span>-&gt;getlong();
+              <span class="variable">$this</span>-&gt;lastip = <span class="variable">$this</span>-&gt;getlong();
+              <span class="variable">$this</span>-&gt;totalip = (<span class="variable">$this</span>-&gt;lastip - <span class="variable">$this</span>-&gt;firstip) / <span class="number">7</span>;
+           <span class="comment">//注册析构函数，使其在程序执行结束时执行</span>
+           register_shutdown_function(<span class="keyword">array</span>(&<span class="variable">$this</span>, <span class="string">'_IpLocation'</span>));
+       }
+   }
+   <span class="comment">/**
+    * 析构函数，用于在页面执行结束后自动关闭打开的文件。
+    *
+    */</span>
+   <span class="function"><span class="keyword">function</span> <span class="title">_IpLocation</span><span class="params">()</span> {</span>
+       <span class="keyword">if</span> (<span class="variable">$this</span>-&gt;fp) {
+              fclose(<span class="variable">$this</span>-&gt;fp);
+        }
+        <span class="variable">$this</span>-&gt;fp = <span class="number">0</span>;
+   }
+}
+</pre></td></tr></table></figure>
+
+<h3>3、使用方法</h3>
+<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="variable">$ip</span>=getIP();
+<span class="variable">$iplocation</span> = <span class="keyword">new</span> IpLocation();
+<span class="variable">$location</span> = <span class="variable">$iplocation</span>-&gt;getlocation(<span class="variable">$ip</span>);
+<span class="comment">//转码为UTF-8</span>
+<span class="variable">$address</span>=mb_convert_encoding(<span class="variable">$location</span>[<span class="string">'country'</span>].<span class="variable">$location</span>[<span class="string">'area'</span>], <span class="string">"UTF-8"</span>, <span class="string">"GBK"</span>);
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/php/">php</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/后端运维/">后端运维</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2010/04/11/使用apache-htpasswd-exe来管理svn帐户/" class="prev" title="使用Apache htpasswd.exe来管理SVN帐户">使用Apache htpasswd.exe来管理SVN帐户</a>
+ 
+ 
+	<a href="/2010/03/17/26大实用的jquery技巧和解决方案/" class="next" title="25大实用的jQuery技巧和解决方案">25大实用的jQuery技巧和解决方案</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="php获取来访者IP信息"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

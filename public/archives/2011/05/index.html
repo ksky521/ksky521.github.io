@@ -1,0 +1,432 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>归档：2011/5 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2011/5</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/05/20/nodelist集合跟array数组的区别/">NodeList集合跟Array数组的区别</a></h1>
+  
+
+      <time datetime="2011-05-20T09:27:16.000Z"><a href="/2011/05/20/nodelist集合跟array数组的区别/">2011年5月20日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>首先来看看什么是<strong>NodeList</strong>，NodeList跟arguments都不是普通的数组，他们有数组的一些基本属性但是又不完全是数组。下面是在<a href="https://developer.mozilla.org/En/DOM/NodeList" target="_blank">Mozilla</a>上面找到的定义：</p>
+<blockquote>
+<p>This is a commonly used type which is a collection of nodes returned by getElementsByTagName, getElementsByTagNameNS, and Node.childNodes. The list is live, so changes to it internally or externally will cause the items they reference to be updated as well. Unlike NamedNodeMap, NodeList maintains a particular order (document order). The nodes in a NodeList are indexed starting with zero, similarly to JavaScript arrays, but a NodeList is not an array.<br>由字面意思来看<strong>NodeList</strong>是DOM操作（getElementsByTagName等）取出来的集合，是集合而不是普通的数组，但是他们有数组的一些属性，例如length、下标索引，但是他们也有自己的属性，例如item，另外NodeList最大的特点就是时效性（live）。</p>
+</blockquote>
+<h3>NodeList的时效性</h3>
+<p>我们来看下面的代码：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>
+
+*   index0
+*   index1
+*   index2
+*   index3
+*   index4
+</pre></td></tr></table></figure>
+
+<p>javascript代码如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>
+<span class="keyword">var</span> myUl = document.getElementById(<span class="string">'nodelist'</span>);
+<span class="keyword">var</span> lis = myUl.getElementsByTagName(<span class="string">'li'</span>);
+</pre></td></tr></table></figure>
+
+<p>lis是一个NodeList集合，具有时效性，所谓的时效性就是我们在修改li的同时，会反映到lis上来，这与array是不同的，例如我们把第一个li插入到ul的底部，那么lis也会发生相应的变化：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="comment">//把第一个li插入的ul的底部</span>
+myUl.appendChild(myUl.getElementsByTagName(<span class="string">'li'</span>).item(<span class="number">0</span>));
+console.log(lis[<span class="number">0</span>]);<span class="comment">//输出的是原来ul的第二个li</span>
+</pre></td></tr></table></figure>
+
+<p>所以我们应该在写代码的时候注意<strong>NodeList</strong>的时效性，不然就会犯一些错误，
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/05/20/nodelist集合跟array数组的区别/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/05/18/使用windows7的virtual-pc打造原装ie6、ie7、ie8测试环境/">使用windows7的virtual PC打造原装IE6、IE7、IE8测试环境</a></h1>
+  
+
+      <time datetime="2011-05-17T20:38:49.000Z"><a href="/2011/05/18/使用windows7的virtual-pc打造原装ie6、ie7、ie8测试环境/">2011年5月18日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>公司使用的是windows7操作系统，自己之前一直使用IETester来测试页面在IE6~IE8下的兼容性，可是在测试js的时候还是会出现实际使用的还是windows7的IE8内核问题。<br>所以自己想通过<strong>virtual PC</strong>来搭建个虚拟的测试环境，为什么选择virtual PC呢？<br>1、windows 7系统自带，并且xp mode就可以直接安装上xp系统<br>2、windows 7支持自动发布功能，即不启动虚拟机的情况也可以在xp下运行相应的程序，节省内存开销</p>
+<h3>安装虚拟机</h3>
+<p>第一步是安装xp MODE，这个网上很多教程，很简单我们就安装了带有IE6的xp系统了，并且可以把IE6发布到windows7上去运行<br>第二步是创建第二个虚拟机，也就是带IE7的xp虚拟机，我先找了个sp2的xp安装上了（可以在设置里面添加ISO），可是不支持自动发布，当我查看帮助文件的时候发现原来只用sp3以上的系统才支持自动发布，于是先升级sp3,。<br>升级sp3的时候悲剧了，因为一开始设置的虚拟硬盘大小是3G，导致sp3升级包升级的时候显示磁盘不足，试了很多扩展虚拟硬盘的方法都是不行，只有重新删除硬盘再次创建一个大点的硬盘，这次我创建的虚拟硬盘大小是5G，安装sp2，然后安装sp3，之后就是安装集成系统。<br>一切就绪了，可是还是不支持自动发布功能，后来在帮助里面发现了原来sp3还是要安装一个补丁的，即（<a href="http://www.microsoft.com/downloads/zh-cn/details.aspx?FamilyID=e5433d88-685f-4036-b435-570ff53598cd&amp;displaylang=zh-cn" target="_blank">Windows® XP SP3 用于启用 RemoteApp™ 的更新</a> ）<br>安装补丁之后终于可以了！<br>下面是截图：</p>
+<p><a href="http://js8.in/688.html/2011-05-18_101406"><img src="/uploads/2011/05/2011-05-18_101406-300x191.png" alt="使用windows7的virtual PC打造原装IE6、IE7、IE8环境" title="使用windows7的virtual PC打造原装IE6、IE7、IE8环境"></a><br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/05/18/使用windows7的virtual-pc打造原装ie6、ie7、ie8测试环境/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/05/13/ie6下javascript不能隐藏select标签的bug/">IE6下javascript不能隐藏select标签的bug</a></h1>
+  
+
+      <time datetime="2011-05-13T15:50:57.000Z"><a href="/2011/05/13/ie6下javascript不能隐藏select标签的bug/">2011年5月13日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>昨天做了一个简单的项目，要求有三级联动的select菜单，可是伤不起的IE6下就出现了<strong>不能隐藏select</strong>的bug，之前我也介绍过IE6下select层高的问题，可以通过隐藏select或者<a href="http://js8.in/553.html" title="解决IE6 select z-index无效，遮挡div的bug">使用iframe遮挡</a>的方式来解决，今天的bug不同以前，大家如果在用js控制select显示隐藏的时候可能会经常遇到，调试一下午终于找到了解决的方案，特此记录一下。</p>
+<h3>IE6不能隐藏select重现代码</h3>
+<p>建立两个关联的select，通过javascript控制第一个select 发生变化后，第二个select根据第一个value重新添加options，如果为空则隐藏第二个select（示例中判断除第一个之外都隐藏），则由第一个select的第三个value切换到第二个value则第二个select就不会隐藏。<br>具体效果见下面的实例：</p>
+<p><a href="//js8.in/mywork/ie6selectbug.html">IE6 select隐藏bug</a></p>
+<h3>IE6下不能隐藏select标签解决方案</h3>
+<ol>
+<li>可以通过先设置select为显示，后设置为none的方式</li>
+<li>通过给select添加class来控制显示<br>具体方法，见示例代码源码注释的地方。</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

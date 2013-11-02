@@ -1,0 +1,570 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>作用域 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">作用域</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/12/25/再探javascript作用域/">再探javascript作用域</a></h1>
+  
+
+      <time datetime="2012-12-25T09:30:37.000Z"><a href="/2012/12/25/再探javascript作用域/">2012年12月25日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>对于javascript作用域的理解，之前整理过两篇文章：《<a href="/2011/10/25/javascript%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/">javascript作用域和作用域链</a>》《<a href="/2011/08/15/javascript%E7%9A%84%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/">javascript的词法作用域</a>》。最近读了周爱民老师的《javascript语言精髓》，对<strong>javascript作用域</strong>有了新的认识，特地整理下思路。</p>
+<p>javascript的作用域广义来分：<strong>语法作用域</strong>和<strong>变量作用域</strong>。</p>
+<h2>javascript语法作用域</h2>
+<p><strong>javascript语法作用域</strong>是讨论代码的组织结构上抽象，可以理解为讨论的是“圈地”问题，也有书籍中对纯粹的语法作用域称为“静态作用域”。</p>
+<p>语法作用域分四级，下标依次增高</p>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>作用域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>级别一</td>
+<td>表达式</td>
+</tr>
+<tr>
+<td>级别二</td>
+<td>语句/批语句</td>
+</tr>
+<tr>
+<td>级别三</td>
+<td>函数</td>
+</tr>
+<tr>
+<td>级别四</td>
+<td>全局（宿主）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ol>
+<li>同级别可以平行也可以相互嵌套（包含）</li>
+<li>高级别可以嵌套（包含）低级别</li>
+<li>低级别不可以嵌套（包含）高级别作用域；假如低级别嵌套高u别，可以理解成相互平行，例如下面的代码是完全等效的</li>
+</ol>
+</blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span class="keyword">if</span>(<span class="literal">true</span>){
+    <span class="comment">//</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">fn</span><span class="params">()</span>{</span>
+        <span class="comment">//</span>
+    }
+}
+
+<span class="keyword">if</span>(<span class="literal">true</span>){
+    <span class="comment">//</span>
+}
+<span class="function"><span class="keyword">function</span> <span class="title">fn</span><span class="params">()</span>{</span>
+    <span class="comment">//</span>
+}
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/12/25/再探javascript作用域/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/25/javascript作用域和作用域链/">javascript作用域和作用域链</a></h1>
+  
+
+      <time datetime="2011-10-25T11:26:22.000Z"><a href="/2011/10/25/javascript作用域和作用域链/">2011年10月25日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>javascript的<strong>作用域</strong>是一个重要的知识点，javascript作用域（scope）是通过javascript的作用域链（scope chain）来实现的。</p>
+<h2>javascript作用域</h2>
+<p>javascript作用域(scope)：简单的说，就是创建一个函数时在什么环境下创建的，它控制了javascript代码运行时变量和函数的访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</p>
+<h3>全局作用域（Global Scope）</h3>
+<p>在代码中任何地方都能访问到的对象拥有全局作用域，注意：全局变量是魔鬼！因为它效率低（后面讲到），污染全局环境！一般有一下三种方式获取全局作用域。</p>
+<h4>代码最外层定义的函数和变量拥有全局作用域</h4>
+<p>在代码的最外层，定义的函数、变量，都是拥有全局作用域的。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="keyword">var</span> a = <span class="number">1</span>;
+<span class="function"><span class="keyword">function</span> <span class="title">b</span><span class="params">()</span>{</span>
+    <span class="keyword">var</span> a = <span class="number">2</span>;
+}
+b();
+alert(a);<span class="comment">//1</span>
+</pre></td></tr></table></figure>
+
+<h4>函数内部不使用var定义的拥有全局作用域</h4>
+<p>在函数内部，不使用var定义的变量拥有全局作用域，这是个坑！要注意，很多前端开发工程师不习惯写var，其实这时候你已经污染了全局作用域！</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="keyword">var</span> a = <span class="number">1</span>;
+<span class="function"><span class="keyword">function</span> <span class="title">b</span><span class="params">()</span>{</span>
+    a = <span class="number">2</span>;
+    c = <span class="number">3</span>;
+}
+b();
+alert(a);<span class="comment">//2</span>
+alert(c);<span class="comment">//3</span>
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/10/25/javascript作用域和作用域链/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/08/15/javascript的词法作用域/">javascript的词法作用域</a></h1>
+  
+
+      <time datetime="2011-08-15T08:35:22.000Z"><a href="/2011/08/15/javascript的词法作用域/">2011年8月15日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>大家应该写过下面类似的代码吧，其实这里我想要表达的是有时候一个方法定义的地方和使用的地方会相隔十万八千里，那方法执行时，它能访问哪些变量，不能访问哪些变量，这个怎么判断呢？这个就是我们这次需要分析的问题——<strong>词法作用域</strong></p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="code"><pre><span class="keyword">var</span> classA = <span class="keyword">function</span>(){
+    <span class="keyword">this</span>.prop1 = <span class="number">1</span>;
+}
+classA.prototype.func1 = <span class="keyword">function</span>(){
+    <span class="keyword">var</span> that = <span class="keyword">this</span>,
+        var1 = <span class="number">2</span>;
+
+    <span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">()</span>{</span>
+        <span class="keyword">return</span> <span class="keyword">function</span>(){
+            alert(var1);
+            alert(<span class="keyword">this</span>.prop1);
+        }.apply(that);
+    };
+    a();
+}
+<span class="keyword">var</span> objA = <span class="keyword">new</span> ClassA();
+objA.func1();
+</pre></td></tr></table></figure>
+
+<p><strong>词法作用域</strong>：变量的作用域是在定义时决定而不是执行时决定，也就是说词法作用域取决于源码，通过静态分析就能确定，因此词法作用域也叫做静态作用域。 with和eval除外，所以只能说JS的作用域机制非常接近词法作用域（Lexical scope）。</p>
+<p>下面通过几个小小的案例，开始深入的了解对理解词法作用域和<strong>闭包</strong>必不可少的，JS执行时底层的一些概念和理论知识。</p>
+<h2>经典案列重现</h2>
+<h4>1、经典案例一</h4>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="comment">/*全局（window）域下的一段代码*/</span>
+<span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(i)</span> {</span>
+    <span class="keyword">var</span> i;
+    alert(i);
+};
+a(<span class="number">10</span>);
+</pre></td></tr></table></figure>
+
+<p>疑问：上面的代码会输出什么呢？<br>答案：没错，就是弹出10。具体执行过程应该是这样的</p>
+<blockquote>
+<p>a 函数有一个形参 i，调用 a 函数时传入实参 10，形参 i=10<br>接着定义一个同名的局部变量 i，未赋值<br>alert 输出 10</p>
+</blockquote>
+<p>思考：局部变量 i 和形参 i 是同一个存储空间吗？</p>
+<h4>2、经典案例二</h4>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="comment">/*全局（window）域下的一段代码*/</span>
+<span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(i)</span> {</span>
+    alert(i);
+    alert(arguments[<span class="number">0</span>]); <span class="comment">//arguments[0]应该就是形参 i</span>
+    <span class="keyword">var</span> i = <span class="number">2</span>;
+    alert(i);
+    alert(arguments[<span class="number">0</span>]);
+};
+a(<span class="number">10</span>);
+</pre></td></tr></table></figure>
+
+<p>疑问：上面的代码又会输出什么呢？（（ 10,10,2,10 || 10,10,2,2 ））<br>答案：在FireBug中的运行结果是第二个10,10,2,2，猜对了… ，下面简单说一下具体执行过程<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/08/15/javascript的词法作用域/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

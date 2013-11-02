@@ -1,0 +1,456 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>png在IE6下透明的几种方法 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="断桥残雪在《IE6 PNG图片不透明问题的解决方法》中提到了使用js来解决IE6下PNG图片不透明的问题，今天我总结一下png在IE6下透明的方法：css方法、js方法、htc方法。
+png透明针对IE6一直是件挺麻烦的事情，使用的方法也是各有不同，大多的原理是用IE的滤镜来解决的。
+
+语法：filter : progid:DXImageTransform.Microsoft.AlphaImageLoader ( enabled=bEnabled , sizingMethod=sSize , src=sURL )
+enabled : 可选项。布尔值(Boolean)。设置或检索滤镜是否激活。true | false true : 默认值。滤镜激活。false : 滤镜被禁止。sizingMethod : 可选项。字符串(String)。设置或检索滤镜作用的对象的图片在对象容器边界内的显示方式。 crop : 剪切图片以适应对象尺寸。image : 默认值。增大或减小对象的尺寸边界以适应图片的尺寸。scale : 缩放图片以适应对象的尺寸边界。src : 必选项。字符串(String)。使用绝对或相对 url 地址指定背景图像。假如忽略此参数，滤镜将不会作用。现在一般在使用的方法有以下几种：">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="png在IE6下透明的几种方法"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">png在IE6下透明的几种方法</h1>
+  
+
+      <time datetime="2010-01-14T10:47:44.000Z"><a href="/2010/01/14/png在ie6下透明的几种方法/">2010年1月14日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>断桥残雪在《<a href="http://js8.in/380.html" title="IE6 PNG图片不透明问题的解决方法">IE6 PNG图片不透明问题的解决方法</a>》中提到了使用js来解决IE6下PNG图片不透明的问题，今天我总结一下png在IE6下透明的方法：<strong>css方法</strong>、<strong>js方法</strong>、<strong>htc方法</strong>。</p>
+<p>png透明针对IE6一直是件挺麻烦的事情，使用的方法也是各有不同，大多的原理是用IE的滤镜来解决的。</p>
+<blockquote>
+<p>语法：<br>filter : progid:DXImageTransform.Microsoft.AlphaImageLoader ( enabled=bEnabled , sizingMethod=sSize , src=sURL )</p>
+<p>enabled : 可选项。布尔值(Boolean)。设置或检索滤镜是否激活。true | false true : 默认值。滤镜激活。<br>false : 滤镜被禁止。<br>sizingMethod : 可选项。字符串(String)。设置或检索滤镜作用的对象的图片在对象容器边界内的显示方式。 crop : 剪切图片以适应对象尺寸。<br>image : 默认值。增大或减小对象的尺寸边界以适应图片的尺寸。scale : 缩放图片以适应对象的尺寸边界。<br>src : 必选项。字符串(String)。使用绝对或相对 url 地址指定背景图像。假如忽略此参数，滤镜将不会作用。<br>现在一般在使用的方法有以下几种：<br><a id="more"></a></p>
+</blockquote>
+<h3>1、css方法</h3>
+<blockquote>
+<p><strong>css</strong>：</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>
+&gt; .pngs {
+&gt; height: 90px;width: 90px;
+&gt; background-image:url(icon_home.png)!important;  /* FF IE7 */
+&gt; background-repeat: no-repeat; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=’icon_home.png’);  /* IE6 */
+&gt; _ background-image: none; /* IE6 */
+&gt; }
+</pre></td></tr></table></figure>
+
+
+<p><strong>xhtml</strong>：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">”pngs”</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>这种方法的优点就是使用简单方便，但是不能作为背景，且只能用作单个png图片的使用。如果要作为背景，需要新增加一个div层，并设置其position:relative;</p>
+<blockquote>
+<p><strong>css</strong>：</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>
+&gt; <span class="class">.png</span> <span class="tag">div</span><span class="rules">{<span class="rule"><span class="attribute">position</span>:<span class="value">relative;</span></span><span class="rule">}</span></span>
+&gt;
+</pre></td></tr></table></figure>
+
+<p><strong>xhml</strong>:</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>
+&gt; <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">’png’</span>&gt;</span>
+&gt; <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+&gt; CSS 背景PNG透明 及 链接失效问题解决
+&gt; <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+&gt; <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>这种方法可以使用在那些png图片不多，且不需要repeat的情况下。</p>
+<h3>2、js方法</h3>
+<p><pre lang=”javascript”><br>function correctPNG() // correctly handle PNG transparency in Win IE 5.5 &amp; 6.<br>{<br>    var arVersion = navigator.appVersion.split(“MSIE”)<br>    var version = parseFloat(arVersion[1])<br>    if ((version &gt;= 5.5) &amp;&amp; (document.body.filters))<br>    {<br>       for(var j=0; j&lt;document.images.length; j++)<br>       {<br>          var img = document.images[j]<br>          var imgName = img.src.toUpperCase()<br>          if (imgName.substring(imgName.length-3, imgName.length) == “PNG”)<br>          {<br>             var imgID = (img.id) ? “id=’” + img.id + “‘ ” : “”<br>             var imgClass = (img.className) ? “class=’” + img.className + “‘ ” : “”<br>             var imgTitle = (img.title) ? “title=’” + img.title + “‘ ” : “title=’” + img.alt + “‘ ”<br>             var imgStyle = “display:inline-block;” + img.style.cssText<br>             if (img.align == “left”) imgStyle = “float:left;” + imgStyle<br>             if (img.align == “right”) imgStyle = “float:right;” + imgStyle<br>             if (img.parentElement.href) imgStyle = “cursor:hand;” + imgStyle<br>             var strNewHTML = “&lt;span ” + imgID + imgClass + imgTitle<br>             + ” style=\”&quot; + “width:” + img.width + “px; height:” + img.height + “px;” + imgStyle + “;”<br>             + “filter:progid:DXImageTransform.Microsoft.AlphaImageLoader”<br>             + “(src=\’” + img.src + “\’, sizingMethod=’scale’);\”&gt;</span>”<br>             img.outerHTML = strNewHTML<br>             j = j-1<br>          }<br>       }<br>    }<br>}<br>window.attachEvent(“onload”, correctPNG);</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="code"><pre><span class="xml">
+这种js先判断是否IE，然后判断ie版本，版本在</span><span class="number">6.0</span><span class="xml">下则判定函数，给png的图片添加滤镜。
+使用起来的确方便，无论多少图片都可以解决，但是依然无法repeat。
+
+</span><span class="comment">### 3、htc方法</span><span class="xml">
+
+htc相当于完全通过插件的方法修复的IE6的bug，功能强大，支持repeat，背景等功能，使用起来也很方便。
+使用一个**iepngfix.htc** 文件，和一个透明的gif文件。
+
+使用方法：
+
+```html
+
+<span class="tag">&lt;<span class="title">!–[if</span> <span class="attribute">lte</span> <span class="attribute">IE</span> </span><span class="number">6</span><span class="xml">]&gt;
+<span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"><span class="class">.png</span><span class="rules">{<span class="rule"><span class="attribute">behavior</span>:<span class="value"><span class="function">url(“iepngfix.htc”)</span>;</span></span><span class="rule">}</span></span></span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>  //在这里可以加入其他用到png图片的id或者class
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">”text</span>/<span class="attribute">javascript</span>” <span class="attribute">src</span>=<span class="value">”iepngfix_tilebg.js”</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">![endif]–</span>&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<p>ps：如果需要repeat背景，往往需要设置这个div 宽度为100%。</p>
+<p>关于<strong>iepngfix.htc</strong>的详细用法以及<a href="http://www.twinhelix.com/css/iepngfix/demo/" target="_blank">Demo</a>，请<a href="http://www.twinhelix.com/css/iepngfix/demo/" target="_blank">狂点此处</a></p>
+<h3>总结</h3>
+<p>总结这几种方法，第三种方法（<strong>htc方法</strong>）是最简单实用，且容易推广的方法，建议可以做个公共的地址，有产品需要，只需要应用这个公共地址就行了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/css/">css</a><a href="/tags/javascript/">javascript</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2010/01/15/jquery-easing-动画效果扩展/" class="prev" title="jQuery Easing 动画效果扩展">jQuery Easing 动画效果扩展</a>
+ 
+ 
+	<a href="/2010/01/09/用document-domainiframe实现ajax跨子域/" class="next" title="用document.domain+iframe实现Ajax跨子域">用document.domain+iframe实现Ajax跨子域</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="png在IE6下透明的几种方法"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

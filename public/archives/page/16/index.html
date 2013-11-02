@@ -1,0 +1,768 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 16 页 - 归档 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">归档</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/01/19/google黑板报澄清退出中国的不实传言/">google黑板报澄清退出中国的不实传言</a></h1>
+  
+
+      <time datetime="2010-01-19T10:57:44.000Z"><a href="/2010/01/19/google黑板报澄清退出中国的不实传言/">2010年1月19日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>对于<strong>谷歌退出中国的真相</strong>，网民进行了很多猜测，其中也有人肆意夸大事实，对此谷歌中国终于坐不住了，今天在谷歌中国<a href="http://googlechinablog.com/" title="谷歌中国黑板报" target="_blank">黑板报</a>中发布了《<a href="http://googlechinablog.com/2010/01/blog-post_19.html" title="谷歌澄清不实的传言" target="_blank">澄清不实传言</a>》的日志，全文如下：</p>
+<blockquote>
+<p>过去几天里，我们看到有很多关于谷歌中国以及谷歌员工的不真实的传言，一些报道称我们已经关闭了在中国的办公室，还有一些报道称我们在中国的员工已经接到通知将于近期离职。这些都是不真实的。目前，谷歌中国的员工同过去一样在办公室正常工作，讨论产品开发，与客户进行沟通。尽管谷歌总部管理层近期宣布他们将会在未来的几个星期与中 国（防河蟹）政 府就一些事宜进行商讨，谷歌中国的员工们仍在一如既往地努力向我们的用户和合作伙伴提供最好的产品和服务，用户和合作伙伴对谷歌是非常重要的。<br>由此可见谷歌退出中国，其实真的是为了跟中国政府谈判增加砝码，大家也就不要大惊小怪啦，静观其变吧</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/01/15/jquery-easing-动画效果扩展/">jQuery Easing 动画效果扩展</a></h1>
+  
+
+      <time datetime="2010-01-15T10:21:10.000Z"><a href="/2010/01/15/jquery-easing-动画效果扩展/">2010年1月15日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>最近<strong>断桥残雪部落格</strong>的<a href="http://js8.in" title="断桥残雪部落格首页">首页</a>文章添加了“点击展开/关闭”文章功能，并且返回顶部、跳到评论等功能进行了动画效果的修改，此次修改使用了jQuery Easing动画效果扩展插件：<a href="http://gsgd.co.uk/sandbox/jquery/easing/" title="jQuery Easing动画效果插件" target="_blank">jQuery Easing Plugin</a>。在jQuery文档中我们可以看到，自定义动画函数<strong>.animate()</strong>有四个参数：</p>
+<blockquote>
+<p><strong>params </strong>(Options) : 一组包含作为动画属性和终值的样式属性和及其值的集合<br><strong> duration</strong> (String,Number) : (可选) 三种预定速度之一的字符串(“slow”, “normal”, or “fast”)或表示动画时长的毫秒数值(如：1000)<br><strong> easing</strong> (String) : (可选) 要使用的擦除效果的名称(需要插件支持).默认jQuery提供“linear” 和 “swing”.<br><strong> callback</strong> (Function) : (可选) 在动画完成时执行的函数<br>其中参数<strong>easing</strong>默认有两个效果：“linear”和“swing”，如果需要更多就要插件支持了，也就是今天断桥残雪要跟大家分享的插件：<a href="http://gsgd.co.uk/sandbox/jquery/easing/" title="jQuery Easing动画效果插件" target="_blank">jQuery Easing Plugin</a>.</p>
+</blockquote>
+<p>在jQuery Easing中设置了easeInElastic、easeOutElastic、easeInOutElastic等共31中不同的效果，应该可以满足大家的需要啦，如果你还想研究下动画移动的效果图，还可以看一下<a href="http://james.padolsey.com/demos/jquery/easing/" target="_blank">这篇文章</a>不仅有动画演示，还有图片分析。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/01/15/jquery-easing-动画效果扩展/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/01/14/png在ie6下透明的几种方法/">png在IE6下透明的几种方法</a></h1>
+  
+
+      <time datetime="2010-01-14T10:47:44.000Z"><a href="/2010/01/14/png在ie6下透明的几种方法/">2010年1月14日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>断桥残雪在《<a href="http://js8.in/380.html" title="IE6 PNG图片不透明问题的解决方法">IE6 PNG图片不透明问题的解决方法</a>》中提到了使用js来解决IE6下PNG图片不透明的问题，今天我总结一下png在IE6下透明的方法：<strong>css方法</strong>、<strong>js方法</strong>、<strong>htc方法</strong>。</p>
+<p>png透明针对IE6一直是件挺麻烦的事情，使用的方法也是各有不同，大多的原理是用IE的滤镜来解决的。</p>
+<blockquote>
+<p>语法：<br>filter : progid:DXImageTransform.Microsoft.AlphaImageLoader ( enabled=bEnabled , sizingMethod=sSize , src=sURL )</p>
+<p>enabled : 可选项。布尔值(Boolean)。设置或检索滤镜是否激活。true | false true : 默认值。滤镜激活。<br>false : 滤镜被禁止。<br>sizingMethod : 可选项。字符串(String)。设置或检索滤镜作用的对象的图片在对象容器边界内的显示方式。 crop : 剪切图片以适应对象尺寸。<br>image : 默认值。增大或减小对象的尺寸边界以适应图片的尺寸。scale : 缩放图片以适应对象的尺寸边界。<br>src : 必选项。字符串(String)。使用绝对或相对 url 地址指定背景图像。假如忽略此参数，滤镜将不会作用。<br>现在一般在使用的方法有以下几种：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/01/14/png在ie6下透明的几种方法/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/01/09/用document-domainiframe实现ajax跨子域/">用document.domain+iframe实现Ajax跨子域</a></h1>
+  
+
+      <time datetime="2010-01-08T17:03:36.000Z"><a href="/2010/01/09/用document-domainiframe实现ajax跨子域/">2010年1月9日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>Ajax跨域一直是个比较麻烦的问题，例如：断桥残雪在一个项目中使用了open打开一个跟父窗口不同域名的新页面，结果子窗口就不能传值给父窗口了；再如：我在www.2fool.cn下不可以获取love.2fool.cn域名下的页面内容。<strong>浏览器的跨域</strong>限制是为了安全，可是当我们想要在一个域名下请求另外一个域名的内容的时候就感觉不那么爽了。</p>
+<p>我在<a href="http://js8.in/wordpress-weather" title="wordpress来访者天气预报插件">WordPress天气插件</a>、<a href="http://js8.in/441.html" title="使用滔滔给WordPress添加博主状态">滔滔API接口</a>处理上都使用了<strong>JSONP</strong>的方法来实现的跨域。而今天我要通过使用JS的<a href="http://js8.in/443.html" title="用document.domain+iframe实现Ajax跨子域">document.domain和iframe来解决Ajax跨子域的问题</a>。</p>
+<h3>原理</h3>
+<p>通过给主页面跟请求页面设置相同的document.domain来，欺骗浏览器，达到<strong>Ajax跨子域</strong>的效果，此方法在IE，chrome，Firefox，Safari，Opera下测试通过。</p>
+<p><strong>缺点：</strong>无法实现不同主域名之间的通讯。并且当在一个页面中还包含有其它的iframe时，会产生安全性异常，拒绝访问。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/01/09/用document-domainiframe实现ajax跨子域/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/31/三个使用wordpress自定义域做的小工具/">三个使用WordPress自定义域做的小工具</a></h1>
+  
+
+      <time datetime="2009-12-31T08:26:10.000Z"><a href="/2009/12/31/三个使用wordpress自定义域做的小工具/">2009年12月31日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>刚开始建立WordPress博客的时候对于自定义域不是很了解，之后通过搜索相关知识：发现原来<strong>WordPress自定义域</strong>可以做很多事情，今天断桥残雪就说说WordPress自定义域三个用处：<strong>给某一日记添加js或者CSS</strong>，<strong>给加密的日志添加密码提示信息</strong>、<strong>首页显示日志缩略图</strong>。</p>
+<h3>给某一日记添加js或者CSS</h3>
+<p>WordPress 在发布日志时会对过滤一些Javascript、CSS内容，所以我们无法直接把JS、CSS直接写到日志，当然我们可以通过修改主题来实现。可是如果修改主题，把JS或者CSS的内容添加到 header.php 文件中，那么博客所有的页面都会加载这些内容，这样势必会造成整个博客效率下降。所以这个时候我们可以通过 WordPress 自定义域来给某篇的日志单独加<strong>载Javascript 和CSS</strong>。文章最后再介绍一种管理WordPress自定义域的小技巧工具。</p>
+<p>假设我们给日志单独加载JS、CSS的自定义域名称是 head_JS_CSS。那么你首先需要把下面这段代码复制到你主题根目录下的 functions.php 文件中：</p>
+<blockquote>
+<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>
+&gt; <span class="function"><span class="keyword">function</span> <span class="title">head_JS_CSS</span><span class="params">()</span>{</span>
+&gt;     <span class="keyword">if</span> (is_single() || is_page()) {
+&gt;         <span class="keyword">global</span> <span class="variable">$post</span>;
+&gt;         <span class="variable">$head_JS_CSS</span> = get_post_meta(<span class="variable">$post</span>-&gt;ID, <span class="string">'head_JS_CSS'</span>, <span class="keyword">true</span>);
+&gt;         <span class="keyword">echo</span> <span class="variable">$head_JS_CSS</span>;
+&gt;     }
+&gt; }
+&gt; add_action(<span class="string">"wp_head"</span>,<span class="string">"head_JS_CSS"</span>);
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>现在你在添加日志的时候，在WordPress自定义域区域，创建一个新的名称为：&quot;head_JS_CSS&quot;自定义域，在“值”输入你要单独为这篇日志加载的 Javascript 代码或者 CSS 即可。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/31/三个使用wordpress自定义域做的小工具/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/27/jquery选择器使用详解/">jQuery选择器使用详解</a></h1>
+  
+
+      <time datetime="2009-12-27T10:46:56.000Z"><a href="/2009/12/27/jquery选择器使用详解/">2009年12月27日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>随着jQuery的风靡，有很多关于<strong>jQuery选择器</strong>的文章，可是很多人没有系统的学过或者总结过jQuery的选择器使用方法，本文主要跟大家讨论一下jQuery的选择器的用法，针对于不同的jQuery用户，从基础说起，带您领略jQuery强大的选择器。</p>
+<p>在跟大家分享自己的jQuery选择器的使用方法之前，我想跟大家说一个Tip，当你使用jQuery选择器的时候，有时候我们却不一定使用jQuery的选择器里面的函数，而是要简单的返回HTML对象，如果使用getElementById之类选择出HTML对象，就比较麻烦了，再说我们强大的jQuery选择器就浪费了，在这里我通过Firebug查看了jQuery选择器返回的对象，发现原来<strong>$(“#id”)[0]</strong>就是我们要的HTML对象，比如我们要取其中的innerHTML就可以使用$()[0].innerHTML。</p>
+<h3>关于jQuery选择器</h3>
+<p>通过<a href="http://jquery-api-zh-cn.googlecode.com/svn/trunk/index.html" title="jQuery参考手册" target="_blank">jQuery的参考手册</a> 我们可以看见jQuery的选择器分为：基本、层次、简单筛选、内容、可见性筛选、属性筛选、子元素、表单以及表单及其属性，共九种选择器类型，本文主要介绍基本选择器、属性、简单筛选、内容筛选这几个常用的选择器。如果能熟练掌握这几个选择器，那么我们的<strong>jQuery选择器</strong>就已经很熟练了</p>
+<h3>jQuery基本选择器</h3>
+<p>jQuery的选择器跟CSS的选择器很接近，甚至于跟CSS的选择器统一，这样就比较容易学习，简单选择器就是我们常用的CSS的ID和Class选择器，例如下面的代码把id为world的html内容改为“Hello World!”<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/27/jquery选择器使用详解/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/25/php生成rss类：rss-class-php/">PHP生成RSS类：RSS.class.php</a></h1>
+  
+
+      <time datetime="2009-12-25T12:33:02.000Z"><a href="/2009/12/25/php生成rss类：rss-class-php/">2009年12月25日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前些日子给<a href="http://love.2fool.cn" target="_blank">爱墙</a>添加了RSS订阅功能，代码是自己写的，其中使用到了一个PHP类：RSS.class.php，感觉非常方便，不敢独享，特拿出来跟大家分享。</p>
+<p>使用方法如下：</blockquote><br>使用方法如下：</p>
+<blockquote>
+<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+&gt; <span class="keyword">include_once</span>(<span class="string">"class/RSS.class.php"</span>);<span class="comment">//引入RSS PHP类</span>
+&gt; <span class="variable">$RSS</span>= <span class="keyword">new</span> RSS(<span class="string">"名称"</span>,<span class="string">"地址"</span>,<span class="string">"描述"</span>,<span class="string">"RSS频道图标"</span>);
+&gt; <span class="variable">$RSS</span>-&gt;AddItem(<span class="string">"日志的标题"</span>,<span class="string">"日志的地址"</span>,<span class="string">"日志的摘要"</span>,<span class="string">"日志的发布日期"</span>);
+&gt; <span class="variable">$RSS</span>-&gt;Display();<span class="comment">//输出RSS内容</span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/25/php生成rss类：rss-class-php/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/25/javascript跨浏览器的添加删除事件绑定函数/">JavaScript跨浏览器的添加删除事件绑定函数</a></h1>
+  
+
+      <time datetime="2009-12-25T10:31:13.000Z"><a href="/2009/12/25/javascript跨浏览器的添加删除事件绑定函数/">2009年12月25日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>现在浏览器太多了也使我们前端开发人员慌了手脚，今天<a href="http://oncoding.cn" target="_blank">刘洋</a>在写《<a href="http://www.oncoding.cn/2009/translate-tool-bookmark/" target="_blank">教程：编写放在收藏夹里的网页划词翻译工具</a>》的时候，问起来绑定事件的函数，由于一直使用<strong>jQuery</strong>开发，我都差点忘记了最原始的<strong>js添加绑定事件</strong>的方法啦~抽空立马写两个函数，以备不时之需。</p>
+<h3>javascript跨浏览器添加事件绑定 bind()</h3>
+<p>IE 的<strong>事件绑定</strong>函数是<strong> attachEvent</strong>；而 Firefox, Safari 是 <strong>addEventListener</strong>；Opera 则两种都支持。使用jQuery就可以使用简单的bind()，或者$().click()之类的函数解决，而如果不使用JavaScript框架的时候，大家可是使用下面的封装bind()函数。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre><span class="comment">/************************************
+ * 添加事件绑定
+ * @param obj   : 要绑定事件的元素
+ * @param type : 事件名称。不加 "on". 如 : "click" 而不是 "onclick".
+ * @param fn    : 事件处理函数
+ ************************************/</span>
+<span class="function"><span class="keyword">function</span> <span class="title">bind</span><span class="params">( obj, type, fn )</span> {</span>
+    <span class="keyword">if</span> ( obj.attachEvent ) {
+        obj[<span class="string">'e'</span>+type+fn] = fn;
+        obj[type+fn] = <span class="keyword">function</span>(){obj[<span class="string">'e'</span>+type+fn]( window.event );}
+        obj.attachEvent( <span class="string">'on'</span>+type, obj[type+fn] );
+    } <span class="keyword">else</span>
+        obj.addEventListener( type, fn, <span class="literal">false</span> );
+}
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/25/javascript跨浏览器的添加删除事件绑定函数/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/">使用ZeroClipboard解决跨浏览器复制到剪贴板的问题</a></h1>
+  
+
+      <time datetime="2009-12-23T17:48:06.000Z"><a href="/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/">2009年12月24日</a></time>
+    </header>
+    <div class="entry">
+      
+        <h3>导言</h3>
+<p>之前在开发<a href="http://www.pujia.com" target="_blank">普加</a>09年国庆中秋祝福页面复制链接功能时，遇见在Firefox，Chrome，Opera，Safari能复制链接的<strong>兼容性</strong>问题，而在近期上线的<a href="http://ditu.pujia.com/preview" target="_blank">普加地图</a>产品中使用的是Flash的<strong>flashvars</strong>来传入参数来解决了这个问题。其实开发中经常会用到复制的功能，在 IE 下通过JavaScript的<strong>window.clipboardData.setData</strong>可以简单实现复制到剪贴板功能。最后终于找到了终极解决方式：使用jhuckaby写的Zero Clipboard的js类库。此方法利用 Flash完成进行复制内容到剪贴板，所以只要浏览器装有Flash 就可以复制内容。</p>
+<h3>Zero Clipboard的实现原理</h3>
+<p><strong>Zero Clipboard </strong>利用透明的Flash让其漂浮在复制按钮之上，这样其实点击的不是按钮而是 Flash ，这样将需要的内容传入Flash，再通过Flash的复制功能把传入的内容复制到<strong>剪贴板</strong>。</p>
+<h3>Zero Clipboard的安装方法</h3>
+<p>其实也不算安装啦，就是使用前的准备工作。<br>首先需要下载 Zero Clipboard的压缩包，解压后把文件夹中两个文件：ZeroClipboard.js 和 ZeroClipboard.swf 放入到你的项目中。</p>
+<blockquote>
+<p>Zero Clipboard : <a href="http://code.google.com/p/zeroclipboard/" target="_blank">[项目主页</a>] <a href="http://code.google.com/p/zeroclipboard/downloads/list" target="_blank">[zip下载</a>] <a href="http://bowser.macminicolo.net/~jhuckaby/zeroclipboard/" target="_blank">[在线演示</a>]<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/18/ie6-png图片不透明问题的解决方法/">IE6 PNG图片不透明问题的解决方法</a></h1>
+  
+
+      <time datetime="2009-12-17T18:16:33.000Z"><a href="/2009/12/18/ie6-png图片不透明问题的解决方法/">2009年12月18日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>IE6真是前端开发人员的噩梦，就像<a href="http://oncoding.cn" target="_blank">刘洋</a>说的:IE6一次又一次的阻碍了互联网的发展。在前几天开发的<a href="http://js8.in/wordpress-weather">WordPress天气预报插件</a>中使用的图片都是png格式的透明图片，由于png格式的图片比较漂亮美观，可是在<strong>IE6</strong>中png的透明效果是没有的，这样子本来设计很漂亮的页面在IE6就歇菜了，让人感觉很不爽~本文使用js的方法来解决IE6下<strong>PNG图片不透明</strong>的问题，简单实用。<a href="http://js8.in/448.html" title="png在IE6下透明的几种方法">更多解决方法点击此处</a>。</p>
+<p>如果我们在页面中使用的透明PNG图片不是很多，可以使用下面的代码来解决问题：</p>
+<blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">setPng</span><span class="params">(img, w, h)</span>{</span>
+&gt;                 ua = window.navigator.userAgent.toLowerCase();
+&gt;                 <span class="keyword">if</span> (!<span class="regexp">/msie/</span>.test(ua))
+&gt;                     <span class="keyword">return</span>;
+&gt;                 imgStyle = <span class="string">"display:inline-block;"</span> + img.style.cssText;
+&gt;                 strNewHTML = <span class="string">""</span>;
+&gt;                 img.outerHTML = strNewHTML;
+&gt; }
+</pre></td></tr></table></figure>
+
+<p>使用方法，在img上添加onload=“setPng(this,宽度,高度)”，如&lt;img onload=“setPng(this,98,78)” src=“” /&gt;<br>如果您觉得这样的方法比较麻烦，或者页面中使用的<strong>透明png图片</strong>比较多如果手动添加很不方便的时候，可是使用下面的代码来解决问题。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/18/ie6-png图片不透明问题的解决方法/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

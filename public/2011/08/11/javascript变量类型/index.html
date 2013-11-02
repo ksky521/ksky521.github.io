@@ -1,0 +1,447 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>javascript变量类型 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="javascript的变量类型真的很要人纠结，即使你是很有经验的js工程师，你也很难说清楚js的类型和分类。最近在讲javascript入门指南的时候，有人提出数组为什么不是基本类型，我通过演示typeof []的结果来说明，数组是对象类型派生出来的，而不是六种基本类型。其实要理解javascript的变量类型很简单，就是我们要找到一个划分的标准。
+javascript变量类型分类
+在很多书中都提到了javascript的变量类型，每本书都有不同的划分标准，如果按照typeof和instanceof的返回值来区分，可以把javascript的变量类型分为两套类型系统：基本类型和对象类型衍生出来的对象类型系统。基本类型包括：undefined，number，boolean，string，object，function，他们之前通过typeof的返回值来区分。第二套对象类型系统是由第一套系统衍生发展而来的，例如前面提到的Array，还有Null，Number，Boolean等等，对象类型可以通过instanceof来判断。那么对象类型中的Number和基本类型中的number又是什么关系呢？他们又是什么区别呢？答案就是，他们是映射关系，即下例：
+1
+2
+3
+4
+5
+var a = new Number(123);
+console.log(a.valueOf()===123);//true
+var b = new String(123);
+console.log(b.valueOf()===123);//false
+console.log(b.valueOf()==='123');//true
+
+
+obj.valueOf()返回的是该对象的原始值。
+值类型和引用类型">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="javascript变量类型"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">javascript变量类型</h1>
+  
+
+      <time datetime="2011-08-11T12:51:09.000Z"><a href="/2011/08/11/javascript变量类型/">2011年8月11日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>javascript的<strong>变量类型</strong>真的很要人纠结，即使你是很有经验的js工程师，你也很难说清楚js的类型和分类。<br>最近在讲javascript入门指南的时候，有人提出数组为什么不是基本类型，我通过演示<code>typeof []</code>的结果来说明，数组是对象类型派生出来的，而不是六种基本类型。<br>其实要理解javascript的变量类型很简单，就是我们要找到一个划分的标准。</p>
+<h2>javascript变量类型分类</h2>
+<p>在很多书中都提到了javascript的变量类型，每本书都有不同的划分标准，如果按照typeof和instanceof的返回值来区分，可以把javascript的变量类型分为两套类型系统：基本类型和对象类型衍生出来的对象类型系统。<br>基本类型包括：undefined，number，boolean，string，object，function，他们之前通过typeof的返回值来区分。<br>第二套对象类型系统是由第一套系统衍生发展而来的，例如前面提到的Array，还有Null，Number，Boolean等等，对象类型可以通过<strong>instanceof</strong>来判断。<br>那么对象类型中的Number和基本类型中的number又是什么关系呢？他们又是什么区别呢？<br>答案就是，他们是映射关系，即下例：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> a = <span class="keyword">new</span> Number(<span class="number">123</span>);
+console.log(a.valueOf()===<span class="number">123</span>);<span class="comment">//true</span>
+<span class="keyword">var</span> b = <span class="keyword">new</span> String(<span class="number">123</span>);
+console.log(b.valueOf()===<span class="number">123</span>);<span class="comment">//false</span>
+console.log(b.valueOf()===<span class="string">'123'</span>);<span class="comment">//true</span>
+</pre></td></tr></table></figure>
+
+<p>obj.valueOf()返回的是该对象的原始值。</p>
+<h2>值类型和引用类型</h2>
+<p><a id="more"></a><br>这里再谈谈值类型和引用类型的问题，在javascript中：undefined、string、number和boolean是“值类型”，而object与function是“<strong>引用类型</strong>”。所有引用类型都可以看着Object()的子类，所以任意函数也是Object()的子类。<br>怎么理解值类型和引用类型呢？？看下面的例子:</p>
+<h3>值类型示例</h3>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="keyword">var</span> a = <span class="number">123</span>;
+<span class="keyword">var</span> b = a;
+a = <span class="number">1</span>;
+console.log(b);<span class="comment">//123</span>
+</pre></td></tr></table></figure>
+
+<h3>引用类型示例</h3>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="keyword">var</span> c = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];
+<span class="keyword">var</span> d = c;
+d[<span class="number">0</span>] = <span class="number">4</span>;
+console.log(c);<span class="comment">//[4,2,3]</span>
+</pre></td></tr></table></figure>
+
+<h3>值类型和引用类型解释</h3>
+<p>看见上面的示例，有些人可能就晕了，很多人一不小心就改变了引用类型的值，而自己还不清楚程序出现了什么问题！<br>当值类型a赋值给b时，这时候会在内存中给b分配空间，所以a和b是完全独立的两个变量。<br>而c和d之间，通过赋值，产生了引用关系，两者之间都指向了同一个数组，所以修改其中一个值会改变对方的值。<br>在实际开发中一定要记住这点，不要乱赋值，否则会犯上面的错误。例如下例，可以先把使用的site赋值出来，这样变量e是一个值类型，不会产生引用问题。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> c = {site:<span class="string">'js8.in'</span>};
+<span class="keyword">var</span> d = c;
+<span class="keyword">var</span> e = d.site;
+d.site = <span class="string">'weibo.com'</span>;
+console.log(e);<span class="comment">//js8.in</span>
+</pre></td></tr></table></figure>
+
+<h2>arguments的值</h2>
+<p>ECMAScript中函数的参数是按值传递的，当参数为引用类型值时便按引用传递是一种错误或者不全面的说法。</p>
+<p>对于参数为基本类型值的情况，很容易理解。但对于引用类型值的参数，却很容易让人误解为是按引用传递的。如下面的例子：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">fn</span><span class="params">(arg)</span>{</span>
+	arg.site = <span class="string">'js8.in'</span>;
+	arg = <span class="keyword">new</span> Object();
+	arg.site = <span class="string">'weibo.com'</span>;
+}
+<span class="keyword">var</span> obj = <span class="keyword">new</span> Object();
+fn(obj);
+console.log(obj.site)<span class="comment">//js8.in</span>
+console.log(window.arg);<span class="comment">//undefined</span>
+</pre></td></tr></table></figure>
+
+<p>示例中，如果<strong>arguments</strong>是按照引用类型传递的，那么obj.site应该为weibo.com，但是结果却是js8.in。</p>
+<p>事实是这样的：当参数为引用类型值时的确是按引用传递的。<br>至于的你后面举的例子也是一个引用传递的，obj把引用传给arg，arg引用的内存空间和obj的一致，所以设置site为js8.in的时候，obj能接受到。后面你new了一个新的Object，相当于开了一个新的内存空间，然后arg引向了那块新内存，但是obj引用的内存还是原来那块，所以后面site赋值了，obj不改变。这个跟C/C++的指针有点像。至于window.arg为undefined,是因为js的作用域是词法作用域，function外的当然引用不了function内的，与值传递或者引用传递木有关系啊(来自周某欣)。</p>
+<p>最后来一张周爱民大神的javascript类型关系图：</p>
+<p><img src="/uploads/2011/08/1804_131297002896En.png" alt="javascript变量关系图" title="javascript变量关系图"></p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/javascript/">javascript</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2011/08/15/javascript的词法作用域/" class="prev" title="javascript的词法作用域">javascript的词法作用域</a>
+ 
+ 
+	<a href="/2011/08/05/ie的fireevent方法/" class="next" title="IE的fireEvent方法">IE的fireEvent方法</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="javascript变量类型"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

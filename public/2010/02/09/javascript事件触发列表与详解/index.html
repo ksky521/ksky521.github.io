@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Javascript事件触发列表与详解 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="今天在司徒正美（原文）的博客上看见一个关于javascript事件触发列表的文章，感觉不错，拿来给大家分享一下，本文中涉及到了很多javascript的事件，有不同浏览器差异的事件，大家必要的时候可以做以下参考">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Javascript事件触发列表与详解"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">Javascript事件触发列表与详解</h1>
+  
+
+      <time datetime="2010-02-09T09:06:53.000Z"><a href="/2010/02/09/javascript事件触发列表与详解/">2010年2月9日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天在司徒正美（<a href="http://www.cnblogs.com/rubylouvre/archive/2010/02/09/1632990.html" target="_blank">原文</a>）的博客上看见一个关于javascript事件触发列表的文章，感觉不错，拿来给大家分享一下，本文中涉及到了很多javascript的事件，有不同浏览器差异的事件，大家必要的时候可以做以下参考<br><a id="more"></a></p>
+<table border=1 cellspacing=0 cellpadding=3 width="100%"><br>        <tbody><br>          <tr><br>          <th colspan=3 align=left><font color=#990000><strong>一般事件</strong></font></th></tr><br>          <tr><br>            <th><strong><font size=2>事件</font></strong></th><br>            <th><strong><font size=2>浏览器支持</font></strong></th><br>          <th><strong><font size=2>描述</font></strong></th></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onclick</font></strong></th><br>            <td valign=top nowrap>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser: <strong><font color=#cc0000>ie3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n2&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>鼠标点击事件，多用在某个对象控制的范围内的鼠标点击</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondblclick</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>鼠标双击事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onmousedown</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>鼠标上的按钮被按下了</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onmouseup</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>鼠标按下后，松开时激发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onmouseover</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n2&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>当鼠标移动到某对象范围的上方时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onmousemove</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>鼠标移动时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onmouseout</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>当鼠标离开某对象范围时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onkeypress</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>当键盘上的某个键被按下并且释放时触发的事件.[注意:页面内必须有被聚焦的对象]</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onkeydown</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>当键盘上某个按键被按下时触发的事件[注意:页面内必须有被聚焦的对象]</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onkeyup</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>当键盘上某个按键被按放开时触发的事件[注意:页面内必须有被聚焦的对象]</td></tr><br>          <tr><br>          <th colspan=3 align=left><font color=#990000><strong>页面相关事件</strong></font></th></tr><br>          <tr><br>            <th><strong><font size=2>事件</font></strong></th><br>            <th><strong><font size=2>浏览器支持</font></strong></th><br>          <th><strong><font size=2>描述</font></strong></th></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onabort</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n3&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>图片在下载时被用户中断</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onbeforeunload</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当前页面的内容将要被改变时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onerror</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n3&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>捕抓当前页面因为某种原因而出现的错误，如脚本错误与外部数据引用的错误</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onload</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n2&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>页面内空完成传送到浏览器时触发的事件，包括外部文件引入完成</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onmove</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:&nbsp;ie&nbsp;|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>浏览器的窗口被移动时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onresize</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>当浏览器的窗口大小被改变时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onscroll</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>浏览器的滚动条位置发生变化时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onstop</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>浏览器的停止按钮被按下时触发的事件或者正在下载的文件被中断</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onunload</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n2&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>当前页面将被改变时触发的事件</td></tr><br>          <tr><br>          <th colspan=3 align=left><font color=#990000><strong>表单相关事件</strong></font></th></tr><br>          <tr><br>            <th><strong><font size=2>事件</font></strong></th><br>            <th><strong><font size=2>浏览器支持</font></strong></th><br>          <th><strong><font size=2>描述</font></strong></th></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onblur</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n2&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>当前元素失去焦点时触发的事件 [鼠标与键盘的触发均可]</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onchange</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n2&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>当前元素失去焦点并且元素的内容发生改变而触发的事件 [鼠标与键盘的触发均可]</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onfocus</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n2&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>当某个元素获得焦点时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onreset</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>当表单中reset的属性被激发时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onsubmit</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie3&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;n2&nbsp;</font></strong>|<strong><font color=#cc0000>&nbsp;o3&nbsp;</font></strong></td><br>          <td>一个表单被递交时触发的事件</td></tr><br>          <tr><br>          <th colspan=3 align=left><font color=#990000><strong>滚动字幕事件</strong></font></th></tr><br>          <tr><br>            <th><strong><font size=2>事件</font></strong></th><br>            <th><strong><font size=2>浏览器支持</font></strong></th><br>          <th><strong><font size=2>描述</font></strong></th></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onbounce</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>在marquee内的内容移动至marquee显示范围之外时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onfinish</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当marquee元素完成需要显示的内容后触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onstart</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当marquee元素开始显示内容时触发的事件</td></tr><br>          <tr><br>          <th colspan=3 align=left><font color=#990000><strong>编辑事件</strong></font></th></tr><br>          <tr><br>            <th><strong><font size=2>事件</font></strong></th><br>            <th><strong><font size=2>浏览器支持</font></strong></th><br>          <th><strong><font size=2>描述</font></strong></th></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onbeforecopy</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当页面当前的被选择内容将要复制到浏览者系统的剪贴板前触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onbeforecut</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当页面中的一部分或者全部的内容将被移离当前页面[剪贴]并移动到浏览者的系统剪贴板时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onbeforeeditfocus</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当前元素将要进入编辑状态</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onbeforepaste</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>内容将要从浏览者的系统剪贴板传送[粘贴]到页面中时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onbeforeupdate</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当浏览者粘贴系统剪贴板中的内容时通知目标对象</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>oncontextmenu</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当浏览者按下鼠标右键出现菜单时或者通过键盘的按键触发页面菜单时触发的事件 [试试在页面中的&lt;body&gt;中加入oncontentmenu=“return false”就可禁止使用鼠标右键了]</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>oncopy</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当页面当前的被选择内容被复制后触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>oncut</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当页面当前的被选择内容被剪切时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondrag</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当某个对象被拖动时触发的事件 [活动事件]</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondragdrop</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:&nbsp;ie&nbsp;|<strong><font color=#cc0000>&nbsp;n4&nbsp;</font></strong>|&nbsp;o&nbsp;</td><br>          <td>一个外部对象被鼠标拖进当前窗口或者帧</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondragend</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当鼠标拖动结束时触发的事件，即鼠标的按钮被释放了</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondragenter</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当对象被鼠标拖动的对象进入其容器范围内时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondragleave</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当对象被鼠标拖动的对象离开其容器范围内时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondragover</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当某被拖动的对象在另一对象容器范围内拖动时触发的事件 [活动事件]</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondragstart</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当某对象将被拖动时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondrop</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>在一个拖动过程中，释放鼠标键时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onlosecapture</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当元素失去鼠标移动所形成的选择焦点时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onpaste</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当内容被粘贴时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onselect</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|<strong><font color=#cc0000>&nbsp;4&nbsp;</font></strong><br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当文本内容被选择时的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onselectstart</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o&nbsp;</td><br>          <td>当文本内容选择将开始发生时触发的事件</td></tr><br>          <tr><br>          <th colspan=3 align=left><font color=#990000><strong>数据绑定</strong></font></th></tr><br>          <tr><br>            <th><strong><font size=2>事件</font></strong></th><br>            <th><strong><font size=2>浏览器支持</font></strong></th><br>          <th><strong><font size=2>描述</font></strong></th></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onafterupdate</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当数据完成由数据源到对象的传送时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>oncellchange</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当数据来源发生变化时</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondataavailable</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当数据接收完成时触发事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondatasetchanged</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>数据在数据源发生变化时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>ondatasetcomplete</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当来子数据源的全部有效数据读取完毕时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onerrorupdate</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当使用onbeforeupdate事件触发取消了数据传送时，代替onafterupdate事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onrowenter</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当前数据源的数据发生变化并且有新的有效数据时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onrowexit</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当前数据源的数据将要发生变化时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onrowsdelete</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当前数据记录将被删除时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onrowsinserted</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当前数据源将要插入新数据记录时触发的事件</td></tr><br>          <tr><br>          <th colspan=3 align=left><font color=#990000><strong>外部事件</strong></font></th></tr><br>          <tr><br>            <th><strong><font size=2>事件</font></strong></th><br>            <th><strong><font size=2>浏览器支持</font></strong></th><br>          <th><strong><font size=2>描述</font></strong></th></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onafterprint</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当文档被打印后触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onbeforeprint</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当文档即将打印时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onfilterchange</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当某个对象的滤镜效果发生变化时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onhelp</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当浏览者按下f1或者浏览器的帮助选择时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onpropertychange</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie5&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>          <td>当对象的属性之一发生变化时触发的事件</td></tr><br>          <tr><br>            <th valign=top align=left><strong><font size=2>onreadystatechange</font></strong></th><br>            <td valign=top>html: 2&nbsp;|&nbsp;3&nbsp;|&nbsp;3.2&nbsp;|&nbsp;4&nbsp;<br>browser:<strong><font color=#cc0000>&nbsp;ie4&nbsp;</font></strong>|&nbsp;n&nbsp;|&nbsp;o</td><br>    <td>当对象的初始化属性值发生变化时触发的事件</td><br>  </tr><br> </tbody><br></table>
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/javascript/">javascript</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2010/02/21/使用css设置文字反选的背景颜色/" class="prev" title="使用CSS设置文字反选的背景颜色">使用CSS设置文字反选的背景颜色</a>
+ 
+ 
+	<a href="/2010/02/08/cssjquery实现滑动幻灯片实例详解/" class="next" title="CSS+jQuery实现滑动幻灯片实例详解">CSS+jQuery实现滑动幻灯片实例详解</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="Javascript事件触发列表与详解"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

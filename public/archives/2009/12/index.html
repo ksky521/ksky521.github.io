@@ -1,0 +1,775 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>归档：2009/12 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2009/12</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/31/三个使用wordpress自定义域做的小工具/">三个使用WordPress自定义域做的小工具</a></h1>
+  
+
+      <time datetime="2009-12-31T08:26:10.000Z"><a href="/2009/12/31/三个使用wordpress自定义域做的小工具/">2009年12月31日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>刚开始建立WordPress博客的时候对于自定义域不是很了解，之后通过搜索相关知识：发现原来<strong>WordPress自定义域</strong>可以做很多事情，今天断桥残雪就说说WordPress自定义域三个用处：<strong>给某一日记添加js或者CSS</strong>，<strong>给加密的日志添加密码提示信息</strong>、<strong>首页显示日志缩略图</strong>。</p>
+<h3>给某一日记添加js或者CSS</h3>
+<p>WordPress 在发布日志时会对过滤一些Javascript、CSS内容，所以我们无法直接把JS、CSS直接写到日志，当然我们可以通过修改主题来实现。可是如果修改主题，把JS或者CSS的内容添加到 header.php 文件中，那么博客所有的页面都会加载这些内容，这样势必会造成整个博客效率下降。所以这个时候我们可以通过 WordPress 自定义域来给某篇的日志单独加<strong>载Javascript 和CSS</strong>。文章最后再介绍一种管理WordPress自定义域的小技巧工具。</p>
+<p>假设我们给日志单独加载JS、CSS的自定义域名称是 head_JS_CSS。那么你首先需要把下面这段代码复制到你主题根目录下的 functions.php 文件中：</p>
+<blockquote>
+<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>
+&gt; <span class="function"><span class="keyword">function</span> <span class="title">head_JS_CSS</span><span class="params">()</span>{</span>
+&gt;     <span class="keyword">if</span> (is_single() || is_page()) {
+&gt;         <span class="keyword">global</span> <span class="variable">$post</span>;
+&gt;         <span class="variable">$head_JS_CSS</span> = get_post_meta(<span class="variable">$post</span>-&gt;ID, <span class="string">'head_JS_CSS'</span>, <span class="keyword">true</span>);
+&gt;         <span class="keyword">echo</span> <span class="variable">$head_JS_CSS</span>;
+&gt;     }
+&gt; }
+&gt; add_action(<span class="string">"wp_head"</span>,<span class="string">"head_JS_CSS"</span>);
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>现在你在添加日志的时候，在WordPress自定义域区域，创建一个新的名称为：&quot;head_JS_CSS&quot;自定义域，在“值”输入你要单独为这篇日志加载的 Javascript 代码或者 CSS 即可。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/31/三个使用wordpress自定义域做的小工具/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/27/jquery选择器使用详解/">jQuery选择器使用详解</a></h1>
+  
+
+      <time datetime="2009-12-27T10:46:56.000Z"><a href="/2009/12/27/jquery选择器使用详解/">2009年12月27日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>随着jQuery的风靡，有很多关于<strong>jQuery选择器</strong>的文章，可是很多人没有系统的学过或者总结过jQuery的选择器使用方法，本文主要跟大家讨论一下jQuery的选择器的用法，针对于不同的jQuery用户，从基础说起，带您领略jQuery强大的选择器。</p>
+<p>在跟大家分享自己的jQuery选择器的使用方法之前，我想跟大家说一个Tip，当你使用jQuery选择器的时候，有时候我们却不一定使用jQuery的选择器里面的函数，而是要简单的返回HTML对象，如果使用getElementById之类选择出HTML对象，就比较麻烦了，再说我们强大的jQuery选择器就浪费了，在这里我通过Firebug查看了jQuery选择器返回的对象，发现原来<strong>$(“#id”)[0]</strong>就是我们要的HTML对象，比如我们要取其中的innerHTML就可以使用$()[0].innerHTML。</p>
+<h3>关于jQuery选择器</h3>
+<p>通过<a href="http://jquery-api-zh-cn.googlecode.com/svn/trunk/index.html" title="jQuery参考手册" target="_blank">jQuery的参考手册</a> 我们可以看见jQuery的选择器分为：基本、层次、简单筛选、内容、可见性筛选、属性筛选、子元素、表单以及表单及其属性，共九种选择器类型，本文主要介绍基本选择器、属性、简单筛选、内容筛选这几个常用的选择器。如果能熟练掌握这几个选择器，那么我们的<strong>jQuery选择器</strong>就已经很熟练了</p>
+<h3>jQuery基本选择器</h3>
+<p>jQuery的选择器跟CSS的选择器很接近，甚至于跟CSS的选择器统一，这样就比较容易学习，简单选择器就是我们常用的CSS的ID和Class选择器，例如下面的代码把id为world的html内容改为“Hello World!”<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/27/jquery选择器使用详解/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/25/php生成rss类：rss-class-php/">PHP生成RSS类：RSS.class.php</a></h1>
+  
+
+      <time datetime="2009-12-25T12:33:02.000Z"><a href="/2009/12/25/php生成rss类：rss-class-php/">2009年12月25日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前些日子给<a href="http://love.2fool.cn" target="_blank">爱墙</a>添加了RSS订阅功能，代码是自己写的，其中使用到了一个PHP类：RSS.class.php，感觉非常方便，不敢独享，特拿出来跟大家分享。</p>
+<p>使用方法如下：</blockquote><br>使用方法如下：</p>
+<blockquote>
+<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+&gt; <span class="keyword">include_once</span>(<span class="string">"class/RSS.class.php"</span>);<span class="comment">//引入RSS PHP类</span>
+&gt; <span class="variable">$RSS</span>= <span class="keyword">new</span> RSS(<span class="string">"名称"</span>,<span class="string">"地址"</span>,<span class="string">"描述"</span>,<span class="string">"RSS频道图标"</span>);
+&gt; <span class="variable">$RSS</span>-&gt;AddItem(<span class="string">"日志的标题"</span>,<span class="string">"日志的地址"</span>,<span class="string">"日志的摘要"</span>,<span class="string">"日志的发布日期"</span>);
+&gt; <span class="variable">$RSS</span>-&gt;Display();<span class="comment">//输出RSS内容</span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/25/php生成rss类：rss-class-php/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/25/javascript跨浏览器的添加删除事件绑定函数/">JavaScript跨浏览器的添加删除事件绑定函数</a></h1>
+  
+
+      <time datetime="2009-12-25T10:31:13.000Z"><a href="/2009/12/25/javascript跨浏览器的添加删除事件绑定函数/">2009年12月25日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>现在浏览器太多了也使我们前端开发人员慌了手脚，今天<a href="http://oncoding.cn" target="_blank">刘洋</a>在写《<a href="http://www.oncoding.cn/2009/translate-tool-bookmark/" target="_blank">教程：编写放在收藏夹里的网页划词翻译工具</a>》的时候，问起来绑定事件的函数，由于一直使用<strong>jQuery</strong>开发，我都差点忘记了最原始的<strong>js添加绑定事件</strong>的方法啦~抽空立马写两个函数，以备不时之需。</p>
+<h3>javascript跨浏览器添加事件绑定 bind()</h3>
+<p>IE 的<strong>事件绑定</strong>函数是<strong> attachEvent</strong>；而 Firefox, Safari 是 <strong>addEventListener</strong>；Opera 则两种都支持。使用jQuery就可以使用简单的bind()，或者$().click()之类的函数解决，而如果不使用JavaScript框架的时候，大家可是使用下面的封装bind()函数。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre><span class="comment">/************************************
+ * 添加事件绑定
+ * @param obj   : 要绑定事件的元素
+ * @param type : 事件名称。不加 "on". 如 : "click" 而不是 "onclick".
+ * @param fn    : 事件处理函数
+ ************************************/</span>
+<span class="function"><span class="keyword">function</span> <span class="title">bind</span><span class="params">( obj, type, fn )</span> {</span>
+    <span class="keyword">if</span> ( obj.attachEvent ) {
+        obj[<span class="string">'e'</span>+type+fn] = fn;
+        obj[type+fn] = <span class="keyword">function</span>(){obj[<span class="string">'e'</span>+type+fn]( window.event );}
+        obj.attachEvent( <span class="string">'on'</span>+type, obj[type+fn] );
+    } <span class="keyword">else</span>
+        obj.addEventListener( type, fn, <span class="literal">false</span> );
+}
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/25/javascript跨浏览器的添加删除事件绑定函数/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/">使用ZeroClipboard解决跨浏览器复制到剪贴板的问题</a></h1>
+  
+
+      <time datetime="2009-12-23T17:48:06.000Z"><a href="/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/">2009年12月24日</a></time>
+    </header>
+    <div class="entry">
+      
+        <h3>导言</h3>
+<p>之前在开发<a href="http://www.pujia.com" target="_blank">普加</a>09年国庆中秋祝福页面复制链接功能时，遇见在Firefox，Chrome，Opera，Safari能复制链接的<strong>兼容性</strong>问题，而在近期上线的<a href="http://ditu.pujia.com/preview" target="_blank">普加地图</a>产品中使用的是Flash的<strong>flashvars</strong>来传入参数来解决了这个问题。其实开发中经常会用到复制的功能，在 IE 下通过JavaScript的<strong>window.clipboardData.setData</strong>可以简单实现复制到剪贴板功能。最后终于找到了终极解决方式：使用jhuckaby写的Zero Clipboard的js类库。此方法利用 Flash完成进行复制内容到剪贴板，所以只要浏览器装有Flash 就可以复制内容。</p>
+<h3>Zero Clipboard的实现原理</h3>
+<p><strong>Zero Clipboard </strong>利用透明的Flash让其漂浮在复制按钮之上，这样其实点击的不是按钮而是 Flash ，这样将需要的内容传入Flash，再通过Flash的复制功能把传入的内容复制到<strong>剪贴板</strong>。</p>
+<h3>Zero Clipboard的安装方法</h3>
+<p>其实也不算安装啦，就是使用前的准备工作。<br>首先需要下载 Zero Clipboard的压缩包，解压后把文件夹中两个文件：ZeroClipboard.js 和 ZeroClipboard.swf 放入到你的项目中。</p>
+<blockquote>
+<p>Zero Clipboard : <a href="http://code.google.com/p/zeroclipboard/" target="_blank">[项目主页</a>] <a href="http://code.google.com/p/zeroclipboard/downloads/list" target="_blank">[zip下载</a>] <a href="http://bowser.macminicolo.net/~jhuckaby/zeroclipboard/" target="_blank">[在线演示</a>]<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/18/ie6-png图片不透明问题的解决方法/">IE6 PNG图片不透明问题的解决方法</a></h1>
+  
+
+      <time datetime="2009-12-17T18:16:33.000Z"><a href="/2009/12/18/ie6-png图片不透明问题的解决方法/">2009年12月18日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>IE6真是前端开发人员的噩梦，就像<a href="http://oncoding.cn" target="_blank">刘洋</a>说的:IE6一次又一次的阻碍了互联网的发展。在前几天开发的<a href="http://js8.in/wordpress-weather">WordPress天气预报插件</a>中使用的图片都是png格式的透明图片，由于png格式的图片比较漂亮美观，可是在<strong>IE6</strong>中png的透明效果是没有的，这样子本来设计很漂亮的页面在IE6就歇菜了，让人感觉很不爽~本文使用js的方法来解决IE6下<strong>PNG图片不透明</strong>的问题，简单实用。<a href="http://js8.in/448.html" title="png在IE6下透明的几种方法">更多解决方法点击此处</a>。</p>
+<p>如果我们在页面中使用的透明PNG图片不是很多，可以使用下面的代码来解决问题：</p>
+<blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">setPng</span><span class="params">(img, w, h)</span>{</span>
+&gt;                 ua = window.navigator.userAgent.toLowerCase();
+&gt;                 <span class="keyword">if</span> (!<span class="regexp">/msie/</span>.test(ua))
+&gt;                     <span class="keyword">return</span>;
+&gt;                 imgStyle = <span class="string">"display:inline-block;"</span> + img.style.cssText;
+&gt;                 strNewHTML = <span class="string">""</span>;
+&gt;                 img.outerHTML = strNewHTML;
+&gt; }
+</pre></td></tr></table></figure>
+
+<p>使用方法，在img上添加onload=“setPng(this,宽度,高度)”，如&lt;img onload=“setPng(this,98,78)” src=“” /&gt;<br>如果您觉得这样的方法比较麻烦，或者页面中使用的<strong>透明png图片</strong>比较多如果手动添加很不方便的时候，可是使用下面的代码来解决问题。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/18/ie6-png图片不透明问题的解决方法/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/17/主流浏览器的css-hack方法整理/">主流浏览器的CSS Hack方法整理</a></h1>
+  
+
+      <time datetime="2009-12-17T08:28:06.000Z"><a href="/2009/12/17/主流浏览器的css-hack方法整理/">2009年12月17日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>由于不同的浏览器，比如IE6、IE7、Firefox等，对CSS的解析不一样，因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。我在写<a href="http://js8.in/374.html">WordPress天气预报插件</a>的时候就碰见了一个<strong>CSS hack</strong>的问题：在IE6下不能显示正常。本来一个很好的<a href="http://js8.in/wordpress-weather">WordPress天气预报插件</a>就因为IE6给推迟了发布时间。所以对于前端开发人员<strong>CSS兼容性</strong>是个比较棘手的问题，当然对于不同浏览器也有不同的CSS hack的方法，此处本人就整理了一些常用到CSS hack方法，分享给大家，希望对大家有用。</p>
+<h3>CSS Hack浏览器的顺序</h3>
+<p>对于不同浏览器的CSS hack是有顺序区分的，一般的书写hack的顺序是：<strong>Firefox -&gt; IE7 -&gt; IE6 -&gt; 其他</strong>，<br>当然推荐大家使用Firefox+Firebug来进行调试，注意书写的时候要尽量标准，记住封口，很多时候不封口在FF，IE7下显示正常，可是在IE6下就全部乱了~</p>
+<h3>CSS Hack整理汇总</h3>
+<p>这些方法相信很多人已经很熟悉了：比如 <strong>IE6</strong>能识别下划线&quot;<strong><span style="color: #ff00ff;">_</span></strong>“和星号” <span style="color: #ff00ff;"><strong>* </strong></span>&quot;，<strong>IE7</strong>能识别星号&quot;<span style="color: #ff00ff;"><strong> *</strong></span> “，但不能识别下划线”<span style="color: #ff00ff;"><strong>_</strong></span>&quot;，而<strong>firefox</strong>两个都不能认识。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/17/主流浏览器的css-hack方法整理/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/16/使用if-ie-hack注释解决css以及js的兼容问题/">使用if IE hack注释解决CSS以及JS的兼容问题</a></h1>
+  
+
+      <time datetime="2009-12-16T15:39:55.000Z"><a href="/2009/12/16/使用if-ie-hack注释解决css以及js的兼容问题/">2009年12月16日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在<strong>IE CSS hack</strong>(<a href="http://js8.in/382.html">更多方法</a>)当中常用到if IE 来判断浏览器的类型，解决CSS甚至于JS的<strong>兼容</strong>性问题，之前大家可能知道if IE来解决<strong>CSS的兼容</strong>性问题，其实if IE不仅仅是用于CSS hack的使用，我们在前端开发中甚至可以使用<strong>if IE</strong>来做JS的处理，如下面的代码：</p>
+<blockquote>
+<p>&lt;!—[if IE 5]&gt; &lt;script&gt;document.write(“仅IE5.0与IE5.5可以识别”);&lt;/script&gt; &lt;![endif]—&gt;</p>
+<p>&lt;!—[if gte IE 5.0]&gt;&lt;script&gt;document.write(“IE5.0以及IE5.0以上版本都可以识别”);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if IE 6]&gt;&lt;script&gt;document.write(“仅IE6可识别”);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if lt IE 6]&gt;&lt;script&gt;document.write(“IE6以下版本可识别”);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if gte IE 6]&gt;&lt;script&gt;document.write(&quot;<strong>IE6</strong>以及IE6以上版本可识别&quot;);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if IE 7]&gt;&lt;script&gt;document.write(“仅IE7可识别”);&lt;/script&gt; &lt;![endif]—&gt;</p>
+<p>&lt;!—[if lt IE 7]&gt;&lt;script&gt;document.write(“IE7以下版本可识别”);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if gte IE 7]&gt;&lt;script&gt;document.write(“IE7以及IE7以上版本可识别”);&lt;/script&gt;&lt;![endif]—&gt;<br>下面对<strong>if IE</strong>做一下详细的解释：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/16/使用if-ie-hack注释解决css以及js的兼容问题/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/14/curl常用的几个php函数/">cURL常用的几个PHP函数</a></h1>
+  
+
+      <time datetime="2009-12-14T09:26:11.000Z"><a href="/2009/12/14/curl常用的几个php函数/">2009年12月14日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>cURL是一个功能强大的<strong>PHP库</strong>，我们可以使用PHP的cURL采用<strong>GET</strong>、<strong>POST</strong>等方式发送请求，获取网页内容以及取一个XML文件并把其导入数据库等等。本文中收集了几种常用的<strong>PHP的cURL函数</strong>，以备使用。主要的有几个PHP函数用于：GET，POST，HTTP验证，<strong>302重定向</strong>，设置cURL的代理。</p>
+<h3>1、开启PHP的cURL功能</h3>
+<p>在Windows平台下，或者使用xampp之类的集成服务器的程序，会非常简单，你需要改一改你的<strong>php.ini</strong>文件的设置，找到php_curl.dll，并取消前面的分号注释就行了。如下所示：</p>
+<blockquote>
+<p>//取消注释，开启cURL功能<br>extension=php_curl.dll<br>在<strong>Linux</strong>下面，那么，你需要重新编译你的PHP了，编辑时，你需要打开编译参数——在configure命令上加上“–with-curl” 参数。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/14/curl常用的几个php函数/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/11/对引用外部javascript页面编码处理/">UTF-8页面引用外部编码为GBK的JS文件编码的处理</a></h1>
+  
+
+      <time datetime="2009-12-11T14:13:47.000Z"><a href="/2009/12/11/对引用外部javascript页面编码处理/">2009年12月11日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>昨天写的一个根据来访者IP返回来访者所在地区的天气情况的<a href="http://js8.in/wordpress-weather" title="WordPress 天气插件">WordPress天气插件</a>侧边栏，效果见本<a href="http://js8.in" title="断桥残雪部落格">博客的首页</a>侧边栏“天气预报”。其中根据<strong>IP</strong>返回来访者城市地理位置的方法是采用了QQ的一个接口：<a href="http://fw.qq.com/ipaddress,而这个接口提供的js为GBK编码的，由于[我的博客](http://js8.in" target="_blank">http://fw.qq.com/ipaddress,而这个接口提供的js为GBK编码的，由于[我的博客](http://js8.in</a> “断桥残雪部落格”)是UTF-8编码的，所以再次使用返回的城市名称在我页面显示的是<strong>乱码</strong>，而且不能引用的。</p>
+<p>上网找了很多关于JavaScript把<strong>GBK编码转换为UTF-8编码</strong>的js函数，可是都无济于事，并且如果单单为了编码问题就单独写一个js函数来处理GBK转UTF-8编码，这是很不合理的~由于本来我引用的是QQ的根据IP返回城市接口，我自己是不能够改变QQ官方的<strong>数据编码格式</strong>的，解决的方法唯有我在我的程序中把<strong>GBK编码</strong>的js强制转换为utf-8的格式，怎么转换是个比较难的方式，既然不能通过写js函数，那就只用用其他的方式了。</p>
+<p>最后我在网上找到了一个很好的解决方法，<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/11/对引用外部javascript页面编码处理/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

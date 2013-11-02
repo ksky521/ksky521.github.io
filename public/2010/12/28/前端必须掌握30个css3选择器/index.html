@@ -1,0 +1,1154 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端必须掌握30个CSS3选择器 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="也许你已经学会了CSS的三个简单常用的选择器：#ID，.class，标签选择器，可是这些就足够了吗？随着CSS3的到来，作为前端开发者需要掌握下面三十个基本的选择器，这样才可以在平时开发中得心用手。
+本文中将综合前端开发中常用的30个CSS3选择器，并且附带了浏览器的支持情况，希望对大家有所帮助。
+1、*：通用元素选择器
+1
+2
+3
+4
+5
+
+* {  
+ margin: 0;  
+ padding: 0;  
+}
+
+
+*选择器是选择页面上的全部元素，上面的代码作用是把全部元素的margin和padding设为0，最基本的清除默认CSS样式方法
+*选择器也可以应用到子选择器中，例如下面的代码：
+1
+2
+3
+4
+
+#container * {  
+ border: 1px solid black;  
+}
+
+
+这样ID为container 的所有子标签元素都被选中了，并且设置了border。
+查看演示
+兼容性
+
+IE6+
+Firefox
+Chrome
+Safari
+Opera
+
+#ID：ID选择器
+1
+2
+3
+4
+5
+
+#container {  
+   width: 960px;  
+   margin: auto;  
+}
+
+
+ID选择器是CSS中效率最高的选择器，使用的时候要保证ID的唯一性。
+查看演示
+兼容性
+
+IE6+
+Firefox
+Chrome
+Safari
+Opera
+
+.class:类选择器
+1
+2
+3
+4
+
+.error {  
+  color: red;  
+}
+
+
+类选择器效率低于ID选择器，一个页面可以有多个class，并且class可以放在不同的标签中使用。
+查看演示">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="前端必须掌握30个CSS3选择器"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">前端必须掌握30个CSS3选择器</h1>
+  
+
+      <time datetime="2010-12-28T13:57:58.000Z"><a href="/2010/12/28/前端必须掌握30个css3选择器/">2010年12月28日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>也许你已经学会了CSS的三个简单常用的选择器：#ID，.class，标签选择器，可是这些就足够了吗？随着<strong>CSS3</strong>的到来，作为前端开发者需要掌握下面三十个基本的选择器，这样才可以在平时开发中得心用手。</p>
+<p>本文中将综合前端开发中常用的30个<strong>CSS3选择器</strong>，并且附带了浏览器的支持情况，希望对大家有所帮助。</p>
+<h3>1、*：通用元素选择器</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+* <span class="rules">{  
+ <span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span>;</span></span>  
+ <span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span>;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>*选择器是选择页面上的全部元素，上面的代码作用是把全部元素的margin和padding设为0，最基本的<a href="http://js8.in/365.html" title="清除默认CSS样式注意事项">清除默认CSS样式</a>方法</p>
+<p>*选择器也可以应用到子选择器中，例如下面的代码：</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="id">#container</span> * <span class="rules">{  
+ <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid black;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>这样ID为container 的所有子标签元素都被选中了，并且设置了border。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/star.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>#ID：ID选择器</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+<span class="id">#container</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">960</span>px;</span></span>  
+   <span class="rule"><span class="attribute">margin</span>:<span class="value"> auto;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>ID选择器是CSS中效率最高的选择器，使用的时候要保证ID的唯一性。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/id.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>.class:类选择器</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="class">.error</span> <span class="rules">{  
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>类选择器效率低于ID选择器，一个页面可以有多个class，并且class可以放在不同的标签中使用。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/class.html" target="_blank">查看演示</a></p>
+<a id="more"></a>
+
+<h5>兼容性</h5>
+<ol>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X Y：标签组合选择器</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">li</span> <span class="tag">a</span> <span class="rules">{  
+  <span class="rule"><span class="attribute">text-decoration</span>:<span class="value"> none;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>标签组合选择器也是常用的选择器。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/descend.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X：标签选择器</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>
+<span class="tag">a</span> <span class="rules">{ <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span> <span class="rule">}</span></span>  
+<span class="tag">ul</span> <span class="rules">{ <span class="rule"><span class="attribute">margin-left</span>:<span class="value"> <span class="number">0</span>;</span></span> <span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>如果你只是想要页面中的某个标签样式改变，可以选择使用标签选择器。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/tagName.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:visited and X:link</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>
+<span class="tag">a</span><span class="pseudo">:link</span> <span class="rules">{ <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span> <span class="rule">}</span></span>  
+<span class="tag">a</span><span class="pseudo">:visted</span> <span class="rules">{ <span class="rule"><span class="attribute">color</span>:<span class="value"> purple;</span></span> <span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>伪类选择器，最常用的为A标签</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/links.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X + Y：毗邻元素选择器</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">ul</span> + <span class="tag">p</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>毗邻元素选择器，匹配的是所有紧随X元素之后的同级元素Y</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/adjacent.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X &gt; Y：子元素选择器</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">div</span><span class="id">#container</span> &gt; <span class="tag">ul</span> <span class="rules">{  
+  <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid black;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配#container下的所有子元素。<br>关于<code>X&gt;Y</code>和<code>X Y</code>的区别请看下面的html实例：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span>  
+
+*   List Item
+        *   Child*   List Item*   List Item*   List Item  
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>选择器<code>#container &gt; ul</code>只会匹配到第一个UL，也就是#container的子元素UL，而不是li里面的ul，但是<code>div ul</code>则可以匹配到所有DIV里面的ul。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/childcombinator.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X ~ Y：</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">ul</span> ~ <span class="tag">p</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配任何在X元素之后的同级P元素。也就是选择了UL之后的同级所有的元素。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/generalcombinator.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X[title]：属性选择器</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">a</span><span class="attr_selector">[title]</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> green;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配具有某属性的标签，例如实例中是匹配具有title属性的a标签。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/attributes.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X[href=“foo”]</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">a</span><span class="attr_selector">[href="http://js8.in"]</span> <span class="rules">{  
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#1f6053</span>;</span></span> <span class="comment">/* nettuts green */</span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>也属于属性选择器，匹配属性中为某个值的标签。例如实例中匹配的为<code>href=&quot;http://js8.in&quot;</code>的a标签，而其他链接的a标签不选择。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/attributes2.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X[href*=“nettuts”]</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">a</span><span class="attr_selector">[href*="tuts"]</span> <span class="rules">{  
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#1f6053</span>;</span></span> <span class="comment">/* nettuts green */</span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>属于属性选择器，匹配href中所有含有tuts的标签。正则匹配</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/attributes3.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X[href^=“http”]</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+<span class="tag">a</span><span class="attr_selector">[href^="http"]</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="function">url(path/to/external/icon.png)</span> no-repeat;</span></span>  
+   <span class="rule"><span class="attribute">padding-left</span>:<span class="value"> <span class="number">10</span>px;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>与上面的属相选择标签类似，但是匹配的以http开头的A标签，正则匹配</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/attributes4.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X[href$=“.jpg”]</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">a</span><span class="attr_selector">[href$=".jpg"]</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配属性中以.jpg结尾的标签，正则匹配，也是属性选择器的一种</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/attributes5.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X[data-*=“foo”]</h3>
+<p>如果你要匹配所有的图片链接，你可以通过下面的CSS来实现：</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>
+<span class="tag">a</span><span class="attr_selector">[href$=".jpg"]</span>,  
+<span class="tag">a</span><span class="attr_selector">[href$=".jpeg"]</span>,  
+<span class="tag">a</span><span class="attr_selector">[href$=".png"]</span>,  
+<span class="tag">a</span><span class="attr_selector">[href$=".gif"]</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>但是如果我们给a标签添加一个data-filetype属性，我们就可以使用下面的CSS来快速的选择我们需要匹配的标签了。</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>
+[ Image Link ](path/to/image.jpg)  
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+
+```css
+a[data-filetype="image"] {  
+   color: red;  
+}
+</pre></td></tr></table></figure>
+
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/attributes6.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X[foo~=“bar”]</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>
+<span class="tag">a</span><span class="attr_selector">[data-info~="external"]</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>  
+
+<span class="tag">a</span><span class="attr_selector">[data-info~="image"]</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid black;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配属性中具有多个空格分隔的值、其中一个值等于“bar”的X元素，例如下面的例子：</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/attributes7.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:checked</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">input</span><span class="attr_selector">[type=radio]</span><span class="pseudo">:checked</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid black;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>这个选择器主要用于checkbox，选择checkbox为当前选中的那个标签。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/checked.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:after</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre>
+<span class="class">.clearfix</span><span class="pseudo">:after</span> <span class="rules">{  
+    <span class="rule"><span class="attribute">content</span>:<span class="value"> <span class="string">""</span>;</span></span>  
+    <span class="rule"><span class="attribute">display</span>:<span class="value"> block;</span></span>  
+    <span class="rule"><span class="attribute">clear</span>:<span class="value"> both;</span></span>  
+    <span class="rule"><span class="attribute">visibility</span>:<span class="value"> hidden;</span></span>  
+    <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">0</span>;</span></span>  
+    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">0</span>;</span></span>  
+    <span class="rule">}</span></span>  
+
+<span class="class">.clearfix</span> <span class="rules">{  
+   <span class="rule">*<span class="attribute">display</span>:<span class="value"> inline-block;</span></span>  
+   <span class="rule"><span class="attribute">_height</span>:<span class="value"> <span class="number">1</span>%;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p><code>before</code> 和<code>after</code>是在选择的标签之前或者之后插入内容，一般用于清除浮动，但是对于IE6、IE7是不可用的。</p>
+<h5>兼容性</h5>
+<ol>
+<li>IE8+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:hover</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">div</span><span class="pseudo">:hover</span> <span class="rules">{  
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#e3e3e3</span>;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>最常用的就是A标签了，但是在IE6浏览器下除了A标签之外，其他标签<code>div:hover</code>不匹配。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/generalcombinator.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE6+（IE6只可以使用在A标签中）</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:not(selector)</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+*<span class="pseudo">:not(p)</span> <span class="rules">{  
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> green;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>选择除了（）中选择器之外的标签元素。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/not.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X::pseudoElement</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre>
+<span class="tag">p</span><span class="pseudo">::first-line</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">font-weight</span>:<span class="value"> bold;</span></span>  
+   <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">1.2</span>em;</span></span>  
+<span class="rule">}</span></span>  
+<span class="tag">p</span><span class="pseudo">::first-letter</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">float</span>:<span class="value"> left;</span></span>  
+   <span class="rule"><span class="attribute">font-size</span>:<span class="value"> <span class="number">2</span>em;</span></span>  
+   <span class="rule"><span class="attribute">font-weight</span>:<span class="value"> bold;</span></span>  
+   <span class="rule"><span class="attribute">font-family</span>:<span class="value"> cursive;</span></span>  
+   <span class="rule"><span class="attribute">padding-right</span>:<span class="value"> <span class="number">2</span>px;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>分别用于匹配元素的第一行和第一个字母。看实例：</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/pseudoElements.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE6+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:nth-child(n)</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">li</span><span class="pseudo">:nth-child(3)</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配X元素中从头数第几个标签，例如上面的代码是匹配的是第三个li标签。</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/nth.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:nth-last-child(n)</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">li</span><span class="pseudo">:nth-last-child(2)</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>与上一个选择器相反，这个选择器是倒序匹配第几个标签，上面的代码的意思是匹配倒数第二个li标签</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/nthLast.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:nth-of-type(n)</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">ul</span><span class="pseudo">:nth-of-type(3)</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid black;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>与<code>:nth-child()</code>作用类似，但是仅匹配使用同种标签的元素</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/nthOfType.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:nth-last-of-type(n)</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">ul</span><span class="pseudo">:nth-last-of-type(3)</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1</span>px solid black;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>与<code>:nth-last-child()</code>作用类似，但是仅匹配使用同种标签的元素</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/generalcombinator.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:first-child</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">ul</span> <span class="tag">li</span><span class="pseudo">:first-child</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">border-top</span>:<span class="value"> none;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配其父元素的第n个子元素，第一个编号为1</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/firstChild.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE7+</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:last-child</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">ul</span> &gt; <span class="tag">li</span><span class="pseudo">:last-child</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> green;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配其父元素的倒数第n个子元素，第一个编号为1</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/firstChild.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:only-child</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">div</span> <span class="tag">p</span><span class="pseudo">:only-child</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">color</span>:<span class="value"> red;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配父元素下仅有的一个子元素，等同于:first-child:last-child或 :nth-child(1):nth-last-child(1)</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/onlyChild.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:only-of-type</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">li</span><span class="pseudo">:only-of-type</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">font-weight</span>:<span class="value"> bold;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配父元素下使用同种标签的唯一一个子元素，等同于:first-of-type:last-of-type或 :nth-of-type(1):nth-last-of-type(1)</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/onlyOfType.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<h3>X:first-of-type</h3>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="tag">li</span><span class="pseudo">:only-of-type</span> <span class="rules">{  
+   <span class="rule"><span class="attribute">font-weight</span>:<span class="value"> bold;</span></span>  
+<span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+<p>匹配父元素下使用同种标签的第一个子元素，等同于:nth-of-type(1)</p>
+<p><a href="http://d2o0t5hpnwv4c1.cloudfront.net/840_cssSelectors/selectors/firstOfType.html" target="_blank">查看演示</a></p>
+<h5>兼容性</h5>
+<ol>
+<li>IE9</li>
+<li>Firefox 3.5+</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+</ol>
+<p>原文出处：<a href="http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/" target="_blank">http://net.tutsplus.com/tutorials/html-css-techniques/the-30-css-selectors-you-must-memorize/</a><br>PS：也不算是翻译，只是根据作者整理的然后融入了我自己的理解，希望大家斧正。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/css/">css</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2010/12/29/前端必须熟悉的10个css3属性/" class="prev" title="前端必须熟悉的10个CSS3属性">前端必须熟悉的10个CSS3属性</a>
+ 
+ 
+	<a href="/2010/12/20/利用百度ping服务api加快文章收录，秒收不是梦/" class="next" title="利用百度ping服务API加快文章收录，秒收不是梦">利用百度ping服务API加快文章收录，秒收不是梦</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="前端必须掌握30个CSS3选择器"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

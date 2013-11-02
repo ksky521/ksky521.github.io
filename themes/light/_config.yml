@@ -1,0 +1,35 @@
+menu:
+  首页: /
+  关于: /about
+  Github: https://github.com/ksky521
+  新浪微博: http://weibo.com/sanshuiqing
+
+comments: true
+
+widgets:
+- category
+- tag
+- rss
+
+excerpt_link: 全文
+
+
+fancybox: true
+
+rss: atom.xml
+
+baidutongji:
+  enable: true
+  id: 1c76f5cc8274a56106b13b9c9b1fb046
+
+
+baidushare:
+  enable: true
+  id: 6635976
+  tsina: 61439547
+  wbUid: 2037334587
+
+duoshuo: ksky521
+
+
+

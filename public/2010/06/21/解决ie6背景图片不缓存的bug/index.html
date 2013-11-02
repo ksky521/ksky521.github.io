@@ -1,0 +1,376 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>解决IE6背景图片不缓存的BUG - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="IE6在背景图片缓存上有一个bug：它会每次都从服务器端读取背景图片。例如我们使用a:hover更换背景图片，在IE6下会出现每次鼠标滑过则重新向服务器请求图片，如果服务器反应较慢，那么hover效果就会出现短暂的空白，令人极度不爽。虽然可以通过CSS sprites的方式解决问题的，但效果差强人意。
+示例：a{ background:url(normal.gif); } a:hover { background:url(hover.gif); }如果为超级链接定义上述的css样式以实现鼠标悬浮时的动态效果，在firefox下是没有什么问题的，第一次加载之后，浏览器都会从缓存读取背景图片.
+解决方法
+具体的解决方法就是在页面中加入一段简单的javascript脚本，告诉IE6：本地有背景图片的话就不要麻烦服务器了。 document.execCommand(&quot;BackgroundImageCache&quot;,false,true);
+关于这段脚本的放置方式有两种：">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="解决IE6背景图片不缓存的BUG"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">解决IE6背景图片不缓存的BUG</h1>
+  
+
+      <time datetime="2010-06-20T21:34:13.000Z"><a href="/2010/06/21/解决ie6背景图片不缓存的bug/">2010年6月21日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><strong>IE6</strong>在背景图片缓存上有一个<strong>bug</strong>：它会每次都从服务器端读取背景图片。例如我们使用a:hover更换背景图片，在IE6下会出现每次鼠标滑过则重新向服务器请求图片，如果服务器反应较慢，那么hover效果就会出现短暂的空白，令人极度不爽。虽然可以通过<strong>CSS sprites</strong>的方式解决问题的，但效果差强人意。</p>
+<p>示例：<br><code>a{ background:url(normal.gif); } a:hover { background:url(hover.gif); }</code><br>如果为超级链接定义上述的css样式以实现鼠标悬浮时的动态效果，在firefox下是没有什么问题的，第一次加载之后，浏览器都会从缓存读取背景图片.</p>
+<h3>解决方法</h3>
+<p>具体的<strong>解决方法</strong>就是在页面中加入一段简单的javascript脚本，告诉IE6：本地有背景图片的话就不要麻烦服务器了。 <code>document.execCommand(&quot;BackgroundImageCache&quot;,false,true);</code></p>
+<p>关于这段脚本的放置方式有两种：</p>
+<a id="more"></a>
+
+<p>1.使用CSS，在CSS中加入如下代码</p>
+<blockquote>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">html</span> <span class="rules">{<span class="rule">}</span></span><span class="rules">{ <span class="rule"><span class="attribute">filter</span>:<span class="value"> <span class="function">expression(document.execCommand(<span class="string">"BackgroundImageCache"</span>, false, true)</span>);</span></span> <span class="rule">}</span></span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>2.使用JS：</p>
+<blockquote>
+<p><pre style="padding-left: 30px; " lang="javascript">document.execCommand(“BackgroundImageCache”,false,true);```</p>
+</blockquote>
+<p>另外查了一下关于这个<strong>document.execCommand</strong> 的一些其他用法</p>
+<blockquote>
+<p>2D-Position 允许通过拖曳移动绝对定位的对象。<br>AbsolutePosition 设定元素的 position 属性为“absolute”(绝对)。<br>BackColor 设置或获取当前选中区的背景颜色。<br>BlockDirLTR 目前尚未支持。<br>BlockDirRTL 目前尚未支持。<br>Bold 切换当前选中区的粗体显示与否。<br>BrowseMode 目前尚未支持。<br>Copy 将当前选中区复制到剪贴板。<br>CreateBookmark 创建一个书签锚或获取当前选中区或插入点的书签锚的名称。<br>CreateLink 在当前选中区上插入超级链接，或显示一个对话框允许用户指定要为当前选中区插入的超级链接的 URL。<br>Cut 将当前选中区复制到剪贴板并删除之。<br>Delete 删除当前选中区。<br>DirLTR 目前尚未支持。<br>DirRTL 目前尚未支持。<br>EditMode 目前尚未支持。<br>FontName 设置或获取当前选中区的字体。<br>FontSize 设置或获取当前选中区的字体大小。<br>ForeColor 设置或获取当前选中区的前景(文本)颜色。<br>FormatBlock 设置当前块格式化标签。<br>Indent 增加选中文本的缩进。<br>InlineDirLTR 目前尚未支持。<br>InlineDirRTL 目前尚未支持。<br>InsertButton 用按钮控件覆盖当前选中区。<br>InsertFieldset 用方框覆盖当前选中区。<br>InsertHorizontalRule 用水平线覆盖当前选中区。<br>InsertIFrame 用内嵌框架覆盖当前选中区。<br>InsertImage 用图像覆盖当前选中区。<br>InsertInputButton 用按钮控件覆盖当前选中区。<br>InsertInputCheckbox 用复选框控件覆盖当前选中区。<br>InsertInputFileUpload 用文件上载控件覆盖当前选中区。<br>InsertInputHidden 插入隐藏控件覆盖当前选中区。<br>InsertInputImage 用图像控件覆盖当前选中区。<br>InsertInputPassword 用密码控件覆盖当前选中区。<br>InsertInputRadio 用单选钮控件覆盖当前选中区。<br>InsertInputReset 用重置控件覆盖当前选中区。<br>InsertInputSubmit 用提交控件覆盖当前选中区。<br>InsertInputText 用文本控件覆盖当前选中区。<br>InsertMarquee 用空字幕覆盖当前选中区。<br>InsertOrderedList 切换当前选中区是编号列表还是常规格式化块。<br>InsertParagraph 用换行覆盖当前选中区。<br>InsertSelectDropdown 用下拉框控件覆盖当前选中区。<br>InsertSelectListbox 用列表框控件覆盖当前选中区。<br>InsertTextArea 用多行文本输入控件覆盖当前选中区。<br>InsertUnorderedList 切换当前选中区是项目符号列表还是常规格式化块。<br>Italic 切换当前选中区斜体显示与否。<br>JustifyCenter 将当前选中区在所在格式化块置中。<br>JustifyFull 目前尚未支持。<br>JustifyLeft 将当前选中区所在格式化块左对齐。<br>JustifyNone 目前尚未支持。<br>JustifyRight 将当前选中区所在格式化块右对齐。<br>LiveResize 迫使 MSHTML 编辑器在缩放或移动过程中持续更新元素外观，而不是只在移动或缩放完成后更新。<br>MultipleSelection 允许当用户按住 Shift 或 Ctrl 键时一次选中多于一个站点可选元素。<br>Open 打开。<br>Outdent 减少选中区所在格式化块的缩进。<br>OverWrite 切换文本状态的插入和覆盖。<br>Paste 用剪贴板内容覆盖当前选中区。<br>PlayImage 目前尚未支持。<br>Print 打开打印对话框以便用户可以打印当前页。<br>Redo 重做。<br>Refresh 刷新当前文档。<br>RemoveFormat 从当前选中区中删除格式化标签。<br>RemoveParaFormat 目前尚未支持。<br>SaveAs 将当前 Web 页面保存为文件。<br>SelectAll 选中整个文档。<br>SizeToControl 目前尚未支持。<br>SizeToControlHeight 目前尚未支持。<br>SizeToControlWidth 目前尚未支持。<br>Stop 停止。<br>StopImage 目前尚未支持。<br>StrikeThrough 目前尚未支持。<br>Subscript 目前尚未支持。<br>Superscript 目前尚未支持。<br>UnBookmark 从当前选中区中删除全部书签。<br>Underline 切换当前选中区的下划线显示与否。<br>Undo 撤消。<br>Unlink 从当前选中区中删除全部超级链接。<br>Unselect 清除当前选中区的选中状态。</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/css/">css</a><a href="/tags/javascript/">javascript</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2010/06/24/google-map-api教程之如何自动缩放级别（setautozoom）/" class="prev" title="Google Map API教程之如何自动缩放级别（setAutoZoom）">Google Map API教程之如何自动缩放级别（setAutoZoom）</a>
+ 
+ 
+	<a href="/2010/06/19/引入css-的两种方式：link和import的区别/" class="next" title="引入CSS 的两种方式：link和@import的区别">引入CSS 的两种方式：link和@import的区别</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="解决IE6背景图片不缓存的BUG"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

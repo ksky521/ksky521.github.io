@@ -1,0 +1,561 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>chrome扩展应用开发教程之开发chrome应用基础 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="不得不说chrome做的真的不错，听了貘大大关于chrome插件机制的讲座，就有亲手做个chrome应用的冲动，这个周末终于抽时间做了一个简单的天气预报插件，原理还是很简单的，采用了weather.com.cn的数据，因为比较熟悉这个weather.com.cn的接口，所以很快就搞定一个简单的chrome天气预报应用了。废话不多说了，开始正文。
+chrome应用开发基础知识
+chrome扩展应用是由html、css和javascript组成的，所以chrome应用的门槛比较低，对于一个前端开发者，只要读懂了chrome的开发文档，就可以很快的上手一个chrome应用。
+每个chrome扩展都应该包含下面的文件：
+
+一个包括一个manifest.json文件，是个配置文件，json格式，通过manifest.json可以设置应用的icon，指定默认的background.html或者popup.html……一个或多个html文件（除非这个应用是一个皮肤）可选的一个或多个javascript文件可选的任何需要的其他文件，例如图片
+
+在开发应用（扩展）时，需要把这些文件都放到同一个目录下。发布应用（扩展）时，这个目录全部打包到一个应用（扩展）名是.crx的压缩文件中。如果使用Chrome Developer Dashboard，上传应用（扩展），可以自动生成.crx文件。
+下图是我天气预报插件的文件列表：
+chrome应用界面控制
+chrome应用会以browser action或page action的形式在chrome浏览器界面上展现出来。每个应用扩展最多可以有一个browser action或page action。当应用（扩展）的图标是否显示出来是取决于单个的页面时，应当选择page action；当其它情况时可以选择browser action。
+例如gmail提醒应用使用了browser action，它在工具栏上增加一个图标：
+
+这个新闻阅读应用也使用了browser action，当点击时会弹出一个气泡窗口popup.html：
+另外chrome还包括了桌面提醒（gmail新邮件提醒），主题（chrome皮肤），应用设置页面（应用设置页面），选项卡页面（新选项卡页面）等多种界面形式，本文示例使用的是browser action和popup页面来做一个简单的应用。
+chrome应用基本架构
+绝大多数chrome应用会包含一个背景页面(background page)，用来执行chrome应用扩展的主要功能。该背景页面时再manifest.json中设置的：
+1
+&quot;background_page&quot;: &quot;bg.html&quot;,//默认背景页面
+
+
+[/caption]
+上图显示了安装了应用扩展的chrome。黄色图标代表的browser action和蓝色图标代表的page action。在background.html文件里定义了browser action和javascript代码。在两个窗口里browser action都可以工作。
+背景页面并不是chrome应用中唯一的页面。例如，本例天气预报插件中还包括了一个弹窗页面(popup.html)，此页面也是又html页面实现的。在应用内部还可以使用chrome.tabs.create()或者window.open()来显示内部的HTML文件。
+chrome应用的弹窗界面也是可以在manifest.json中设置的：
+1
+2
+3
+4
+5
+&quot;browser_action&quot;: {
+    &quot;default_icon&quot;: &quot;icon.png&quot; ,
+    &quot;default_title&quot;: &quot;Weather&quot;,
+    &quot;default_popup&quot;: &quot;popup.html&quot;
+  },
+
+
+
+值得一提的是chrome应用里面的HTML页面可以互相访问各自DOM树中的全部元素，或者互相调用其中的函数。
+
+下图显示了一个chrome应用的弹窗的架构。弹窗的内容是由HTML文件（popup.html）定义的web页面。它不必复制背景页面(background.html)里的代码，因为它可以直接调用背景页面中的函数！
+
+应用文件的引用
+任何需要的文件都可以放到应用（扩展）中，但是怎么使用它们呢？一般的说，可以像在普通的HTML文件中那样使用相对地址来引用一个文件。下面的例子演示了如何引用images子目录下的文件myimage.png
+1
+&lt;img src=&quot;img/myimage.png&quot; alt=&quot;&quot;&gt;">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="chrome扩展应用开发教程之开发chrome应用基础"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">chrome扩展应用开发教程之开发chrome应用基础</h1>
+  
+
+      <time datetime="2011-10-21T11:55:17.000Z"><a href="/2011/10/21/chrome扩展应用开发教程之开发chrome应用基础/">2011年10月21日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>不得不说<strong>chrome</strong>做的真的不错，听了貘大大关于<strong>chrome插件</strong>机制的讲座，就有亲手做个chrome应用的冲动，这个周末终于抽时间做了一个简单的天气预报插件，原理还是很简单的，采用了weather.com.cn的数据，因为比较熟悉这个weather.com.cn的接口，所以很快就搞定一个简单的chrome天气预报应用了。废话不多说了，开始正文。</p>
+<h2>chrome应用开发基础知识</h2>
+<p>chrome扩展应用是由html、css和javascript组成的，所以chrome应用的门槛比较低，对于一个<strong>前端开发</strong>者，只要读懂了chrome的开发文档，就可以很快的上手一个chrome应用。</p>
+<p>每个chrome扩展都应该包含下面的文件：</p>
+<blockquote>
+<p>一个包括一个manifest.json文件，是个配置文件，json格式，通过manifest.json可以设置应用的icon，指定默认的background.html或者popup.html……<br>一个或多个html文件（除非这个应用是一个皮肤）<br>可选的一个或多个javascript文件<br>可选的任何需要的其他文件，例如图片</p>
+</blockquote>
+<p>在开发应用（扩展）时，需要把这些文件都放到同一个目录下。发布应用（扩展）时，这个目录全部打包到一个应用（扩展）名是.crx的压缩文件中。如果使用<a href="https://chrome.google.com/webstore/developer/dashboard" target="_blank">Chrome Developer Dashboard</a>，上传应用（扩展），可以自动生成.crx文件。</p>
+<p>下图是我天气预报插件的文件列表：<br><a href="/uploads/2011/10/2011-10-21_215004.png"><img src="/uploads/2011/10/2011-10-21_215004.png" alt="chrome天气预报插件目录结构" title="chrome天气预报插件目录结构"></a></p>
+<h2>chrome应用界面控制</h2>
+<p>chrome应用会以browser action或page action的形式在chrome浏览器界面上展现出来。每个应用扩展最多可以有一个browser action或page action。当应用（扩展）的图标是否显示出来是取决于单个的页面时，应当选择page action；当其它情况时可以选择browser action。</p>
+<p>例如gmail提醒应用使用了browser action，它在工具栏上增加一个图标：</p>
+<p><a href="/uploads/2011/10/gmail.png"><img src="/uploads/2011/10/gmail.png" alt="gmail应用使用browser action提示" title="gmail应用使用browser action提示"></a></p>
+<p>这个新闻阅读应用也使用了browser action，当点击时会弹出一个气泡窗口popup.html：<br><a href="/uploads/2011/10/news.png"><img src="/uploads/2011/10/news.png" alt="news使用的是popup的方式" title="news使用的是popup的方式"></a></p>
+<p>另外chrome还包括了<a href="http://dev.chromium.org/developers/design-documents/desktop-notifications/api-specification" target="_blank">桌面提醒</a>（gmail新邮件提醒），主题（chrome皮肤），应用设置页面（应用设置页面），选项卡页面（新选项卡页面）等多种界面形式，本文示例使用的是browser action和popup页面来做一个简单的应用。</p>
+<h3>chrome应用基本架构</h3>
+<p>绝大多数chrome应用会包含一个背景页面(background page)，用来执行chrome应用扩展的主要功能。该背景页面时再manifest.json中设置的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="string">"background_page"</span>: <span class="string">"bg.html"</span>,<span class="comment">//默认背景页面</span>
+</pre></td></tr></table></figure>
+
+<p><a href="/uploads/2011/10/background.gif"><img src="/uploads/2011/10/background.gif" alt="chrome通过background.html来实现主要功能" title="chrome通过background.html来实现主要功能"></a>[/caption]</p>
+<p>上图显示了安装了应用扩展的chrome。黄色图标代表的browser action和蓝色图标代表的page action。在background.html文件里定义了browser action和javascript代码。在两个窗口里browser action都可以工作。</p>
+<p>背景页面并不是chrome应用中唯一的页面。例如，本例天气预报插件中还包括了一个弹窗页面(popup.html)，此页面也是又html页面实现的。在应用内部还可以使用chrome.tabs.create()或者window.open()来显示内部的HTML文件。</p>
+<p>chrome应用的弹窗界面也是可以在manifest.json中设置的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="string">"browser_action"</span>: {
+    <span class="string">"default_icon"</span>: <span class="string">"icon.png"</span> ,
+    <span class="string">"default_title"</span>: <span class="string">"Weather"</span>,
+    <span class="string">"default_popup"</span>: <span class="string">"popup.html"</span>
+  },
+</pre></td></tr></table></figure>
+
+<blockquote>
+<p>值得一提的是chrome应用里面的HTML页面可以互相访问各自DOM树中的全部元素，或者互相调用其中的函数。</p>
+</blockquote>
+<p>下图显示了一个chrome应用的弹窗的架构。弹窗的内容是由HTML文件（popup.html）定义的web页面。它不必复制背景页面(background.html)里的代码，因为它可以直接调用背景页面中的函数！</p>
+<p><a href="/uploads/2011/10/popup.gif"><img src="/uploads/2011/10/popup.gif" alt="chrome应用的弹窗界面" title="chrome应用的弹窗界面"></a></p>
+<h3>应用文件的引用</h3>
+<p>任何需要的文件都可以放到应用（扩展）中，但是怎么使用它们呢？一般的说，可以像在普通的HTML文件中那样使用相对地址来引用一个文件。下面的例子演示了如何引用images子目录下的文件myimage.png</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"img/myimage.png"</span> <span class="attribute">alt</span>=<span class="value">""</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p><a id="more"></a><br><strong>manifest.json</strong>中的文件引用也是采用了相对路径的方式，如下面的代码&quot;</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre>{
+<span class="string">"name"</span>: <span class="string">"My Extension"</span>,<span class="comment">//名字</span>
+<span class="string">"version"</span>: <span class="string">"2.1"</span>,<span class="comment">//版本</span>
+<span class="string">"description"</span>: <span class="string">"Gets information from Google."</span>,<span class="comment">//描述</span>
+<span class="string">"icons"</span>: { <span class="string">"128"</span>: <span class="string">"icon_128.png"</span> },<span class="comment">//icon</span>
+<span class="string">"background_page"</span>: <span class="string">"bg.html"</span>,<span class="comment">//默认背景page</span>
+<span class="string">"permissions"</span>: [<span class="string">"http://*.google.com/"</span>, <span class="string">"https://*.google.com/"</span>],<span class="comment">//跨域请求域名</span>
+<span class="string">"browser_action"</span>: {
+    <span class="string">"default_icon"</span>: <span class="string">"icon.png"</span> ,<span class="comment">//界面显示的icon</span>
+    <span class="string">"default_title"</span>: <span class="string">"Weather"</span>,<span class="comment">//界面icon鼠标滑过的title</span>
+    <span class="string">"default_popup"</span>: <span class="string">"popup.html"</span><span class="comment">//弹窗界面</span>
+  }
+}
+</pre></td></tr></table></figure>
+
+<h3>chrome应用页面间的通信</h3>
+<p>前面说到了，一个应用中background页面和popup页面之间可以随意的访问相互的DOM，并且可以使用对方的函数。这是因为同一个应用所有页面是在同一个页面的同一个线程中运行的（来自貘大大的ppt），它们之间可以直接互相调用各自的函数。</p>
+<p>可以使用 chrome.extension的方法来获取<strong>chrome应用</strong>中的页面，例如getViews()和getBackgroundPage()。一旦一个页面拥有了对这个应用中其它页面的引用，它就可以调用其它页面中的函数，并控制它们的DOM树。</p>
+<h2>chrome应用数据处理</h2>
+<h3>数据存储</h3>
+<p>开发应用肯定会用到数据的处理，chrome是高级浏览器，所以我们可以使用html5的web storage api来存储数据。</p>
+<h3>跨域请求数据</h3>
+<p>作为一个web前端开发者，我们知道普通网页能够使用XMLHttpRequest对象发送或者接受服务器数据， 但是它们受限于同源策略。 扩展可以不受该限制。</p>
+<p>但是chrome应用可以做到跨域请求数据，这是chrome的内置机制保证的。任何chrome扩展只要它先获取了跨域请求许可，就可以进行跨域请求。这个获取跨域请求许可方式就是在manifest.json中配置跨域授权的域名，例如：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="string">"permissions"</span>: [  <span class="string">"http://*.weather.com.cn/"</span> ]
+</pre></td></tr></table></figure>
+
+<p>跨域允许设置可以使用完整域名, 例如:</p>
+<ul>
+<li>&quot;<a href="http://www.google.com/" target="_blank">http://www.google.com/</a>&quot;</li>
+<li>&quot;<a href="http://www.gmail.com/" target="_blank">http://www.gmail.com/</a>&quot;</li>
+</ul>
+<p>或者使用模式匹配, 例如:</p>
+<blockquote>
+<p>&quot;<a href="http://*.google.com/" target="_blank">http://*.google.com/</a>&quot;</p>
+</blockquote>
+<p>这里还需要注意访问权限是根据访问协议(匹配模式里的http或者https或者其他协议名)及域名来授予的。例如某个扩展希望同时基于https和http协议访问某个域或者某些域，那么它必须分别获取基于这两种协议的访问允许(类似下面这样的声明):</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="string">"permissions"</span>: [
+  <span class="string">"http://www.google.com/"</span>,
+  <span class="string">"https://www.google.com/"</span>
+]
+</pre></td></tr></table></figure>
+
+<h3>跨域的安全性</h3>
+<p>跨域必然要面对的一个问题就是安全问题，尤其是chrome应用中，如果一个chrome应用留有安全隐患，那么所有在chrome浏览的页面都有危险，所以我们编写的背景页需要注意不要成为跨域脚本的牺牲品。例如下面的代码，就很危险：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();
+xhr.open(<span class="string">"GET"</span>, <span class="string">"http://api.example.com/data.json"</span>, <span class="literal">true</span>);
+xhr.onreadystatechange = <span class="keyword">function</span>() {
+  <span class="keyword">if</span> (xhr.readyState == <span class="number">4</span>) {
+    <span class="comment">// 警告! 这里有可能执行了一段恶意脚本!</span>
+    <span class="keyword">var</span> resp = eval(<span class="string">"("</span> + xhr.responseText + <span class="string">")"</span>);
+    <span class="comment">// 警告! 这样处理有可能被注入恶意脚本!</span>
+    document.getElementById(<span class="string">"resp"</span>).innerHTML = xhr.responseText;
+    ...
+  }
+}
+xhr.send();
+</pre></td></tr></table></figure>
+
+<p>要处理这些问题，需要用到json的解析器<code>JSON.parse</code>，在高级浏览器（比如chrome）中已经集成了JSON的操作，不需要引入json.js就可以操作了，所以上面的代码可以改写成：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();
+xhr.open(<span class="string">"GET"</span>, <span class="string">"http://api.example.com/data.json"</span>, <span class="literal">true</span>);
+xhr.onreadystatechange = <span class="keyword">function</span>() {
+  <span class="keyword">if</span> (xhr.readyState == <span class="number">4</span>) {
+    <span class="comment">// 警告! 这里有可能执行了一段恶意脚本!</span>
+    <span class="keyword">var</span> resp = JSON.parse(xhr.responseText);
+    <span class="comment">// 警告! 这样处理有可能被注入恶意脚本!</span>
+    document.getElementById(<span class="string">"resp"</span>).innerText= xhr.responseText;
+    ...
+  }
+}
+xhr.send();
+</pre></td></tr></table></figure>
+
+<p>今天关于<strong>chrome应用开发</strong>的教程就先写到这里，明天继续！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/chrome/">chrome</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2011/10/22/chrome扩展应用开发教程之天气预报应用开发/" class="prev" title="chrome扩展应用开发教程之天气预报应用开发">chrome扩展应用开发教程之天气预报应用开发</a>
+ 
+ 
+	<a href="/2011/10/19/javascript嵌套函数的效率问题/" class="next" title="javascript嵌套函数的效率问题">javascript嵌套函数的效率问题</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="chrome扩展应用开发教程之开发chrome应用基础"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

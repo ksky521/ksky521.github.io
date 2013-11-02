@@ -1,0 +1,801 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 17 页 - 归档 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">归档</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/17/主流浏览器的css-hack方法整理/">主流浏览器的CSS Hack方法整理</a></h1>
+  
+
+      <time datetime="2009-12-17T08:28:06.000Z"><a href="/2009/12/17/主流浏览器的css-hack方法整理/">2009年12月17日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>由于不同的浏览器，比如IE6、IE7、Firefox等，对CSS的解析不一样，因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。我在写<a href="http://js8.in/374.html">WordPress天气预报插件</a>的时候就碰见了一个<strong>CSS hack</strong>的问题：在IE6下不能显示正常。本来一个很好的<a href="http://js8.in/wordpress-weather">WordPress天气预报插件</a>就因为IE6给推迟了发布时间。所以对于前端开发人员<strong>CSS兼容性</strong>是个比较棘手的问题，当然对于不同浏览器也有不同的CSS hack的方法，此处本人就整理了一些常用到CSS hack方法，分享给大家，希望对大家有用。</p>
+<h3>CSS Hack浏览器的顺序</h3>
+<p>对于不同浏览器的CSS hack是有顺序区分的，一般的书写hack的顺序是：<strong>Firefox -&gt; IE7 -&gt; IE6 -&gt; 其他</strong>，<br>当然推荐大家使用Firefox+Firebug来进行调试，注意书写的时候要尽量标准，记住封口，很多时候不封口在FF，IE7下显示正常，可是在IE6下就全部乱了~</p>
+<h3>CSS Hack整理汇总</h3>
+<p>这些方法相信很多人已经很熟悉了：比如 <strong>IE6</strong>能识别下划线&quot;<strong><span style="color: #ff00ff;">_</span></strong>“和星号” <span style="color: #ff00ff;"><strong>* </strong></span>&quot;，<strong>IE7</strong>能识别星号&quot;<span style="color: #ff00ff;"><strong> *</strong></span> “，但不能识别下划线”<span style="color: #ff00ff;"><strong>_</strong></span>&quot;，而<strong>firefox</strong>两个都不能认识。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/17/主流浏览器的css-hack方法整理/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/16/使用if-ie-hack注释解决css以及js的兼容问题/">使用if IE hack注释解决CSS以及JS的兼容问题</a></h1>
+  
+
+      <time datetime="2009-12-16T15:39:55.000Z"><a href="/2009/12/16/使用if-ie-hack注释解决css以及js的兼容问题/">2009年12月16日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在<strong>IE CSS hack</strong>(<a href="http://js8.in/382.html">更多方法</a>)当中常用到if IE 来判断浏览器的类型，解决CSS甚至于JS的<strong>兼容</strong>性问题，之前大家可能知道if IE来解决<strong>CSS的兼容</strong>性问题，其实if IE不仅仅是用于CSS hack的使用，我们在前端开发中甚至可以使用<strong>if IE</strong>来做JS的处理，如下面的代码：</p>
+<blockquote>
+<p>&lt;!—[if IE 5]&gt; &lt;script&gt;document.write(“仅IE5.0与IE5.5可以识别”);&lt;/script&gt; &lt;![endif]—&gt;</p>
+<p>&lt;!—[if gte IE 5.0]&gt;&lt;script&gt;document.write(“IE5.0以及IE5.0以上版本都可以识别”);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if IE 6]&gt;&lt;script&gt;document.write(“仅IE6可识别”);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if lt IE 6]&gt;&lt;script&gt;document.write(“IE6以下版本可识别”);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if gte IE 6]&gt;&lt;script&gt;document.write(&quot;<strong>IE6</strong>以及IE6以上版本可识别&quot;);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if IE 7]&gt;&lt;script&gt;document.write(“仅IE7可识别”);&lt;/script&gt; &lt;![endif]—&gt;</p>
+<p>&lt;!—[if lt IE 7]&gt;&lt;script&gt;document.write(“IE7以下版本可识别”);&lt;/script&gt;&lt;![endif]—&gt;</p>
+<p>&lt;!—[if gte IE 7]&gt;&lt;script&gt;document.write(“IE7以及IE7以上版本可识别”);&lt;/script&gt;&lt;![endif]—&gt;<br>下面对<strong>if IE</strong>做一下详细的解释：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/16/使用if-ie-hack注释解决css以及js的兼容问题/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/14/curl常用的几个php函数/">cURL常用的几个PHP函数</a></h1>
+  
+
+      <time datetime="2009-12-14T09:26:11.000Z"><a href="/2009/12/14/curl常用的几个php函数/">2009年12月14日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>cURL是一个功能强大的<strong>PHP库</strong>，我们可以使用PHP的cURL采用<strong>GET</strong>、<strong>POST</strong>等方式发送请求，获取网页内容以及取一个XML文件并把其导入数据库等等。本文中收集了几种常用的<strong>PHP的cURL函数</strong>，以备使用。主要的有几个PHP函数用于：GET，POST，HTTP验证，<strong>302重定向</strong>，设置cURL的代理。</p>
+<h3>1、开启PHP的cURL功能</h3>
+<p>在Windows平台下，或者使用xampp之类的集成服务器的程序，会非常简单，你需要改一改你的<strong>php.ini</strong>文件的设置，找到php_curl.dll，并取消前面的分号注释就行了。如下所示：</p>
+<blockquote>
+<p>//取消注释，开启cURL功能<br>extension=php_curl.dll<br>在<strong>Linux</strong>下面，那么，你需要重新编译你的PHP了，编辑时，你需要打开编译参数——在configure命令上加上“–with-curl” 参数。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/14/curl常用的几个php函数/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/11/对引用外部javascript页面编码处理/">UTF-8页面引用外部编码为GBK的JS文件编码的处理</a></h1>
+  
+
+      <time datetime="2009-12-11T14:13:47.000Z"><a href="/2009/12/11/对引用外部javascript页面编码处理/">2009年12月11日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>昨天写的一个根据来访者IP返回来访者所在地区的天气情况的<a href="http://js8.in/wordpress-weather" title="WordPress 天气插件">WordPress天气插件</a>侧边栏，效果见本<a href="http://js8.in" title="断桥残雪部落格">博客的首页</a>侧边栏“天气预报”。其中根据<strong>IP</strong>返回来访者城市地理位置的方法是采用了QQ的一个接口：<a href="http://fw.qq.com/ipaddress,而这个接口提供的js为GBK编码的，由于[我的博客](http://js8.in" target="_blank">http://fw.qq.com/ipaddress,而这个接口提供的js为GBK编码的，由于[我的博客](http://js8.in</a> “断桥残雪部落格”)是UTF-8编码的，所以再次使用返回的城市名称在我页面显示的是<strong>乱码</strong>，而且不能引用的。</p>
+<p>上网找了很多关于JavaScript把<strong>GBK编码转换为UTF-8编码</strong>的js函数，可是都无济于事，并且如果单单为了编码问题就单独写一个js函数来处理GBK转UTF-8编码，这是很不合理的~由于本来我引用的是QQ的根据IP返回城市接口，我自己是不能够改变QQ官方的<strong>数据编码格式</strong>的，解决的方法唯有我在我的程序中把<strong>GBK编码</strong>的js强制转换为utf-8的格式，怎么转换是个比较难的方式，既然不能通过写js函数，那就只用用其他的方式了。</p>
+<p>最后我在网上找到了一个很好的解决方法，<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/11/对引用外部javascript页面编码处理/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/11/发布wordpress来访者天气预报插件/">发布WordPress来访者天气预报插件</a></h1>
+  
+
+      <time datetime="2009-12-11T09:43:44.000Z"><a href="/2009/12/11/发布wordpress来访者天气预报插件/">2009年12月11日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>细心的童鞋会发现我的博客昨天添加了一个新的功能——<strong>天气预报</strong>，昨天我说要发布给大家的，晚上睡觉之前，想了很久关于WordPress<strong>天气插件</strong>的编写，基本上在晚上就已经理清了思路，早上很早就起床了，没有吃饭就来到公司，趁着大家还没有来的时候，我要在九点上班之前把WordPress来访者天气预报的插件做出来，加上之前开发的<a href="http://js8.in/352.html">WordPress Follow5 插件</a>开发经验，自己写<a href="http://js8.in/wordpress-weather" title="WordPress天气插件下载"><strong>WordPress来访者天气插件</strong></a>已经是轻车熟路了~</p>
+<p>这个插件的使用的是<strong>jsonp技术</strong>，首先通过QQ的ip接口（<a href="http://fw.qq.com/ipaddress）获取到来访者的城市**地理信息**，然后使用WordPress的wp_footer的hook动态建立一个JavaScript文件，文件地址为我博客的[http://js8.in/weather/js.php](http://js8.in/weather/wordpress-weather" target="_blank">http://fw.qq.com/ipaddress）获取到来访者的城市**地理信息**，然后使用WordPress的wp_footer的hook动态建立一个JavaScript文件，文件地址为我博客的[http://js8.in/weather/js.php](http://js8.in/weather/wordpress-weather</a> “WordPress天气插件下载”)，js.php返回的是一段JavaScript代码，代码使用innerHTML插入来访者天气预报的内容。</p>
+<p>WordPress来访者天气预报插件采用<strong>精美的天气图标</strong>，完全DIV+CSS页面布局，保证了页面的美观大气，数据库信息来自中国气象网，保证了数据的可靠性，并且熟悉CSS的童鞋还可以修改插件中的CSS，以达到自己喜欢的页面效果。css地址为wp-content\plugins\weather\css.css</p>
+<p><strong>插件</strong>如不能正常使用，请看以下注意事项：</p>
+<blockquote>
+<p>1、保证您的主题皮肤中的footer.php中存在<strong>do_action(&#39;wp_footer&#39;);</strong>函数</p>
+<p>2、如出现其他情况，请来<a href="http://js8.in/374.html">插件页面</a>报错<br><a href="/uploads/2009/12/screenshot.jpg"><img src="/uploads/2009/12/screenshot.jpg" alt="WordPress来访者天气预报插件截图" title="WordPress来访者天气预报插件截图"></a></p>
+</blockquote>
+<p>使用方法：</p>
+<blockquote>
+<p>1、下载插件（<a href="http://js8.in/weather/vistor_weather.zip">点击下载</a>）并上传到wp-content\plugins目录中；<br>2、登录网站后台安装此插件；<br>3、然后进入“外观”，“小工具”，把“<strong>Weather Widget</strong>”小工具拖到右侧，填写插件显示名称（如：<strong>天气预报</strong>）即可。</p>
+</blockquote>
+<p><strong><span style="overflow-x: hidden; overflow-y: hidden; color: #ff0000;"><strong>最后更新时间：2009-12-12 8：55</strong></span></strong></p>
+<p><strong>下载地址：<a href="http://js8.in/weather/vistor_weather.zip"><a href="http://js8.in/weather/vistor_weather.zip">http://js8.in/weather/vistor_weather.zip</a></a></strong></p>
+<p><strong>当前最新版本为：0.1</strong></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/10/推荐六个在线制作loading图标的网站/">推荐六个在线制作Loading图标的网站</a></h1>
+  
+
+      <time datetime="2009-12-10T13:51:10.000Z"><a href="/2009/12/10/推荐六个在线制作loading图标的网站/">2009年12月10日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>经常来我的博客的而且细心的童鞋可以看见我的网站侧边栏加上了<strong>天气预报插件</strong>，这是我自己写的，代码稍后放出，写的时候需要一个Loading的gif，于是上网找生成<strong>Loading图标</strong>的网站，这里我推荐六个网站，希望大家喜欢~</p>
+<p>1、<a href="http://ajaxload.info/" target="_blank">Ajax Load</a></p>
+<p><a href="/uploads/2009/12/31.jpg"><img src="/uploads/2009/12/31.jpg" alt="Ajax Load 在线loading图标制作网站" title="Ajax Load"></a></p>
+<p><strong>Ajax Load</strong>所提供的种类丰富，也可以自定义Loading图标样式，推荐！</p>
+<p>2、<a href="http://loadinfo.net/" target="_blank">Load Info</a></p>
+<p><a href="/uploads/2009/12/watermark.jpg"><img src="/uploads/2009/12/watermark.jpg" alt="Load Info loading图标网站" title="Load Info"></a></p>
+<p><a href="http://loadinfo.net/" target="_blank">Load Info</a>在线制作<strong>Loading图标</strong>的免费网站，目前<strong>Load Info</strong>网站提供了90多种（总有一种适合你）动态图标。而且每种图标都自定义背景色和前景色，更有三种不同的尺寸可以选择，包括 16×16, 24×24, 48×46，很是方便实用。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/10/推荐六个在线制作loading图标的网站/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/07/设置htaccess应该注意的问题/">设置htaccess应该注意的问题</a></h1>
+  
+
+      <time datetime="2009-12-06T18:32:56.000Z"><a href="/2009/12/07/设置htaccess应该注意的问题/">2009年12月7日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天给<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>做SEO优化，发现自己没有自定义<strong>404</strong>页面，并且还发现存在index of列目录的漏洞，后来才知道原来WordPress都没有在htaccess中使用<strong>Options -Indexes</strong>来防止列目录，于是先加上了Options -Indexes来防止列目录的问题，自动转为了404错误，而不是403，呵呵~</p>
+<p>可是我改变了<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>的根目录下的htaccess配置把404页面指到了404.html，可是就是不能实现<strong>404页面</strong>的跳转呢？难道htaccess的404配置不可用？而是直接都返回到了<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙的首页</a>（<a href="http://love.js8.in）~这样子听说对**SEO**是很不好的，搜索引擎不会收录网站的首页，于是上网google原因，找了半天的原因也没有找到问题的根本所在~" target="_blank">http://love.js8.in）~这样子听说对**SEO**是很不好的，搜索引擎不会收录网站的首页，于是上网google原因，找了半天的原因也没有找到问题的根本所在~</a></p>
+<p>后来我在一片不起眼的文章中找到了问题的所在~<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/07/设置htaccess应该注意的问题/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/04/css清除浏览器默认样式注意点/">CSS清除浏览器默认样式注意点</a></h1>
+  
+
+      <time datetime="2009-12-04T10:15:20.000Z"><a href="/2009/12/04/css清除浏览器默认样式注意点/">2009年12月4日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天看了岁月如歌的一片文章《<a href="http://lifesinger.org/blog/2009/12/kissy-css-reset/" target="_blank">KISSY CSS Reset 1.0</a>》其中写到了<strong>css重置</strong>的代码</p>
+<blockquote>
+<p>/<em><br>KISSY CSS Reset<br>理念：1. reset 的目的不是清除浏览器的默认样式，这仅是部分工作。清除和重置是紧密不可分的。<br>2. reset 的目的不是让默认样式在所有浏览器下一致，而是减少默认样式有可能带来的问题。<br>3. reset 期望提供一套普适通用的基础样式。但没有银弹，推荐根据具体需求，裁剪和修改后再使用。<br>特色：1. 适应中文；2. 基于最新主流浏览器。<br>维护：玉伯, 正淳<br>Revision: 276
+</em>/</p>
+<p>/<strong> 清除内外边距 </strong>/<br>body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /<em> structural elements 结构元素 </em>/<br>dl, dt, dd, ul, ol, li, /<em> list elements 列表元素 </em>/<br>pre, /<em> text formatting elements 文本格式元素 </em>/<br>form, fieldset, legend, button, input, textarea, /<em> form elements 表单元素 </em>/<br>th, td /<em> table elements 表格元素 </em>/ {<br>margin: 0;<br>padding: 0;<br>}</p>
+<p>/<strong> 设置默认字体 </strong>/<br>body,<br>button, input, select, textarea /<em> for ie </em>/ {<br>font: 12px/1.5 tahoma, arial, simsun, sans-serif;<br>}<br>h1, h2, h3, h4, h5, h6 { font-size: 100%; }<br>address, cite, dfn, em, var { font-style: normal; } /<em> 将斜体扶正 </em>/<br>code, kbd, pre, samp { font-family: courier new, courier, monospace; } /<em> 统一等宽字体 </em>/<br>small { font-size: 12px; } /<em> 小于 12px 的中文很难阅读，让 small 正常化 </em>/</p>
+<p>/<strong> 重置列表元素 </strong>/<br>ul, ol { list-style: none; }</p>
+<p>/<strong> 重置文本格式元素 </strong>/<br>a { text-decoration: none; }<br>a:hover { text-decoration: underline; }</p>
+<p>sup { vertical-align: text-top; } /<em> 重置，减少对行高的影响 </em>/<br>sub { vertical-align: text-bottom; }</p>
+<p>/<strong> 重置表单元素 </strong>/<br>legend { color: #000; } /<em> for ie6 </em>/<br>fieldset, img { border: 0; } /<em> img 搭车：让链接里的 img 无边框 </em>/<br>button, input, select, textarea { font-size: 100%; } /<em> 使得表单元素在 ie 下能继承字体大小 </em>/<br>/<em> 注：optgroup 无法扶正 </em>/</p>
+<p>/<strong> 重置表格元素 </strong>/<br>table { border-collapse: collapse; border-spacing: 0; }<br>而我在腾讯webteam中看到一篇文章《<a href="http://webteam.tencent.com/?p=1481" target="_blank">border:none;与border:0;的区别</a>》中提到<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/04/css清除浏览器默认样式注意点/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/01/使用css控制打印页面格式/">使用CSS控制打印页面格式</a></h1>
+  
+
+      <time datetime="2009-11-30T17:12:39.000Z"><a href="/2009/12/01/使用css控制打印页面格式/">2009年12月1日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>之前做<a href="http://ditu.pujia.com/preview" target="_blank">地图</a>打印页面的时候，经理要求打印时候把打印的按钮去掉。这个时候就用到了控制<strong>打印</strong>的<strong>样式表</strong>了。<br>&lt;link rel=“stylesheet” type=“text/css” media=“print” href=“print.css” /&gt;</p>
+<p>正因为xhtml和css是分离的，所以我们可以在print.css里自由书写需要打印显示的内容和表现形式。那么这也要求我们在书写xhtml的时候更多考虑到打印显示效果的需求，良好的扩展标记和结构嵌套，使得我们轻松的使用display:none将内容设置为不显示。然后就是去书写 print.css内容的时候了，你象设置word一样去写你想打印的页面吧。<br>后来想了想，其实单独写一个css增加了请求次数，就想到<strong>了@media print</strong>{}的作用，代码如下</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="code"><pre><span class="at_rule">@<span class="keyword">media</span> print</span>{
+ <span class="class">.printdesc</span>
+<span class="rules">{
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">0</span>;</span></span>
+    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">685</span>px;</span></span>
+    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">69</span>px;</span></span>
+    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#FFFFFF</span>;</span></span>
+    <span class="rule"><span class="attribute">float</span>:<span class="value">left;</span></span>
+    <span class="rule"><span class="attribute">overflow</span>:<span class="value">auto;</span></span>
+    <span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">0</span>px;</span></span>
+<span class="rule">}</span></span>
+<span class="class">.text</span><span class="rules">{
+    <span class="rule"><span class="attribute">float</span>:<span class="value">right;</span></span>
+    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">688</span>px;</span></span>
+    <span class="rule"><span class="attribute">margin-top</span>:<span class="value"><span class="number">20</span>px;</span></span>
+<span class="rule">}</span></span>
+<span class="class">.printlink</span><span class="rules">{
+    <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">0</span>px;</span></span>
+    <span class="rule"><span class="attribute">display</span>:<span class="value">none;</span></span>
+    <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">0</span>px;</span></span>
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value">-<span class="number">10</span>;</span></span>
+
+<span class="rule">}</span></span>
+<span class="class">.printlink</span> <span class="tag">a</span><span class="rules">{
+    <span class="rule"><span class="attribute">display</span>:<span class="value">none;</span></span>
+<span class="rule">}</span></span>
+}
+</pre></td></tr></table></figure>
+
+<p>后来想到如果打印页面的某一部分，可以使用iframe来进行操作，现在的打印页面的局部内容基本上就是使用iframe进行处理的~特此记录一下</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/">javascript高效简洁代码的编写及优化技巧</a></h1>
+  
+
+      <time datetime="2009-11-27T22:46:59.000Z"><a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/">2009年11月28日</a></time>
+    </header>
+    <div class="entry">
+      
+        <h3>前言</h3>
+<p>随着互联网前端技术的革新，<strong>javascript</strong>越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函数可以放着不动，而js不同，如果加入很多很多无用的函数会大大的占有带宽，不利于用户体验。下面结合笔者实际开发过程中遇到的问题，以及自己收集的技巧，谈谈js高效简洁代码的编写及其优化的技巧。当然网上也有很多类似的文章，不过建议大家还是不要人云亦云，真正适合自己的技巧跟编写习惯才是最好的！</p>
+<h3>真假的判断</h3>
+<p>Javascript中有null、undefined、string、number、boolean五种基本的类型，一般判断真假或者为空的时候大家会使用下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre>
+<span class="keyword">if</span>(a==<span class="literal">true</span>){
+    <span class="comment">//doSomeTing();</span>
+}```但是这种方法很不简洁，我们完全可以使用<span class="number">1</span>，<span class="number">0</span>来判断，比如我们设定一个a，如果a为假，我们就改成真，而a在程序后面可能用于判断，最简单也是最好理解的方法就是下面的写法
+```javascript
+
+<span class="keyword">var</span> a=<span class="literal">false</span>;
+<span class="keyword">if</span>(a==<span class="literal">false</span>){
+    a=<span class="literal">true</span>;
+}
+```既然提到了<span class="number">0</span>，<span class="number">1</span>，肯定有人想到了第二种写法：
+```javascript
+
+<span class="keyword">var</span> a=<span class="number">0</span>;
+<span class="keyword">if</span>(!a){
+    a=<span class="number">1</span>;
+}
+```这个代码还可以进一步简写优化，就是使用js的三元运算符，也就是三目运算符：
+```javascript
+
+<span class="keyword">var</span> a=<span class="number">0</span>;
+!a?a=<span class="number">1</span>?<span class="literal">null</span>;
+</pre></td></tr></table></figure>
+
+<p>还有一点，对于空字符串的判断，往往采用<strong>if（a==“”）</strong>,其实对于空字符本身就是false，下面我总结了下Javascript中的真假值，希望对大家有用<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

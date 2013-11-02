@@ -1,0 +1,844 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 6 页 - 归档：2010 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2010</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/03/08/jquery插件-wbox发布/">jQuery插件--wBox发布</a></h1>
+  
+
+      <time datetime="2010-03-08T13:56:44.000Z"><a href="/2010/03/08/jquery插件-wbox发布/">2010年3月8日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>经过大约一周的时间，wBox终于跟大家见面啦，这是<a href="http://js8.in">断桥残雪</a>写的第一个jQuery插件，开发时间比较急促，所以有不足之处希望大家指出。</p>
+<p><strong><a href="http://code.google.com/p/follow5api/downloads/list" target="_blank">wBox</a></strong>——轻量级的弹出窗口<strong>jQuery插件</strong>，基于jQuery1.4开发，主要实现弹出框的效果，并且加入了很多有趣的功能，比如可img灯箱效果，callback函数，显示隐藏层，Ajax页面，iframe嵌入页面……</p>
+<ol>
+<li>背景透明度可以根据实际情况进行调节，甚至不设置背景</li>
+<li>可以根据需要添加wBox标题</li>
+<li>支持设置窗口位置，默认为在中心显示</li>
+<li>支持callback函数</li>
+<li>支持html内容自定义</li>
+<li>img灯箱看图功能</li>
+<li>支持在wBox显示#ID的内容</li>
+<li>支持Ajax页面内容</li>
+<li>支持设置背景，不设置背景</li>
+<li>支持wBox拖拽功能</li>
+<li>ESC键，或者在背景上双击即可关闭wBox</li>
+<li>.wBoxClose的内容click可以关闭wBox，无论是组装的html，还是隐藏的html，甚至于iframe的内容中的.wBoxClose<br>下面简单介绍下wBox的使用方法：</li>
+</ol>
+<h3>最简单的使用方法</h3>
+<ol>
+<li>首先<a href="http://code.google.com/p/follow5api/downloads/list" title="下载wbox" target="_blank">下载wBox</a>文件，然后将wBox中的</li>
+<li>引入wbox.js文件</li>
+<li>引入wbox.css文件</li>
+<li><span style="color: #ff6600;"><strong>注意</strong></span>：wBox源代码文件夹中的图片要跟js，css放在相同的目录下,loading.gif要跟你页面放在同一个目录<br>html代码如下：</li>
+</ol>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>[这是一个隐藏wBox](#nosee)
+<span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"nosee"</span> <span class="attribute">style</span>=<span class="value">"display:none"</span>&gt;</span>这里是个隐藏的id为nosee的DIV<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+[这是一个image wBox](http://js8.in/wbox/001.jpg)
+</pre></td></tr></table></figure>
+
+<p>js代码如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>$(<span class="string">".wBox"</span>).wBox();
+</pre></td></tr></table></figure>
+
+<p>这样就建立了一个最简单的wBox.</p>
+<p><div id="nosee" style="display:none">这里是个隐藏的id为nosee的DIV</div><br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/03/08/jquery插件-wbox发布/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/03/08/ie中image-onload失效的问题/">IE中Image.onload失效的问题</a></h1>
+  
+
+      <time datetime="2010-03-08T08:43:02.000Z"><a href="/2010/03/08/ie中image-onload失效的问题/">2010年3月8日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>最近在做wBox开发中，需要做一个图片的幻灯片效果，为了方便加载速度，我使用了<strong>new Iamge</strong>的对象方法来<strong>预加载图片</strong>，当图片onLoad就运行一个函数来计算图片的大小尺寸，进行<a href="http://js8.in/451.html" title="jQuery easing动画效果扩展">jQuery动画</a>，以及切换图片src，在firefox下开发完成后，可是到了IE下进行调试总是不会触发<strong>onload</strong>事件，不管是IE8、IE7还是万恶的IE6，都不会触发onload事件，我很迷惑，后来在google上找到了<strong>解决</strong>的方法：一下为引用部分</p>
+<p>最初的代码如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> img = <span class="keyword">new</span> Image;
+img.src = <span class="string">"test.gif"</span>;
+img.onload = <span class="keyword">function</span>(){
+    alert ( img.width );
+};
+</pre></td></tr></table></figure>
+
+<p>这段代码看着没什么问题，但是为什么onload没有被IE调用呢？因为IE会缓存图片，第2次加载的图片，不是从服务器上传过来的，而是从缓冲区里加载的。是不是从缓冲区里加载的图片就不触发onload事件呢？我于是我测试了以下代码，成功了～</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> img = <span class="keyword">new</span> Image;
+img.onload = <span class="keyword">function</span>(){
+    alert ( img.width );
+};
+img.src = <span class="string">"test.gif"</span>;
+</pre></td></tr></table></figure>
+
+<p>我把onload写到前面去，先告诉浏览器如何处理这张图片，再指定这张图片的源，这样就正常了。所以，不是IE没有触发onload事件，而是因为加载缓冲区的速度太快，以至于没有运行到img.onload的时候，onload事件已经触发了。这让我想到了Ajax，我们在写xmlhttp的时候，都是先指定onstatechange的回调函数，然后再send数据的，道理是一样的。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/03/05/jquery实现拖拽功能/">jQuery实现拖拽功能</a></h1>
+  
+
+      <time datetime="2010-03-04T18:36:59.000Z"><a href="/2010/03/05/jquery实现拖拽功能/">2010年3月5日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在360开发中，使用了我写的一个jQuery wBox插件，可是这个wBox只是根据项目需要进行的修改，没有加上拖拽功能，而我正在写新的wBox插件加上了简单的拖拽功能，wBox已经进行到最后样式修改、程序调试阶段，基本功能已经实现。言归正传，结合wBox部分源代码说说jQuery的拖拽功能实现。<br><a href="/uploads/2010/03/Snap1.jpg"><img src="/uploads/2010/03/Snap1.jpg" alt="jQuery wBox插件预览" title="jQuery wBox插件预览"></a></p>
+<p>要写一个拖拽效果，必须区分开mousedown，mouseup，mousemove 三个鼠标的不同状态，当mousedown的时候激发拖拽，表示拖拽开始，当mouseup的时候自然拖拽就结束，而mousemove的时候是拖拽的过程，这个过程就要不停的获取鼠标的位置，根据鼠标运动到得位置设置要拖拽的目标div的位置，具体就不解释啦，很简单的原理，很简单的代码，放出wBox drag部分的代码，希望对大家有用，C为拖拽的目标对象： 
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/03/05/jquery实现拖拽功能/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/21/使用css设置文字反选的背景颜色/">使用CSS设置文字反选的背景颜色</a></h1>
+  
+
+      <time datetime="2010-02-21T11:51:39.000Z"><a href="/2010/02/21/使用css设置文字反选的背景颜色/">2010年2月21日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在计算机操作中经常会有<strong>反选</strong>出现，系统一般会根据选择区域的颜色，显示出补色。但windows默认的文字选择时，背景为蓝色，前景色为白色，如果背景是深色，则文字为蓝色，<strong>背景</strong>变成白色。如下图所示：</p>
+<p><a href="/uploads/2010/02/b201022115279.gif"><img src="/uploads/2010/02/b201022115279.gif" alt="反选默认样式" title="反选默认样式"></a></p>
+<p>能不能改变选择的默认颜色呢，也许很多人对这个问题不是很在意，也可能你早就见到过这个效果了，但是却忽略了。<a href="http://www.quirksmode.org/css/selection.html" target="_blank">查看示例</a>(<span style="color: #00ccff;">请在非IE浏览器下查看</span>)</p>
+<p>从博客里可以看到PPK给出了如下的CSS代码：</p>
+<blockquote>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="code"><pre><span class="pseudo">::-moz-selection</span><span class="rules">{    <span class="comment">/*针对Firefox*/</span>
+<span class="rule">&gt;     <span class="attribute">background</span>:<span class="value"><span class="hexcolor">#cc0000</span>;</span></span>
+<span class="rule">&gt;     <span class="attribute">color</span>:<span class="value"><span class="hexcolor">#fff</span>;</span></span>
+<span class="rule">&gt; }</span></span>
+&gt; 
+&gt; <span class="pseudo">::selection</span> <span class="rules">{
+<span class="rule">&gt;     <span class="attribute">background</span>:<span class="value"><span class="hexcolor">#cc0000</span>;</span></span>
+<span class="rule">&gt;     <span class="attribute">color</span>:<span class="value"><span class="hexcolor">#fff</span>;</span></span>
+<span class="rule">&gt; }</span></span>
+&gt; 
+&gt; <span class="tag">code</span><span class="pseudo">::-moz-selection</span> <span class="rules">{  <span class="comment">/*code是标签选择器，可以换成p或span等*/</span>
+<span class="rule">&gt;     <span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#333333</span>;</span></span>
+<span class="rule">&gt; }</span></span>
+&gt; 
+&gt; <span class="tag">code</span><span class="pseudo">::selection</span> <span class="rules">{
+<span class="rule">&gt;     <span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#333333</span>;</span></span>
+<span class="rule">&gt; }</span></span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>通过以上代码可以看出，你完全可以给不同的容器定义不同的反选背景颜色，</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/09/javascript事件触发列表与详解/">Javascript事件触发列表与详解</a></h1>
+  
+
+      <time datetime="2010-02-09T09:06:53.000Z"><a href="/2010/02/09/javascript事件触发列表与详解/">2010年2月9日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天在司徒正美（<a href="http://www.cnblogs.com/rubylouvre/archive/2010/02/09/1632990.html" target="_blank">原文</a>）的博客上看见一个关于javascript事件触发列表的文章，感觉不错，拿来给大家分享一下，本文中涉及到了很多javascript的事件，有不同浏览器差异的事件，大家必要的时候可以做以下参考<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/02/09/javascript事件触发列表与详解/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/08/cssjquery实现滑动幻灯片实例详解/">CSS+jQuery实现滑动幻灯片实例详解</a></h1>
+  
+
+      <time datetime="2010-02-08T10:18:01.000Z"><a href="/2010/02/08/cssjquery实现滑动幻灯片实例详解/">2010年2月8日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天我看见一个比较不错的<strong>jQuery幻灯片</strong>教程，比我之前的文章《<a href="http://js8.in/462.html" title="两个简单的jQuery幻灯片实例">两个简单的jQuery幻灯片实例</a>》写的更为详细，并且有框架布局的演示图片，特地转载来，部分英文不翻译了，很简单的~</p>
+<h3>HTML部分代码</h3>
+<p>Start with having a wrapping container div called <em>main_view</em>, and two sections nested inside called <em>image_reel</em> and <em>paging.</em> The <em>image_reel _will contain the sliding images, and _paging</em> contains the paging controls. Take a look at the image below for a visual.</p>
+<blockquote>
+<figure class="highlight lang-html"><div"><figcaption><span>class="main_view</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="code"><pre>
+&gt;     <span class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"window"</span>&gt;</span>
+&gt;         <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"image_reel"</span>&gt;</span>
+&gt;             [![](reel_1.jpg)](#)
+&gt;             [![](reel_2.jpg)](#)
+&gt;             [![](reel_3.jpg)](#)
+&gt;             [![](reel_4.jpg)](#)
+&gt;         <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+&gt;     <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+&gt;     <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"paging"</span>&gt;</span>
+&gt;         [1](#)
+&gt;         [2](#)
+&gt;         [3](#)
+&gt;         [4](#)
+&gt;     <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+&gt; <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p><a href="http://js8.in/mywork/jq_slider/"><img src="/uploads/2010/02/1.jpg" alt="css+jQuery实现滑动幻灯片实例教程" title="css+jQuery实现滑动幻灯片实例教程"></a><br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/02/08/cssjquery实现滑动幻灯片实例详解/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/07/less—让css如此简单/">Less—让CSS如此简单</a></h1>
+  
+
+      <time datetime="2010-02-07T09:47:27.000Z"><a href="/2010/02/07/less—让css如此简单/">2010年2月7日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><a href="/uploads/2010/02/less.png"><img src="/uploads/2010/02/less.png" alt="less" title="less"></a></p>
+<p>写<strong>CSS</strong> 最痛苦的是要搞定一堆<strong>浏览器兼容</strong>bug ，其次就是要面对CSS 不是programming language 这现实，不存在其他程式语言常见的变数、运算、继承等概念，使原本简单的工作变得冗长，并且使维护工作变得麻烦。<br><strong>less</strong> 的出现便是为了解决这个问题：在现有CSS syntax 的基础上，为CSS 加入程式语言的特性，包括变数、scope、nested rules、运算、继承。<br>看例子你便会明白：</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>@brand_color: #F0F;
+
+#container {
+div {
+color: @brand_color;
+border: none; }
+p {
+color: @brand_color;
+}
+}
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/02/07/less—让css如此简单/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/05/php二维数组去重复项函数/">PHP二维数组去重复项函数</a></h1>
+  
+
+      <time datetime="2010-02-05T08:42:15.000Z"><a href="/2010/02/05/php二维数组去重复项函数/">2010年2月5日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>PHP数组去除<strong>重复项</strong>有个内置函数<strong>array_unique</strong>()，但是php的array_unique函数只适用于一维数组，对多维数组并不适用，以下提供一个<strong>二维数组</strong>的array_unique函数</p>
+<blockquote>
+<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre><span class="comment">//二维数组去掉重复值</span>
+&gt; <span class="function"><span class="keyword">function</span> <span class="title">array_unique_fb</span><span class="params">(<span class="variable">$array2D</span>)</span>{</span>
+&gt;      <span class="keyword">foreach</span> (<span class="variable">$array2D</span> <span class="keyword">as</span> <span class="variable">$v</span>){
+&gt;          <span class="variable">$v</span> = join(<span class="string">","</span>,<span class="variable">$v</span>);  <span class="comment">//降维,也可以用implode,将一维数组转换为用逗号连接的字符串</span>
+&gt;          <span class="variable">$temp</span>[] = <span class="variable">$v</span>;
+&gt;      }
+&gt;      <span class="variable">$temp</span> = array_unique(<span class="variable">$temp</span>);    <span class="comment">//去掉重复的字符串,也就是重复的一维数组</span>
+&gt;     <span class="keyword">foreach</span> (<span class="variable">$temp</span> <span class="keyword">as</span> <span class="variable">$k</span> =&gt; <span class="variable">$v</span>){
+&gt;         <span class="variable">$temp</span>[<span class="variable">$k</span>] = explode(<span class="string">","</span>,<span class="variable">$v</span>);   <span class="comment">//再将拆开的数组重新组装</span>
+&gt;     }
+&gt;     <span class="keyword">return</span> <span class="variable">$temp</span>;
+&gt; }
+</pre></td></tr></table></figure>
+
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/04/javascript正则表达式详解/">Javascript正则表达式详解</a></h1>
+  
+
+      <time datetime="2010-02-03T17:57:08.000Z"><a href="/2010/02/04/javascript正则表达式详解/">2010年2月4日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><strong>js正则表达式</strong>是很多js开发人员比较头疼的事情，也很多人不愿意学习，只是必要的时候上网查一下就可以啦~本文中详细的把javascript正则表达式的用法进行了列表，希望对于大家学习<strong>javascript正则</strong>表达式有一定的帮助。</p>
+<p><strong>建立正则表达式对象语法
+</strong>re = new <span style="color: #008080; padding: 0px; margin: 0px;">RegExp</span>(/pattern/[flags])</p>
+<p><strong>flags 参数说明：
+</strong><span style="color: #ff6600; padding: 0px; margin: 0px;">g</span> （全文查找出现的所有 <em>pattern</em>）<br><span style="color: #ff6600; padding: 0px; margin: 0px;">i</span> （忽略大小写）<br><span style="color: #ff6600; padding: 0px; margin: 0px;">m</span> （多行查找）</p>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/02/04/javascript正则表达式详解/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/02/03/简单修改-htaccess来提高yslow等级/">简单修改.htaccess来提高Yslow等级</a></h1>
+  
+
+      <time datetime="2010-02-03T13:40:49.000Z"><a href="/2010/02/03/简单修改-htaccess来提高yslow等级/">2010年2月3日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>最近一直在修改我的<a href="http://love.js8.in" title="爱墙许愿送祝福" target="_blank">爱墙程序</a>，其中对于<strong>Yslow的等级</strong>纳入了考虑，之前的空间不支持自定义<strong>htaccess</strong>文件，现在的空间支持自定义htaccess，在以前的文章中我写过一篇关于htaccess的文章，今天我在结合<strong>爱墙许愿送祝福</strong>（<a href="http://love.js8.in）的网站，来说说通过修改htaccess达到Yslow优化，等级提高的方法，大家可以看看[http://love.js8.in](http://love.js8.in)的Yslow等级已经到了**B**，分数是85~87之间，由于网站使用了jQuery的FaceBox插件以及量子统计，所以等级有点降低，可是总体等级是不大会变的，其实我就是通过修改htaccess达到Yslow优化的，这是最直接的方法，不需要修改程序代码既可以提高Yslow等级~废话不说啦，进入正题吧。" target="_blank">http://love.js8.in）的网站，来说说通过修改htaccess达到Yslow优化，等级提高的方法，大家可以看看[http://love.js8.in](http://love.js8.in)的Yslow等级已经到了**B**，分数是85~87之间，由于网站使用了jQuery的FaceBox插件以及量子统计，所以等级有点降低，可是总体等级是不大会变的，其实我就是通过修改htaccess达到Yslow优化的，这是最直接的方法，不需要修改程序代码既可以提高Yslow等级~废话不说啦，进入正题吧。</a></p>
+<p><a href="/uploads/2010/02/Snap2.jpg"><img src="/uploads/2010/02/Snap2.jpg" alt="简单修改htaccess文件提高Yslow等级优化" title="简单修改htaccess文件提高Yslow等级优化"></a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/02/03/简单修改-htaccess来提高yslow等级/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

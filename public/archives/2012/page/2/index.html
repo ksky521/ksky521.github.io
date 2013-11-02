@@ -1,0 +1,1222 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 - 归档：2012 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2012</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/09/13/关于javascript位运算符的技巧/">关于javascript位运算符的技巧</a></h1>
+  
+
+      <time datetime="2012-09-13T11:06:51.000Z"><a href="/2012/09/13/关于javascript位运算符的技巧/">2012年9月13日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天说下常用的javascript位运算符的技巧</p>
+<h2>js位运算来判断奇偶数</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">if</span>(n&<span class="number">1</span>===<span class="number">0</span>){
+<span class="comment">//偶数</span>
+}<span class="keyword">else</span>{
+<span class="comment">//奇数</span>
+}
+</pre></td></tr></table></figure>
+
+<h2>js位运算符来代替Math.floor</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>(<span class="number">2.9</span>|<span class="number">0</span>)===<span class="number">2</span>
+(~~<span class="number">2.9</span>)===<span class="number">2</span>
+(<span class="number">2.9</span>&gt;&gt;&gt;<span class="number">0</span>)===<span class="number">2</span>
+(<span class="number">2.9</span>&gt;&gt;<span class="number">0</span>)===<span class="number">2</span>
+(<span class="number">2.9</span>&lt;<span class="xml"><span class="tag">&lt;<span class="title">0)===2
+</span>//注意
+~~(<span class="attribute">-2.999</span>);//= <span class="attribute">-2</span>
+<span class="attribute">Math.floor</span>(<span class="attribute">-2.999</span>);// = <span class="attribute">-3</span></span>
+</pre></td></tr></table></figure>
+
+<h2>RGB2HEX</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">RGB2HEX</span><span class="params">(a,b,c)</span>{</span><span class="keyword">return</span><span class="string">"#"</span>+((<span class="number">256</span>+a&lt;<span class="xml"><span class="tag">&lt;<span class="title">8|b)&lt;&lt;8|c).toString(16).slice(1)}
+</span>//或者
+<span class="attribute">function</span> <span class="attribute">toHexString</span>(<span class="attribute">r</span>,<span class="attribute">g</span>,<span class="attribute">b</span>) {
+  <span class="attribute">return</span> ("<span class="attribute">00000</span>" + (<span class="attribute">r</span> &lt;&lt; <span class="attribute">16</span> | <span class="attribute">g</span> &lt;&lt; <span class="attribute">8</span> | <span class="attribute">b</span>)<span class="attribute">.toString</span>(<span class="attribute">16</span>))<span class="attribute">.slice</span>(<span class="attribute">-6</span>);
+}
+<span class="attribute">var</span> <span class="attribute">hex</span> = <span class="attribute">toHexString</span>(<span class="attribute">red</span>, <span class="attribute">green</span>, <span class="attribute">blue</span>);</span>
+</pre></td></tr></table></figure>
+
+<h2>检测相等关系</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="keyword">if</span>(a!=<span class="number">123</span>)
+<span class="keyword">if</span>(a^<span class="number">123</span>)
+<span class="comment">//注意：</span>
+<span class="literal">false</span> ^ <span class="number">1</span> <span class="comment">// 1</span>
+<span class="literal">true</span> ^ <span class="number">1</span> <span class="comment">// 0</span>
+<span class="number">2</span> ^ <span class="number">1</span> <span class="comment">// 3</span>
+{} ^ <span class="number">1</span> <span class="comment">// 1</span>
+</pre></td></tr></table></figure>
+
+<p>这个很好用的，比如下面的代码</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre><span class="keyword">var</span> isReady = <span class="number">0</span>;
+
+<span class="comment">// somewhere else</span>
+<span class="keyword">if</span>( isReady ) { }
+
+<span class="comment">// somewhere else, set isReady state to 1</span>
+isReady ^= <span class="number">1</span>;
+
+<span class="comment">// somewhere else, set isReady state to 0</span>
+isReady ^= <span class="number">1</span>;
+</pre></td></tr></table></figure>
+
+<h2>默认值</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="keyword">if</span> (!n) n = defaultValue;
+<span class="comment">//使用下面的代码</span>
+n||(n=defaultValue);
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/09/13/关于javascript位运算符的技巧/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/06/获取a标签和script标签的绝对路径和相对路径/">获取a标签和script标签的绝对路径和相对路径</a></h1>
+  
+
+      <time datetime="2012-08-06T10:22:35.000Z"><a href="/2012/08/06/获取a标签和script标签的绝对路径和相对路径/">2012年8月6日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>做了一个a标签和script标签获取绝对路径和相对路径的实验，实验代码如下：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">a</span> <span class="attribute">id</span>=<span class="value">"link"</span> <span class="attribute">href</span>=<span class="value">"a.html"</span>&gt;</span>a.html<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">id</span>=<span class="value">"script"</span> <span class="attribute">src</span>=<span class="value">'a.js'</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="function"><span class="keyword">function</span> <span class="title">$</span><span class="params">(id)</span>{</span>
+        <span class="keyword">return</span> document.getElementById(id);
+    }
+    alert(<span class="string">'link.href=&gt;'</span>+$(<span class="string">'link'</span>).href);
+    alert(<span class="string">'link.get=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>));
+    alert(<span class="string">'link.get0=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>,<span class="number">0</span>));
+    alert(<span class="string">'link.get1=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>,<span class="number">1</span>));
+    alert(<span class="string">'link.get2=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>,<span class="number">2</span>));
+    alert(<span class="string">'link.get4=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>,<span class="number">4</span>));
+
+    alert(<span class="string">'script.src=&gt;'</span>+$(<span class="string">'script'</span>).src);
+    alert(<span class="string">'script.get=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>));
+    alert(<span class="string">'script.get0=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>,<span class="number">0</span>));
+    alert(<span class="string">'script.get1=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>,<span class="number">1</span>));
+    alert(<span class="string">'script.get2=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>,<span class="number">2</span>));
+    alert(<span class="string">'script.get4=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>,<span class="number">4</span>));
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>分别在IE6~IE9（都是虚拟机原生，非ie9模拟）、chrome21、FF14，opera12.01，safari5.1.7中做出如下的实验结果:</p>
+<p>√代表绝对路径，×代表相对路径（即src或者href属性的值，如果为完整的路径，则是完整路径）</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>IE6</th>
+<th>IE7</th>
+<th>IE8</th>
+<th>IE9</th>
+<th>chrome 21</th>
+<th>FF 14</th>
+<th>safari 5.1.7</th>
+<th>opera 12</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>link.href</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>link.get</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>link.get0</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>link.get1</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>link.get2</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>link.get4</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.src</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>script.get</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.get0</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.get1</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.get2</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.get4</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody>
+</table>
+<p>详情见MSDN的介绍：<a href="http://msdn.microsoft.com/en-us/library/ms536429(v=VS.85" target="_blank"><a href="http://msdn.microsoft.com/en-us/library/ms536429(v=VS.85).aspx">http://msdn.microsoft.com/en-us/library/ms536429(v=VS.85).aspx</a></a>.aspx)</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/07/27/ecmascript-5的严格模式：语法限制/">ECMAScript 5的严格模式：语法限制</a></h1>
+  
+
+      <time datetime="2012-07-27T09:08:23.000Z"><a href="/2012/07/27/ecmascript-5的严格模式：语法限制/">2012年7月27日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在<strong>ECMAScript 5严格模式</strong>介绍的第一篇（<a href="/2012/07/26/ecmascript-5%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%9Astrict-mode%E4%BB%8B%E7%BB%8D/">ECMAScript 5的严格模式：strict mode介绍</a>）文章中提到了严格模式会在语法解析和代码执行两个方面做限制，抛出更多的异常。今天介绍的是<strong>ECMAScript 5严格模式</strong>的第一部分：语法限制。</p>
+<p>ECMAScript 5严格模式的语法限制有七个，下面一一介绍：</p>
+<h2>禁止函数出现相同的参数</h2>
+<p>我们知道在普通的函数中，多个参数可以相同（即使我们很少或者没有这样写过），但是在严格模式下，这样的行为是被禁止！<br>例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
+    alert(x+y);
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<p>在非严格模式下，后面的x会覆盖第一个x的传参，即运行结果实际为<code>2+3=5</code>。</p>
+<p>但是在严格模式下，上面的代码却会抛出类似“Strict mode function may not have duplicate parameter names”的语法异常。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
+    <span class="string">"use strict"</span>;
+    alert(x+y);
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<h2>禁止对象直接量的相同属性名</h2>
+<p>跟第一条相同，下面的代码在非严格模式是正常的，但是在严格模式却是禁止的，也是抛出语法异常（chrome 下为“Duplicate data property in object literal not allowed in strict mode”）</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> obj = {
+    a: <span class="number">1</span>,
+    a: <span class="number">2</span>
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<h2>禁止重新定义eval和arguments</h2>
+<p>严格模式中不能声明或重写 <code>eval</code> 和 <code>arguments</code><br>这两个标识符，亦即是说，它们不能出现在赋值运算的左边，也不能使用 var 语句来声明。</p>
+<p>另外，由于 catch 子句以及具名函数都会隐式地声明变量名，因此在它们的语法中也不允许用 eval 和 arguments 作为标识符。最后要强调的是，arguments 或 eval 也不能使用 delete 去删除。所以下面的代码在严格模式下都会抛出语法异常：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span class="comment">//向 eval或 arguments赋值</span>
+eval = <span class="keyword">function</span>() { }
+
+<span class="comment">//重新声明 eval或 arguments</span>
+<span class="keyword">var</span> arguments;
+
+<span class="comment">//将 eval或 arguments用做 catch子句的异常对象名</span>
+<span class="keyword">try</span> {
+    <span class="comment">// …</span>
+}
+<span class="keyword">catch</span> (eval) {
+    <span class="comment">// …</span>
+}
+
+<span class="comment">//将 eval或 arguments用做函数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">arguments</span><span class="params">()</span> {</span> }
+
+<span class="comment">//删除 arguments，或形式参数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>
+    <span class="keyword">delete</span> arguments;
+}
+</pre></td></tr></table></figure>
+
+<h2>禁止使用 0 前缀声明的 8 进制直接量</h2>
+<p>例如下面的代码在严格模式下面是错误的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="keyword">var</span> num = <span class="number">012</span>;
+alert(num);
+</pre></td></tr></table></figure>
+
+<p>而在非严格模式中，<code>num</code>因为0而被解析为八进制数值，所以<code>alert</code>出来的是十进制的<code>10</code></p>
+<h2>禁止delete显式声明的标识符、具名函数</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre><span class="comment">//删除变量名</span>
+<span class="keyword">var</span> x;
+<span class="keyword">delete</span> x;
+
+<span class="comment">//删除具名函数</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>}
+<span class="keyword">delete</span> foo;
+
+<span class="comment">//删除 arguments，或形式参数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x)</span> {</span>
+<span class="keyword">delete</span> x;
+}
+
+<span class="comment">//删除 catch子句中声明的异常对象</span>
+<span class="keyword">try</span>{} <span class="keyword">catch</span>(e) { <span class="keyword">delete</span> e }
+</pre></td></tr></table></figure>
+
+<p>在非严格模式中，通常这些操作只是“无效的”，并不会抛出异常。此外，用 delete操作其他一些不能被删除的对象属性、标识符时将导致执行期异常。</p>
+<h2>保留字增多</h2>
+<p>在严格模式中，在代码中使用一些扩展的保留字也会抛出异常。</p>
+<p>这些保留字包括：implements, interface, let,package, private, protected, public, static，以及 yield。</p>
+<h2>禁止使用with(){}</h2>
+<p>我们知道with会使作用域链延长，如果你使用严格模式编码，那么使用with语句会直接抛出语法异常。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/07/26/ecmascript-5的严格模式：strict-mode介绍/">ECMAScript5的严格模式strict mode介绍</a></h1>
+  
+
+      <time datetime="2012-07-26T09:53:24.000Z"><a href="/2012/07/26/ecmascript-5的严格模式：strict-mode介绍/">2012年7月26日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><strong>严格模式</strong>（Strict Mode）是ECMAScript 5中提出的一个新特性，在严格模式中的代码。这种严格的语境会防止某些特定的操作并抛出更多的异常。严格模式向前兼容，所以在不支持ES5的浏览器中是正常运行代码的，而只有支持严格模式的浏览器才会开启严格模式。</p>
+<h2>严格模式的好处</h2>
+<p>启用严格模式有以下好处：</p>
+<ol>
+<li>捕获一些编程错误，并抛出异常。</li>
+<li>阻止进行一些相对“不安全”的操作（例如访问全局变量），抛出异常。</li>
+<li>禁用一些让人迷惑的特性。</li>
+</ol>
+<p>启用严格模式，需要从下面两个方面来做限制（检查）</p>
+<ol>
+<li>语法解析阶段：如果在语法检测时发现语法问题，则整个代码块失效，并导致一个语法异常。</li>
+<li>阻止进行一些相对“不安全”的操作（例如访问全局变量），抛出异常。</li>
+<li>代码执行阶段：如果在运行期出现了违反严格模式的代码，则抛出执行异常。</li>
+</ol>
+<h2>使用严格模式</h2>
+<h3>在全局中使用严格模式</h3>
+<p>如果要在全局范围内使用严格模式，只需要在代码的第一行加上下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="string">"use strict"</span>;
+</pre></td></tr></table></figure>
+
+<p>这样在一个js文件，或者script标签内的所有代码都需要遵循严格模式的代码要求</p>
+<h3>函数中使用严格模式</h3>
+<p>如果要在某个函数中使用<strong>严格模式</strong>需要在函数的第一行加上<code>&quot;use strict&quot;;</code>，如下面的代码</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span>{</span>
+    <span class="string">"use strict"</span>;
+    <span class="comment">//……</span>
+}
+</pre></td></tr></table></figure>
+
+<h3>使用严格模式注意的情况</h3>
+<p>需要注意的是，如果<code>&quot;use strict&quot;;</code>不是出现在第一行（全局的、或者函数的），那么严格模式的启用会被忽略，即还是不会使用严格模式来解析执行代码。</p>
+<p>另外在函数的严格模式中函数体和函数声明部分就需要遵循严格模式，而不是只有函数体内的代码才遵循严格模式，例如在严格模式中不允许重新定义<code>eval</code>，说以下面的代码是会抛出异常的</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">eval</span><span class="params">()</span>{</span>
+    <span class="string">"use strict"</span>;
+    <span class="comment">//……</span>
+}
+</pre></td></tr></table></figure>
+
+<p>今天写到这，下一篇介绍严格模式下面的语法限制。<br>《<a href="/2012/07/27/ecmascript-5%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%9A%E8%AF%AD%E6%B3%95%E9%99%90%E5%88%B6/">ECMAScript 5的严格模式：语法限制</a>》</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/06/15/写了一个html5音乐播放器/">写了一个html5音乐播放器</a></h1>
+  
+
+      <time datetime="2012-06-15T08:25:26.000Z"><a href="/2012/06/15/写了一个html5音乐播放器/">2012年6月15日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>昨天查了一些audio资料，自己写了个html5音乐播放器，后来写上瘾了，晚上折腾了一下加上了多首音乐支持、添加了循环模式，添加了进度，歌词等功能，界面仿得亦歌，可是一些icon还是比较难看，毕竟自己不会设计，呵呵，上面的歌曲都是通过goldwave转的ogg格式。访问地址：<a href="http://4.qdemo.sinaapp.com/html5/audio/player.html" target="_blank">html5音乐播放器</a>.</p>
+<center><iframe src="http://4.qdemo.sinaapp.com/html5/audio/player.html" width="290" height="370" scrolling='no' frameborder="0"></iframe></center>
+
+<p><a href="http://4.qdemo.sinaapp.com/html5/audio/player.html" target="_blank">html5音乐播放器</a></p>
+<p>代码还算简洁，javascript只用了400行左右，css和html也不是很多，后期如果找个视觉帮忙设计下界面就帅了，哈哈</p>
+<p>主要功能：</p>
+<ol>
+<li>支持音乐列表</li>
+<li>支持歌词滚动</li>
+<li>歌词实时显示到title</li>
+<li>支持列表循环和单曲循环循环模式</li>
+<li>支持音量调节</li>
+<li>支持拖动改变播放进度</li>
+<li>更多功能等你去发现哦</li>
+</ol>
+<p>写的比较仓促，所有功能都是在一天内完成的，难免会有bug，欢迎拍砖</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/06/14/【ppt】那些年，我们一起跨过域/">【PPT】那些年，我们一起跨过域</a></h1>
+  
+
+      <time datetime="2012-06-14T08:59:26.000Z"><a href="/2012/06/14/【ppt】那些年，我们一起跨过域/">2012年6月14日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>这个是入职腾讯第二月做的跨域分享，介绍了五种跨域方式，比较了他们之间的优缺点，希望可以解决小组内经常遇见的<strong>跨域</strong>问题。另外简单列举了另外五个跨域的方式，因为不经常用，所以也就简单的一笔带过了。</p>
+<p>名字有点小清新，我想最后一个月的分享也是《那些年系列》：《那些年，我们一起跨过域》《那些年，我们错过的爱情（html5+css3）》，为什么是那些年呢，装清纯吧，感觉自己老了呗。</p>
+<p>言归正传，我介绍的五种跨域方式是：</p>
+<blockquote>
+<ol>
+<li>document.domain</li>
+<li>location.hash</li>
+<li>window.name</li>
+<li>postMessage</li>
+<li>flash</li>
+</ol>
+</blockquote>
+<p>以上五种跨域方式可能是现实工作中最常用的跨域方式，例如简单的<strong>跨域iframe自适应高度</strong>，你可以使用location.hash，跨子域可以使用<strong>document.domain</strong>，ppt每个方法都要详细的介绍，并且附上了我亲自写的demo哦~很有诚意是不（不要吐血），哈哈，好了又凑了一篇文章。另外附上昨天用css3画的企鹅：<a href="http://4.qdemo.sinaapp.com/qie.htm" target="_blank"><a href="http://4.qdemo.sinaapp.com/qie.htm">http://4.qdemo.sinaapp.com/qie.htm</a></a>。ps：office 2010的ppt切换动画好炫哦</p>
+<p>slideshare被墙，下载地址：<a href="http://4.qdemo.sinaapp.com/xdomain/naxieniankuayu.pptx" target="_blank">http://4.qdemo.sinaapp.com/xdomain/naxieniankuayu.pptx</a></p>
+<p><div style="width:425px" id="__ss_13232998"> <strong><a href="http://www.slideshare.net/ksky521/ss-13232998" title="那些年，我们一起跨过域" target="_blank">那些年，我们一起跨过域</a></strong> <iframe src="http://www.slideshare.net/slideshow/embed_code/13232998" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0" allowfullscreen></iframe> <div style="padding:5px 0 12px"> View more <a href="http://www.slideshare.net/thecroaker/death-by-powerpoint" target="_blank">PowerPoint</a> from <a href="http://www.slideshare.net/ksky521" target="_blank">ksky521</a> </div> </div><br>微盘下载：<a href="http://vdisk.weibo.com/s/6wt-O" target="_blank">http://vdisk.weibo.com/s/6wt-O</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/06/13/将uglifyjs添加到鼠标右键菜单/">将uglifyjs添加到鼠标右键菜单</a></h1>
+  
+
+      <time datetime="2012-06-12T17:48:29.000Z"><a href="/2012/06/13/将uglifyjs添加到鼠标右键菜单/">2012年6月13日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>之前几天根据YUICompressor和TBCompressor整合到鼠标右键菜单自己将<strong>uglifyjs</strong>也添加到了右键菜单，下面简单记录下过程。效果如下</p>
+<p><a href="/uploads/2012/06/uglifyjsmenu.png"><img src="/uploads/2012/06/uglifyjsmenu.png" alt="uglifyjs添加到鼠标右键菜单" title="uglifyjs添加到鼠标右键菜单"></a></p>
+<h2>配置windows nodepath环境</h2>
+<p>鼠标右键我的电脑，选择属性→高级属性管理→高级选项卡→环境变量，添加新的环境变量，名字为<code>NODE_PATH</code>，变量值为<strong>nodejs</strong>的安装路径，例如下面</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>C:<span class="command">\Program</span> Files<span class="command">\nodejs</span>
+</pre></td></tr></table></figure>
+
+<p>然后保存退出</p>
+<h2>安装uglifyjs</h2>
+<p>在命令行安装uglifyjs，</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">npm</span> install uglify-js -g
+</pre></td></tr></table></figure>
+
+<h2>安装uglifyjs到鼠标右键菜单</h2>
+<p>找到第二步安装的<strong>uglifyjs</strong>的路径下的bin文件夹，例如我的安装在：</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>C:<span class="command">\Program</span> Files<span class="command">\nodejs</span><span class="command">\node</span>_modules<span class="command">\npm</span><span class="command">\node</span>_modules<span class="command">\uglify</span>-js<span class="command">\bin</span>
+</pre></td></tr></table></figure>
+
+<p>然后下载uglifyjs的安装文件解压到这个文件夹</p>
+<p><a href="http://4.qdemo.sinaapp.com/tool/uglifyjsmenu.zip" target="_blank">uglifyjs到鼠标右键菜单安装文件</a></p>
+<ul>
+<li>双击运行<code>install.cmd</code>就可以安装了。</li>
+<li>卸载运行<code>uninstall.cmd</code>就可以卸载。</li>
+</ul>
+<p>主要的代码还是根据YUICompressor的安装文件改的，压缩的时候首先将源文件copy为dev作为备份，然后压缩替换原文件。例如a.js,压缩后变成a.dev.js原文件和压缩后的js文件。美化则是将美化后的代码存到bea.js，即a.js美化后为a.bea.js<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/06/13/将uglifyjs添加到鼠标右键菜单/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/06/12/pngfix-js可能导致xss攻击/">pngfix.js可能导致xss攻击</a></h1>
+  
+
+      <time datetime="2012-06-11T18:20:19.000Z"><a href="/2012/06/12/pngfix-js可能导致xss攻击/">2012年6月12日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天看了国外大佬Spanner的一篇关于pngfix的文章，已经到下班时间，就简单说说pngfix的xss攻击。</p>
+<h2>pngfix.js</h2>
+<p><code>pngfix.js</code>是IE6中解决png不透明的js方案，原理其实就是遍历了页面的img，然后使用滤镜来解决。</p>
+<h2>pngfix导致xss</h2>
+<p>pngfix.js使用了如下的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="keyword">var</span> imgID = (img.id) ? <span class="string">"id='"</span> + img.id + <span class="string">"' "</span> : <span class="string">""</span>;
+
+img.outerHTML = strNewHTML
+</pre></td></tr></table></figure>
+
+<p>如果使用如下的代码就会出现xss：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">1.png</span> <span class="attribute">id</span>=<span class="value">"'&gt;&lt;img src=1 onerror=alert(/png_fixed!/)&gt;"</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>详细原文地址：<a href="http://www.thespanner.co.uk/2012/06/12/pngfix/" target="_blank">http://www.thespanner.co.uk/2012/06/12/pngfix/</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/06/11/ie中iframe和document-selection-createrange导致跨域/">IE中iframe和document.selection.createRange导致跨域</a></h1>
+  
+
+      <time datetime="2012-06-10T17:50:15.000Z"><a href="/2012/06/11/ie中iframe和document-selection-createrange导致跨域/">2012年6月11日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>帮忙在活动中找bug，两层iframe，经过调试发现是<code>document.selection.createRange</code>导致的错误，在浏览器中报“拒绝访问”，猜测是跨域导致的。于是加上<code>document.domain</code>主域就搞定了。</p>
+<p>本来以为是两层iframe导致的（因为他们反映一层iframe没有问题），于是自己建了个demo，test.qq.com/qq1.html代码如下：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">iframe</span> <span class="attribute">src</span>=<span class="value">"http://demos.qq.com/qq2.html"</span> <span class="attribute">frameborder</span>=<span class="value">"0"</span> <span class="attribute">id</span>=<span class="value">"myIframe"</span>&gt;</span><span class="tag">&lt;/<span class="title">iframe</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>demos.qq.com/qq2.html代码如下：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="comment">//document.domain = 'qq.com';</span>
+    <span class="keyword">var</span> a = document.selection.createRange();
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>这样在IE9中访问<code>test.qq.com/qq1.html</code>就会报错，而把<code>qq2.html</code>和<code>qq1.html</code>都添加<code>document.domain=&#39;qq.com&#39;;</code>就可以了。暂时原因不明了，记录在此备份下，懂得朋友可以来说道说道</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2012/06/07/踩了apache配置虚拟主机的坑/">踩了apache配置虚拟主机的坑</a></h1>
+  
+
+      <time datetime="2012-06-07T13:46:11.000Z"><a href="/2012/06/07/踩了apache配置虚拟主机的坑/">2012年6月7日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>一直使用xampp做apache服务器，可是新版的xampp添加了虚拟主机就访问<code>127.0.0.1</code>也跳转到了虚拟主机去了，比如：我添加了<code>www.demo.com</code>，路径是<code>e:\www\demo</code>，而我的添加完之后，访问<code>127.0.0.1</code>竟然也是跑到了<code>www.demo.com</code>下面去。</p>
+<p>上网找了好多资料说是添加localhost的，于是在httpd.conf最后添加如下配置：</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre><span class="tag">&lt;VirtualHost *&gt;</span>
+    <span class="keyword">DocumentRoot</span> E:\www
+    <span class="keyword">ServerName</span> 127.0.0.1
+<span class="comment">#    ErrorLog logs/default-error_log</span>
+<span class="tag">&lt;/VirtualHost&gt;</span>
+
+<span class="tag">&lt;Directory "E:\www"&gt;</span>
+    <span class="keyword">Options</span> Indexes FollowSymLinks Multiviews
+    <span class="keyword">AllowOverride</span> All
+    <span class="keyword">Order</span> <span class="keyword">Allow</span>,<span class="keyword">Deny</span>
+    <span class="keyword">Allow</span> from all
+<span class="tag">&lt;/Directory&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>发现还是不行，继续查找，期间安装了PHPnow，也是类似的情况，后来无意中看到了NameVirtualHost这个配置，于是写成了：</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="title">NameVirtualHost</span> *
+</pre></td></tr></table></figure>
+
+<p>重启apache竟然可以了，坑爹啊，记录下，防止下次踩坑！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

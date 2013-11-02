@@ -1,0 +1,2564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[三水清]]></title>
+  <subtitle><![CDATA[专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧]]></subtitle>
+  <link href="http://js8.in/atom.xml" rel="self"/>
+  <link href="http://js8.in"/>
+  <updated>2013-11-02T08:18:07.605Z</updated>
+  <id>http://js8.in/</id>
+  <author>
+    <name><![CDATA[三水清]]></name>
+    <email><![CDATA[ksky521@gmail.com]]></email>
+  </author>
+  <generator uri="http://zespia.tw/hexo">Hexo</generator>
+  <entry>
+    <title type="html"><![CDATA[Gruntjs——前端任务管理工具]]></title>
+    <link href="http://js8.in/2013/04/16/gruntjs——前端任务管理工具/"/>
+    <id>http://js8.in/2013/04/16/gruntjs——前端任务管理工具/</id>
+    <published>2013-04-16T13:09:34.000Z</published>
+    <updated>2013-11-02T06:48:18.000Z</updated>
+    <content type="html"><![CDATA[<p><a href="http://www.gruntjs.com" target="_blank">Gruntjs</a>是前端项目构建工具，基于node的命令行工具。很多公司或者js项目都是用<strong>gruntjs</strong>来搭建，例如jQuery，twitter，Qunit等。主要功能有：</p>
+<ul>
+<li>合并文件</li>
+<li>压缩html/js/css/图片文件</li>
+<li>语法检测</li>
+<li>单元测试（基于Qunit）</li>
+<li>watch功能</li>
+</ul>
+<p>相对于Ant的打包工具，grunt更加灵活，语法采用json，比xml语法更加简洁，作为前端工程师可能更喜欢写json。</p>
+<h2>GruntJS的安装</h2>
+<p>Grunt是基于nodejs的，所以安装GruntJS之前，需要保证你的电脑有<a href="http://nodejs.org/" target="_blank">nodejs环境</a>，node环境比之前安装简单多了，现在windows平台只需要下载node安装程序，一路next就可以了。</p>
+<a id="more"></a>
+
+<h4>安装grunt-cli</h4>
+<p>在命令行中，执行<code>npm install -g grunt-cli</code>，来安装grunt-cli</p>
+<h4>安装grunt插件</h4>
+<p>在项目路径下的命令行中，输入<code>npm install grunt-plugin-name --save-dev</code>就可以完成插件安装，或者直接修改grunt的package.json，然后执行<code>npm install</code>，npm会自动安装想用插件。</p>
+<h2>创建GruntJS管理项目</h2>
+<p>每个GruntJS都包括两个文件：</p>
+<ul>
+<li>package.json：依赖模块+你可能用到的变量和说明，例如：version、name</li>
+<li>Gruntfile.js：node module写法的任务管理文件</li>
+</ul>
+<h3>package.json</h3>
+<p>一个典型的package.json内容如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre>  {
+    <span class="string">"name"</span>: <span class="string">"my-project-name"</span>,
+    <span class="string">"version"</span>: <span class="string">"0.1.0"</span>,
+    <span class="string">"devDependencies"</span>: {
+      <span class="string">"grunt"</span>: <span class="string">"~0.4.0"</span>,
+      <span class="string">"grunt-contrib-jshint"</span>: <span class="string">"~0.1.0"</span>,
+      <span class="string">"grunt-contrib-concat"</span>: <span class="string">"~0.1.1"</span>,
+      <span class="string">"grunt-contrib-uglify"</span>: <span class="string">"~0.1.0"</span>,
+      <span class="string">"grunt-contrib-watch"</span>: <span class="string">"~0.1.4"</span>
+    }
+  }
+</pre></td></tr></table></figure>
+
+<p>如果安装了新的插件，那么这个package.json会自动更新的，或者修改它，然后执行<code>npm install</code>，也可以安装对应的插件。</p>
+<h3>Gruntfile.js</h3>
+<p>Gruntfile.js是node module格式的任务管理文件，例如：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre>module.exports = <span class="keyword">function</span>(grunt) {
+  <span class="comment">// 以下代码初始化Grunt任务</span>
+  grunt.initConfig({
+    <span class="comment">// js语法检查</span>
+    jshint: { <span class="comment">/*…*/</span> },
+    <span class="comment">// 需要合并的任务</span>
+    concat: { <span class="comment">/*…*/</span> },
+    <span class="comment">// 压缩</span>
+    uglify: { <span class="comment">/*…*/</span> },
+    <span class="comment">// watch任务</span>
+    watch: { <span class="comment">/*…*/</span> }
+  });
+
+  <span class="comment">// 加载package.json中的想用插件</span>
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-jshint'</span>);
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-concat'</span>);
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-uglify'</span>);
+  grunt.loadNpmTasks(<span class="string">'grunt-contrib-watch'</span>);
+
+  <span class="comment">// 注册一个任务，第二参数可以是数组或者字符串</span>
+  <span class="comment">// 默认会执行default任务.</span>
+  grunt.registerTask(<span class="string">'default'</span>, [<span class="string">'jshint'</span>, <span class="string">'concat'</span>, <span class="string">'uglify'</span>]);
+};
+</pre></td></tr></table></figure>
+
+<h2>常用Grunt任务介绍</h2>
+<h3>使用JSHint检查js语法</h3>
+<p>JSHint是JSLint的一个分支，可以用于js语法规则、错误检测。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>jshint: {
+  files: [<span class="string">'Gruntfile.js'</span>, <span class="string">'lib/**/*.js'</span>]
+},
+</pre></td></tr></table></figure>
+
+<p>上面的代码可以检测lib文件夹下所有二级路径的js语法内容。另外后面可以使用watch任务，实时检测语法。</p>
+<h3>合并任务</h3>
+<p>concat是合并任务，可以合并打包js，css文件。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>concat: {
+  js: {
+    src: [<span class="string">'lib/module1.js'</span>, <span class="string">'lib/module2.js'</span>, <span class="string">'lib/plugin.js'</span>],
+    dest: <span class="string">'dist/script.js'</span>
+  }
+  css: {
+    src: [<span class="string">'style/normalize.css'</span>, <span class="string">'style/base.css'</span>, <span class="string">'style/theme.css'</span>],
+    dest: <span class="string">'dist/screen.css'</span>
+  }
+},
+</pre></td></tr></table></figure>
+
+<h3>使用uglifyjs压缩js文件</h3>
+<p>uglifyjs就不用介绍了，jQuery就是用它压缩的。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre>uglify: {
+  dist: {
+    src: [<span class="string">'&lt;%= concat.js.dest %&gt;'</span>],
+    dest: <span class="string">'dist/script.min.js'</span>
+  }
+},
+</pre></td></tr></table></figure>
+
+<h3>watch功能</h3>
+<p>watch功能是Grunt的实时处理任务，当监控的文件发生变化的时候，则执行相应的任务。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>watch: {
+  files: <span class="string">'&lt;%= jshint.files %&gt;'</span>,
+  tasks: <span class="string">'jshint'</span>
+},
+</pre></td></tr></table></figure>
+
+<p>除了上面的任务外，还有<a href="http://gruntjs.com/plugins" target="_blank">很多插件</a>，参考文章《<a href="http://js8.in/1122.html">双屏切图：使用livereload实现自动刷新</a>》</p>
+]]></content>
+    <category scheme="http://js8.in/tags/grunt/" term="grunt"/>
+    <category scheme="http://js8.in/tags/前端工具/" term="前端工具"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[双屏切图：使用livereload实现自动刷新]]></title>
+    <link href="http://js8.in/2013/04/07/双屏切图：使用livereload实现自动刷新/"/>
+    <id>http://js8.in/2013/04/07/双屏切图：使用livereload实现自动刷新/</id>
+    <published>2013-04-07T12:49:27.000Z</published>
+    <updated>2013-11-02T06:48:46.000Z</updated>
+    <content type="html"><![CDATA[<p><strong>livereload</strong>是一个web开发辅助工具，当我们修改完html、css和js的时候会自动刷新浏览器，解放码农的双手。这样在双屏切图、写js代码的时候会提高很多效率。livereload有很多版本，比如基于ruby的版本，我们今天介绍的是node+grunt+chrome插件一体化方案。</p>
+<p>我们使用的这个livereload的基本原理是试用node开启一个websocket服务，并且检测文件变化，浏览器打开一个页面时候，引入固定的livereload.js（chrome插件会帮忙加上）会建立ws请求，当node检测到文件变化，则自动推送消息给浏览器，实现刷新。</p>
+<h2>livereload环境搭建</h2>
+<ul>
+<li>nodejs安装</li>
+<li>grunt安装</li>
+<li>grunt-contrib-watch：npm install grunt-contrib-watch —save-dev</li>
+<li>grunt-livereload：npm install grunt-livereload —save-dev</li>
+<li>chrome插件：<a href="https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei" target="_blank">安装</a></li>
+</ul>
+<p><a id="more"></a></p>
+<h3>编写grunt的Gruntfile.js文件</h3>
+<p>进入项目根目录，安装grunt基本服务（参考grunt使用介绍），然后修改Gruntfile.js内容，添加如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre>livereload: {
+    options: {
+        base: <span class="string">'public'</span>,
+    },
+    files: [<span class="string">'src/**/*'</span>]
+}
+watch: {
+    all:{
+        files: [<span class="string">'src/js/touch.js'</span>, <span class="string">'src/sass/*.scss'</span>],
+        tasks: [<span class="string">'jshint'</span>, <span class="string">'compass:dev'</span>],
+    },
+    <span class="comment">//grunt watch:js|css</span>
+    js:{
+        files: [<span class="string">'src/js/touch.js'</span>],
+        tasks: [<span class="string">'jshint'</span>],
+    },
+    css:{
+        files: [<span class="string">'src/sass/*.scss'</span>],
+        tasks: [<span class="string">'compass:dev'</span>],
+    }
+}
+grunt.loadNpmTasks(<span class="string">'grunt-livereload'</span>);
+grunt.registerTask(<span class="string">'live'</span>, [<span class="string">'livereload'</span>, <span class="string">'watch:css'</span>]);
+</pre></td></tr></table></figure>
+
+<p>建立一个live的任务，开启livereload服务，同时watch css任务，当css文件发生变化的时候，执行compass:dev任务（即compass编译任务）。</p>
+<h3>执行grunt任务</h3>
+<p>当我们进行切图（或者其他事情的时候），执行cmd进入项目目录，执行下面命令来启动grunt的live任务：</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="variable">$ </span>grunt live
+</pre></td></tr></table></figure>
+
+<p>浏览器端使用chrome插件打开要自动刷新的页面，例如：<a href="http://127.0.0.1/test.html，" target="_blank">http://127.0.0.1/test.html，</a></p>
+<p>点击chrome插件livereload的icon，仔细观察会发现icon的中间空心圆点变成了实心的。 这样就可以自动刷新了。</p>
+<h3>使用livereload</h3>
+<p>完成上面的步骤，这时候我们修改src/<em>*/</em>下的文件就会自动刷新页面，我修改了test.scss文件，</p>
+<p>首先触发的是watch:css任务，执行compass:dev任务，即编译css文件为test.css，</p>
+<p>这时触发livereload，实现自动刷新</p>
+]]></content>
+    <category scheme="http://js8.in/tags/javascript/" term="javascript"/>
+    <category scheme="http://js8.in/tags/前端工具/" term="前端工具"/>
+    <category scheme="http://js8.in/tags/livereload/" term="livereload"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[ javascript实现比较相似图片算法]]></title>
+    <link href="http://js8.in/2013/04/02/javascript实现比较相似图片算法/"/>
+    <id>http://js8.in/2013/04/02/javascript实现比较相似图片算法/</id>
+    <published>2013-04-02T13:14:44.000Z</published>
+    <updated>2013-11-02T07:34:37.000Z</updated>
+    <content type="html"><![CDATA[<p>昨天看了阮一峰老师的文章：《<a href="http://www.ruanyifeng.com/blog/2013/03/similar_image_search_part_ii.html" target="_blank">相似图片搜索原理</a>》，于是把直方图和向量那块算法用js实现了一下，</p>
+<p>源码如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">getHistogram</span><span class="params">(imageData)</span> {</span>
+    <span class="keyword">var</span> arr = [];
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">64</span>; i++) {
+        arr[i] = <span class="number">0</span>;
+    }
+    <span class="keyword">var</span> data = imageData.data;
+    <span class="keyword">var</span> pow4 = Math.pow(<span class="number">4</span>, <span class="number">2</span>);
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = data.length; i &lt; len; i += <span class="number">4</span>) {
+        <span class="keyword">var</span> red = (data[i] / <span class="number">64</span>) | <span class="number">0</span>;
+        <span class="keyword">var</span> green = (data[i + <span class="number">1</span>] / <span class="number">64</span>) | <span class="number">0</span>;
+        <span class="keyword">var</span> blue = (data[i + <span class="number">2</span>] / <span class="number">64</span>) | <span class="number">0</span>;
+        <span class="keyword">var</span> index = red * pow4 + green * <span class="number">4</span> + blue;
+        arr[index]++;
+    }
+
+    <span class="keyword">return</span> arr;
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">cosine</span><span class="params">(arr1, arr2)</span> {</span>
+    <span class="keyword">var</span> axb = <span class="number">0</span>,
+        a = <span class="number">0</span>,
+        b = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = arr1.length; i &lt; len; i++) {
+        axb += arr1[i] * arr2[i];
+        a += arr1[i] * arr1[i];
+        b += arr2[i] * arr2[i];
+    }
+    <span class="keyword">return</span> axb / (Math.sqrt(a) * Math.sqrt(b));
+}
+<span class="function"><span class="keyword">function</span> <span class="title">gray</span><span class="params">(imgData)</span> {</span>
+    <span class="keyword">var</span> data = imgData.data;
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = data.length; i &lt; len; i += <span class="number">4</span>) {
+        <span class="keyword">var</span> gray = parseInt((data[i] + data[i + <span class="number">1</span>] + data[i + <span class="number">2</span>]) / <span class="number">3</span>);
+        data[i + <span class="number">2</span>] = data[i + <span class="number">1</span>] = data[i] = gray;
+    }
+    <span class="keyword">return</span> imgData;
+}
+</pre></td></tr></table></figure>
+
+<p>有个问题，假如图片是灰色的跟原图进行比较，那么要比较相似度，需要将图片都转成灰色的，即使用上面代码的gray函数来处理</p>
+]]></content>
+    <category scheme="http://js8.in/tags/javascript/" term="javascript"/>
+    <category scheme="http://js8.in/tags/算法/" term="算法"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[怎么清空javascript数组]]></title>
+    <link href="http://js8.in/2013/01/17/怎么清空javascript数组/"/>
+    <id>http://js8.in/2013/01/17/怎么清空javascript数组/</id>
+    <published>2013-01-17T14:04:08.000Z</published>
+    <updated>2013-11-01T09:45:10.000Z</updated>
+    <content type="html"><![CDATA[<p>这是一个很基础的问题，但是我们往往经常做错。</p>
+<p>当一个数组需要清空的时候，很多人使用下面的方法：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>a = [];
+</pre></td></tr></table></figure>
+
+<p>我们知道javascript变量存储方式分为引用类型和直接量。数组属于对象，即引用类型，引用的是变量指针地址，之所以这样设计也是为了节省内存。</p>
+<p>再说到上面的请空数组的方式，如果采用直接赋值一个新数组的方式，那么之前引用的数组可能不会被释放（有其他的引用），例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="keyword">var</span> a = [<span class="number">2</span>,<span class="number">3</span>];
+<span class="keyword">var</span> b = a;
+a = [];
+console.log(b);
+</pre></td></tr></table></figure>
+
+<p>这时候a和b就不是同一个数组了，清空了a而b还是指到之前的引用地址，除非你是故意的，否则这将会有隐患。</p>
+<p>所以最佳的请空数组方式是：将length设置为0，即：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>a.length = <span class="number">0</span>;
+</pre></td></tr></table></figure>
+
+]]></content>
+    <category scheme="http://js8.in/tags/javascript/" term="javascript"/>
+    <category scheme="http://js8.in/tags/性能/" term="性能"/>
+    <category scheme="http://js8.in/tags/数组/" term="数组"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[javascript的类型数组（Typed Array）]]></title>
+    <link href="http://js8.in/2013/01/05/javascript的类型数组（typed-array）/"/>
+    <id>http://js8.in/2013/01/05/javascript的类型数组（typed-array）/</id>
+    <published>2013-01-04T21:59:29.000Z</published>
+    <updated>2013-11-02T06:49:39.000Z</updated>
+    <content type="html"><![CDATA[<p>在《<a href="/2013/01/02/html5-canvas-%E5%9B%BE%E7%89%87%E5%83%8F%E7%B4%A0/">javascript canvas图片像素</a>》中提到了类型数组（Typed Array），javascript这是一种快速操作二进制数据的解决方案。</p>
+<p>随着web发展和html5的推进，javascript来处理音视频、二进制文件和网络协议等都成为了可能，这时候原生的数组Array已经不能够满足需求，需要一种快速操作二进制流的东东产生，于是ArrayBuffer类型和Typed Array诞生了。</p>
+<h2>类型数组介绍</h2>
+<p>类型化数组类型表示可编制索引和操纵的<a href="http://www.javascripture.com/ArrayBuffer" target="_blank">ArrayBuffer</a>对象的各种识图。所有数组类型的长度固定不变。如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>大小（以字节为单位）</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Int8Array</td>
+<td>1</td>
+<td>8 位二补码有符号整数</td>
+</tr>
+<tr>
+<td>Uint8Array</td>
+<td>1</td>
+<td>8 位无符号整数</td>
+</tr>
+<tr>
+<td>Int16Array</td>
+<td>2</td>
+<td>16 位二补码有符号整数</td>
+</tr>
+<tr>
+<td>Uint16Array</td>
+<td>2</td>
+<td>16 位无符号整数</td>
+</tr>
+<tr>
+<td>Int32Array</td>
+<td>4</td>
+<td>32 位二补码有符号整数</td>
+</tr>
+<tr>
+<td>Uint32Array</td>
+<td>4</td>
+<td>32 位无符号整数</td>
+</tr>
+<tr>
+<td>Float32Array</td>
+<td>4</td>
+<td>32 位 IEEE 浮点数</td>
+</tr>
+<tr>
+<td>Float64Array</td>
+<td>8</td>
+<td>64 位 IEEE 浮点数</td>
+</tr>
+</tbody>
+</table>
+<p><a id="more"></a><br>多个类型的数组视图可以指向一个ArrayBuffer，例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="comment">// 创建一个16字节的ArrayBuffer</span>
+<span class="keyword">var</span> arrayBuffer = <span class="keyword">new</span> ArrayBuffer(<span class="number">8</span>);
+<span class="comment">//创建一个8位无符号整形类型数组</span>
+<span class="keyword">var</span> u8 = <span class="keyword">new</span> Uint8Array(arrayBuffer);
+<span class="comment">//16 位类型数组</span>
+<span class="keyword">var</span> u16 = <span class="keyword">new</span> Uint16Array(arrayBuffer);
+<span class="comment">//32为类型数组</span>
+<span class="keyword">var</span> u32 = <span class="keyword">new</span> Uint32Array(arrayBuffer);
+</pre></td></tr></table></figure>
+
+<p>所以 u8、u16 、u32 指向同一块 8 字节长度的内存，因此 u8 有8 个元素，u16 有4个元素，u32 则只有2个元素。</p>
+<p>那么改变其中一个其他两个也跟着变（类似引用类型的数据，占用同一地址的内存）：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>].forEach(<span class="keyword">function</span>(v,i){
+    u8[i] = v;
+})
+console.log(u8,u16,u32);
+</pre></td></tr></table></figure>
+
+<p>需要注意的是，类型数组中每个值都是number类型的数据，是不允许出现字符串的。出现会采用隐性类型转换成0或者number，跟+号转换一样，但是要注意溢出问题！例如：8位数值范围为0~255（2^8），超出范围就溢出了<br><img src="file:///C:/Users/theowang/AppData/Local/youdao/ynote/images/A2048DB4463940BF9576D2C9B5DEFE5D/1.jpeg" alt=""></p>
+<h2>类型数组优点</h2>
+<h3>优秀的性能</h3>
+<p>类型数组的提出就是来解决二进制数据访问操作的问题，所以类型数组比传统的数组要快很多，具有良好的性能。这是因为类型数组实际上是作为一个固定的内存块来进行访问，而传统的javascript数组使用的是hash查找方式。</p>
+<h3>二进制支持</h3>
+<p>我们知道html5有很多api是跟二进制密切相关的，例如音频视频、文件和websocket。而且XMLHttpRequest Level 2 已经可以指定文件responseType来制定arraybuffer等类型</p>
+<h2>类型数组的作用</h2>
+<p>这样我们可以做下面的事情：</p>
+<ul>
+<li>javascript处理图片和音频</li>
+<li>javascript读取二进制文件</li>
+<li>javascript压缩二进制文件</li>
+<li>javascript转换文件为二进制然后传输</li>
+</ul>
+<p>这么来看js无敌了……</p>
+<p>目前想到的，js可以通过FileReader读取文件，然后转换成二进制，最后再次上传。或者：FileReader读取图片，canvas进行图片压缩，使用toDataURL（或者imageData）进行图片压缩，然后上传，这样在手机端可以减少流量，提高速度。</p>
+<p>另外在通信方面，可以实时转换成二进制进行socket通信。希望我说的这些都不是天方夜谭，但是实践中肯定会有很多问题</p>
+<h3>参考内容：</h3>
+<ul>
+<li><a href="http://www.javascripture.com/" target="_blank"><a href="http://www.javascripture.com/">http://www.javascripture.com/</a></a></li>
+<li><a href="http://blog.csdn.net/hfahe/article/details/7421203" target="_blank"><a href="http://blog.csdn.net/hfahe/article/details/7421203">http://blog.csdn.net/hfahe/article/details/7421203</a></a></li>
+<li><a href="http://www.cnblogs.com/ecalf/archive/2012/11/25/2787219.html" target="_blank"><a href="http://www.cnblogs.com/ecalf/archive/2012/11/25/2787219.html">http://www.cnblogs.com/ecalf/archive/2012/11/25/2787219.html</a></a></li>
+<li><a href="http://blog.n01se.net/blog-n01se-net-p-248.html" target="_blank"><a href="http://blog.n01se.net/blog-n01se-net-p-248.html">http://blog.n01se.net/blog-n01se-net-p-248.html</a></a></li>
+</ul>
+]]></content>
+    <category scheme="http://js8.in/tags/javascript/" term="javascript"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[html5 canvas 图片像素]]></title>
+    <link href="http://js8.in/2013/01/02/html5-canvas-图片像素/"/>
+    <id>http://js8.in/2013/01/02/html5-canvas-图片像素/</id>
+    <published>2013-01-02T13:36:00.000Z</published>
+    <updated>2013-11-01T10:04:37.000Z</updated>
+    <content type="html"><![CDATA[<h2>html5 canvas图像转换成数组</h2>
+<p>html5的canvas可以进行图片处理，图片是由像素组成的。我们知道canvas有方法<code>getImageData</code>，返回的对象中可以取出，image的data 数组（类似数组的Type Array类型数组，Uint8ClampedArray）。</p>
+<p>假设canvas宽高是500*400，那么应该有200000个像素点，而通过<code>getImageData().data</code>获取的data数组的<code>length</code>是800000。</p>
+<p>我们还知道rgba表示颜色的方法：<br><em> r=red
+</em> g=green<br><em> b=blue
+</em> a=alpha</p>
+<p>即红绿蓝三原色和透明值。</p>
+<p>所以这个data数组是每四个数组值代表一个像素点。这样一来，一个图像就转化成了数据表示的数组。如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="keyword">var</span> canvas = document.getElementById(<span class="string">'canvas'</span>);
+<span class="keyword">var</span> ctxt = canvas.getContext(<span class="string">'2d'</span>);
+<span class="keyword">var</span> img = <span class="keyword">new</span> Image;
+img.onload = <span class="keyword">function</span>(){
+    ctxt.drawImage(img, <span class="number">0</span>, <span class="number">0</span>);
+    <span class="keyword">var</span> data = ctxt.getImageData(<span class="number">0</span>, <span class="number">0</span>, <span class="number">480</span>, <span class="number">480</span>).data;
+    console.log(data, data.toString());
+}
+img.src = <span class="string">'img/pic.jpg'</span>;
+</pre></td></tr></table></figure>
+
+<h2>图像数组的遍历</h2>
+<p>如上面的代码，我们可以看到数组data就是图片转换成的数组，那么遍历这个数组就可以取得图片的像素点内容：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="keyword">var</span> data = ctxt.getImageData(<span class="number">0</span>, <span class="number">0</span>, <span class="number">480</span>, <span class="number">480</span>).data;
+<span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>,len = data.length; i&lt;len;i+=<span class="number">4</span>){
+    <span class="keyword">var</span> red = data[i],
+    green = data[i+<span class="number">1</span>],
+    blue = data[i+<span class="number">2</span>],
+    alpha = data[i+<span class="number">3</span>];
+
+}
+</pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h2>图片颜色反转</h2>
+<p>颜色反转的算法就是三原色求反，即255-原色。所以有了下面的方法：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">draw</span><span class="params">(img)</span>{</span>
+    ctxt.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">480</span>, <span class="number">480</span>);
+    <span class="comment">// console.log(img);</span>
+    ctxt.putImageData(img,<span class="number">0</span>,<span class="number">0</span>);
+}
+<span class="function"><span class="keyword">function</span> <span class="title">invert</span><span class="params">()</span>{</span>
+    <span class="keyword">var</span> back = ctxt.createImageData(<span class="number">480</span>, <span class="number">480</span>);
+    <span class="keyword">var</span> arr = back.data;
+
+    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,len = data.length;i&lt;len;i+=<span class="number">4</span>){
+        <span class="keyword">var</span> red = data[i],
+        green = data[i+<span class="number">1</span>],
+        blue = data[i+<span class="number">2</span>],
+        alpha = data[i+<span class="number">3</span>];
+
+        arr[i] = <span class="number">255</span>-red;
+        arr[i+<span class="number">1</span>] = <span class="number">255</span>-green;
+        arr[i+<span class="number">2</span>] = <span class="number">255</span>-blue;
+        arr[i+<span class="number">3</span>] = alpha;
+    }
+    <span class="keyword">return</span> back;
+}
+<span class="comment">//颜色反转</span>
+draw(invert());
+</pre></td></tr></table></figure>
+
+<h2>颜色一些算法</h2>
+<h3>去色</h3>
+<p>把图片变成黑白图，只要把每个像素的R、G、B设为亮度（Y）的值就行了。</p>
+<p>关于R、G、B、Y的关系可以看到这里看看，这里只要记住这条公式：<code>Y = 0.299R + 0.587G + 0.114B</code>，使用位：<code>(R* 4899 + G * 9617 + B* 1868 + 8192) &gt;&gt; 14</code>，速度会快</p>
+<h3>反相（反转）</h3>
+<p>就是将一个颜色换成它的补色。</p>
+<p>补色就是用255（8位通道模式下，255即2的8次方，16位要用65535去减，即2的16次方）减去它本身得到的值：<code>R(补) = 255 – R</code>。</p>
+<p>其他算法需要基色和混合色配合可以参考：<a href="http://wenku.baidu.com/view/275f9c4769eae009581bec56.html" target="_blank">http://wenku.baidu.com/view/275f9c4769eae009581bec56.html</a></p>
+]]></content>
+    <category scheme="http://js8.in/tags/canvas/" term="canvas"/>
+    <category scheme="http://js8.in/tags/html5/" term="html5"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[ECMAScript 262 5th ：执行环境一些概念解释]]></title>
+    <link href="http://js8.in/2013/01/01/ecmascript-262-5th-：执行环境一些概念解释/"/>
+    <id>http://js8.in/2013/01/01/ecmascript-262-5th-：执行环境一些概念解释/</id>
+    <published>2012-12-31T19:12:37.000Z</published>
+    <updated>2013-11-01T10:13:15.000Z</updated>
+    <content type="html"><![CDATA[<h2>可执行代码</h2>
+<p><strong>ECMAScript 5th</strong>规定了3种<strong>可执行代码</strong>：Global code、Eval code和Function code。</p>
+<p>根据名字就已经知道，<code>Global code</code>和<code>Eval code</code>分别对应全局代码和<code>eval</code>函数中执行的代码。</p>
+<p>三种可执行代码中最为复杂的就是<code>Function code</code>，即函数代码。因为javascript的特性，所以<code>Function code</code>中还可以嵌入<code>Function code</code>，导致了<code>Function</code>的执行环境会较为复杂。</p>
+<h2>执行环境（执行上下文）</h2>
+<p>当javascript引擎开始执行（进入）一段可执行代码时，就会生成一个<strong>执行环境</strong>（<code>Execution Context</code>，或称<strong>执行上下文</strong>）。</p>
+<p>javascript引擎通过一个栈（<code>Stack</code>）来维护执行环境，当进入一个执行环境，则将当前运行的执行环境压入到这个栈的顶部，代码表示：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> ECStack = [];<span class="comment">//维护执行环境的栈</span>
+<span class="function"><span class="keyword">function</span> <span class="title">enterExecutabCode</span><span class="params">()</span>{</span>
+    <span class="keyword">var</span> ec = <span class="keyword">new</span> ExecutionContext();
+    ECStack.push(ec);
+}
+</pre></td></tr></table></figure>
+
+<p>一个执行环境是由：<code>LexicalEnvironment</code>、<code>VariableEvironment</code>和<code>ThisBinding</code>组成的。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">ExecutionContext</span><span class="params">()</span>{</span>
+    <span class="keyword">return</span> {
+        LexicalEnvironment,
+        VariableEnvironment,
+        ThisBinding
+    }
+}
+</pre></td></tr></table></figure>
+
+<h2>词法环境（Lexical Environments）注意是复数哦~</h2>
+<p>一个词法环境对象包括：环境数据（<code>Environment  Record</code>）和外部环境（<code>outer Lexical Environment</code>）。</p>
+<h3>外部环境（outer Lexical Environment）</h3>
+<p>表示外层函数的词法环境，有两种：<code>null</code>（<code>global</code>环境），或者外层函数的词法环境（嵌套函数）</p>
+<h3>环境数据(记录)（Environment Record）</h3>
+<p>有两种环境数据：<code>declarative environment records</code> 和 <code>object environment records</code>，因为存在两种类型的环境数据，所以词法环境的实现类型包括了两种：<code>DecarativeEnvironment</code>和<code>ObjectEnvironment</code>。</p>
+<h4>Declarative environment records</h4>
+<p>常见标识符绑定基本都是这个类型，例如函数定义，<code>var</code>声明，<code>try</code>的<code>catch</code>子句</p>
+<h4>Object environment records</h4>
+<p>包括两种一种是程序级别的（<code>Program</code>），另外一种是with语句，因为这两种绑定标识符过程需要传入一个对象做为环境数据的属性值。</p>
+<p>继续说环境数据，环境数据存在于词法环境或者变量环境中，它包含了一个绑定对象（<code>bindingObject</code>），这个对象是一种键值对象，即有<code>name</code>和value一一对应关系，其中<code>name</code>就是标识符，<code>value</code>则为对应的变量值。</p>
+<p>既然环境数据是保存数据的地方，必然有一些方法用于存储数据和读取数据。所以环境数据常见的方法有：<br><a id="more"></a></p>
+<blockquote>
+<p><strong>HasBinding(N)</strong>：是否绑定一个标识符？返回<code>true</code>或者<code>false</code><br><strong>CreateMutableBinding(N, D)</strong>：创建一个名字为N的新记录，并且初始值为undefined，D表示是否可删除，<code>true</code>为可以删除（通过运算符delete操作），即对应的<code>DontDelete</code><br><strong>SetMutableBinding(N, V, S)</strong>：给N设置值V，S为严格模式的标志，如果为<code>true</code>，并且绑定（可以认为是一种赋值）不能完成，则抛出<code>TypeError</code>的异常<br><strong>GetBindingValue(N, S)</strong>：获取N的值，当S为<code>true</code>时，如果绑定不存在或者未初始化则抛出<code>ReferenceError</code>异常<br><strong>DeleteBinding(N)</strong>：删除N的绑定，如果存在N的绑定则删除，并且返回<code>true</code>，如果绑定不存在则返回<code>true</code>，如果绑定存在并且不能删除（<code>DontDelete=true</code>）则返回false<br><strong>ImplicitThisValue</strong>：返回this的值，如果是Declarative Environment Records则总是返回<code>undefined</code>；如果是Object Environment Records：<code>provideThis==true</code>则返回bindingObject，否则返回<code>undefined</code></p>
+</blockquote>
+<p>此外Declarative Environment Records有两个额外的方法：</p>
+<blockquote>
+<p><strong>CreateImmutableBinding(N)</strong>：创建一个名字为N的新的不初始化的绑定<br><strong>InitializeImmutableBinding(N, V)</strong>：设置一个存在的并且未初始化的N的值为V</p>
+</blockquote>
+<p>所以运用我们的原型知识和面向对象知识，我们可以将上面的过程设计成下面的代码（当然这个过程不是这么简单的，至少对于ObjectEnvironmentRecord是不对的）：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">DeclarativeEnvironmentRecord</span><span class="params">()</span>{</span>
+    <span class="keyword">this</span>.bindingObject = {};
+}
+<span class="function"><span class="keyword">function</span> <span class="title">ObjectEnvironmentRecord</span><span class="params">(O)</span>{</span>
+    <span class="keyword">this</span>.bindingObject = O;
+    <span class="keyword">this</span>.provideThis = <span class="literal">false</span>;
+}
+DeclarativeEnvironmentRecord.prototype = <span class="keyword">new</span> EnvironmentRecord();
+ObjectEnvironmentRecord.prototype = <span class="keyword">new</span> EnvironmentRecord();
+
+EnvironmentRecord.prototype.CreateImmutableBinding = <span class="keyword">function</span>(N){
+    <span class="keyword">var</span> envRec = <span class="keyword">this</span>.bindingObject;
+    <span class="comment">//断言！</span>
+    <span class="keyword">if</span>(!<span class="keyword">this</span>.HasBinding(N)){
+        envRec[N] = {
+            uninitialised: <span class="literal">true</span>,<span class="comment">//未初始化</span>
+            type:<span class="string">'immutable'</span>
+        }
+    }
+}
+EnvironmentRecord.prototype.InitializeImmutableBinding = <span class="keyword">function</span>(N,V) {
+    <span class="keyword">var</span> envRec = <span class="keyword">this</span>.bindingObject;
+    <span class="comment">//断言！</span>
+    <span class="keyword">if</span>(<span class="keyword">this</span>.HasBinding(N) && envRec[N].initialised === <span class="literal">false</span>){
+        envRec[N].value = V;
+        envRec[N].initialised = <span class="literal">true</span>;
+    }
+}
+EnvironmentRecord.prototype.HasBinding = <span class="keyword">function</span>(N){
+    <span class="keyword">var</span> envRec = <span class="keyword">this</span>.bindingObject;
+    <span class="keyword">if</span>(N <span class="keyword">in</span> envRec){
+        <span class="keyword">return</span> <span class="literal">true</span>;
+    }<span class="keyword">else</span>{
+        <span class="keyword">return</span> <span class="literal">false</span>;
+    }
+}
+EnvironmentRecord.prototype.CreateMutableBinding = <span class="keyword">function</span>(N, D){
+    <span class="keyword">var</span> envRec = <span class="keyword">this</span>.bindingObject;
+    <span class="comment">//有个断言</span>
+    <span class="keyword">if</span>(!<span class="keyword">this</span>.HasBinding(N)){
+        envRec[N] = {
+            value:<span class="literal">undefined</span>,
+            type:<span class="string">'mutable'</span>,<span class="comment">//是否可变</span>
+            DontDelete:D
+        }
+    }
+
+}
+EnvironmentRecord.prototype.SetMutableBinding = <span class="keyword">function</span>(N, V, S){
+    <span class="keyword">var</span> envRec = <span class="keyword">this</span>.bindingObject;
+    <span class="comment">//有个断言</span>
+    <span class="keyword">if</span>(<span class="keyword">this</span>.HasBinding(N)){
+        <span class="keyword">if</span>(envRec[N].type === <span class="string">'mutable'</span>){
+            envRec[N].value = V;
+        }<span class="keyword">else</span>{
+            <span class="comment">//有修改immutable的企图</span>
+            <span class="keyword">if</span>( S === <span class="literal">true</span> ){
+                <span class="keyword">throw</span> <span class="keyword">new</span> TypeError();
+            }
+        }
+    }
+
+}
+
+EnvironmentRecord.prototype.GetBindingValue = <span class="keyword">function</span>(N, S){
+    <span class="keyword">var</span> envRec = <span class="keyword">this</span>.bindingObject;
+    <span class="comment">//有个断言</span>
+    <span class="keyword">if</span>(<span class="keyword">this</span>.HasBinding(N)){
+        <span class="keyword">if</span>(envRec[N].type === <span class="string">'immutable'</span> && envRec[N].initialised===<span class="literal">false</span>){
+            <span class="keyword">if</span>( S === <span class="literal">false</span>){
+                <span class="keyword">return</span> <span class="literal">undefined</span>;
+            }<span class="keyword">else</span>{
+                <span class="keyword">throw</span> <span class="keyword">new</span> ReferenceError();
+            }
+        }<span class="keyword">else</span>{
+            <span class="keyword">return</span> envRec[N];
+        }
+    }
+
+}
+
+EnvironmentRecord.prototype.DeleteBinding = <span class="keyword">function</span>(N){
+    <span class="keyword">var</span> envRec = <span class="keyword">this</span>.bindingObject;
+    <span class="keyword">if</span>(!<span class="keyword">this</span>.HasBinding(N)){
+        <span class="keyword">return</span> <span class="literal">true</span>;
+    }
+    <span class="keyword">if</span>(envRec[N].DontDelete === <span class="literal">true</span>){
+        <span class="keyword">return</span> <span class="literal">false</span>;
+    }
+    <span class="keyword">delete</span> envRec[N];
+    <span class="keyword">return</span> <span class="literal">true</span>;
+}
+
+EnvironmentRecord.prototype.ImplicitThisValue = <span class="keyword">function</span>(){
+    <span class="keyword">return</span> <span class="literal">undefined</span>;
+}
+
+EnvironmentRecord.prototype.ImplicitThisValue = <span class="keyword">function</span>(){
+    <span class="keyword">if</span>(<span class="keyword">this</span>.provideThis===<span class="literal">true</span>){
+        <span class="keyword">return</span> <span class="keyword">this</span>.bindingObject;
+    }
+    <span class="keyword">return</span> <span class="literal">undefined</span>;
+}
+</pre></td></tr></table></figure>
+
+<h3>创建词法环境</h3>
+<p>因为词法环境的<strong>环境数据</strong>有两种，所以也存在两种对应的词法环境创建方式：<code>NewDeclarativeEnvironment</code> 和 <code>NewObjectEnvironment</code></p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="code"><pre>
+<span class="function"><span class="keyword">function</span> <span class="title">NewDeclarativeEnvironment</span><span class="params">(E)</span>{</span>
+    <span class="keyword">var</span> env = <span class="keyword">new</span> LexicalEnvironment();
+    <span class="keyword">var</span> envRec = <span class="keyword">new</span> DeclarativeEnvironmentRecord();
+    env.EnvironmentRecord = envRec;
+    env.outerLexicalEnvironment = E;
+    <span class="keyword">return</span> env;
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">NewObjectEnvironment</span><span class="params">(O, E)</span> {</span>
+    <span class="keyword">var</span> env = <span class="keyword">new</span> LexicalEnvironment();
+    <span class="keyword">var</span> envRec = <span class="keyword">new</span> ObjectEnvironmentRecord(O);
+    env.EnvironmentRecord = envRec;
+    env.outerLexicalEnvironment = E;
+    <span class="keyword">return</span> env;
+}
+</pre></td></tr></table></figure>
+
+<h3>执行环境的LexicalEnvironment</h3>
+<p>在每个执行环境都有并且只有一个与之关联的词法环境<code>LexicalEnvironment</code>， <code>LexicalEnvironment</code>是一个 <code>LexicalEnvironments</code> （注意这是个复数）队形。<br>在代码执行过程中，如果需要解析变量，从词法环境对象中进行解析，需要取值，则从词法环境的环境数据（<code>Environment  Record</code>）中读取，所以</p>
+<h3>执行环境的变量环境VariableEnvironment</h3>
+<p>一个执行环境中的变量环境也是唯一的，变量环境和词法环境（<code>LexicalEnvironment</code>）一样都是一个<code>LexicalEnvironments</code>（注意是复数）对象，（这个地方有点绕，所以注意是中间不带空格的），而且两者一开始是相等的，即是一个东西！词法环境在执行过程中可能改变，但是变量环境是不变化的。</p>
+<p>ps：<code>ECMA 5th</code>出现了<code>LexicalEnvironment</code>和<code>VariableEnvironment</code>的两个差不多相同的概念，两者都可以看城市一个<code>LexicalEnvironments</code>的实例，并且刚开始是相等的。</p>
+<h3>This绑定</h3>
+<p>很简单，可以看成this关键字的绑定。</p>
+<h2>全局环境（Global Environment）</h2>
+<p>全局环境是一种特别的词法环境，它的<code>Environment Record</code>是<code>Object Environment</code> Record类型，并且是global对象（如宿主对象<code>window</code>），<code>outer</code> 是<code>null</code>。</p>
+<h2>变量的查找</h2>
+<p>下面来说说变量是怎样查找的，通过前面的介绍，我们知道，变量不是单独存在的，而是依附在一个<code>EnvironmentRecord</code>的<code>bindingObject</code>中，进一步说：一个变量的取值是关系到它自己所处的环境的，这个环境就是执行环境的词法环境（<code>LexicalEnvironment</code>）。所以要找一个变量还要确认在哪里找，即从哪个执行环境的<code>LexicalEnvironment</code>中找。</p>
+<p>确定了执行环境，还要知道变量名（即一个标识符），然后在<code>EnvironmentRecord中查找，如果找不到，则从</code>outer Lexical Environment<code>中查找，如此一直找到</code>null<code>，如果找不到，则返回</code>undefined`。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">GetIdentifierReference</span><span class="params">(env, name)</span>{</span>
+    <span class="keyword">if</span>(env===<span class="literal">null</span>){
+        <span class="keyword">return</span> <span class="keyword">new</span> Reference(name,<span class="literal">undefined</span>);
+    }
+    <span class="keyword">var</span> envRec = env.LexicalEnvironment.EnvironmentRecord;
+
+    <span class="keyword">if</span> (envRec.hasBinding(name)) {
+        <span class="keyword">return</span> <span class="keyword">new</span> Reference(name, envRec);
+    }
+    <span class="keyword">return</span> GetIdentifierReference(env.outerLexicalEnvironment, name);
+}
+<span class="function"><span class="keyword">function</span> <span class="title">Reference</span><span class="params">(name, base, strict)</span>{</span>
+    <span class="keyword">this</span>.base = base;
+    <span class="keyword">this</span>.name = name;
+    <span class="keyword">this</span>.strict = strict || <span class="literal">false</span>;
+}
+<span class="function"><span class="keyword">function</span> <span class="title">GetValue</span><span class="params">(V)</span>{</span>
+    <span class="comment">//other</span>
+    <span class="keyword">if</span>(V.base <span class="keyword">instanceof</span> EnvironmentRecord){
+        <span class="keyword">return</span> V.base.GetBindingValue(V.name, V.strict);
+    }
+}
+</pre></td></tr></table></figure>
+
+]]></content>
+    <category scheme="http://js8.in/tags/ecmascript/" term="ecmascript"/>
+    <category scheme="http://js8.in/tags/执行环境/" term="执行环境"/>
+    <category scheme="http://js8.in/categories/读书笔记/" term="读书笔记"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[js模块并行加载器：MixJS]]></title>
+    <link href="http://js8.in/2012/12/31/js模块并行加载器：mixjs/"/>
+    <id>http://js8.in/2012/12/31/js模块并行加载器：mixjs/</id>
+    <published>2012-12-30T16:49:27.000Z</published>
+    <updated>2013-11-01T10:14:10.000Z</updated>
+    <content type="html"><![CDATA[<p>自己写了一个js模块加载器，所谓的并行其实也不完全是并行的，只是依赖关系模块是并行的。当然我知道现在有很多类似的js框架，而且MixJS也没有做更加全面的浏览器测试，只是跟我的意识写的一个加载器。</p>
+<p>项目放在github上面：<a href="https://github.com/ksky521/MixJS" target="_blank"><a href="https://github.com/ksky521/MixJS">https://github.com/ksky521/MixJS</a></a><br>算是给2012年的一个总结。</p>
+<h2>简单说下功能</h2>
+<p>跟玉伯的Seajs不同，也跟CMD和AMD不同，我使用的是依赖关系明确的声明模块方式，这样减少了扫描代码读取依赖关系的方式，开发者虽然有了一定的束缚，但是总体来说，后期的维护成本，代码效率和实时combo、上线打包都会大大的降低成本。</p>
+<h2>MixJS介绍</h2>
+<p>轻量级前端模块化解决方案，提供模块管理、php实时合并、打包工具等方案。可以用于提供给第三方开发者使用的小组件，核心文件可以单独拿出来作为框架core，在此基础上可以开发出一整套的前端框架</p>
+<p>MixJS还在开发完善阶段，未作完整兼容性测试，多数代码是出于解决问题的想法而写的，当然也copy了很多牛人的代码，比如cssload回调借鉴了seajs，Deferred来自于jQuery。。。。</p>
+<p>。。。。鉴于最近前端圈比较乱，我的小手都开始颤抖，造轮子必然会被喷，我只能说我是根据自己的意识码了这些的代码，据此操作后果自负。。。。</p>
+<p>0.2开发完成，现在开发基于0.2模块的开放平台部分代码，主要包括：Deferred（延迟队列）、API（API接口调用）、Widget（小组件）和XDomain（跨域）</p>
+<p>模块加载不是单纯的文件加载，需要根据模块规范来写模块哦~</p>
+<h2>MixJS代码示例</h2>
+<p>参考github项目readme文件。</p>
+<h2>用途</h2>
+<p>关于MixJS的用途，主要解决是模块开发中的管理、加载。</p>
+<p>我赞成使用MixJS是：细模块，粗文件。总体来看MixJS适合Widget开发、开放平台开放js开发，也适合作为模块管理器来打造更加强大的前端架构。</p>
+<p>不多说了，吹嘘会被喷的，哈哈~</p>
+<h2>感谢</h2>
+<p>MixJS也借鉴了不少大牛的代码（嗯，你可以说是抄袭），感谢seajs，jQuery，mass，curl.js等作者。</p>
+]]></content>
+    <category scheme="http://js8.in/tags/mixjs/" term="mixjs"/>
+    <category scheme="http://js8.in/tags/模块化/" term="模块化"/>
+    <category scheme="http://js8.in/tags/javascript/" term="javascript"/>
+    <category scheme="http://js8.in/categories/王婆卖瓜/" term="王婆卖瓜"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[再探javascript作用域]]></title>
+    <link href="http://js8.in/2012/12/25/再探javascript作用域/"/>
+    <id>http://js8.in/2012/12/25/再探javascript作用域/</id>
+    <published>2012-12-25T09:30:37.000Z</published>
+    <updated>2013-11-02T06:50:15.000Z</updated>
+    <content type="html"><![CDATA[<p>对于javascript作用域的理解，之前整理过两篇文章：《<a href="/2011/10/25/javascript%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/">javascript作用域和作用域链</a>》《<a href="/2011/08/15/javascript%E7%9A%84%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/">javascript的词法作用域</a>》。最近读了周爱民老师的《javascript语言精髓》，对<strong>javascript作用域</strong>有了新的认识，特地整理下思路。</p>
+<p>javascript的作用域广义来分：<strong>语法作用域</strong>和<strong>变量作用域</strong>。</p>
+<h2>javascript语法作用域</h2>
+<p><strong>javascript语法作用域</strong>是讨论代码的组织结构上抽象，可以理解为讨论的是“圈地”问题，也有书籍中对纯粹的语法作用域称为“静态作用域”。</p>
+<p>语法作用域分四级，下标依次增高</p>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>作用域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>级别一</td>
+<td>表达式</td>
+</tr>
+<tr>
+<td>级别二</td>
+<td>语句/批语句</td>
+</tr>
+<tr>
+<td>级别三</td>
+<td>函数</td>
+</tr>
+<tr>
+<td>级别四</td>
+<td>全局（宿主）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ol>
+<li>同级别可以平行也可以相互嵌套（包含）</li>
+<li>高级别可以嵌套（包含）低级别</li>
+<li>低级别不可以嵌套（包含）高级别作用域；假如低级别嵌套高u别，可以理解成相互平行，例如下面的代码是完全等效的</li>
+</ol>
+</blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span class="keyword">if</span>(<span class="literal">true</span>){
+    <span class="comment">//</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">fn</span><span class="params">()</span>{</span>
+        <span class="comment">//</span>
+    }
+}
+
+<span class="keyword">if</span>(<span class="literal">true</span>){
+    <span class="comment">//</span>
+}
+<span class="function"><span class="keyword">function</span> <span class="title">fn</span><span class="params">()</span>{</span>
+    <span class="comment">//</span>
+}
+</pre></td></tr></table></figure>
+
+<p><a id="more"></a></p>
+<h3>批语句作用域</h3>
+<p>批语句<strong>作用域</strong>的“<code>{}</code>”是用来声明被影响的代码，如果单纯理解为复合语句的“<code>{}</code>”则会报错，例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="keyword">try</span>
+    <span class="keyword">var</span> a = <span class="number">2</span>;
+<span class="keyword">catch</span>(e);
+</pre></td></tr></table></figure>
+
+<p>批语句作用域包括：<code>try{}catch(e){}finally{}</code>和<code>switch</code></p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="keyword">for</span>( <span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++){ } console.log(i);<span class="comment">//10</span>
+</pre></td></tr></table></figure>
+
+<p>spidermonkey 1.7 添加了let关键字，所以：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="keyword">for</span>( <span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++){ } console.log(i);<span class="comment">//报错，undefined</span>
+</pre></td></tr></table></figure>
+
+<h2>javascript变量作用域</h2>
+<p>变量的可见性 和 生存周期；即大家常说（或者常被理解）的作用域。</p>
+<p>变量作用域完成对信息的隐蔽，也就是处理“割据”的问题，也有书籍中对执行期的变量作用域为“动态作用域”。</p>
+<p>变量作用域没有语句级别，分为：<strong>表达式</strong>、<strong>函数</strong>和<strong>全局</strong>三个级别。</p>
+<h3>表达式</h3>
+<p>表达式级别作用域，变量创建出来被立即使用。</p>
+<p>表达式级别作用域，都是匿名的。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="keyword">var</span> date = <span class="string">'date:'</span>+<span class="keyword">new</span> Date;
+<span class="keyword">var</span> foo = (<span class="number">100</span> + <span class="keyword">function</span>(){
+    <span class="keyword">return</span> <span class="number">100</span>
+});
+</pre></td></tr></table></figure>
+
+<h3>函数</h3>
+<p>局部变量，对内可见；对外不可见</p>
+<h3>全局</h3>
+<p>在全局范围内任意声明变量。</p>
+<p>在函数内部不使用<code>var</code> 声明而直接赋值的变量，该变量会被隐式的在全局中声明</p>
+<p>全局变量可以理解为Global对象中的成员，也可以被解释为宿主对象，在浏览器中就是<code>window</code>对象</p>
+<p>显性声明和隐性声明 虽然都是全局变量，但是而这处理规则却不同</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="keyword">var</span> a = <span class="number">100</span>;
+<span class="keyword">delete</span> a; <span class="comment">//因为dontDelete为false，所以返回false</span>
+a = <span class="number">100</span>;
+<span class="keyword">delete</span> a; <span class="comment">//因为dontDelete 为true，所以返回true</span>
+</pre></td></tr></table></figure>
+
+<h2>总结下javascript的作用域</h2>
+<blockquote>
+<ol>
+<li>javascript没有块级作用域</li>
+<li>语法作用域不等于变量作用域</li>
+<li>变量的可见性受限于它所在的语法结构的（语法）作用域</li>
+</ol>
+<ul>
+<li>补充：如果语言没有实现相应的变量作用域，那么该变量的可见性会溢出到同级的其他结构中，例如 if、for块级语句</li>
+<li><em>特例</em>：spidermonkey javascript 1.7 let 关键字会实现语句级别的变量作用域</li>
+</ul>
+</blockquote>
+<h3>变量声明次序问题</h3>
+<p>javascript不同于C和java语言，javascript是解释执行的语言。语法解析会在执行之前，语法解析会建立一个类似“变量表”的对象，并且赋值为<code>undefined</code>。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">if</span> ( !a ){
+    alert(a); <span class="comment">//undefined</span>
+    <span class="keyword">var</span> a = <span class="number">1</span>;
+}
+alert(a); <span class="comment">//1</span>
+</pre></td></tr></table></figure>
+
+<h3>变量作用域和变量的生存周期</h3>
+<p><strong>变量作用域</strong>讨论的是解决变量在哪个范围内存储；生存周期讨论的是代码执行中什么时候创建和释放一个变量。</p>
+<p><strong>创建</strong>：</p>
+<blockquote>
+<ol>
+<li>js引擎做语法分析，发现显性的声明</li>
+<li>js引擎代码执行时，发现隐性的未被创建的变量时</li>
+</ol>
+</blockquote>
+<p><strong>释放</strong>：</p>
+<blockquote>
+<ol>
+<li>js引擎执行到函数结束/退出时，将清除的函数的未被引用的变量</li>
+<li>js引擎执行到全局代码结束，或者引擎卸载和重新载入时，将清除全局的变量和数据引用</li>
+</ol>
+</blockquote>
+<p>所以生存周期包括：函数内局部执行期间，函数外全局执行期间。变量的生存周期创建和释放过程就是内存的占用和释放过程</p>
+]]></content>
+    <category scheme="http://js8.in/tags/javascript/" term="javascript"/>
+    <category scheme="http://js8.in/tags/作用域/" term="作用域"/>
+    <category scheme="http://js8.in/categories/读书笔记/" term="读书笔记"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[开源个html5播放器]]></title>
+    <link href="http://js8.in/2012/11/08/开源个html5播放器/"/>
+    <id>http://js8.in/2012/11/08/开源个html5播放器/</id>
+    <published>2012-11-07T20:53:15.000Z</published>
+    <updated>2013-11-01T10:25:19.000Z</updated>
+    <content type="html"><![CDATA[<p>前言：人家都说没有几个项目在github，都不好意思说自己混前端的……</p>
+<p>好吧，看见越来越多的人都推自己的github主页，我也把自己的之前写的一些东西整理下，从sae的svn迁移到github上，开了几个项目，虽然说代码的确乱糟糟的，但是也凑凑数吧，今天开源的是html5音乐播放器</p>
+<h2>html5音乐播放器</h2>
+<ul>
+<li>github地址：<a href="https://github.com/ksky521/player" target="_blank"><a href="https://github.com/ksky521/player">https://github.com/ksky521/player</a></a></li>
+<li>在线演示地址：<a href="http://4.qdemo.sinaapp.com/html5/chrome/" target="_blank"><a href="http://4.qdemo.sinaapp.com/html5/chrome/">http://4.qdemo.sinaapp.com/html5/chrome/</a></a></li>
+</ul>
+<p>截图如下：<br><img src="http://ww2.sinaimg.cn/bmiddle/796f423btw1dvbr7xm7xdj.jpg" alt="" title="html5 player"></p>
+<p>之前放出的是jquery版本的，见文章《<a href="http://js8.in/1023.html">写了一个html5音乐播放器</a>》也整理到了<a href="https://github.com/ksky521/player" target="_blank">这个项目</a>中，文件夹是<code>withjQuery</code>内。<br><a id="more"></a></p>
+<h3>功能说明</h3>
+<ul>
+<li>支持iOS设备，但是iOS不支持自动下一曲，这是iOS本身限制，支持touch事件</li>
+<li>支持播放模式：循环，单曲循环</li>
+<li>支持歌词实时显示，包括显示到title</li>
+<li>支持静音，iOS不支持……</li>
+</ul>
+<h4>简单说下歌词显示算法</h4>
+<p>首先异步获取lrc内容（loadLrc），然后使用正则解析lrc（parseLrc），得到格式如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>{
+    words:[],<span class="comment">//歌词数组</span>
+    times:[],<span class="comment">//时间数组</span>
+    data:{}<span class="comment">//歌曲信息：作者、歌手、长度；有些lrc不会包括此部分，或者不全</span>
+}
+</pre></td></tr></table></figure>
+
+<p>然后循环去除word（歌词）和time（歌词对应时间），生成html，其中会计算出来marginTop位置：</p>
+<p>当歌曲播放时，实时获取当前播放时间audio.currentTime（为了提高歌词响应速度会提前100ms），然后遍历歌词nodelist，通过计算data-lrctime，取出当前播放进度对应的P元素，根据此P元素data-lrctop设置marginTop，通过css3实现动画。</p>
+<h3>html5版 音乐播放器github地址</h3>
+<p><a href="https://github.com/ksky521/player" target="_blank"><a href="https://github.com/ksky521/player">https://github.com/ksky521/player</a></a></p>
+]]></content>
+    <category scheme="http://js8.in/tags/html5/" term="html5"/>
+    <category scheme="http://js8.in/tags/audio/" term="audio"/>
+    <category scheme="http://js8.in/categories/王婆卖瓜/" term="王婆卖瓜"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[使用广播事件来实现模块解耦]]></title>
+    <link href="http://js8.in/2012/11/04/使用广播事件来实现模块解耦/"/>
+    <id>http://js8.in/2012/11/04/使用广播事件来实现模块解耦/</id>
+    <published>2012-11-04T14:07:39.000Z</published>
+    <updated>2013-11-01T10:27:29.000Z</updated>
+    <content type="html"><![CDATA[<p><strong>模块化开发</strong>往往最大的问题是解耦，怎么设计一个低耦合的组件呢？这里我用到的方法是时间总线（<code>eventBus</code>）方法，也可以叫做广播事件，模块之间通过发送广播的方式来实现通信，事件发起者只需要派发事件，而不必关心事件是否被接收（订阅）。</p>
+<p>广播事件也是自定义事件的一种，不同于自定义事件，广播事件没有绑定的主体，但是都是通过观察者设计模式来写的代码。<br>大体的javascript实现代码如下：其中包括一些简单方法没有列出，例如<code>$.isUndefined</code></p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+</pre></td><td class="code"><pre><span class="keyword">var</span> _cache = {};
+<span class="keyword">var</span> broadcast = {
+    <span class="comment">/**
+     * 派发
+     * @param  {[type]} type 事件类型
+     * @param  {[type]} data 回调数据
+     * @return {[type]}      [description]
+     */</span>
+    fire:<span class="keyword">function</span>(type, data){
+        <span class="keyword">var</span> listeners = _cache[type],len = <span class="number">0</span>;
+        <span class="keyword">if</span>(!$.isUndefined(listeners)){
+            <span class="keyword">var</span> args = [].slice.call(arguments);
+            args = args.length &gt; <span class="number">2</span> ? args.splice(<span class="number">2</span>, args.length-<span class="number">1</span>) : [];
+            args = [data].concat(args);
+
+            len = listeners.length;
+            <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;len;i++){
+                <span class="keyword">var</span> listener = listeners[i];
+                <span class="keyword">if</span>(listener && listener.callback) {
+                    args = args.concat(listener.args);
+                    listener.callback.apply(listener.scope, args);
+                }
+            }
+        }
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+    <span class="comment">/**
+     * 订阅广播事件
+     * @param  {[type]}   types     事件类型，支持,分隔符
+     * @param  {Function} callback 回调函数
+     * @param  {[type]}   scope    回调函数上下文
+     * @return {[type]}            this
+     */</span>
+    subscribe:<span class="keyword">function</span>(types, callback, scope){
+        types = types || [];
+        <span class="keyword">var</span> args = [].slice.call(arguments);
+
+        <span class="keyword">if</span>($.isString(types)){
+            types = types.split(<span class="string">','</span>);
+        }
+        <span class="keyword">var</span> len = types.length;
+        <span class="keyword">if</span>(len===<span class="number">0</span>){
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        }
+        args = args.length &gt; <span class="number">3</span> ? args.splice(<span class="number">3</span>, args.length-<span class="number">1</span>) : [];
+        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i&lt;len;i++){
+            <span class="keyword">var</span> type = types[i];
+            _cache[type] = _cache[type] || [];
+            _cache[type].push({callback:callback,scope:scope,args:args});
+        }
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+    <span class="comment">/**
+     * 退订
+     * @param  {[type]}   type     [description]
+     * @param  {Function} callback 假如传入则移出传入的监控事件，否则移出全部
+     * @return {[type]}            [description]
+     */</span>
+    unsubscribe:<span class="keyword">function</span>(type, callback, scope){
+        <span class="keyword">var</span> listeners = _cache[type];
+        <span class="keyword">if</span> (!listeners) {
+            <span class="keyword">return</span> <span class="keyword">this</span>;
+        }
+        <span class="keyword">if</span>(callback){
+            <span class="keyword">var</span> len = listeners.length,
+                tmp = [];
+
+            <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;len; i++) {
+                <span class="keyword">var</span> listener = listeners[i];
+                <span class="keyword">if</span>(listener.callback == callback && listener.scope == scope) {
+                } <span class="keyword">else</span> {
+                    tmp.push(listener);
+                }
+            }
+            listeners = tmp;
+        }<span class="keyword">else</span>{
+            listeners.length = <span class="number">0</span>;
+        }
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+    <span class="comment">/**
+     * 订阅别名
+     * @return {[type]} [description]
+     */</span>
+    on:<span class="keyword">function</span>(){
+        <span class="keyword">return</span> <span class="keyword">this</span>.subscribe.apply(<span class="keyword">this</span>,arguments);
+    },
+    <span class="comment">/**
+     * 退订别名
+     * @return {[type]} [description]
+     */</span>
+    un:<span class="keyword">function</span>(){
+        <span class="keyword">return</span> <span class="keyword">this</span>.unsubscribe.apply(<span class="keyword">this</span>,arguments);
+    },
+    dispatch:<span class="keyword">function</span>(){
+        <span class="keyword">return</span> <span class="keyword">this</span>.fire.apply(<span class="keyword">this</span>,arguments);
+    },
+
+    removeAll:<span class="keyword">function</span>(){
+        _cache = {};
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+};
+</pre></td></tr></table></figure>
+
+<p>使用方法：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>broadcast.fire(<span class="string">'event name'</span>, json);
+broadcast.on(<span class="string">'event name'</span>, <span class="keyword">function</span>(data){
+    console.log(data);
+});
+</pre></td></tr></table></figure>
+
+]]></content>
+    <category scheme="http://js8.in/tags/javascript/" term="javascript"/>
+    <category scheme="http://js8.in/tags/解耦/" term="解耦"/>
+    <category scheme="http://js8.in/tags/模块化/" term="模块化"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[VPS 上配置 iptables 防火墙]]></title>
+    <link href="http://js8.in/2012/10/19/vps-上配置-iptables-防火墙/"/>
+    <id>http://js8.in/2012/10/19/vps-上配置-iptables-防火墙/</id>
+    <published>2012-10-18T16:02:51.000Z</published>
+    <updated>2013-11-01T10:32:50.000Z</updated>
+    <content type="html"><![CDATA[<p>今天vps告急，ssh都登录不上去，上去很艰难的查了日志，发现几个ip访问异常，应该是某插件的爬虫，之前把图简单<code>iptables</code>禁用了，只能再次开启，主要命令如下：</p>
+<figure class="highlight lang-bash"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre></td><td class="code"><pre><span class="comment"># 查看状态</span>
+$ service iptables status
+
+<span class="comment"># 查看规则</span>
+$ iptables -L -n
+
+<span class="comment"># 清除默认规则</span>
+$ iptables -F
+$ iptables -X
+$ iptables -Z
+
+<span class="comment">#####建立新的规则######</span>
+<span class="comment"># 允许本地回环 127.0.0.1</span>
+$ iptables -A INPUT -i lo -p all -j ACCEPT
+
+<span class="comment"># 允许已经建立的所有连接</span>
+$ iptables -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+<span class="comment"># 允许所有向外发起的连接</span>
+$ iptables -A OUTPUT -j ACCEPT
+
+<span class="comment"># 拒绝 ping</span>
+$ iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j REJECT
+
+<span class="comment"># 允许 SSH 服务端口（一定要打开，不然就不能ssh了）</span>
+$ iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+<span class="comment"># 允许 Web 服务端口</span>
+$ iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+<span class="comment"># 拒绝其他所有未被允许的连接</span>
+$ iptables -A INPUT -j REJECT
+$ iptables -A FORWARD -j REJECT
+
+<span class="comment"># 禁用ip</span>
+$ iptables -I INPUT -s 124.115.0.199 -j DROP
+<span class="comment"># 封IP段的命令是</span>
+$ iptables -I INPUT -s 124.115.0.0/16 -j DROP
+<span class="comment"># 封整个段的命令是</span>
+$ iptables -I INPUT -s 194.42.0.0/8 -j DROP
+<span class="comment"># 封几个段的命令是</span>
+$ iptables -I INPUT -s 61.37.80.0/24 -j DROP
+$ iptables -I INPUT -s 61.37.81.0/24 -j DROP
+</pre></td></tr></table></figure>
+
+<p><code>dport</code>表示目的，<code>sport</code>表示来源，<code>output</code>表示本机出，<code>input</code>表示访问本机</p>
+<a id="more"></a>
+
+
+<p>然后就是保存和开机启动centos</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="comment"># 保存</span>
+<span class="variable">$ </span>service iptables save
+<span class="comment"># 重启</span>
+<span class="variable">$ </span>service iptables restart
+<span class="comment"># 确认服务会随开机自动启动</span>
+<span class="variable">$ </span>chkconfig iptables on
+</pre></td></tr></table></figure>
+
+]]></content>
+    <category scheme="http://js8.in/tags/VPS/" term="VPS"/>
+    <category scheme="http://js8.in/tags/iptables/" term="iptables"/>
+    <category scheme="http://js8.in/tags/linux/" term="linux"/>
+    <category scheme="http://js8.in/categories/后端运维/" term="后端运维"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[nginx1.2.4: [warn] "log_format" directive used only on "http" level 解决方法]]></title>
+    <link href="http://js8.in/2012/10/18/nginx1-2-4-warn-log_format-directive-used-only-on-http-level-解决方法/"/>
+    <id>http://js8.in/2012/10/18/nginx1-2-4-warn-log_format-directive-used-only-on-http-level-解决方法/</id>
+    <published>2012-10-18T10:21:25.000Z</published>
+    <updated>2013-11-01T10:36:12.000Z</updated>
+    <content type="html"><![CDATA[<p>将nginx升级到1.2.4稳定版之后，会发现之前的<code>vhost/*.conf</code>中的日志配置都报了如下的warn：</p>
+<figure class="highlight lang-text"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>nginx: [warn] <span class="keyword">the</span> “log_format” directive may be used only <span class="function_start"><span class="keyword">on</span> </span>“http” level
+</pre></td></tr></table></figure>
+
+<p>上网搜索解决方案如下：</p>
+<p>将/vhost/xxx.conf里server段里的下面代码移出该server段即可。</p>
+<p>但是这样的又会产生一个问题，就是各子域名的日志文件都会记录所有请求的日志，等了好久都没找到解决方案，后来请教了飞飞之后终于找到解决的方法了。</p>
+<p>原来<code>log_format</code>需要在<code>nginx.conf</code>的http层定义，然后在分域名下面就不用定义<code>log_format</code>，直接引用即可，即：<br>在nginx.conf中http层添加：</p>
+<figure class="highlight lang-text"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="title">log_format</span> Main ‘<span class="variable">$remote_addr</span> – <span class="variable">$remote_user</span> [<span class="variable">$time_local</span>] “<span class="variable">$request</span>” ‘
+‘<span class="variable">$status</span> <span class="variable">$body_bytes_sent</span> “<span class="variable">$http_referer</span>” ‘
+‘”<span class="variable">$http_user_agent</span>” <span class="variable">$http_x_forwarded_for</span> <span class="variable">$request_time</span>’;
+</pre></td></tr></table></figure>
+
+<p>然后在vhost/*.conf中server中直接写：</p>
+<figure class="highlight lang-log"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>access_log ./logs/blog<span class="preprocessor">.log</span> Main<span class="comment">;</span>
+</pre></td></tr></table></figure>
+
+<p>但是注意<code>include vhost/*.conf</code>要放在<code>log_format</code>之后哦，不然会找不到<code>Main</code>的</p>
+]]></content>
+    <category scheme="http://js8.in/tags/linux/" term="linux"/>
+    <category scheme="http://js8.in/tags/nginx/" term="nginx"/>
+    <category scheme="http://js8.in/categories/后端运维/" term="后端运维"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[mysql导入导出数据乱码问题解决方法]]></title>
+    <link href="http://js8.in/2012/10/08/【笔记】mysql导入导出数据乱码问题解决方法/"/>
+    <id>http://js8.in/2012/10/08/【笔记】mysql导入导出数据乱码问题解决方法/</id>
+    <published>2012-10-08T09:44:54.000Z</published>
+    <updated>2013-11-01T10:38:41.000Z</updated>
+    <content type="html"><![CDATA[<p>最近在linux上面用mysqldump导出数据，放在windows系统中导入就会出现中文乱码，然后就会导致出现： <code>Unknown MySQL server host</code>和<code>Can&#39;t connect to the server</code>的错误。</p>
+<p>解决mysql导入导出数据乱码问题就是统一导入导出的编码，linux默认的是utf8编码，而windows是gbk编码，所以会出现上面的乱码问题。</p>
+<h2>解决mysql导入导出数据乱码问题</h2>
+<p>首先要做的是要确定你导出数据的编码格式，使用mysqldump的时候需要加上<code>--default-character-set=utf8</code>，例如下面的代码：<br><a id="more"></a></p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="comment">mysqldump</span>   <span class="literal">-</span><span class="comment">uroot</span>  <span class="literal">-</span><span class="comment">p</span>  <span class="literal">-</span><span class="literal">-</span><span class="comment">default</span>-<span class="comment">character</span>-<span class="comment">set=utf8</span>   <span class="comment">dbname</span> <span class="comment">tablename</span>  &gt;  <span class="comment">bak</span>.<span class="comment">sql
+</pre></td></tr></table></figure>
+
+<p>那么导入数据的时候也要使用<code>--default-character-set=utf8</code>：</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="comment">mysql</span> <span class="literal">-</span><span class="comment">uroot</span> <span class="literal">-</span><span class="comment">p</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">default</span>-<span class="comment">character</span>-<span class="comment">set=utf8</span> <span class="comment">dbname</span> &lt; <span class="comment">bak</span>.<span class="comment">sql
+</pre></td></tr></table></figure>
+
+<p>这样统一编码就解决了mysql数据迁移中的乱码问题了</p>
+]]></content>
+    <category scheme="http://js8.in/tags/mysql/" term="mysql"/>
+    <category scheme="http://js8.in/categories/后端运维/" term="后端运维"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[将nodejs打包工具整合到鼠标右键]]></title>
+    <link href="http://js8.in/2012/09/29/将nodejs打包工具整合到鼠标右键/"/>
+    <id>http://js8.in/2012/09/29/将nodejs打包工具整合到鼠标右键/</id>
+    <published>2012-09-28T16:34:17.000Z</published>
+    <updated>2013-11-01T12:17:31.000Z</updated>
+    <content type="html"><![CDATA[<p>昨天放出了主要的nodejs打包代码(《<a href="/2012/09/28/nodejs%E5%86%99%E7%9A%84%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7/">nodejs写的简单项目打包工具</a>》)，今天放出整合到鼠标右键的代码，打包需要配置环境变量，添加NODE_PATH为node安装路径，打包用到的批处理文件代码如下：</p>
+<figure class="highlight lang-bash"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+</pre></td><td class="code"><pre>@<span class="keyword">echo</span> off
+title Builder - 正在合并 ...
+
+color 03
+REM =====================================
+REM     jsbuilder beta版
+REM
+REM =====================================
+SETLOCAL ENABLEEXTENSIONS
+
+<span class="keyword">echo</span>.
+
+REM 过滤文件后缀，只combo js文件
+<span class="keyword">if</span> <span class="string">"%~x1"</span> NEQ <span class="string">".js"</span> (
+    <span class="keyword">echo</span>.
+    <span class="keyword">echo</span> **** 请选择JS文件
+    <span class="keyword">echo</span>.
+    goto End
+)
+
+REM 检查NODE_PATH
+<span class="keyword">if</span> <span class="string">"%NODE_PATH%"</span> == <span class="string">""</span> goto NoNodePath
+<span class="keyword">if</span> not exist <span class="string">"%NODE_PATH%\node.exe"</span> goto NoNodePath
+
+<span class="keyword">set</span> RESULT_FILE=%~n1-combo%~x1
+
+:ZIP_CHOICE
+
+<span class="keyword">echo</span> 选择是否【压缩】合并后的js文件?
+<span class="keyword">set</span> input=
+<span class="keyword">set</span> /p input= -^&gt; 请选择(y/n):
+<span class="keyword">if</span> /i <span class="string">"%input%"</span>==<span class="string">"n"</span> goto UNZIP
+<span class="keyword">if</span> /i <span class="string">"%input%"</span>==<span class="string">"y"</span> goto ZIP
+
+REM 调用build合并文件
+:UNZIP
+<span class="string">"%NODE_PATH%\node.exe"</span> <span class="string">"%~dp0build.js"</span> --unzip <span class="string">"%~n1%~x1"</span> &gt; <span class="string">"%RESULT_FILE%"</span>
+<span class="keyword">echo</span>.
+<span class="keyword">echo</span> **** ~O(∩_∩)O~ 【合并】成功 ****
+<span class="keyword">echo</span>.
+goto End
+
+REM 调用build合并并且压缩文件
+:ZIP
+<span class="string">"%NODE_PATH%\node.exe"</span> <span class="string">"%~dp0build.js"</span> <span class="string">"%~n1%~x1"</span> &gt; <span class="string">"%RESULT_FILE%"</span>
+<span class="keyword">echo</span>.
+<span class="keyword">echo</span> **** ~O(∩_∩)O~ 【合并并压缩】成功 ****
+<span class="keyword">echo</span>.
+goto End
+
+:NoNodePath
+<span class="keyword">echo</span>.
+<span class="keyword">echo</span> **** 请先安装NodeJS并设置NODE_PATH环境变量 ****
+<span class="keyword">echo</span>.
+
+:End
+ENDLOCAL
+pause
+</pre></td></tr></table></figure>
+
+<p><a id="more"></a><br>打包用的<code>build.js</code>代码如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+</pre></td><td class="code"><pre><span class="comment">//加载配置</span>
+require(<span class="string">'./config.js'</span>);
+<span class="comment">//用到的模块</span>
+<span class="keyword">var</span> FS = require(<span class="string">'fs'</span>),
+    PATH = require(<span class="string">'path'</span>),
+    jscombo = require(<span class="string">'./tool/jscombo'</span>),
+    Util = require(<span class="string">'util'</span>);
+
+<span class="comment">//获取参数</span>
+<span class="keyword">var</span> args = process.argv;
+args = [].slice.call(args,<span class="number">2</span>);
+
+<span class="keyword">var</span> opts = {};<span class="comment">//配置</span>
+<span class="keyword">var</span> curPath, rootPath = curPath = process.cwd();
+
+<span class="comment">//根据config.js的相对路径设置，变换rootPath</span>
+<span class="keyword">if</span>(<span class="keyword">typeof</span> relativePath!==<span class="string">'undefined'</span>){
+    rootPath = PATH.join(rootPath,relativePath);
+}
+
+<span class="keyword">var</span> filename;<span class="comment">//要处理的文件名字</span>
+<span class="comment">//处理参数</span>
+out: <span class="keyword">while</span>(args.length){
+    <span class="keyword">var</span> v = args.shift();
+    <span class="keyword">switch</span>(v){
+        <span class="keyword">case</span> <span class="string">'-uz'</span>:
+        <span class="keyword">case</span> <span class="string">'--unzip'</span>:
+        <span class="comment">//combo后压缩</span>
+            opts.unzip = <span class="literal">true</span>;
+        <span class="keyword">break</span>;
+        <span class="keyword">default</span>:
+            filename = v;
+            <span class="keyword">break</span> out;
+    }
+}
+
+<span class="comment">// var filePath = PATH.join(rootPath,filename);</span>
+<span class="comment">//将要压缩的js文件路径 转化为相对rootpath的路径</span>
+<span class="keyword">var</span> rPath = PATH.relative(rootPath,PATH.join(curPath,filename));
+<span class="keyword">var</span> str = jscombo(rPath, rootPath, opts);
+
+<span class="keyword">var</span> fileout = process.stdout;
+fileout.write(str);
+</pre></td></tr></table></figure>
+
+]]></content>
+    <category scheme="http://js8.in/tags/nodejs/" term="nodejs"/>
+    <category scheme="http://js8.in/tags/右键/" term="右键"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[nodejs写的一个简单项目打包工具]]></title>
+    <link href="http://js8.in/2012/09/28/nodejs写的一个简单项目打包工具/"/>
+    <id>http://js8.in/2012/09/28/nodejs写的一个简单项目打包工具/</id>
+    <published>2012-09-27T17:49:17.000Z</published>
+    <updated>2013-11-01T12:19:10.000Z</updated>
+    <content type="html"><![CDATA[<p>项目是模块加载的，类似<code>require.js</code>的用法，所以简单写了一个js打包工具。<br>项目的模块加载和定义部分代码是这样的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>XX.define(<span class="string">'ns'</span>,[<span class="string">'tool/cookie'</span>],<span class="keyword">function</span>(){
+});
+<span class="comment">//或者</span>
+XX.define(<span class="string">'ns.ns2'</span>,<span class="string">'tool/cookie,tool/abc'</span>,<span class="keyword">function</span>(){
+})
+<span class="comment">//或者</span>
+XX.define(<span class="string">'ns'</span>,<span class="keyword">function</span>(){
+})
+</pre></td></tr></table></figure>
+
+<p>所用到的js打包工具就是扫描文件，然后匹配出来需要加载的模块，然后先加载模块代码。<br>主要的nodejs打包工具代码如下：<br><a id="more"></a></p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+</pre></td><td class="code"><pre><span class="comment">//通用模块</span>
+<span class="keyword">var</span> Util = require(<span class="string">'util'</span>),
+    FS = require(<span class="string">'fs'</span>),
+    getDeps = require(<span class="string">'./getDeps'</span>),
+    Uglify = require(<span class="string">'./uglify/uglify-js'</span>),
+    removeBOMChar = require(<span class="string">'./removeBOM'</span>).removeBOMChar,
+    PATH =require(<span class="string">'path'</span>);
+
+<span class="keyword">var</span> packagedObj = {};<span class="comment">//是否已经打包过</span>
+
+module.exports = <span class="keyword">function</span>(filePath, rootPath, opts){
+    opts = opts || {};
+
+    <span class="keyword">var</span> str = jscombo(filePath,rootPath);
+    <span class="keyword">if</span>(opts.unzip){
+        <span class="keyword">return</span> str;
+    }<span class="keyword">else</span>{
+        <span class="keyword">return</span> Uglify(str);
+    }
+};
+
+<span class="function"><span class="keyword">function</span> <span class="title">jscombo</span><span class="params">(filePaths, rootPath)</span>{</span>
+    <span class="keyword">if</span>(Util.isArray(filePaths)){
+        <span class="keyword">return</span> filePaths.map(<span class="keyword">function</span>(filePath){
+            filePath = PATH.join(rootPath,filePath);
+
+            <span class="comment">//只打包一次</span>
+            <span class="keyword">if</span>(packagedObj[filePath]){
+                <span class="keyword">return</span> <span class="string">''</span>;
+            }
+            packagedObj[filePath] = <span class="number">1</span>;
+
+            <span class="comment">//是否存在</span>
+            <span class="keyword">if</span>(FS.existsSync(filePath)){
+                <span class="comment">//异步读取内容</span>
+                <span class="keyword">var</span> str = FS.readFileSync(filePath, <span class="string">'utf-8'</span>);
+                <span class="comment">//移出BOM头</span>
+                str = removeBOMChar(str);
+                <span class="keyword">var</span> result = getDeps(str, rootPath);
+                <span class="keyword">var</span> content = result.content;
+                content = <span class="string">'//'</span>+filePath+<span class="string">'\n'</span>+content;
+
+                <span class="comment">//递归打包</span>
+                <span class="keyword">if</span>(result.list){
+                    <span class="keyword">return</span> jscombo(result.list, rootPath) + content;
+                }
+                <span class="comment">//返回内容</span>
+                <span class="keyword">return</span> content;
+            }<span class="keyword">else</span>{
+                <span class="comment">//文件不存在错误信息</span>
+                console.error(<span class="string">'jsCombo Error: '</span> + filePath + <span class="string">' does not exsist! the path is:'</span>+rootPath);
+                <span class="keyword">return</span> <span class="string">';alert("'</span> + filePath + <span class="string">' does not exsist!");'</span>;
+            }
+        }).join(<span class="string">';\n'</span>);
+
+    }<span class="keyword">else</span>{
+        <span class="keyword">return</span> jscombo([filePaths],rootPath);
+    }
+}
+</pre></td></tr></table></figure>
+
+<p>对于nodejs之前一直没认真学习，都是边查文档，编写的，所以代码很青涩~</p>
+]]></content>
+    <category scheme="http://js8.in/tags/nodejs/" term="nodejs"/>
+    <category scheme="http://js8.in/tags/前端工具/" term="前端工具"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[ie设置document.domain会导致ueditor拒绝访问]]></title>
+    <link href="http://js8.in/2012/09/19/ie设置document-domain会导致ueditor拒绝访问/"/>
+    <id>http://js8.in/2012/09/19/ie设置document-domain会导致ueditor拒绝访问/</id>
+    <published>2012-09-19T10:53:13.000Z</published>
+    <updated>2013-11-01T12:21:18.000Z</updated>
+    <content type="html"><![CDATA[<p>使用百度的<strong>ueditor</strong>富文本编辑器在ie中如果页面设置了<code>document.domain</code>，则会导致编辑器初始化失败，错误信息是拒绝访问，可见是<strong>跨域</strong>问题导致的。<br>解决的方法就是在render方法中设置src为一个代理页面，或者javascript伪协议，例如：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>container.firstChild.src = <span class="string">"javascript:void((function(){document.open();document.domain='"</span>
++document.domain
++<span class="string">"';document.write('');document.close()})())"</span>;
+</pre></td></tr></table></figure>
+
+<p>弹出的dialog则需要在<code>\dialogs\internal.js</code> 里也加上:</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>document.domain = <span class="string">'根域'</span>;
+</pre></td></tr></table></figure>
+
+<p>至于flash上传问题，需要放个<code>crossdomain.xml</code>文件，具体内容你懂得了……</p>
+]]></content>
+    <category scheme="http://js8.in/tags/ueditor/" term="ueditor"/>
+    <category scheme="http://js8.in/tags/javascript/" term="javascript"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[关于javascript位运算符的技巧]]></title>
+    <link href="http://js8.in/2012/09/13/关于javascript位运算符的技巧/"/>
+    <id>http://js8.in/2012/09/13/关于javascript位运算符的技巧/</id>
+    <published>2012-09-13T11:06:51.000Z</published>
+    <updated>2013-11-01T12:22:46.000Z</updated>
+    <content type="html"><![CDATA[<p>今天说下常用的javascript位运算符的技巧</p>
+<h2>js位运算来判断奇偶数</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">if</span>(n&<span class="number">1</span>===<span class="number">0</span>){
+<span class="comment">//偶数</span>
+}<span class="keyword">else</span>{
+<span class="comment">//奇数</span>
+}
+</pre></td></tr></table></figure>
+
+<h2>js位运算符来代替Math.floor</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>(<span class="number">2.9</span>|<span class="number">0</span>)===<span class="number">2</span>
+(~~<span class="number">2.9</span>)===<span class="number">2</span>
+(<span class="number">2.9</span>&gt;&gt;&gt;<span class="number">0</span>)===<span class="number">2</span>
+(<span class="number">2.9</span>&gt;&gt;<span class="number">0</span>)===<span class="number">2</span>
+(<span class="number">2.9</span>&lt;<span class="xml"><span class="tag">&lt;<span class="title">0)===2
+</span>//注意
+~~(<span class="attribute">-2.999</span>);//= <span class="attribute">-2</span>
+<span class="attribute">Math.floor</span>(<span class="attribute">-2.999</span>);// = <span class="attribute">-3</span></span>
+</pre></td></tr></table></figure>
+
+<h2>RGB2HEX</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">RGB2HEX</span><span class="params">(a,b,c)</span>{</span><span class="keyword">return</span><span class="string">"#"</span>+((<span class="number">256</span>+a&lt;<span class="xml"><span class="tag">&lt;<span class="title">8|b)&lt;&lt;8|c).toString(16).slice(1)}
+</span>//或者
+<span class="attribute">function</span> <span class="attribute">toHexString</span>(<span class="attribute">r</span>,<span class="attribute">g</span>,<span class="attribute">b</span>) {
+  <span class="attribute">return</span> ("<span class="attribute">00000</span>" + (<span class="attribute">r</span> &lt;&lt; <span class="attribute">16</span> | <span class="attribute">g</span> &lt;&lt; <span class="attribute">8</span> | <span class="attribute">b</span>)<span class="attribute">.toString</span>(<span class="attribute">16</span>))<span class="attribute">.slice</span>(<span class="attribute">-6</span>);
+}
+<span class="attribute">var</span> <span class="attribute">hex</span> = <span class="attribute">toHexString</span>(<span class="attribute">red</span>, <span class="attribute">green</span>, <span class="attribute">blue</span>);</span>
+</pre></td></tr></table></figure>
+
+<h2>检测相等关系</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="keyword">if</span>(a!=<span class="number">123</span>)
+<span class="keyword">if</span>(a^<span class="number">123</span>)
+<span class="comment">//注意：</span>
+<span class="literal">false</span> ^ <span class="number">1</span> <span class="comment">// 1</span>
+<span class="literal">true</span> ^ <span class="number">1</span> <span class="comment">// 0</span>
+<span class="number">2</span> ^ <span class="number">1</span> <span class="comment">// 3</span>
+{} ^ <span class="number">1</span> <span class="comment">// 1</span>
+</pre></td></tr></table></figure>
+
+<p>这个很好用的，比如下面的代码</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre><span class="keyword">var</span> isReady = <span class="number">0</span>;
+
+<span class="comment">// somewhere else</span>
+<span class="keyword">if</span>( isReady ) { }
+
+<span class="comment">// somewhere else, set isReady state to 1</span>
+isReady ^= <span class="number">1</span>;
+
+<span class="comment">// somewhere else, set isReady state to 0</span>
+isReady ^= <span class="number">1</span>;
+</pre></td></tr></table></figure>
+
+<h2>默认值</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="keyword">if</span> (!n) n = defaultValue;
+<span class="comment">//使用下面的代码</span>
+n||(n=defaultValue);
+</pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h2>indexOf和~</h2>
+<p>在代码中常使用String.indexOf，例如：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="string">'abc'</span>.indexOf(<span class="string">'d'</span>)===-<span class="number">1</span>;
+<span class="keyword">if</span>(<span class="string">'abc'</span>.indexOf(str)!==-<span class="number">1</span>){
+<span class="comment">//在字符串中</span>
+}
+</pre></td></tr></table></figure>
+
+<p>我们可以这样来写</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre>~<span class="string">'abc'</span>.indexOf(<span class="string">'d'</span>)===<span class="number">0</span>;
+<span class="keyword">if</span>(~<span class="string">'abc'</span>.indexOf(<span class="string">'d'</span>)){
+<span class="comment">//在字符串中</span>
+}
+<span class="keyword">if</span>(!~<span class="string">'abc'</span>.indexOf(<span class="string">'d'</span>)){
+<span class="comment">//不在字符串中</span>
+}
+</pre></td></tr></table></figure>
+
+<p>当然javascript的位运算符会导致代码的可读性降低，所以在使用的时候要权衡，或者作为代码规范（编程习惯）给大家参考，这样大家都懂了，自然代码可读性就上去了。</p>
+]]></content>
+    <category scheme="http://js8.in/tags/性能/" term="性能"/>
+    <category scheme="http://js8.in/tags/前端优化/" term="前端优化"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[获取a标签和script标签的绝对路径和相对路径]]></title>
+    <link href="http://js8.in/2012/08/06/获取a标签和script标签的绝对路径和相对路径/"/>
+    <id>http://js8.in/2012/08/06/获取a标签和script标签的绝对路径和相对路径/</id>
+    <published>2012-08-06T10:22:35.000Z</published>
+    <updated>2013-11-01T12:29:19.000Z</updated>
+    <content type="html"><![CDATA[<p>做了一个a标签和script标签获取绝对路径和相对路径的实验，实验代码如下：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">a</span> <span class="attribute">id</span>=<span class="value">"link"</span> <span class="attribute">href</span>=<span class="value">"a.html"</span>&gt;</span>a.html<span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span> <span class="attribute">id</span>=<span class="value">"script"</span> <span class="attribute">src</span>=<span class="value">'a.js'</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="function"><span class="keyword">function</span> <span class="title">$</span><span class="params">(id)</span>{</span>
+        <span class="keyword">return</span> document.getElementById(id);
+    }
+    alert(<span class="string">'link.href=&gt;'</span>+$(<span class="string">'link'</span>).href);
+    alert(<span class="string">'link.get=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>));
+    alert(<span class="string">'link.get0=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>,<span class="number">0</span>));
+    alert(<span class="string">'link.get1=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>,<span class="number">1</span>));
+    alert(<span class="string">'link.get2=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>,<span class="number">2</span>));
+    alert(<span class="string">'link.get4=&gt;'</span>+$(<span class="string">'link'</span>).getAttribute(<span class="string">'href'</span>,<span class="number">4</span>));
+
+    alert(<span class="string">'script.src=&gt;'</span>+$(<span class="string">'script'</span>).src);
+    alert(<span class="string">'script.get=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>));
+    alert(<span class="string">'script.get0=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>,<span class="number">0</span>));
+    alert(<span class="string">'script.get1=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>,<span class="number">1</span>));
+    alert(<span class="string">'script.get2=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>,<span class="number">2</span>));
+    alert(<span class="string">'script.get4=&gt;'</span>+$(<span class="string">'script'</span>).getAttribute(<span class="string">'src'</span>,<span class="number">4</span>));
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>分别在IE6~IE9（都是虚拟机原生，非ie9模拟）、chrome21、FF14，opera12.01，safari5.1.7中做出如下的实验结果:</p>
+<p>√代表绝对路径，×代表相对路径（即src或者href属性的值，如果为完整的路径，则是完整路径）</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>IE6</th>
+<th>IE7</th>
+<th>IE8</th>
+<th>IE9</th>
+<th>chrome 21</th>
+<th>FF 14</th>
+<th>safari 5.1.7</th>
+<th>opera 12</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>link.href</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>link.get</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>link.get0</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>link.get1</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>link.get2</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>link.get4</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.src</td>
+<td>×</td>
+<td>×</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>script.get</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.get0</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.get1</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.get2</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>script.get4</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody>
+</table>
+<p>详情见MSDN的介绍：<a href="http://msdn.microsoft.com/en-us/library/ms536429(v=VS.85" target="_blank"><a href="http://msdn.microsoft.com/en-us/library/ms536429(v=VS.85).aspx">http://msdn.microsoft.com/en-us/library/ms536429(v=VS.85).aspx</a></a>.aspx)</p>
+]]></content>
+    <category scheme="http://js8.in/tags/标签/" term="标签"/>
+    <category scheme="http://js8.in/tags/路径/" term="路径"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[ECMAScript 5的严格模式：语法限制]]></title>
+    <link href="http://js8.in/2012/07/27/ecmascript-5的严格模式：语法限制/"/>
+    <id>http://js8.in/2012/07/27/ecmascript-5的严格模式：语法限制/</id>
+    <published>2012-07-27T09:08:23.000Z</published>
+    <updated>2013-11-01T12:36:12.000Z</updated>
+    <content type="html"><![CDATA[<p>在<strong>ECMAScript 5严格模式</strong>介绍的第一篇（<a href="/2012/07/26/ecmascript-5%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%9Astrict-mode%E4%BB%8B%E7%BB%8D/">ECMAScript 5的严格模式：strict mode介绍</a>）文章中提到了严格模式会在语法解析和代码执行两个方面做限制，抛出更多的异常。今天介绍的是<strong>ECMAScript 5严格模式</strong>的第一部分：语法限制。</p>
+<p>ECMAScript 5严格模式的语法限制有七个，下面一一介绍：</p>
+<h2>禁止函数出现相同的参数</h2>
+<p>我们知道在普通的函数中，多个参数可以相同（即使我们很少或者没有这样写过），但是在严格模式下，这样的行为是被禁止！<br>例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
+    alert(x+y);
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<p>在非严格模式下，后面的x会覆盖第一个x的传参，即运行结果实际为<code>2+3=5</code>。</p>
+<p>但是在严格模式下，上面的代码却会抛出类似“Strict mode function may not have duplicate parameter names”的语法异常。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
+    <span class="string">"use strict"</span>;
+    alert(x+y);
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<h2>禁止对象直接量的相同属性名</h2>
+<p>跟第一条相同，下面的代码在非严格模式是正常的，但是在严格模式却是禁止的，也是抛出语法异常（chrome 下为“Duplicate data property in object literal not allowed in strict mode”）</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> obj = {
+    a: <span class="number">1</span>,
+    a: <span class="number">2</span>
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<h2>禁止重新定义eval和arguments</h2>
+<p>严格模式中不能声明或重写 <code>eval</code> 和 <code>arguments</code><br>这两个标识符，亦即是说，它们不能出现在赋值运算的左边，也不能使用 var 语句来声明。</p>
+<p>另外，由于 catch 子句以及具名函数都会隐式地声明变量名，因此在它们的语法中也不允许用 eval 和 arguments 作为标识符。最后要强调的是，arguments 或 eval 也不能使用 delete 去删除。所以下面的代码在严格模式下都会抛出语法异常：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span class="comment">//向 eval或 arguments赋值</span>
+eval = <span class="keyword">function</span>() { }
+
+<span class="comment">//重新声明 eval或 arguments</span>
+<span class="keyword">var</span> arguments;
+
+<span class="comment">//将 eval或 arguments用做 catch子句的异常对象名</span>
+<span class="keyword">try</span> {
+    <span class="comment">// …</span>
+}
+<span class="keyword">catch</span> (eval) {
+    <span class="comment">// …</span>
+}
+
+<span class="comment">//将 eval或 arguments用做函数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">arguments</span><span class="params">()</span> {</span> }
+
+<span class="comment">//删除 arguments，或形式参数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>
+    <span class="keyword">delete</span> arguments;
+}
+</pre></td></tr></table></figure>
+
+<h2>禁止使用 0 前缀声明的 8 进制直接量</h2>
+<p>例如下面的代码在严格模式下面是错误的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="keyword">var</span> num = <span class="number">012</span>;
+alert(num);
+</pre></td></tr></table></figure>
+
+<p>而在非严格模式中，<code>num</code>因为0而被解析为八进制数值，所以<code>alert</code>出来的是十进制的<code>10</code></p>
+<h2>禁止delete显式声明的标识符、具名函数</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre><span class="comment">//删除变量名</span>
+<span class="keyword">var</span> x;
+<span class="keyword">delete</span> x;
+
+<span class="comment">//删除具名函数</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>}
+<span class="keyword">delete</span> foo;
+
+<span class="comment">//删除 arguments，或形式参数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x)</span> {</span>
+<span class="keyword">delete</span> x;
+}
+
+<span class="comment">//删除 catch子句中声明的异常对象</span>
+<span class="keyword">try</span>{} <span class="keyword">catch</span>(e) { <span class="keyword">delete</span> e }
+</pre></td></tr></table></figure>
+
+<p>在非严格模式中，通常这些操作只是“无效的”，并不会抛出异常。此外，用 delete操作其他一些不能被删除的对象属性、标识符时将导致执行期异常。</p>
+<h2>保留字增多</h2>
+<p>在严格模式中，在代码中使用一些扩展的保留字也会抛出异常。</p>
+<p>这些保留字包括：implements, interface, let,package, private, protected, public, static，以及 yield。</p>
+<h2>禁止使用with(){}</h2>
+<p>我们知道with会使作用域链延长，如果你使用严格模式编码，那么使用with语句会直接抛出语法异常。</p>
+]]></content>
+    <category scheme="http://js8.in/tags/ecmascript/" term="ecmascript"/>
+    <category scheme="http://js8.in/tags/语法限制/" term="语法限制"/>
+    <category scheme="http://js8.in/categories/读书笔记/" term="读书笔记"/>
+  </entry>
+</feed>

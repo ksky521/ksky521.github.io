@@ -1,0 +1,1231 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 - 归档：2009 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2009</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/11/发布wordpress来访者天气预报插件/">发布WordPress来访者天气预报插件</a></h1>
+  
+
+      <time datetime="2009-12-11T09:43:44.000Z"><a href="/2009/12/11/发布wordpress来访者天气预报插件/">2009年12月11日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>细心的童鞋会发现我的博客昨天添加了一个新的功能——<strong>天气预报</strong>，昨天我说要发布给大家的，晚上睡觉之前，想了很久关于WordPress<strong>天气插件</strong>的编写，基本上在晚上就已经理清了思路，早上很早就起床了，没有吃饭就来到公司，趁着大家还没有来的时候，我要在九点上班之前把WordPress来访者天气预报的插件做出来，加上之前开发的<a href="http://js8.in/352.html">WordPress Follow5 插件</a>开发经验，自己写<a href="http://js8.in/wordpress-weather" title="WordPress天气插件下载"><strong>WordPress来访者天气插件</strong></a>已经是轻车熟路了~</p>
+<p>这个插件的使用的是<strong>jsonp技术</strong>，首先通过QQ的ip接口（<a href="http://fw.qq.com/ipaddress）获取到来访者的城市**地理信息**，然后使用WordPress的wp_footer的hook动态建立一个JavaScript文件，文件地址为我博客的[http://js8.in/weather/js.php](http://js8.in/weather/wordpress-weather" target="_blank">http://fw.qq.com/ipaddress）获取到来访者的城市**地理信息**，然后使用WordPress的wp_footer的hook动态建立一个JavaScript文件，文件地址为我博客的[http://js8.in/weather/js.php](http://js8.in/weather/wordpress-weather</a> “WordPress天气插件下载”)，js.php返回的是一段JavaScript代码，代码使用innerHTML插入来访者天气预报的内容。</p>
+<p>WordPress来访者天气预报插件采用<strong>精美的天气图标</strong>，完全DIV+CSS页面布局，保证了页面的美观大气，数据库信息来自中国气象网，保证了数据的可靠性，并且熟悉CSS的童鞋还可以修改插件中的CSS，以达到自己喜欢的页面效果。css地址为wp-content\plugins\weather\css.css</p>
+<p><strong>插件</strong>如不能正常使用，请看以下注意事项：</p>
+<blockquote>
+<p>1、保证您的主题皮肤中的footer.php中存在<strong>do_action(&#39;wp_footer&#39;);</strong>函数</p>
+<p>2、如出现其他情况，请来<a href="http://js8.in/374.html">插件页面</a>报错<br><a href="/uploads/2009/12/screenshot.jpg"><img src="/uploads/2009/12/screenshot.jpg" alt="WordPress来访者天气预报插件截图" title="WordPress来访者天气预报插件截图"></a></p>
+</blockquote>
+<p>使用方法：</p>
+<blockquote>
+<p>1、下载插件（<a href="http://js8.in/weather/vistor_weather.zip">点击下载</a>）并上传到wp-content\plugins目录中；<br>2、登录网站后台安装此插件；<br>3、然后进入“外观”，“小工具”，把“<strong>Weather Widget</strong>”小工具拖到右侧，填写插件显示名称（如：<strong>天气预报</strong>）即可。</p>
+</blockquote>
+<p><strong><span style="overflow-x: hidden; overflow-y: hidden; color: #ff0000;"><strong>最后更新时间：2009-12-12 8：55</strong></span></strong></p>
+<p><strong>下载地址：<a href="http://js8.in/weather/vistor_weather.zip"><a href="http://js8.in/weather/vistor_weather.zip">http://js8.in/weather/vistor_weather.zip</a></a></strong></p>
+<p><strong>当前最新版本为：0.1</strong></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/10/推荐六个在线制作loading图标的网站/">推荐六个在线制作Loading图标的网站</a></h1>
+  
+
+      <time datetime="2009-12-10T13:51:10.000Z"><a href="/2009/12/10/推荐六个在线制作loading图标的网站/">2009年12月10日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>经常来我的博客的而且细心的童鞋可以看见我的网站侧边栏加上了<strong>天气预报插件</strong>，这是我自己写的，代码稍后放出，写的时候需要一个Loading的gif，于是上网找生成<strong>Loading图标</strong>的网站，这里我推荐六个网站，希望大家喜欢~</p>
+<p>1、<a href="http://ajaxload.info/" target="_blank">Ajax Load</a></p>
+<p><a href="/uploads/2009/12/31.jpg"><img src="/uploads/2009/12/31.jpg" alt="Ajax Load 在线loading图标制作网站" title="Ajax Load"></a></p>
+<p><strong>Ajax Load</strong>所提供的种类丰富，也可以自定义Loading图标样式，推荐！</p>
+<p>2、<a href="http://loadinfo.net/" target="_blank">Load Info</a></p>
+<p><a href="/uploads/2009/12/watermark.jpg"><img src="/uploads/2009/12/watermark.jpg" alt="Load Info loading图标网站" title="Load Info"></a></p>
+<p><a href="http://loadinfo.net/" target="_blank">Load Info</a>在线制作<strong>Loading图标</strong>的免费网站，目前<strong>Load Info</strong>网站提供了90多种（总有一种适合你）动态图标。而且每种图标都自定义背景色和前景色，更有三种不同的尺寸可以选择，包括 16×16, 24×24, 48×46，很是方便实用。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/10/推荐六个在线制作loading图标的网站/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/07/设置htaccess应该注意的问题/">设置htaccess应该注意的问题</a></h1>
+  
+
+      <time datetime="2009-12-06T18:32:56.000Z"><a href="/2009/12/07/设置htaccess应该注意的问题/">2009年12月7日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天给<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>做SEO优化，发现自己没有自定义<strong>404</strong>页面，并且还发现存在index of列目录的漏洞，后来才知道原来WordPress都没有在htaccess中使用<strong>Options -Indexes</strong>来防止列目录，于是先加上了Options -Indexes来防止列目录的问题，自动转为了404错误，而不是403，呵呵~</p>
+<p>可是我改变了<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>的根目录下的htaccess配置把404页面指到了404.html，可是就是不能实现<strong>404页面</strong>的跳转呢？难道htaccess的404配置不可用？而是直接都返回到了<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙的首页</a>（<a href="http://love.js8.in）~这样子听说对**SEO**是很不好的，搜索引擎不会收录网站的首页，于是上网google原因，找了半天的原因也没有找到问题的根本所在~" target="_blank">http://love.js8.in）~这样子听说对**SEO**是很不好的，搜索引擎不会收录网站的首页，于是上网google原因，找了半天的原因也没有找到问题的根本所在~</a></p>
+<p>后来我在一片不起眼的文章中找到了问题的所在~<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/07/设置htaccess应该注意的问题/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/04/css清除浏览器默认样式注意点/">CSS清除浏览器默认样式注意点</a></h1>
+  
+
+      <time datetime="2009-12-04T10:15:20.000Z"><a href="/2009/12/04/css清除浏览器默认样式注意点/">2009年12月4日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天看了岁月如歌的一片文章《<a href="http://lifesinger.org/blog/2009/12/kissy-css-reset/" target="_blank">KISSY CSS Reset 1.0</a>》其中写到了<strong>css重置</strong>的代码</p>
+<blockquote>
+<p>/<em><br>KISSY CSS Reset<br>理念：1. reset 的目的不是清除浏览器的默认样式，这仅是部分工作。清除和重置是紧密不可分的。<br>2. reset 的目的不是让默认样式在所有浏览器下一致，而是减少默认样式有可能带来的问题。<br>3. reset 期望提供一套普适通用的基础样式。但没有银弹，推荐根据具体需求，裁剪和修改后再使用。<br>特色：1. 适应中文；2. 基于最新主流浏览器。<br>维护：玉伯, 正淳<br>Revision: 276
+</em>/</p>
+<p>/<strong> 清除内外边距 </strong>/<br>body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /<em> structural elements 结构元素 </em>/<br>dl, dt, dd, ul, ol, li, /<em> list elements 列表元素 </em>/<br>pre, /<em> text formatting elements 文本格式元素 </em>/<br>form, fieldset, legend, button, input, textarea, /<em> form elements 表单元素 </em>/<br>th, td /<em> table elements 表格元素 </em>/ {<br>margin: 0;<br>padding: 0;<br>}</p>
+<p>/<strong> 设置默认字体 </strong>/<br>body,<br>button, input, select, textarea /<em> for ie </em>/ {<br>font: 12px/1.5 tahoma, arial, simsun, sans-serif;<br>}<br>h1, h2, h3, h4, h5, h6 { font-size: 100%; }<br>address, cite, dfn, em, var { font-style: normal; } /<em> 将斜体扶正 </em>/<br>code, kbd, pre, samp { font-family: courier new, courier, monospace; } /<em> 统一等宽字体 </em>/<br>small { font-size: 12px; } /<em> 小于 12px 的中文很难阅读，让 small 正常化 </em>/</p>
+<p>/<strong> 重置列表元素 </strong>/<br>ul, ol { list-style: none; }</p>
+<p>/<strong> 重置文本格式元素 </strong>/<br>a { text-decoration: none; }<br>a:hover { text-decoration: underline; }</p>
+<p>sup { vertical-align: text-top; } /<em> 重置，减少对行高的影响 </em>/<br>sub { vertical-align: text-bottom; }</p>
+<p>/<strong> 重置表单元素 </strong>/<br>legend { color: #000; } /<em> for ie6 </em>/<br>fieldset, img { border: 0; } /<em> img 搭车：让链接里的 img 无边框 </em>/<br>button, input, select, textarea { font-size: 100%; } /<em> 使得表单元素在 ie 下能继承字体大小 </em>/<br>/<em> 注：optgroup 无法扶正 </em>/</p>
+<p>/<strong> 重置表格元素 </strong>/<br>table { border-collapse: collapse; border-spacing: 0; }<br>而我在腾讯webteam中看到一篇文章《<a href="http://webteam.tencent.com/?p=1481" target="_blank">border:none;与border:0;的区别</a>》中提到<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/12/04/css清除浏览器默认样式注意点/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/12/01/使用css控制打印页面格式/">使用CSS控制打印页面格式</a></h1>
+  
+
+      <time datetime="2009-11-30T17:12:39.000Z"><a href="/2009/12/01/使用css控制打印页面格式/">2009年12月1日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>之前做<a href="http://ditu.pujia.com/preview" target="_blank">地图</a>打印页面的时候，经理要求打印时候把打印的按钮去掉。这个时候就用到了控制<strong>打印</strong>的<strong>样式表</strong>了。<br>&lt;link rel=“stylesheet” type=“text/css” media=“print” href=“print.css” /&gt;</p>
+<p>正因为xhtml和css是分离的，所以我们可以在print.css里自由书写需要打印显示的内容和表现形式。那么这也要求我们在书写xhtml的时候更多考虑到打印显示效果的需求，良好的扩展标记和结构嵌套，使得我们轻松的使用display:none将内容设置为不显示。然后就是去书写 print.css内容的时候了，你象设置word一样去写你想打印的页面吧。<br>后来想了想，其实单独写一个css增加了请求次数，就想到<strong>了@media print</strong>{}的作用，代码如下</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="code"><pre><span class="at_rule">@<span class="keyword">media</span> print</span>{
+ <span class="class">.printdesc</span>
+<span class="rules">{
+    <span class="rule"><span class="attribute">right</span>:<span class="value"> <span class="number">0</span>;</span></span>
+    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">685</span>px;</span></span>
+    <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">69</span>px;</span></span>
+    <span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#FFFFFF</span>;</span></span>
+    <span class="rule"><span class="attribute">float</span>:<span class="value">left;</span></span>
+    <span class="rule"><span class="attribute">overflow</span>:<span class="value">auto;</span></span>
+    <span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">0</span>px;</span></span>
+<span class="rule">}</span></span>
+<span class="class">.text</span><span class="rules">{
+    <span class="rule"><span class="attribute">float</span>:<span class="value">right;</span></span>
+    <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">688</span>px;</span></span>
+    <span class="rule"><span class="attribute">margin-top</span>:<span class="value"><span class="number">20</span>px;</span></span>
+<span class="rule">}</span></span>
+<span class="class">.printlink</span><span class="rules">{
+    <span class="rule"><span class="attribute">height</span>:<span class="value"><span class="number">0</span>px;</span></span>
+    <span class="rule"><span class="attribute">display</span>:<span class="value">none;</span></span>
+    <span class="rule"><span class="attribute">width</span>:<span class="value"><span class="number">0</span>px;</span></span>
+    <span class="rule"><span class="attribute">z-index</span>:<span class="value">-<span class="number">10</span>;</span></span>
+
+<span class="rule">}</span></span>
+<span class="class">.printlink</span> <span class="tag">a</span><span class="rules">{
+    <span class="rule"><span class="attribute">display</span>:<span class="value">none;</span></span>
+<span class="rule">}</span></span>
+}
+</pre></td></tr></table></figure>
+
+<p>后来想到如果打印页面的某一部分，可以使用iframe来进行操作，现在的打印页面的局部内容基本上就是使用iframe进行处理的~特此记录一下</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/">javascript高效简洁代码的编写及优化技巧</a></h1>
+  
+
+      <time datetime="2009-11-27T22:46:59.000Z"><a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/">2009年11月28日</a></time>
+    </header>
+    <div class="entry">
+      
+        <h3>前言</h3>
+<p>随着互联网前端技术的革新，<strong>javascript</strong>越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函数可以放着不动，而js不同，如果加入很多很多无用的函数会大大的占有带宽，不利于用户体验。下面结合笔者实际开发过程中遇到的问题，以及自己收集的技巧，谈谈js高效简洁代码的编写及其优化的技巧。当然网上也有很多类似的文章，不过建议大家还是不要人云亦云，真正适合自己的技巧跟编写习惯才是最好的！</p>
+<h3>真假的判断</h3>
+<p>Javascript中有null、undefined、string、number、boolean五种基本的类型，一般判断真假或者为空的时候大家会使用下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre>
+<span class="keyword">if</span>(a==<span class="literal">true</span>){
+    <span class="comment">//doSomeTing();</span>
+}```但是这种方法很不简洁，我们完全可以使用<span class="number">1</span>，<span class="number">0</span>来判断，比如我们设定一个a，如果a为假，我们就改成真，而a在程序后面可能用于判断，最简单也是最好理解的方法就是下面的写法
+```javascript
+
+<span class="keyword">var</span> a=<span class="literal">false</span>;
+<span class="keyword">if</span>(a==<span class="literal">false</span>){
+    a=<span class="literal">true</span>;
+}
+```既然提到了<span class="number">0</span>，<span class="number">1</span>，肯定有人想到了第二种写法：
+```javascript
+
+<span class="keyword">var</span> a=<span class="number">0</span>;
+<span class="keyword">if</span>(!a){
+    a=<span class="number">1</span>;
+}
+```这个代码还可以进一步简写优化，就是使用js的三元运算符，也就是三目运算符：
+```javascript
+
+<span class="keyword">var</span> a=<span class="number">0</span>;
+!a?a=<span class="number">1</span>?<span class="literal">null</span>;
+</pre></td></tr></table></figure>
+
+<p>还有一点，对于空字符串的判断，往往采用<strong>if（a==“”）</strong>,其实对于空字符本身就是false，下面我总结了下Javascript中的真假值，希望对大家有用<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/22/css-3-0-参考手册-中文版下载/">CSS 3.0 参考手册 (中文版)下载</a></h1>
+  
+
+      <time datetime="2009-11-22T09:33:32.000Z"><a href="/2009/11/22/css-3-0-参考手册-中文版下载/">2009年11月22日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>原文来自：<a href="http://webteam.tencent.com/css3/" target="_blank">腾讯webteam</a></p>
+<p><span style="background-color: #ffffff;">CSS 是 Cascading Style Sheet 的缩写。译作「层叠样式表」。是用于(增强)控制网页样式并允许将样式信息与网页内容分离的一种标记性语言。</span></p>
+<h2>手册难点</h2>
+<ol>
+<li>中文资料少，对英文翻译功底要求较高；</li>
+<li>基础语法要求字斟句酌，避免产生歧义；</li>
+<li>兼容性列表涉及浏览器及版本众多；</li>
+<li>草案中的Grid布局被业界同仁普遍认为比“天书”还难…</li>
+</ol>
+<p>CSS3 还是草案，中文资料少之又少，基本上都是一篇内容转来转去，而我们的手册从基础语法到示例制作，都是根据W3C工作草案进行翻译，并结合自身的沉淀制作示例。</p>
+<h2>备受期待的 CSS 3 新功能</h2>
+<p>圆角、多背景、@font-face 用户自定义字体、动画与渐变、渐变色、盒阴影、RGBa - 加入透明色、文字阴影等等<br>CSS3 的出现，让代码更简洁、页面结构更合理，性能和效果得到兼顾。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/11/22/css-3-0-参考手册-中文版下载/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/21/google-map-api根据关键词返回经纬度接口/">php、js两种不同方式根据关键词返回经纬度接口【基于Google map API】</a></h1>
+  
+
+      <time datetime="2009-11-20T16:21:09.000Z"><a href="/2009/11/21/google-map-api根据关键词返回经纬度接口/">2009年11月21日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>P.S：在本文章中您将找到根据城市关键词获取经纬度的方法，即就是通过google map API的逆经纬度查询接口获得经纬度。<br><strong>google map api</strong>是一个强大的地图API，很多知名的网站都是用了google地图API，曾经我也写过一个根据来访者甚至域名来查询经纬度的程序（<a href="http://js8.in/mywork/ipsearch"><a href="http://js8.in/mywork/ipsearch">http://js8.in/mywork/ipsearch</a></a>）。文章链接地址为：<a href="http://js8.in/308.html">根据IP返回地理位置地址以及地理经纬度的方法</a>，关于经纬度的其他文章可以参考<a href="http://js8.in/285.html">全国各省市，县级城市经纬度SQL数据以及<strong>js数组</strong></a><br>其中使用的是纯真IP数据库，已经google地图的逆经纬度查询~<br>而本例中我们实现的主要方式是php如何获得关键字的经纬度。<br>使用过Google map API的人都知道google有一个逆经纬度查询的接口，例如：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+</pre></td><td class="code"><pre>geocoder = new GClientGeocoder();geocoder.getLocations(
+          '山东青岛',
+        function($){
+var lalton = $.Placemark[0].Point.coordinates;
+alert(latlon[0]+","+latlon[1]);
+});```可是对于php应该怎样获取**经纬度**呢？
+今天在无意的时候看到一个wp的插件，其中找到了方法，就是通过google map API的逆经纬度查询接口获得经纬度~
+首先你需要去http://code.google.com/intl/zh-CN/apis/maps/signup.html申请一个google map api的授权域名**key**，
+google的map api逆经纬度接口为：
+http://maps.google.com/maps/geo?q=关键词（如山东青岛）&key=刚刚申请的API KEY&sensor=false&output=xml&oe=utf8
+请求下来的数据时kml的数据格式，怎样解析呢？
+&lt;!--more--&gt;我们可以使用**xml**的方式来进行解析，这里我提供一个解析的**php**代码，代码来自于wp的一个插件
+第一个函数是xml2array()，这个函数的作用就是把xml转换为数组便于操作
+参数$url为请求的xml地址，返回的是一个xml转换成的数组
+
+```php
+//from http://us3.php.net/manual/en/function.xml-parse.php
+function xml2array($url, $get_attributes = 1, $priority = 'tag')
+{
+    $contents = "";
+    if (!function_exists('xml_parser_create'))
+    {
+        return array ();
+    }
+    $parser = xml_parser_create('');
+    if (!($fp = @ fopen($url, 'rb')))
+    {
+        return array ();
+    }
+    while (!feof($fp))
+    {
+        $contents .= fread($fp, 8192);
+    }
+    fclose($fp);
+    xml_parser_set_option($parser, XML_OPTION_TARGET_ENCODING, "UTF-8");
+    xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+    xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+    xml_parse_into_struct($parser, trim($contents), $xml_values);
+    xml_parser_free($parser);
+    if (!$xml_values)
+        return; //Hmm...
+    $xml_array = array ();
+    $parents = array ();
+    $opened_tags = array ();
+    $arr = array ();
+    $current = & $xml_array;
+    $repeated_tag_index = array ();
+    foreach ($xml_values as $data)
+    {
+        unset ($attributes, $value);
+        extract($data);
+        $result = array ();
+        $attributes_data = array ();
+        if (isset ($value))
+        {
+            if ($priority == 'tag')
+                $result = $value;
+            else
+                $result['value'] = $value;
+        }
+        if (isset ($attributes) and $get_attributes)
+        {
+            foreach ($attributes as $attr =&gt; $val)
+            {
+                if ($priority == 'tag')
+                    $attributes_data[$attr] = $val;
+                else
+                    $result['attr'][$attr] = $val; //Set all the attributes in a array called 'attr'
+            }
+        }
+        if ($type == "open")
+        {
+            $parent[$level -1] = & $current;
+            if (!is_array($current) or (!in_array($tag, array_keys($current))))
+            {
+                $current[$tag] = $result;
+                if ($attributes_data)
+                    $current[$tag . '_attr'] = $attributes_data;
+                $repeated_tag_index[$tag . '_' . $level] = 1;
+                $current = & $current[$tag];
+            }
+            else
+            {
+                if (isset ($current[$tag][0]))
+                {
+                    $current[$tag][$repeated_tag_index[$tag . '_' . $level]] = $result;
+                    $repeated_tag_index[$tag . '_' . $level]++;
+                }
+                else
+                {
+                    $current[$tag] = array (
+                        $current[$tag],
+                        $result
+                    );
+                    $repeated_tag_index[$tag . '_' . $level] = 2;
+                    if (isset ($current[$tag . '_attr']))
+                    {
+                        $current[$tag]['0_attr'] = $current[$tag . '_attr'];
+                        unset ($current[$tag . '_attr']);
+                    }
+                }
+                $last_item_index = $repeated_tag_index[$tag . '_' . $level] - 1;
+                $current = & $current[$tag][$last_item_index];
+            }
+        }
+        elseif ($type == "complete")
+        {
+            if (!isset ($current[$tag]))
+            {
+                $current[$tag] = $result;
+                $repeated_tag_index[$tag . '_' . $level] = 1;
+                if ($priority == 'tag' and $attributes_data)
+                    $current[$tag . '_attr'] = $attributes_data;
+            }
+            else
+            {
+                if (isset ($current[$tag][0]) and is_array($current[$tag]))
+                {
+                    $current[$tag][$repeated_tag_index[$tag . '_' . $level]] = $result;
+                    if ($priority == 'tag' and $get_attributes and $attributes_data)
+                    {
+                    $current[$tag][$repeated_tag_index[$tag . '_' . $level] . '_attr'] = $attributes_data;
+                    }
+                    $repeated_tag_index[$tag . '_' . $level]++;
+                }
+                else
+                {
+                    $current[$tag] = array (
+                        $current[$tag],
+                        $result
+                    );
+                    $repeated_tag_index[$tag . '_' . $level] = 1;
+                    if ($priority == 'tag' and $get_attributes)
+                    {
+                        if (isset ($current[$tag . '_attr']))
+                        {
+                            $current[$tag]['0_attr'] = $current[$tag . '_attr'];
+                            unset ($current[$tag . '_attr']);
+                        }
+                        if ($attributes_data)
+                        {
+                            $current[$tag][$repeated_tag_index[$tag . '_' . $level] . '_attr'] = $attributes_data;
+                        }
+                    }
+                    $repeated_tag_index[$tag . '_' . $level]++; //0 and 1 index is already taken
+                }
+            }
+        }
+        elseif ($type == 'close')
+        {
+            $current = & $parent[$level -1];
+        }
+    }
+    return ($xml_array);
+}
+</pre></td></tr></table></figure>
+
+<p>第二个函数getPoiAndAdd($address,$mapkey):<br>$address为查询的关键词，地址就可以啦，$mapkey为你申请的google map api key，<br>返回的是一个数组，其中包括了经纬度以及详细地址哦~</p>
+<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">gmshc_point</span> <span class="params">(<span class="variable">$address</span>,<span class="variable">$apikey</span>)</span>{</span>
+    <span class="variable">$find</span> = <span class="keyword">array</span>(<span class="string">"\n"</span>,<span class="string">"\r"</span>,<span class="string">" "</span>);
+	<span class="variable">$replace</span> = <span class="keyword">array</span>(<span class="string">""</span>,<span class="string">""</span>,<span class="string">"+"</span>);					
+    <span class="variable">$address</span> = str_replace( <span class="variable">$find</span>,<span class="variable">$replace</span>, <span class="variable">$address</span>);
+	<span class="variable">$url</span> = <span class="string">'http://maps.google.com/maps/geo?q='</span>.<span class="variable">$address</span>.<span class="string">'&key='</span>.<span class="variable">$apikey</span>.
+         <span class="string">'&sensor=false&output=xml&oe=utf8'</span>;	
+	<span class="variable">$response</span> = xml2array(<span class="variable">$url</span>);	<span class="comment">//此处调用都一个函数进行解析</span>
+	<span class="variable">$coordinates</span> = <span class="variable">$response</span>[<span class="string">'kml'</span>][<span class="string">'Response'</span>][<span class="string">'Placemark'</span>][<span class="string">'Point'</span>][<span class="string">'coordinates'</span>];
+	<span class="variable">$address</span> = <span class="variable">$response</span>[<span class="string">'kml'</span>][<span class="string">'Response'</span>][<span class="string">'Placemark'</span>][<span class="string">'address'</span>];	
+	<span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$coordinates</span>)) {	
+	<span class="variable">$point_array</span> = split(<span class="string">","</span>,<span class="variable">$coordinates</span>);	
+	<span class="variable">$point</span> = <span class="variable">$point_array</span>[<span class="number">1</span>].<span class="string">","</span>.<span class="variable">$point_array</span>[<span class="number">0</span>];
+	<span class="variable">$response</span> = <span class="keyword">array</span>(<span class="string">'point'</span>=&gt;<span class="variable">$point</span>,<span class="string">'address'</span>=&gt;<span class="variable">$address</span>);	
+	<span class="keyword">return</span>  <span class="variable">$response</span>;	
+	}
+}
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/18/jquery浏览器判断一个bug，以及修改建议/">jQuery浏览器判断一个bug，以及修改建议</a></h1>
+  
+
+      <time datetime="2009-11-18T13:48:48.000Z"><a href="/2009/11/18/jquery浏览器判断一个bug，以及修改建议/">2009年11月18日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前几天在使用<strong>jQuery</strong>（1.3.2）的时候，想使用下浏览器判断$.browser，可是我在使用$.browser.safari的时候，发现一个问题：<br>就是chrome浏览器也走<strong>$.browser.safari</strong>的判断，查看了jQuery的源代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="code"><pre><span class="keyword">var</span> userAgent = navigator.userAgent.toLowerCase();
+jQuery.browser = {
+	version: (userAgent.match( <span class="regexp">/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/</span> ) || [<span class="number">0</span>,<span class="string">'0'</span>])[<span class="number">1</span>],
+	safari: <span class="regexp">/webkit/</span>.test( userAgent ),
+	opera: <span class="regexp">/opera/</span>.test( userAgent ),
+	msie: <span class="regexp">/msie/</span>.test( userAgent ) && !<span class="regexp">/opera/</span>.test( userAgent ),
+	mozilla: <span class="regexp">/mozilla/</span>.test( userAgent ) && !<span class="regexp">/(compatible|webkit)/</span>.test( userAgent )
+};```&lt;!--more--&gt;
+经过同事**修改**后的代码是：
+```javascript
+<span class="keyword">var</span> browserName = navigator.userAgent.toLowerCase();
+mybrowser = {
+	version: (browserName.match(<span class="regexp">/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/</span>) || [<span class="number">0</span>, <span class="string">'0'</span>])[<span class="number">1</span>],
+	safari: <span class="regexp">/webkit/i</span>.test(browserName) && !<span class="keyword">this</span>.chrome,
+	opera: <span class="regexp">/opera/i</span>.test(browserName),
+        firefox:<span class="regexp">/firefox/i</span>.test(browserName),
+	msie: <span class="regexp">/msie/i</span>.test(browserName) && !<span class="regexp">/opera/</span>.test(browserName),
+	mozilla: <span class="regexp">/mozilla/i</span>.test(browserName) && !<span class="regexp">/(compatible|webkit)/</span>.test(browserName) && !<span class="keyword">this</span>.chrome,
+        chrome: <span class="regexp">/chrome/i</span>.test(browserName) && <span class="regexp">/webkit/i</span>.test(browserName) && <span class="regexp">/mozilla/i</span>.test(browserName)
+}
+</pre></td></tr></table></figure>
+
+<p>完全可以使用，并且防止了safari跟<strong>chrome</strong>混淆的</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/11/09/14js代码编写时最佳规范/">14条JS代码编写时最佳规范</a></h1>
+  
+
+      <time datetime="2009-11-09T00:56:14.000Z"><a href="/2009/11/09/14js代码编写时最佳规范/">2009年11月9日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>写任何编程代码，不同的开发者都会有不同的见解。但参考一下总是好的，下面是来自<a href="http://www.javascripttoolbox.com/bestpractices/" target="_blank">Javascript Toolbox</a>发布的14条最佳JS代码编写技巧，Sofish翻译(1,2)。</p>
+<h3>1. 总是使用 ‘var’</h3>
+<p>在JavaScript中，变量不是全局范围的就是函数范围的，使用”var”关键词将是保持变量简洁明了的关键。当声明一个或者是全局或者是函数级（function-level）的变量，需总是前置”var”关键词，下面的例子将强调不这样做潜在的问题。</p>
+<p>不使用 Var 造成的问题</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="keyword">var</span> i=<span class="number">0</span>; <span class="comment">// This is good - creates a global variable</span>
+<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> {</span>
+   <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) {
+      alert(<span class="string">"Hello World!"</span>);
+   }
+}
+test();
+alert(i); <span class="comment">// The global variable i is now 10!</span>
+</pre></td></tr></table></figure>
+
+<p>因为变量函数中变量 i 并没有使用 var 使其成为函数级的变量，在这个例子中它引用了全局变量。总是使用 var 来声明全局变量是一个很多的做法，但至关重要的一点是使用 var 定义一个函数范围的变量。下面这两个方法在功能上是相同的：</p>
+<p>正确的函数</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> {</span>
+   <span class="keyword">var</span> i=<span class="number">0</span>;
+   <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) {
+      alert(<span class="string">"Hello World!"</span>);
+   }
+}
+正确的函数
+
+<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> {</span>
+   <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;<span class="number">10</span>; i++) {
+      alert(<span class="string">"Hello World!"</span>);
+   }
+}
+</pre></td></tr></table></figure>
+
+<h3>2. 特性检测而非浏览器检测</h3>
+<p>一些代码是写来发现浏览器版本并基于用户正使用的客户端的对其执行不同行为。这个，总的来说，是一个非常糟的实践。更好的方法是使用特性检测，在使 用一个老浏览器可能不支持的高级的特性之前，首先检测（浏览器的）是否有这个功能或特性，然后使用它。这单独检测浏览器版本来得更好，即使你知道它的性 能。你可以在 <a href="http://www.jibbering.com/faq/faq_notes/not_browser_detect.html找到一个深入讨论这个问题的文章。" target="_blank">http://www.jibbering.com/faq/faq_notes/not_browser_detect.html找到一个深入讨论这个问题的文章。</a></p>
+<p>例子：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/11/09/14js代码编写时最佳规范/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

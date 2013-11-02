@@ -1,0 +1,492 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ajax - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title tag">ajax</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/11/09/再谈iframe的问题/">再谈Iframe的问题</a></h1>
+  
+
+      <time datetime="2010-11-09T11:58:18.000Z"><a href="/2010/11/09/再谈iframe的问题/">2010年11月9日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><strong>iframe</strong>是可以做的事情非常多，比如<a href="http://js8.in/443.html" title="用document.domain+iframe实现Ajax跨子域">通过iframe实现跨域</a>，使用<a href="http://js8.in/553.html" title="解决IE6 select z-index无效，遮挡div的bug">iframe解决IE6下select遮挡不住的问题</a>，通过<a href="http://js8.in/311.html" title="关于Ajax在浏览器中产生前进后退的实现方法">iframe解决Ajax的前进后退</a>问题，再比如通过iframe实现异步上传。在很早我就写过一篇文章说明了<a href="http://js8.in/463.html" title="使用JavaScript在IE和Firefox下进行iframe的DOM操作">Iframe在IE、firefox下的一些DOM操作</a>。今天结合最近项目中遇见的<strong>iframe问题</strong>，再来谈谈iframe的一些常见问题解决方案。</p>
+<h3>IE下iframe背景透明问题</h3>
+<p>在firefox下，iframe背景默认的是透明的，在IE下默认不是透明的，我们可以使用<code>allowTransparency=&#39;true&#39;</code>来设置IE下的iframe为透明，另外我们使用<code>scrolling =&#39;no&#39; ``frameborder=&#39;0&#39;</code>分别来实现iframe页面没有滚动条，边框宽度。</p>
+<h3>IE6下iframe不显示的问题</h3>
+<p>不得不说<strong>IE6</strong>是个操蛋的浏览器，尤其是在中国！iframe有的时候在IE6中会出现不显示的问题，主要有以下几种原因，请一一排查：</p>
+<ol>
+<li>可能你的iframe没有设置宽高，例如在table不居中，计算不出来td的高度，会导致这种问题</li>
+<li><p>尝试使用下面的代码来重新载入IE6下的iframe页面：</p>
+<blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre>
+&gt; setTimeout(<span class="keyword">function</span>(){
+&gt; 	document.frames[<span class="string">'fuckIE6'</span>].location.reload();
+&gt; },<span class="number">0</span>)
+&gt;
+</pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>传闻iframe标签中不要把src紧跟在iframe之后，也就是<code>&amp;lt;iframe src=&#39;js8.in&#39; name=&#39;fuckIE6&#39;&amp;gt;&amp;lt;/iframe&amp;gt;</code>是错误的，不过我没有碰见过类似的问题，为了保险起见，还是不要写成上面的样式为妙。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/11/09/再谈iframe的问题/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/06/11/通过jsonp实现完美跨域/">通过JSONP实现完美跨域</a></h1>
+  
+
+      <time datetime="2010-06-11T12:17:47.000Z"><a href="/2010/06/11/通过jsonp实现完美跨域/">2010年6月11日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>以前我经常在博客说<strong>JSONP</strong>，例如我的<a href="http://js8.in/wordpress-weather" title="WordPress天气预报插件">WordPress天气插件</a>就是通过JSONP来调用的天气数据，今天就说说通过JSONP实现<strong>跨域</strong>的应用~</p>
+<h3>什么是JSONP</h3>
+<p>JSONP即JSON with Padding。由于同源策略的限制，XmlHttpRequest只允许请求当前源（域名、协议、端口）的资源。如果要进行跨域请求，我们可以通过使用 html的script标记来进行跨域请求，并在响应中返回要执行的script代码，其中可以直接使用JSON传递javascript对象。这种跨域的通讯方式称为JSONP。</p>
+<p>对于上面的解释，我们可以简单这样理解：JSONP就是可以通过<strong>JavaScript</strong>文件进行跨域通讯的方式，例如：现在各大网站风靡的搜索提示，<a href="http://js8.in/314.html" title="搜狗云输入法解析">搜狗云输入法</a><br>注意：<strong>JSONP</strong>服务器端代码需要充分做好<strong>安全</strong>措施。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/06/11/通过jsonp实现完美跨域/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/01/26/使用hash来实现ajax前进后退/">使用hash来实现Ajax前进后退</a></h1>
+  
+
+      <time datetime="2010-01-26T08:22:12.000Z"><a href="/2010/01/26/使用hash来实现ajax前进后退/">2010年1月26日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>Ajax应用中容易导致浏览器的<strong>前进后退</strong>按钮失效，不产生前进后退功能，在本文中断桥残雪就通过改变<strong>location.hash</strong>值来解决Ajax过程中导致的浏览器前进后退按键失效的问题，此方法兼容IE6+，Firefox，chrome，Safari，Opera等浏览器。</p>
+<p>在去年断桥残雪已经写了一篇<a href="http://js8.in/311.html" title="关于Ajax在浏览器中产生前进后退的实现方法">使用iframe来解决Ajax前进后退</a>的方法，也提到了通过改变hash的方法来解决这个问题，这也是比较方便的方法，而使用iframe实现Ajax前进后退可以在不改变浏览器地址栏地址的前提下通过iframe地址的变化来“欺骗”浏览器产生前进后退，hash的方法则是直接改变浏览器地址栏地址，从而使浏览器产生前进后退。</p>
+<h3>hash导致浏览器产生前进后退原理</h3>
+<p>浏览器URL的hash值，指的是URL地址之后的<strong>#hash</strong>部分，我们可以通过JavaScript的location对象的<strong>location.hash</strong>方法来获得或者改变，但是IE中，不能设置，好像是IE中只能通过连接来实现hash的改变，不过我们可以通过jQuery插件hashchange中的$.locationHash函数来解决这个问题。</p>
+<p>比如一个页面的地址是：<a href="http://js8.in/#top，那么这个页面的location.hash=&quot;#top&quot;，如果要改变这个地址的hash，可以给location.hash赋值，如：location.hash=&quot;#home&quot;，在IE下可以使用hashchange函数中$.locationHash(hash)给hash赋值。在日常我们常见的使用hash应用中，hash值使用最多的方式是">http://js8.in/#top，那么这个页面的location.hash=&quot;#top&quot;，如果要改变这个地址的hash，可以给location.hash赋值，如：location.hash=&quot;#home&quot;，在IE下可以使用hashchange函数中$.locationHash(hash)给hash赋值。在日常我们常见的使用hash应用中，hash值使用最多的方式是</a> “<strong>返回顶部</strong>” 功能。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/01/26/使用hash来实现ajax前进后退/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2010/01/09/用document-domainiframe实现ajax跨子域/">用document.domain+iframe实现Ajax跨子域</a></h1>
+  
+
+      <time datetime="2010-01-08T17:03:36.000Z"><a href="/2010/01/09/用document-domainiframe实现ajax跨子域/">2010年1月9日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>Ajax跨域一直是个比较麻烦的问题，例如：断桥残雪在一个项目中使用了open打开一个跟父窗口不同域名的新页面，结果子窗口就不能传值给父窗口了；再如：我在www.2fool.cn下不可以获取love.2fool.cn域名下的页面内容。<strong>浏览器的跨域</strong>限制是为了安全，可是当我们想要在一个域名下请求另外一个域名的内容的时候就感觉不那么爽了。</p>
+<p>我在<a href="http://js8.in/wordpress-weather" title="wordpress来访者天气预报插件">WordPress天气插件</a>、<a href="http://js8.in/441.html" title="使用滔滔给WordPress添加博主状态">滔滔API接口</a>处理上都使用了<strong>JSONP</strong>的方法来实现的跨域。而今天我要通过使用JS的<a href="http://js8.in/443.html" title="用document.domain+iframe实现Ajax跨子域">document.domain和iframe来解决Ajax跨子域的问题</a>。</p>
+<h3>原理</h3>
+<p>通过给主页面跟请求页面设置相同的document.domain来，欺骗浏览器，达到<strong>Ajax跨子域</strong>的效果，此方法在IE，chrome，Firefox，Safari，Opera下测试通过。</p>
+<p><strong>缺点：</strong>无法实现不同主域名之间的通讯。并且当在一个页面中还包含有其它的iframe时，会产生安全性异常，拒绝访问。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/01/09/用document-domainiframe实现ajax跨子域/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2009/05/02/jquerygoogle-weather-api轻松实现天气地图（一）/">jQuery+google weather API轻松实现天气地图（一）</a></h1>
+  
+
+      <time datetime="2009-05-01T21:04:01.000Z"><a href="/2009/05/02/jquerygoogle-weather-api轻松实现天气地图（一）/">2009年5月2日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>这里我使用的是<strong>MapBar</strong>的地图<strong>API</strong>，其他的如：Google 就不做说明了～方法类似～截图如下：<br><a href="/uploads/userup/0905/021309521305.png"><img src="/uploads/userup/0905/021309521305.png" alt=""></a><br>现在把全部<strong>代码</strong>放出，希望大家拍砖：<br>PS：关于各个城市的经纬度数据，请阅览：<a href="http://js8.in/2857.html"><a href="http://js8.in/285.html">http://js8.in/285.html</a></a><br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/05/02/jquerygoogle-weather-api轻松实现天气地图（一）/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

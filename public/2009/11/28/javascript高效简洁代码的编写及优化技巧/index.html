@@ -1,0 +1,639 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>javascript高效简洁代码的编写及优化技巧 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="前言
+随着互联网前端技术的革新，javascript越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函数可以放着不动，而js不同，如果加入很多很多无用的函数会大大的占有带宽，不利于用户体验。下面结合笔者实际开发过程中遇到的问题，以及自己收集的技巧，谈谈js高效简洁代码的编写及其优化的技巧。当然网上也有很多类似的文章，不过建议大家还是不要人云亦云，真正适合自己的技巧跟编写习惯才是最好的！
+真假的判断
+Javascript中有null、undefined、string、number、boolean五种基本的类型，一般判断真假或者为空的时候大家会使用下面的代码：
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+
+if(a==true){
+    //doSomeTing();
+}```但是这种方法很不简洁，我们完全可以使用1，0来判断，比如我们设定一个a，如果a为假，我们就改成真，而a在程序后面可能用于判断，最简单也是最好理解的方法就是下面的写法
+```javascript
+
+var a=false;
+if(a==false){
+    a=true;
+}
+```既然提到了0，1，肯定有人想到了第二种写法：
+```javascript
+
+var a=0;
+if(!a){
+    a=1;
+}
+```这个代码还可以进一步简写优化，就是使用js的三元运算符，也就是三目运算符：
+```javascript
+
+var a=0;
+!a?a=1?null;
+
+
+还有一点，对于空字符串的判断，往往采用if（a==“”）,其实对于空字符本身就是false，下面我总结了下Javascript中的真假值，希望对大家有用">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="javascript高效简洁代码的编写及优化技巧"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">javascript高效简洁代码的编写及优化技巧</h1>
+  
+
+      <time datetime="2009-11-27T22:46:59.000Z"><a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/">2009年11月28日</a></time>
+    </header>
+    <div class="entry">
+      
+        <h3>前言</h3>
+<p>随着互联网前端技术的革新，<strong>javascript</strong>越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函数可以放着不动，而js不同，如果加入很多很多无用的函数会大大的占有带宽，不利于用户体验。下面结合笔者实际开发过程中遇到的问题，以及自己收集的技巧，谈谈js高效简洁代码的编写及其优化的技巧。当然网上也有很多类似的文章，不过建议大家还是不要人云亦云，真正适合自己的技巧跟编写习惯才是最好的！</p>
+<h3>真假的判断</h3>
+<p>Javascript中有null、undefined、string、number、boolean五种基本的类型，一般判断真假或者为空的时候大家会使用下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre>
+<span class="keyword">if</span>(a==<span class="literal">true</span>){
+    <span class="comment">//doSomeTing();</span>
+}```但是这种方法很不简洁，我们完全可以使用<span class="number">1</span>，<span class="number">0</span>来判断，比如我们设定一个a，如果a为假，我们就改成真，而a在程序后面可能用于判断，最简单也是最好理解的方法就是下面的写法
+```javascript
+
+<span class="keyword">var</span> a=<span class="literal">false</span>;
+<span class="keyword">if</span>(a==<span class="literal">false</span>){
+    a=<span class="literal">true</span>;
+}
+```既然提到了<span class="number">0</span>，<span class="number">1</span>，肯定有人想到了第二种写法：
+```javascript
+
+<span class="keyword">var</span> a=<span class="number">0</span>;
+<span class="keyword">if</span>(!a){
+    a=<span class="number">1</span>;
+}
+```这个代码还可以进一步简写优化，就是使用js的三元运算符，也就是三目运算符：
+```javascript
+
+<span class="keyword">var</span> a=<span class="number">0</span>;
+!a?a=<span class="number">1</span>?<span class="literal">null</span>;
+</pre></td></tr></table></figure>
+
+<p>还有一点，对于空字符串的判断，往往采用<strong>if（a==“”）</strong>,其实对于空字符本身就是false，下面我总结了下Javascript中的真假值，希望对大家有用<br><a id="more"></a>&gt; JavaScript 中的真假值</p>
+<blockquote>
+<p>类型    真假值<br>Null    总是为假（false）<br>Undefined    总是为假（false）<br>Boolean    保持真假值不变<br>Number    +0，-0 或是 NaN 的时候为假，其它值为真<br>String    空字符串的时候为假，其它值为真<br>Object    总是为真（true）</p>
+</blockquote>
+<h3>数组跟对象的定义</h3>
+<p>对于类似下面的正统数组跟对象的定义</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+</pre></td><td class="code"><pre>
+<span class="keyword">var</span> a=<span class="keyword">new</span> Array;
+<span class="keyword">var</span> b=<span class="keyword">new</span> obj;
+obj.name=<span class="string">"WYQ"</span>;
+obj.webSite=<span class="string">"http://js8.in"</span>;
+```我们可以使用
+```javascript
+
+<span class="keyword">var</span> a=[];
+<span class="keyword">var</span> b={name:<span class="string">"WYQ"</span>,webSite:<span class="string">"http://js8.in"</span>};
+```来代替
+
+### 循环的控制
+在使用循环遍历时候要注意提前把长度或者要计算的长度记录下来，如下面的写法
+```javascript
+
+<span class="keyword">var</span> list = document.getElementsByTagName(<span class="string">'p'</span>);
+<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = list.length; i &lt; l; i++) {<span class="comment">//注意此处把list的长度提前计算出来，避免了每次循环重复计算</span>
+    ……
+}
+```**注意**循环体**内部的写法，该放在外面的放在外面**如下面的代码
+```javascript
+
+<span class="keyword">var</span> list = $(<span class="string">".abc"</span>);
+<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = list.length; i &lt; l; i++) {<span class="comment">//注意此处把list的长度提前计算出来，避免了每次循环重复计算</span>
+    <span class="keyword">var</span> a=list[i].html();
+    $(<span class="string">"#abc"</span>).after(a);
+}
+```我们分析一下：每次循环的时候，都要首先解析$(<span class="string">"#abc"</span>);势必效率变低，接着在使用after插入到#abc中去。这样子写效率会很低的，而下面的写法就高效了
+```javascript
+
+<span class="keyword">var</span> list = $(<span class="string">".abc"</span>);
+<span class="keyword">var</span> b = $(<span class="string">"#abc"</span>);
+<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = list.length; i &lt; l; i++) {<span class="comment">//注意此处把list的长度提前计算出来，避免了每次循环重复计算</span>
+    <span class="keyword">var</span> a=list[i].html();
+    b.after(a);
+}
+```这样的写法还不是最高效的，看下面的方法
+```javascript
+
+<span class="keyword">var</span> list = $(<span class="string">".abc"</span>);
+<span class="keyword">var</span> b = <span class="string">""</span>;
+<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = list.length; i &lt; l; i++) {<span class="comment">//注意此处把list的长度提前计算出来，避免了每次循环重复计算</span>
+    b+=list[i].html();
+}
+$(<span class="string">"#abc"</span>).after(b);
+```_看似简单的Javascript代码，其实要做的功夫很多！_
+
+### 用<span class="keyword">while</span>还是<span class="keyword">for</span>？
+
+对于我来说，那个使用的方便，那个用的变量少使用那个，如对顺序没有关系的循环可以使用**<span class="keyword">while</span>**，如下面的两段代码，前者使用了<span class="keyword">for</span>，后者使用了<span class="keyword">while</span>，两者明显<span class="keyword">while</span>使用的变量少，虽然<span class="keyword">for</span>容易使大家理解
+```javascript
+
+<span class="comment">//使用for</span>
+<span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>];
+<span class="keyword">var</span> sum = <span class="number">0</span>;
+<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, l = arr.length; i &lt; l; i++) {
+    sum += arr[i];
+}   
+<span class="comment">//使用while</span>
+<span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>];
+<span class="keyword">var</span> sum = <span class="number">0</span>, l = arr.length;
+<span class="keyword">while</span> (l--) {
+    sum += arr[l];
+}
+</pre></td></tr></table></figure>
+
+<h3>条件判断的优化技巧</h3>
+<p><strong>1、对于可能性的排列按照从高到底的顺序进行排列</strong></p>
+<p>原因很简单，可以减少程序的试探次数。<br><strong>2、使用三目运算符**</strong>三目运算符<strong>比if else判断语句</strong>效率**高，而且往往代码比较简洁如下面的两段代码</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre>
+<span class="comment">//使用if else</span>
+<span class="keyword">if</span> (a &gt; b) {
+    num = a;
+} <span class="keyword">else</span> {
+    num = b;
+}
+<span class="comment">//三目运算符</span>
+num = a &gt; b ? a : b;
+<span class="comment">//谁说三目不能代替if else的function？</span>
+c=a&gt;b?<span class="keyword">function</span>(){
+            }:<span class="keyword">function</span>(){
+                 };
+c();
+</pre></td></tr></table></figure>
+
+<p><strong>使用switch 代替if</strong>对于同一个条件不同情况的判断，使用switch简洁易懂，并且switch本身比if效率要高，在IE下尤为明显！</p>
+<h3>==与===的区别</h3>
+<p>看过jQuery源码的朋友发现，其中很多使用的是===，而不是==，这是因为===的效率比==要高，但是使用===要注意，===不会进行类型的转换，比如如果你确定比较两者类型相同，推荐使用<strong>===</strong>，这也是大家在编写代码时候自己细节的养成。当然也有一定的注意情况，下面仔细的说说==跟===的区别</p>
+<blockquote>
+<p>=== 操作符的判断算法</p>
+<p>在使用 === 来判断两个值是否相等的时候，如判断x===y，会首先比较两个值的类型是否相等，如果不相等的话，直接返回 false 。接着根据 x 的类型有不同的判断逻辑。</p>
+<p>如果 x 的类型是 Undefined 或 Null，则返回 true 。<br>如果 x 的类型是 Number，只要 x 或 y 中有一个值为 NaN，就返回 false ；如果 x 和 y 的数字值相等，就返回 true ；如果 x 或 y 中有一个是 +0，另外一个是 -0，则返回 true 。<br>如果 x 的类型是 String，当 x 和 y 的字符序列完全相同时返回 true，否则返回 false 。<br>如果 x 的类型是 Boolean，当 x 和 y 同为 true 或 false 时返回 true，否则返回 false 。<br>当 x 和 y 引用相同的对象时返回 true，否则返回 false 。<br>== 操作符的判断算法</p>
+<p>在使用 == 来判断两个值是否相等的时候，如判断x==y，当 x 和 y 的类型一样的时候，判断逻辑与 === 一样；如果 x 和 y 的类型不一样，== 不是简单的返回 false，而是会做一定的类型转换。</p>
+<p>如果 x 和 y 中有一个是 null，另外一个是 undefined 的话，返回 true 。如null == undefined。<br>如果 x 和 y 中一个的类型是 String，另外一个的类型是 Number 的话，会将 String 类型的值转换成 Number 来比较。如3 == “3”。<br>如果 x 和 y 中一个的类型是 Boolean 的话，会将 Boolean 类型的值转换成 Number 来比较。如true == 1、true == “1”<br>如果 x 和 y 中一个的类型是 String 或 Number，另外一个的类型是 Object 的话，会将 Object 类型的值转换成基本类型来比较。如[3,4] == “3,4”<br>需要注意的是 == 操作符不一定是传递的，即从A == B, B == C并不能一定得出A == C。考虑下面的例子，var str1 = new String(“Hello”); var str2 = new String(“Hello”); str1 == “Hello”; str2 == “Hello”，但是str1 != str2。</p>
+</blockquote>
+<h3>typeof使用时候注意</h3>
+<p>对于同一个<strong>var a=“abc”;</strong><br>在FF下typeof a==string 返回 true<br>在IE下返回false，IE就是这样的娇贵！<br>推荐写法：</p>
+<blockquote>
+<p>typeof a==“string”</p>
+</blockquote>
+<h3>最后，尽量避免使用eval等语句！</h3>
+<p><strong>eval</strong>、Function、execScript等语句会再次使用javascript解析引擎进行解析，需要消耗大量的执行时间。</p>
+<p><em>P.S.</em><strong>此文章不断整理更新中，有好的想法，大家可以提出来讨论</strong></p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/javascript/">javascript</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2009/12/01/使用css控制打印页面格式/" class="prev" title="使用CSS控制打印页面格式">使用CSS控制打印页面格式</a>
+ 
+ 
+	<a href="/2009/11/22/css-3-0-参考手册-中文版下载/" class="next" title="CSS 3.0 参考手册 (中文版)下载">CSS 3.0 参考手册 (中文版)下载</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="javascript高效简洁代码的编写及优化技巧"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

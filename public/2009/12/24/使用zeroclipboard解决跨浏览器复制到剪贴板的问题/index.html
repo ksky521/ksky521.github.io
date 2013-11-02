@@ -1,0 +1,486 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用ZeroClipboard解决跨浏览器复制到剪贴板的问题 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="导言
+之前在开发普加09年国庆中秋祝福页面复制链接功能时，遇见在Firefox，Chrome，Opera，Safari能复制链接的兼容性问题，而在近期上线的普加地图产品中使用的是Flash的flashvars来传入参数来解决了这个问题。其实开发中经常会用到复制的功能，在 IE 下通过JavaScript的window.clipboardData.setData可以简单实现复制到剪贴板功能。最后终于找到了终极解决方式：使用jhuckaby写的Zero Clipboard的js类库。此方法利用 Flash完成进行复制内容到剪贴板，所以只要浏览器装有Flash 就可以复制内容。
+Zero Clipboard的实现原理
+Zero Clipboard 利用透明的Flash让其漂浮在复制按钮之上，这样其实点击的不是按钮而是 Flash ，这样将需要的内容传入Flash，再通过Flash的复制功能把传入的内容复制到剪贴板。
+Zero Clipboard的安装方法
+其实也不算安装啦，就是使用前的准备工作。首先需要下载 Zero Clipboard的压缩包，解压后把文件夹中两个文件：ZeroClipboard.js 和 ZeroClipboard.swf 放入到你的项目中。
+
+Zero Clipboard : [项目主页] [zip下载] [在线演示]">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="使用ZeroClipboard解决跨浏览器复制到剪贴板的问题"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">使用ZeroClipboard解决跨浏览器复制到剪贴板的问题</h1>
+  
+
+      <time datetime="2009-12-23T17:48:06.000Z"><a href="/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/">2009年12月24日</a></time>
+    </header>
+    <div class="entry">
+      
+        <h3>导言</h3>
+<p>之前在开发<a href="http://www.pujia.com" target="_blank">普加</a>09年国庆中秋祝福页面复制链接功能时，遇见在Firefox，Chrome，Opera，Safari能复制链接的<strong>兼容性</strong>问题，而在近期上线的<a href="http://ditu.pujia.com/preview" target="_blank">普加地图</a>产品中使用的是Flash的<strong>flashvars</strong>来传入参数来解决了这个问题。其实开发中经常会用到复制的功能，在 IE 下通过JavaScript的<strong>window.clipboardData.setData</strong>可以简单实现复制到剪贴板功能。最后终于找到了终极解决方式：使用jhuckaby写的Zero Clipboard的js类库。此方法利用 Flash完成进行复制内容到剪贴板，所以只要浏览器装有Flash 就可以复制内容。</p>
+<h3>Zero Clipboard的实现原理</h3>
+<p><strong>Zero Clipboard </strong>利用透明的Flash让其漂浮在复制按钮之上，这样其实点击的不是按钮而是 Flash ，这样将需要的内容传入Flash，再通过Flash的复制功能把传入的内容复制到<strong>剪贴板</strong>。</p>
+<h3>Zero Clipboard的安装方法</h3>
+<p>其实也不算安装啦，就是使用前的准备工作。<br>首先需要下载 Zero Clipboard的压缩包，解压后把文件夹中两个文件：ZeroClipboard.js 和 ZeroClipboard.swf 放入到你的项目中。</p>
+<blockquote>
+<p>Zero Clipboard : <a href="http://code.google.com/p/zeroclipboard/" target="_blank">[项目主页</a>] <a href="http://code.google.com/p/zeroclipboard/downloads/list" target="_blank">[zip下载</a>] <a href="http://bowser.macminicolo.net/~jhuckaby/zeroclipboard/" target="_blank">[在线演示</a>]<br><a id="more"></a><br>然后把在你要使用复制功能的页面中引入Zero Clipboard的js文件：ZeroClipboard.js<br>如下代码：</p>
+<figure class="highlight lang-html"><script"><figcaption><span>type="text/javascript" src="ZeroClipboard.js</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>注意：以上 ZeroClipboard.js, ZeroClipboard.swf需要放在同一路径下。如果不在同一路径，可使用ZeroClipboard.setMoviePath( “Flash路径” );来设置ZeroClipboard.swf 地址</p>
+<h3>Zero Clipboard实现简单<strong>跨浏览器</strong>复制</h3>
+<blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="keyword">var</span> clip = <span class="keyword">new</span> ZeroClipboard.Client(); <span class="comment">// 新建一个对象</span>
+&gt; clip.setHandCursor( <span class="literal">true</span> ); <span class="comment">// 设置鼠标为手型</span>
+&gt; clip.setText(<span class="string">"哈哈"</span>); <span class="comment">// 设置要复制的文本。</span>
+&gt; <span class="comment">// 注册一个 button，参数为 id。点击这个 button 就会复制。</span>
+&gt; <span class="comment">//这个 button 不一定要求是一个 input 按钮，也可以是其他 DOM 元素。</span>
+&gt; clip.glue(<span class="string">"copy-botton"</span>); <span class="comment">// 和上一句位置不可调换</span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>这样，这样基本功能实现了，点击按钮就可以复制设置好的文本了。你可能注意到了，待复制的文本是固定的，如果想要动态改变的怎么办，比如复制一个输入框中的内容。不用担心，下面会讲到的。</p>
+<h4>Zero Clipboard的高级功能</h4>
+<p><strong>1、reposition() 方法</strong></p>
+<p>因为按钮上漂浮有一个 Flash 按钮，所以当页面大小发生变化时，Flash 按钮可能会错位，这样就点不着了。 不要紧，Zero Clipboard 提供了一个 reposition() 方法，可以重新计算 Flash 按钮的位置。我们可以将它绑定到 resize 事件上。如下面代码是在jQuery下实现的resize事件重新设置按钮位置：&gt; </p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>$(window).resize(<span class="keyword">function</span>(){
+&gt;     clip.reposition();
+&gt; });
+</pre></td></tr></table></figure>
+
+<p><strong>2、hide() 和 show() 方法</strong></p>
+<p>这两个方法可以隐藏和显示 Flash 按钮 。其中 show() 方法会调用 reposition() 方法。</p>
+<p><strong>3、setCSSEffects() 方法</strong></p>
+<p>当鼠标移到按钮上或点击时，由于有 Flash 按钮的遮挡，所以像 css “:hover”, “:active” 等伪类可能会失效。setCSSEffects() 方法就是解决这个问题。首先我们需要将伪类改成类，比如：</p>
+<blockquote>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre>
+&gt; #copy-botton:hover{
+&gt;    border-color:#FF6633;
+&gt; }
+&gt; // 可以改成下面的 ":hover" 改成 ".hover"
+&gt; #copy-botton.hover{
+&gt;    border-color:#FF6633;
+&gt; }
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>我们可以调用 clip.setCSSEffects( true ); 这样 Zero Clipboard 会自动为我们处理：将类 .hover 当成伪类 :hover 。</p>
+<p><strong>4、getHTML() 方法</strong></p>
+<p>如果你想自己实例一个 Flash ，不用 Zero Clipboard 的附着方法，那么这个方法就可以帮上忙了。它接受两个参数，分别为 Flash 的宽度和高度。返回的是 Flash 对应的 HTML 代码。例如：</p>
+<blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>
+&gt; <span class="keyword">var</span> html = clip.getHTML( <span class="number">150</span>, <span class="number">20</span> );
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>你可以用 innerHTML 或直接 document.write(); 进行输出。<br>以下是测试输出的组装完毕的HTML 代码：</p>
+<blockquote>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>
+&gt; <span class="tag">&lt;<span class="title">embed</span> <span class="attribute">id</span>=<span class="value">"ZeroClipboardMovie_1"</span> <span class="attribute">src</span>=<span class="value">"zeroclipboard/ZeroClipboard.swf"</span> <span class="attribute">loop</span>=<span class="value">"false"</span> <span class="attribute">menu</span>=<span class="value">"false"</span> <span class="attribute">quality</span>=<span class="value">"best"</span> <span class="attribute">bgcolor</span>=<span class="value">"#ffffff"</span> <span class="attribute">width</span>=<span class="value">"150"</span> <span class="attribute">height</span>=<span class="value">"20"</span> <span class="attribute">name</span>=<span class="value">"ZeroClipboardMovie_1"</span> <span class="attribute">align</span>=<span class="value">"middle"</span> <span class="attribute">allowScriptAccess</span>=<span class="value">"always"</span> <span class="attribute">allowFullScreen</span>=<span class="value">"false"</span> <span class="attribute">type</span>=<span class="value">"application/x-shockwave-flash"</span> <span class="attribute">pluginspage</span>=<span class="value">"http://www.macromedia.com/go/getflashplayer"</span> <span class="attribute">flashvars</span>=<span class="value">"id=1&width=150&height=20"</span> <span class="attribute">wmode</span>=<span class="value">"transparent"</span> /&gt;</span>
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>IE 的 Flash JavaScript 通信接口上有一个 bug 。你必须插入一个 object 标签到一个已存在的 DOM 元素中。并且在写入 innerHTML 之前请确保该元素已经 appendChild 方法插入到 DOM 中。</p>
+<h3>Zero Clipboard 事件处理</h3>
+<p><strong>Zero Clipboard</strong> 提供了一些事件，你可以自定义函数处理这些事件。Zero Clipboard 事件处理函数为 addEventListener(); 例如当 Flash 完全载入后会触发一个事件 “load” 。</p>
+<blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+&gt; clip.addEventListener( <span class="string">"load"</span>, <span class="keyword">function</span>(client) {
+&gt;     alert(<span class="string">"Flash 加载完毕！"</span>);
+&gt; });
+</pre></td></tr></table></figure>
+
+</blockquote>
+<p>Zero Clipboard 会将 clip 对象作为参数传入。即上例中的 “client” 。<br>还有 “load” 也可以写成 “onLoad”，其他的事件也可以这样。<br>其他事件还包括：</p>
+<p>mouseOver 鼠标移上事件<br>mouseOut 鼠标移出事件<br>mouseDown 鼠标按下事件<br>mouseUp 鼠标松开事件<br>complete 复制成功事件</p>
+<p>其中 mouseOver 事件和 complete 事件比较常用。<br>前面说过，如果需要动态改变待复制的内容，那 mouseOver 事件就可以派上用场了。例如需要动态复制一个 id 为 test 的输入框中的值，我们可以在鼠标 over 的时候重新设置值。</p>
+<blockquote>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre>
+&gt; clip.addEventListener( <span class="string">"mouseOver"</span>, <span class="keyword">function</span>(client) {
+&gt;     <span class="keyword">var</span> test = document.getElementById(<span class="string">"test"</span>);
+&gt;     client.setText( test.value ); <span class="comment">// 重新设置要复制的值</span>
+&gt; });
+&gt; <span class="comment">//复制成功：</span>
+&gt; clip.addEventListener( <span class="string">"complete"</span>, <span class="keyword">function</span>(){
+&gt;     alert(<span class="string">"复制成功！"</span>);
+&gt; });
+&gt;
+</pre></td></tr></table></figure>
+
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/javascript/">javascript</a><a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2009/12/25/javascript跨浏览器的添加删除事件绑定函数/" class="prev" title="JavaScript跨浏览器的添加删除事件绑定函数">JavaScript跨浏览器的添加删除事件绑定函数</a>
+ 
+ 
+	<a href="/2009/12/18/ie6-png图片不透明问题的解决方法/" class="next" title="IE6 PNG图片不透明问题的解决方法">IE6 PNG图片不透明问题的解决方法</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="使用ZeroClipboard解决跨浏览器复制到剪贴板的问题"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

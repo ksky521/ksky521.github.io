@@ -1,0 +1,21 @@
+<% if (theme.baidushare.enable){ %>
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'<%- theme.baidushare.wbUid %>',
+    tsina: '<%- theme.baidushare.tsina %>',
+    pic:'<%- item.photos %>'
+};
+</script>
+
+<% } %>

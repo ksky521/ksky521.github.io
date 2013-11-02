@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>设置htaccess应该注意的问题 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="今天给爱墙做SEO优化，发现自己没有自定义404页面，并且还发现存在index of列目录的漏洞，后来才知道原来WordPress都没有在htaccess中使用Options -Indexes来防止列目录，于是先加上了Options -Indexes来防止列目录的问题，自动转为了404错误，而不是403，呵呵~
+可是我改变了爱墙的根目录下的htaccess配置把404页面指到了404.html，可是就是不能实现404页面的跳转呢？难道htaccess的404配置不可用？而是直接都返回到了爱墙的首页（http://love.js8.in）~这样子听说对**SEO**是很不好的，搜索引擎不会收录网站的首页，于是上网google原因，找了半天的原因也没有找到问题的根本所在~
+后来我在一片不起眼的文章中找到了问题的所在~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="设置htaccess应该注意的问题"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">设置htaccess应该注意的问题</h1>
+  
+
+      <time datetime="2009-12-06T18:32:56.000Z"><a href="/2009/12/07/设置htaccess应该注意的问题/">2009年12月7日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天给<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>做SEO优化，发现自己没有自定义<strong>404</strong>页面，并且还发现存在index of列目录的漏洞，后来才知道原来WordPress都没有在htaccess中使用<strong>Options -Indexes</strong>来防止列目录，于是先加上了Options -Indexes来防止列目录的问题，自动转为了404错误，而不是403，呵呵~</p>
+<p>可是我改变了<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>的根目录下的htaccess配置把404页面指到了404.html，可是就是不能实现<strong>404页面</strong>的跳转呢？难道htaccess的404配置不可用？而是直接都返回到了<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙的首页</a>（<a href="http://love.js8.in）~这样子听说对**SEO**是很不好的，搜索引擎不会收录网站的首页，于是上网google原因，找了半天的原因也没有找到问题的根本所在~" target="_blank">http://love.js8.in）~这样子听说对**SEO**是很不好的，搜索引擎不会收录网站的首页，于是上网google原因，找了半天的原因也没有找到问题的根本所在~</a></p>
+<p>后来我在一片不起眼的文章中找到了问题的所在~<br><a id="more"></a>文章写到如下内容&gt; Apache必须在所有上级的目录中查找<strong>.htaccess</strong>文件，以使所有有效的指令都起作用(参见指令的生效)，所以，如果请求/www/htdocs/example中的页面，Apache必须查找以下文件：</p>
+<blockquote>
+<p>　　/.htaccess<br>　　/www/.htaccess<br>　　/www/htdocs/.htaccess<br>　　/www/htdocs/example/.htaccess<br>　　总共要访问4个额外的文件，即使这些文件都不存在。(注意，这可能仅仅由于允许根目录“/”使用.htaccess ，虽然这种情况并不多。)</p>
+</blockquote>
+<p>我想是不是我的<strong>WordPress</strong>目录下的htaccess影响到了<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>的htaccess呢？因为我的爱墙是放在WordPress目录下的，即WordPress/lovewall，WordPress的htaccess文件地址是WordPress/.htaccess，而<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>的为WordPress/lovewall/.htaccess，所以二者是合并使用了，当访问其他页面的时候，会默认启用WordPress中的重写目录规则。我改写了一下WordPress根目录下的htaccess，果然如此~恍然大悟！可是怎么解决呢？？</p>
+<p>开始想到的是吧lovewall文件夹从WordPress文件夹中移出来，这样WordPress的htaccess文件就不被引用了，可是这样还要重新配置lovewall中文件，还要重新解析<a href="http://love.js8.in，成本太高了，不喜欢~" target="_blank">http://love.js8.in，成本太高了，不喜欢~</a></p>
+<p>后来，我仔细一想不是WordPress的htaccess的文件跟<a href="http://love.js8.in" title="爱墙许愿" target="_blank">爱墙</a>的htaccess文件都是合并吗？为什么不在爱墙的htaccess中把<strong>RewriteEngine</strong>关掉呢？于是我把爱墙的htaccess文件改成了如下的内容&gt; RewriteEngine Off</p>
+<blockquote>
+<p>ErrorDocument 404 /404.html<br>ErrorDocument 403 /404.html<br>Options -Indexes<br>问题成功解决！<br><em>P.S.</em>:一、WordPress的htaccess默认存在<strong>列目录</strong>的问题，可以使用Options -Indexes解决这个问题；二、htaccess的引用是从跟文件夹的htaccess开始引用的，二者（或者更多）合并使用</p>
+</blockquote>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/网络技术/">网络技术</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/乱七八糟/">乱七八糟</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2009/12/10/推荐六个在线制作loading图标的网站/" class="prev" title="推荐六个在线制作Loading图标的网站">推荐六个在线制作Loading图标的网站</a>
+ 
+ 
+	<a href="/2009/12/04/css清除浏览器默认样式注意点/" class="next" title="CSS清除浏览器默认样式注意点">CSS清除浏览器默认样式注意点</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="设置htaccess应该注意的问题"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

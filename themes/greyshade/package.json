@@ -1,0 +1,35 @@
+{
+  "name": "hexo-theme-greyshade",
+  "version": "0.0.2",
+  "private": false,
+  "dependencies": {},
+  "description": "Ported from Octopress Theme Greyshade to Hexo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nuklly/hexo-theme-greyshade.git"
+  },
+  "keywords": [
+    "hexo",
+    "theme",
+    "greyshade"
+  ],
+  "author": {
+    "name": "Nuk"
+  },
+  "license": "MIT",
+  "readme": "# Greyshade\n\nPorted from Octopress Theme [Greyshade](https://github.com/shashankmehta/greyshade)\nto [Hexo](https://github.com/tommy351/hexo).\n\n[Demo](https://nuklly.github.io)\n\n## Installation\n\nAssuming that you have installed Hexo and using light theme.\n\n    cd $hexo\n    npm i hexo-theme-greyshade\n    ln -s node_modules/hexo-theme-greyshade theme/\n\nthen change the value of `theme` field in your `_config.yml` to `greyshade`.\n\nDo not forget:\n\n    hexo generate\n    hexo deploy\n\nto see if it works. Enjoy it!\n\n## Feature\n\n- Responsive design.\n- [Gravator](https://gravatar.com/) profile image support.\n- [Addit](http://www.addthis.com/) sharing shortcut support.\n- [Disqus](http://disqus.com/) comment support.\n- [Mathjax](http://www.mathjax.org/) support.\n\n## Changelog\n\n### Version 0.0.2\n\n- [Add Feature] Page index support\n- [Removed Feature] Updated date removed\n- [Removed Feature] Site title display\n\n### Version 0.0.1\n\n- Build basical functionalities\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/nuklly/hexo-theme-greyshade/issues"
+  },
+  "_id": "hexo-theme-greyshade@0.0.2",
+  "dist": {
+    "shasum": "c24f6f5176ffa4ede71ce3fbc1588f690796365e"
+  },
+  "_from": "hexo-theme-greyshade@",
+  "_resolved": "https://registry.npmjs.org/hexo-theme-greyshade/-/hexo-theme-greyshade-0.0.2.tgz"
+}

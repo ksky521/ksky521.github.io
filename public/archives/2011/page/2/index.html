@@ -1,0 +1,1098 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 - 归档：2011 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2011</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/21/chrome扩展应用开发教程之开发chrome应用基础/">chrome扩展应用开发教程之开发chrome应用基础</a></h1>
+  
+
+      <time datetime="2011-10-21T11:55:17.000Z"><a href="/2011/10/21/chrome扩展应用开发教程之开发chrome应用基础/">2011年10月21日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>不得不说<strong>chrome</strong>做的真的不错，听了貘大大关于<strong>chrome插件</strong>机制的讲座，就有亲手做个chrome应用的冲动，这个周末终于抽时间做了一个简单的天气预报插件，原理还是很简单的，采用了weather.com.cn的数据，因为比较熟悉这个weather.com.cn的接口，所以很快就搞定一个简单的chrome天气预报应用了。废话不多说了，开始正文。</p>
+<h2>chrome应用开发基础知识</h2>
+<p>chrome扩展应用是由html、css和javascript组成的，所以chrome应用的门槛比较低，对于一个<strong>前端开发</strong>者，只要读懂了chrome的开发文档，就可以很快的上手一个chrome应用。</p>
+<p>每个chrome扩展都应该包含下面的文件：</p>
+<blockquote>
+<p>一个包括一个manifest.json文件，是个配置文件，json格式，通过manifest.json可以设置应用的icon，指定默认的background.html或者popup.html……<br>一个或多个html文件（除非这个应用是一个皮肤）<br>可选的一个或多个javascript文件<br>可选的任何需要的其他文件，例如图片</p>
+</blockquote>
+<p>在开发应用（扩展）时，需要把这些文件都放到同一个目录下。发布应用（扩展）时，这个目录全部打包到一个应用（扩展）名是.crx的压缩文件中。如果使用<a href="https://chrome.google.com/webstore/developer/dashboard" target="_blank">Chrome Developer Dashboard</a>，上传应用（扩展），可以自动生成.crx文件。</p>
+<p>下图是我天气预报插件的文件列表：<br><a href="/uploads/2011/10/2011-10-21_215004.png"><img src="/uploads/2011/10/2011-10-21_215004.png" alt="chrome天气预报插件目录结构" title="chrome天气预报插件目录结构"></a></p>
+<h2>chrome应用界面控制</h2>
+<p>chrome应用会以browser action或page action的形式在chrome浏览器界面上展现出来。每个应用扩展最多可以有一个browser action或page action。当应用（扩展）的图标是否显示出来是取决于单个的页面时，应当选择page action；当其它情况时可以选择browser action。</p>
+<p>例如gmail提醒应用使用了browser action，它在工具栏上增加一个图标：</p>
+<p><a href="/uploads/2011/10/gmail.png"><img src="/uploads/2011/10/gmail.png" alt="gmail应用使用browser action提示" title="gmail应用使用browser action提示"></a></p>
+<p>这个新闻阅读应用也使用了browser action，当点击时会弹出一个气泡窗口popup.html：<br><a href="/uploads/2011/10/news.png"><img src="/uploads/2011/10/news.png" alt="news使用的是popup的方式" title="news使用的是popup的方式"></a></p>
+<p>另外chrome还包括了<a href="http://dev.chromium.org/developers/design-documents/desktop-notifications/api-specification" target="_blank">桌面提醒</a>（gmail新邮件提醒），主题（chrome皮肤），应用设置页面（应用设置页面），选项卡页面（新选项卡页面）等多种界面形式，本文示例使用的是browser action和popup页面来做一个简单的应用。</p>
+<h3>chrome应用基本架构</h3>
+<p>绝大多数chrome应用会包含一个背景页面(background page)，用来执行chrome应用扩展的主要功能。该背景页面时再manifest.json中设置的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="string">"background_page"</span>: <span class="string">"bg.html"</span>,<span class="comment">//默认背景页面</span>
+</pre></td></tr></table></figure>
+
+<p><a href="/uploads/2011/10/background.gif"><img src="/uploads/2011/10/background.gif" alt="chrome通过background.html来实现主要功能" title="chrome通过background.html来实现主要功能"></a>[/caption]</p>
+<p>上图显示了安装了应用扩展的chrome。黄色图标代表的browser action和蓝色图标代表的page action。在background.html文件里定义了browser action和javascript代码。在两个窗口里browser action都可以工作。</p>
+<p>背景页面并不是chrome应用中唯一的页面。例如，本例天气预报插件中还包括了一个弹窗页面(popup.html)，此页面也是又html页面实现的。在应用内部还可以使用chrome.tabs.create()或者window.open()来显示内部的HTML文件。</p>
+<p>chrome应用的弹窗界面也是可以在manifest.json中设置的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="string">"browser_action"</span>: {
+    <span class="string">"default_icon"</span>: <span class="string">"icon.png"</span> ,
+    <span class="string">"default_title"</span>: <span class="string">"Weather"</span>,
+    <span class="string">"default_popup"</span>: <span class="string">"popup.html"</span>
+  },
+</pre></td></tr></table></figure>
+
+<blockquote>
+<p>值得一提的是chrome应用里面的HTML页面可以互相访问各自DOM树中的全部元素，或者互相调用其中的函数。</p>
+</blockquote>
+<p>下图显示了一个chrome应用的弹窗的架构。弹窗的内容是由HTML文件（popup.html）定义的web页面。它不必复制背景页面(background.html)里的代码，因为它可以直接调用背景页面中的函数！</p>
+<p><a href="/uploads/2011/10/popup.gif"><img src="/uploads/2011/10/popup.gif" alt="chrome应用的弹窗界面" title="chrome应用的弹窗界面"></a></p>
+<h3>应用文件的引用</h3>
+<p>任何需要的文件都可以放到应用（扩展）中，但是怎么使用它们呢？一般的说，可以像在普通的HTML文件中那样使用相对地址来引用一个文件。下面的例子演示了如何引用images子目录下的文件myimage.png</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">img</span> <span class="attribute">src</span>=<span class="value">"img/myimage.png"</span> <span class="attribute">alt</span>=<span class="value">""</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/10/21/chrome扩展应用开发教程之开发chrome应用基础/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/19/javascript嵌套函数的效率问题/">javascript嵌套函数的效率问题</a></h1>
+  
+
+      <time datetime="2011-10-19T13:27:00.000Z"><a href="/2011/10/19/javascript嵌套函数的效率问题/">2011年10月19日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>javascript自诞生以来就是一门受争议的编程语言，很多人也对javascript的语法表示不解，例如javascript嵌套函数。本文来自Nettuts+的一篇教程，详细的介绍了<strong>javascript</strong>中嵌套函数效率问题，从小处说起，一直说到匿名函数、继承，感觉不错。</p>
+<h2>嵌套函数效率</h2>
+<p>很多jser喜欢在javascript代码中使用嵌套函数，例如下面的例子就是一个典型的嵌套函数：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(a, b)</span> {</span>
+    <span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span> {</span>
+        <span class="keyword">return</span> a + b;
+    }
+
+    <span class="keyword">return</span> bar();
+}
+
+foo(<span class="number">1</span>, <span class="number">2</span>);
+</pre></td></tr></table></figure>
+
+<p>上面的代码中<code>foo()</code>中嵌入了<code>bar()</code>，当<code>foo()</code>运行的时候，就会调用<code>bar()</code>。javascript引擎不会创建<code>bar()</code>函数，直到外部引用了<code>foo()</code>，随着<code>foo()</code>的运行结束，<code>bar()</code>也会销毁。</p>
+<p>当多次运行<code>foo</code>的时候，<strong>javascript引擎</strong>就要在每次的运行<code>foo</code>时创建<code>bar</code>函数，而每次<code>foo</code>结束就要销毁<code>bar</code>函数，这是一个很费劲的工作。</p>
+<p>那么为什么我们不把<code>bar</code>函数拿出来，做为一个独立的函数，它在<code>foo</code>外部只被创建一次，而不是多次，这样就大大的提高了代码效率。例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(a, b)</span> {</span>
+    <span class="keyword">return</span> bar(a, b);
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">(a, b)</span> {</span>
+    <span class="keyword">return</span> a + b;
+}
+
+foo(<span class="number">1</span>, <span class="number">2</span>);
+</pre></td></tr></table></figure>
+
+<p>当然这样做可能随着程序的复杂性，可能存在命名冲突的危险，所以jser需要在这方面权衡，或者采用命名空间来解决这个方式。下面是在jsperf中做的关于上面两个函数大量运行的速度测试<a href="http://jsperf.com/nested-named-functions" target="_blank"><a href="http://jsperf.com/nested-named-functions">http://jsperf.com/nested-named-functions</a></a>。不同的浏览器测试的结果不同，但是总体来看，两个独立的函数要比相互嵌套的javascript函数效率提高10%~90%。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/10/19/javascript嵌套函数的效率问题/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/10/18/html5的sessionstorage和localstorage/">HTMl5的sessionStorage和localStorage</a></h1>
+  
+
+      <time datetime="2011-10-18T14:05:53.000Z"><a href="/2011/10/18/html5的sessionstorage和localstorage/">2011年10月18日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>html5中的Web Storage包括了两种存储方式：sessionStorage和localStorage。</p>
+<p><strong>sessionStorage</strong>用于本地存储一个会话（session）中的数据，这些数据只有在同一个会话中的页面才能访问并且当会话结束后数据也随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。</p>
+<p>而<strong>localStorage</strong>用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。</p>
+<h2>web storage和cookie的区别</h2>
+<p>Web Storage的概念和cookie相似，区别是它是为了更大容量存储设计的。Cookie的大小是受限的，并且每次你请求一个新的页面的时候Cookie都会被发送过去，这样无形中浪费了带宽，另外cookie还需要指定作用域，不可以跨域调用。</p>
+<p>除此之外，<strong>Web Storage</strong>拥有setItem,getItem,removeItem,clear等方法，不像cookie需要前端开发者自己封装setCookie，getCookie。</p>
+<p>但是Cookie也是不可以或缺的：Cookie的作用是与服务器进行交互，作为HTTP规范的一部分而存在 ，而Web Storage仅仅是为了在本地“存储”数据而生（来自@otakustay 的纠正）</p>
+<h2>html5 web storage的浏览器支持情况</h2>
+<p>浏览器的支持除了IE７及以下不支持外，其他标准浏览器都完全支持(ie及FF需在web服务器里运行)，值得一提的是IE总是办好事，例如IE7、IE6中的UserData其实就是<strong>javascript本地存储</strong>的解决方案。通过简单的代码封装可以统一到所有的浏览器都支持web storage。</p>
+<p>要判断浏览器是否支持localStorage可以使用下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="keyword">if</span>(window.localStorage){
+    alert(<span class="string">"浏览支持localStorage"</span>)
+}<span class="keyword">else</span>{
+   alert(<span class="string">"浏览暂不支持localStorage"</span>)
+}
+<span class="comment">//或者</span>
+<span class="keyword">if</span>(<span class="keyword">typeof</span> window.localStorage == <span class="string">'undefined'</span>){
+	alert(<span class="string">"浏览暂不支持localStorage"</span>)
+}
+</pre></td></tr></table></figure>
+
+<h2>localStorage和sessionStorage操作</h2>
+<p>localStorage和sessionStorage都具有相同的操作方法，例如setItem、getItem和removeItem等</p>
+<h3>localStorage和sessionStorage的方法</h3>
+<h4>setItem存储value</h4>
+<p>用途：将value存储到key字段<br>用法：.setItem( key, value)</p>
+<p>代码示例：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>sessionStorage.setItem(<span class="string">"key"</span>, <span class="string">"value"</span>);
+localStorage.setItem(<span class="string">"site"</span>, <span class="string">"js8.in"</span>);
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/10/18/html5的sessionstorage和localstorage/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/09/29/基于expresssocket-io的nodejs聊天室/">基于express+socket.io的nodejs聊天室</a></h1>
+  
+
+      <time datetime="2011-09-29T15:20:24.000Z"><a href="/2011/09/29/基于expresssocket-io的nodejs聊天室/">2011年9月29日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前几天晚上边看水浒边写的<a href="http://js8.in/tag/nodejs">nodejs</a>的聊天室，前面说了，放假之前要把近日学习nodejs的所有心得整理下，今天就是30号鸟~撒欢~，最后放这个聊天室出来给大家作为学习<strong>nodejs</strong>的参考示例，希望对大家有用。</p>
+<p>感谢：cnodejs群里的老雷，及其<a href="http://weibo.com/sanshuiqing" target="_blank">微博</a>上的基友们！顺祝大家长假快乐，顺祝自己明天动车不出轨，顺祝明年不再过节，感慨多了……</p>
+<h3>特点</h3>
+<p>聊天室主要功能及其特点：</p>
+<ol>
+<li>采用nodejs（屁话）</li>
+<li>express框架,jade做模板</li>
+<li>socket.io做前后端的websocket通信</li>
+<li>支持session</li>
+<li>支持@私信功能<br>废话不多说了，注意点，基本前面的文章都提到了，下面罗列下：<br>《<a href="http://js8.in/764.html">配置nodejs.exe的windows目录结构</a>》<br>《<a href="http://js8.in/774.html">安装express及配置app.js文件</a>》<br>《<a href="http://js8.in/784.html">使用socket.io和node.js搭建websocket应用</a>》<br>《<a href="http://js8.in/788.html">在Express和Socket.IO中使用session</a>》</li>
+</ol>
+<h3>nodejs聊天室下载地址</h3>
+<p><a href="http://1.nodejsdemo.sinaapp.com/chat/chat.zip" title="基于express+socket.io的聊天室" target="_blank">基于express+socket.io的聊天室</a></p>
+<h3>聊天室服务器端js代码</h3>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/09/29/基于expresssocket-io的nodejs聊天室/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/09/29/在express和socket-io中使用session/">在Express和Socket.IO中使用session</a></h1>
+  
+
+      <time datetime="2011-09-29T14:32:53.000Z"><a href="/2011/09/29/在express和socket-io中使用session/">2011年9月29日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在nodejs项目中对于一些认证需要用到<strong>session</strong>，例如我写的nodejs 聊天室的demo，就是通过session实现的认证。当存在session，直接进入聊天室，而不会重新登录。</p>
+<p>在网上也找到不少关于Express框架中的session调用方法，可是发现真正能用的不是很多，今天根据聊天室的制作过程，整理下Express和socket.IO中使用session的具体方法。</p>
+<p>Express的session是通过cookie实现的，用到了connect中的两个module：parseCookie和MemoryStore，前者是用来解析cookie，后者用来存储sesion。</p>
+<h2>引入所需module</h2>
+<p>Express框架中使用session必须先引入上面的两个模块，例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="keyword">var</span> parseCookie = require(<span class="string">'connect'</span>).utils.parseCookie,
+	MemoryStore = require(<span class="string">'connect/middleware/session/memory'</span>);
+<span class="comment">//建立一个memory store的实例</span>
+<span class="keyword">var</span> storeMemory = <span class="keyword">new</span> MemoryStore({
+		reapInterval: <span class="number">60000</span> * <span class="number">10</span>
+	});
+</pre></td></tr></table></figure>
+
+<h2>Express中app的配置</h2>
+<p>在app需要添加如下的配置：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>app.configure(<span class="keyword">function</span>(){
+	app.use(express.bodyParser());<span class="comment">//解析post</span>
+	app.use(express.cookieParser());<span class="comment">//解析cookie</span>
+	<span class="comment">//设置session</span>
+	app.use(express.session({
+		secret: <span class="string">'wyq'</span>,
+		store:storeMemory
+	}));
+});
+</pre></td></tr></table></figure>
+
+<h2>在请求中使用session</h2>
+<p>在请求中我们可以使用request.session来调用session，例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre>app.get(<span class="string">'/'</span>,<span class="keyword">function</span>(req,res){
+	<span class="comment">//使用request.session来判断是否登录</span>
+	<span class="keyword">if</span>( req.session.name && req.session.name!==<span class="string">''</span>){
+		<span class="comment">//需要判断下是否已经登录</span>
+		res.redirect(<span class="string">'/chat'</span>);
+	}<span class="keyword">else</span>{
+		<span class="comment">//读取登录页面，要求登录</span>
+		<span class="keyword">var</span> realpath = __dirname + <span class="string">'/views/'</span> + url.parse(<span class="string">'login.html'</span>).pathname;
+		<span class="keyword">var</span> txt = fs.readFileSync(realpath);
+		res.end(txt);
+	}
+});
+</pre></td></tr></table></figure>
+
+<h2>websocket通信中使用session</h2>
+<p>在nodejs项目中，我们常常使用websockt来实现通信，所以websocket中也需要通过session来认证用户。本例使用socket.io来举例实现nodejs中websocket通信session的认证。关于socket.io的使用参考文章《<a href="http://js8.in/784.html">使用socket.io和node.js搭建websocket应用</a>》</p>
+<p>上面代码中引入了解析cookie的<strong>parseCookie</strong>，所以session是通过cookie来解析的。首先我们建立了socket的监听之后需要对监听到的头文件处理，解析出来cookie中的session。例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre><span class="keyword">var</span> io = sio.listen(app);
+<span class="comment">//设置session</span>
+io.set(<span class="string">'authorization'</span>, <span class="keyword">function</span>(handshakeData, callback){
+	<span class="comment">// 通过客户端的cookie字符串来获取其session数据</span>
+	handshakeData.cookie = parseCookie(handshakeData.headers.cookie)
+	<span class="keyword">var</span> connect_sid = handshakeData.cookie[<span class="string">'connect.sid'</span>];
+	<span class="keyword">if</span> (connect_sid) {
+		storeMemory.get(connect_sid, <span class="keyword">function</span>(error, session){
+			<span class="keyword">if</span> (error) {
+				<span class="comment">// if we cannot grab a session, turn down the connection</span>
+				callback(error.message, <span class="literal">false</span>);
+			}
+			<span class="keyword">else</span> {
+				<span class="comment">// save the session data and accept the connection</span>
+				handshakeData.session = session;
+				callback(<span class="literal">null</span>, <span class="literal">true</span>);
+			}
+		});
+	}
+	<span class="keyword">else</span> {
+		callback(<span class="string">'nosession'</span>);
+	}
+});
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/09/29/在express和socket-io中使用session/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/09/28/使用socket-io和node-js搭建websocket应用/">使用socket.io和node.js搭建websocket应用</a></h1>
+  
+
+      <time datetime="2011-09-28T15:42:21.000Z"><a href="/2011/09/28/使用socket-io和node-js搭建websocket应用/">2011年9月28日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><strong>websocket</strong>是HTML5的一种新的通信协议，它是实现了浏览器与服务器的双向通讯。在 WebSocket API 中，浏览器和服务器只需要要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送。<br>关于websocket的更多信息，请移步<a href="http://zh.wikipedia.org/wiki/WebSocket" target="_blank">维基百科</a></p>
+<h2>使用WebSocket</h2>
+<p>在客户端使用websocket需要创建WebSocket对象，通过提供的open、send、message、close等方法实现创建、发送、监听信息、关闭连接。例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span class="keyword">if</span>(<span class="string">'WebSocket'</span> <span class="keyword">in</span> window){
+	<span class="comment">// 创建websocket实例</span>
+	<span class="keyword">var</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">'ws://localhost:8080'</span>);
+	<span class="comment">//打开</span>
+	socket.onopen = <span class="keyword">function</span>(event) {
+	  <span class="comment">// 发送</span>
+	  socket.send(<span class="string">'I am the client and I\'m listening!'</span>);
+	  <span class="comment">// 监听</span>
+	  socket.onmessage = <span class="keyword">function</span>(event) {
+		console.log(<span class="string">'Client received a message'</span>,event);
+	  };
+	  <span class="comment">// 关闭监听</span>
+	  socket.onclose = <span class="keyword">function</span>(event) {
+		console.log(<span class="string">'Client notified socket has closed'</span>,event);
+	  };
+	  <span class="comment">// 关闭</span>
+	  <span class="comment">//socket.close()</span>
+	};
+}<span class="keyword">else</span>{
+	alert(<span class="string">'本浏览器不支持WebSocket哦~'</span>);
+}
+</pre></td></tr></table></figure>
+
+<p>现在chrome、firefox等浏览器都已经支持了websocket，而IE却没有。下面我们来简单说说服务器端对websocket的支持。</p>
+<p>服务器端支持<strong>websocket</strong>的语言不少，而且都有相关的开源项目，例如php的phpwebsockets：<a href="http://code.google.com/p/phpwebsockets/" target="_blank"><a href="http://code.google.com/p/phpwebsockets/">http://code.google.com/p/phpwebsockets/</a></a>，java的jWebsocket：<a href="http://jwebsocket.org/" target="_blank"><a href="http://jwebsocket.org/">http://jwebsocket.org/</a></a>。<br>更多的信息可以浏览这篇文章：<a href="http://net.tutsplus.com/tutorials/javascript-ajax/start-using-html5-websockets-today/" target="_blank">Start Using HTML5 WebSockets Today</a></p>
+<h2>socket.io</h2>
+<p><strong>socket.IO</strong>是一个websocket库，包括了客户端的js和服务器端的nodejs。官方地址：<a href="http://socket.io" target="_blank"><a href="http://socket.io">http://socket.io</a></a></p>
+<h3>客户端使用socket.io</h3>
+<p>去github clone socket.io的最新版本，或者直接饮用使用socket.io的CDN服务：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.socket.io/stable/socket.io.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>下面可以创建使用socket.io库来创建客户端js代码了：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> socket = io.connect(<span class="string">'http://localhost'</span>);
+socket.on(<span class="string">'news'</span>, <span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
+	console.log(data);
+	socket.emit(<span class="string">'my other event'</span>, { my: <span class="string">'data'</span> });
+});
+</pre></td></tr></table></figure>
+
+<p>socket.on是监听，收到服务器端发来的news的内容，则运行function，其中data就是请求回来的数据，socket.emit是发送消息给服务器端的方法。</p>
+<h3>使用socket.io和nodejs搭建websocket服务器端</h3>
+<p>socket.io不仅可以搭建客户端的websocket服务，而且支持nodejs服务器端的websocket。</p>
+<h3>nodejs安装socket.io</h3>
+<p>使用node插件管理包，运行下面的命令就可以安装成功socket.io</p>
+<blockquote>
+<p>npm install socket.io</p>
+</blockquote>
+<p>没有npm的或者windows用户可以使用github下载socket.io并且放入到node_modules文件夹中，具体配置可以参考文章：《nodejs教程：配置nodejs.exe的windows目录结构》</p>
+<h3>nodejs建立socket.io服务</h3>
+<p>通过nodejs的http模块就可以方便的搭建websocket服务器环境，例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="code"><pre>// 引入需要的模块：http和socket.io
+var http = require('http'), io = require('socket.io');
+//创建server
+var server = http.createServer(function(req, res){
+  // Send HTML headers and message
+  res.writeHead(200,{ 'Content-Type': 'text/html' });
+  res.end('
+
+# Hello Socket Lover!
+');
+});
+//端口8000
+server.listen(8080);
+//创建socket
+var socket = io.listen(server);
+//添加连接监听
+socket.on('connection', function(client){
+	//连接成功则执行下面的监听
+	client.on('message',function(event){
+		console.log('Received message from client!',event);
+	});
+	//断开连接callback
+	client.on('disconnect',function(){
+		console.log('Server has disconnected');
+	});
+});
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/09/28/使用socket-io和node-js搭建websocket应用/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/09/27/javascript获取隐藏dom的宽高/">javascript获取隐藏dom的宽高</a></h1>
+  
+
+      <time datetime="2011-09-27T14:50:15.000Z"><a href="/2011/09/27/javascript获取隐藏dom的宽高/">2011年9月27日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>一个隐藏的DOM是获取不到宽高的，如果想要获取，采用下面的方法：<br>首先clone一个DOM，设置<code>position:absolute</code>，然后设置top为一个比较大的负值，然后使其显示出来，最后获取到了DOM的宽高后，将其remove。</p>
+<p>具体代码如下：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/09/27/javascript获取隐藏dom的宽高/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/09/27/nodejs教程：安装express即配置app-js文件/">nodejs教程：安装express及配置app.js文件</a></h1>
+  
+
+      <time datetime="2011-09-26T22:35:52.000Z"><a href="/2011/09/27/nodejs教程：安装express即配置app-js文件/">2011年9月27日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><strong>express.js</strong>是nodejs的一个MVC开发框架，并且支持jade等多种模板。下面简单来说说express的安装和app.js文件的配置，然后在今后的教程中一步一步使用express.js搭建个聊天室。</p>
+<h2>安装express.js</h2>
+<p>如果你安装了npm，安装变得很简单，只需要在终端中运行下面的代码即可：</p>
+<blockquote>
+<p>npm install express -gd<br>-g代表安装到NODE_PATH的lib里面，而-d代表把相依性套件也一起安装。如果沒有-g的话会安装目前所在的目录(会建立一个node_modules的文件夹)，你可以透过以下指令来比较两者的不同：</p>
+<p>npm list -g<br>npm list</p>
+</blockquote>
+<p>如果没有npm，那么我可以使用github来git下来最新的express。<br>好了，现在你可以通过<code>express testapp</code>来建立express实例。以下是示例：</p>
+<blockquote>
+<p>cd ~<br>express testapp<br>cd testapp<br>node app.js<br>这样就建立了一个testapp的<strong>nodejs</strong>应用，而app.js是默认的应用主js。下面来详细的说说app.js中的各项配置。</p>
+</blockquote>
+<h2>引入模块</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="keyword">var</span> express = require(<span class="string">'express'</span>);
+ <span class="keyword">var</span> app = module.exports = express.createServer();
+</pre></td></tr></table></figure>
+
+<p>require()是node.js提供的函数，可以让你引入其他模块以调用模块的函数和变量，默认下node.js会在$NODE_PATH和目前js所在目录下的node_modules文件夹下去寻找模块。require也可以用来载入自己写的模块哦~这样涉及到node.js的模块机制，后面有机会就在介绍。</p>
+<p>第二行的express.createServer()就是在建立server，而中间的module.exports也是涉及到node.js的模块机制，以后再说。</p>
+<h2>express的app.js的详细配置说明</h2>
+<p>express.js继承自connect模块，所以如果你的node_modules文件夹下没有connect模块也是不行的。</p>
+<h3>设置views路径和模板</h3>
+<p>我们再来看下面两行：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>app.set(<span class="string">'views'</span>, __dirname + <span class="string">'/views'</span>);
+app.set(<span class="string">'view engine'</span>, <span class="string">'jade'</span>);
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/09/27/nodejs教程：安装express即配置app-js文件/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/09/08/使用html5-postmessage和window-name实现多浏览器跨域/">使用html5 postMessage和window.name实现多浏览器跨域</a></h1>
+  
+
+      <time datetime="2011-09-07T17:40:30.000Z"><a href="/2011/09/08/使用html5-postmessage和window-name实现多浏览器跨域/">2011年9月8日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><strong>跨域</strong>是个“很古老”的问题，因为浏览器的同源策略，导致不同域名下不能进行跨域名请求数据，虽然这样设计安全了很多，但是对于大型的网站同时维护多个域名就需要进行跨域操作。例如：微博开放平台的jssdk实现的跨域请求数据，再例如weibo.com和sina.com的同步登录。</p>
+<p>之前我也说过不少跨域的方式了，有结合服务器端的，有纯粹javascript实现的跨域，例如：《<a href="http://js8.in/685.html">利用跨域资源共享（CORS）实现ajax跨域调用</a>》、《<a href="http://js8.in/443.html">用document.domain+iframe实现Ajax跨子域</a>》、《<a href="http://js8.in/548.html">通过JSONP实现完美跨域</a>》。在我的上一篇文章《<a href="http://js8.in/750.html">javascript入门到高级PPT</a>》中也提到了跨域。<br>当然也有不少关于跨域的文章，例如口碑UED的文章《<a href="http://ued.koubei.com/?p=1291" target="_blank">跨域资源共享的10种方式</a>》等等。大家可以去阅读一下。</p>
+<p>今天我说的html5 <strong>postMessage</strong>和window.name也不是一种新的跨域方式，因为有不少人写文章写了，而实际应用的我不知道有哪些人？不过新浪微博的新旧两个jssdk都是采用这种方式，包括之前的人人网的xd.html，当然现在的人人和facebook都是通过flash实现的跨域，这不是今天说的内容。</p>
+<h3>html5 postMessage实现跨域</h3>
+<p>postMessage是html5的一个新功能，可以实现不同域名之间的通信，通过给postMessage方式发送数据，监听则通过在父子窗口添加onmessage事件进行。<br>缺点也就很明显了，只有支持html5的浏览器才支持这种跨域方式，像IE6、7当然就拒之门外了！</p>
+<h3>window.name实现跨域</h3>
+<p>window.name实现跨域也是一个比较老的问题，之前<a href="http://hikejun.com/blog/?p=56" target="_blank">kejun</a>写过一个<a href="http://hikejun.com/demo/windowname/demo_windowname.html" target="_blank">demo</a>，可是给的却是同域名的通信。<br>其实kejun的实例中就是实现跨域的，不过他采用了同一个域名，而且过程比较崎岖：</p>
+<ol>
+<li>建立iframe，指定src为被跨域的页面</li>
+<li>被跨域文件修改window.name，将数据传给window.name</li>
+<li>将iframe.src修改为本域代理文件，然后就可以取到contentWindow.name</li>
+<li>进行处理数据，清除iframe<br>充分的运用了<strong>window.name</strong>因为页面的url改变而name不改变的特性。<br>但是如果我们是自己用，还是可以的，而如果我们放出去要别人使用我们写的东西，那样学习成本太大。</li>
+</ol>
+<h3>多浏览器双向跨域</h3>
+<p>为了解决上面的问题，我们使用的方法就是如果支持<strong>postMessage</strong>的浏览器就使用postMessage，如果不支持的就采用window.name的方式，幸运的是在IE6、7中支持跨域设置window.name，而我们就可以简单的通过window.name来<strong>跨域</strong>。然后建立计时器来监听window.name是否发生了变化，如果变化则接收并分析window.name，然后做请求。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/09/08/使用html5-postmessage和window-name实现多浏览器跨域/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
+    <h1 class="title"><a href="/2011/08/27/javascript入门到高级ppt/">javascript入门到高级PPT</a></h1>
+  
+
+      <time datetime="2011-08-27T14:10:20.000Z"><a href="/2011/08/27/javascript入门到高级ppt/">2011年8月27日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前些日子参加了公司RIA的实习生和新员工的<strong>javascript</strong>培训课程，做了个PPT，今天拿来跟大家分享下，高手飘过，欢迎拍砖。<br>本课程分了两段，第一部分是javascript入门基础和中级教程，后面是高级，讲到了javascript的作用域链和原型链，以及javascript面向对象的继承写法，最后简单提了一下前端安全，最后简单介绍了下前端的发展和展望，要新员工开阔下眼界，同时提供了一些学习的资源和RSS源。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/08/27/javascript入门到高级ppt/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>

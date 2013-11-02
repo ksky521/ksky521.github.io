@@ -1,0 +1,623 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>正确理解javascript的this关键字 - 三水清</title>
+  <meta name="author" content="三水清">
+  
+  <meta name="description" content="javascript有this关键字，this跟javascript的执行上下文密切相关，很多前端开发工程师至今对this关键字还是模棱两可，本文将结合代码讲解下javascript的this关键字。
+this和对象的关系
+首先来看下面的代码：
+1
+2
+3
+4
+5
+6
+7
+8
+var person = {
+	name:'Theo Wong',
+	gender:'male',
+	getName:function(){
+		console.log(person.name);
+	}
+};
+person.getName();
+
+
+定义了一个person对象，对象中包含了name、gender属性，还包括了一个getName的方法，其作用是输出person对象的name。在这种情况下，我们可以使用this来在person对象中代替person对象本身，所以上面的代码跟下面的直接结果是一样的：
+1
+2
+3
+4
+5
+6
+7
+8
+var person = {
+	name:'Theo Wong',
+	gender:'male',
+	getName:function(){
+		console.log(this.name);
+	}
+};
+person.getName();
+
+
+请记住一点：this永远指向的是函数对象的所有者！上面的例子中getName的所有者是person对象，所以this指代的是person。
+this和全局对象
+我们再来看看再全局对象中，this指代的是什么，我们知道javascript是脚本语言，所以javascript的执行需要有一个宿主环境，在浏览器中这个宿主环境就是window对象，所以在全局函数中，this指代的是window对象（除非使用new，call，apply方法来改变this的指代关系）。懂得了这个关键点，下面的代码就好理解了：
+1
+2
+3
+4
+var a = 1;
+console.log(a);//1
+console.log(this.a);//1
+console.log(window.a);//1
+
+
+很多前端开发工程师经常使用在函数名字之前添加个window来调用函数，这是因为在浏览器中全局对象就是window，所有的函数变量都是在window对象之中，所以下面的代码中的this指代window对象就好理解了：
+1
+2
+3
+4
+5
+6
+var a = 1;
+function foo(){
+	var b = 2;
+	console.log(this.a+b);//3
+}
+foo();
+
+
+所以说，只要记住：this永远指向的是函数对象的所有者，即this的值是由激活执行上下文代码的调用者决定的，就好理解this的指代关系了。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="正确理解javascript的this关键字"/>
+  <meta property="og:site_name" content="三水清"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="atom.xml" title="三水清" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">三水清</a></h1>
+  <h2><a href="/">专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">首页</a></li>
+    
+      <li><a href="/about">关于</a></li>
+    
+      <li><a href="https://github.com/ksky521">Github</a></li>
+    
+      <li><a href="http://weibo.com/sanshuiqing">新浪微博</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon icon-black"></div>
+      
+      
+  
+    <h1 class="title">正确理解javascript的this关键字</h1>
+  
+
+      <time datetime="2011-10-24T08:55:30.000Z"><a href="/2011/10/24/正确理解javascript的this关键字/">2011年10月24日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>javascript有<code>this</code>关键字，this跟<strong>javascript</strong>的执行上下文密切相关，很多前端开发工程师至今对this关键字还是模棱两可，本文将结合代码讲解下javascript的<strong>this关键字</strong>。</p>
+<h2>this和对象的关系</h2>
+<p>首先来看下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="keyword">var</span> person = {
+	name:<span class="string">'Theo Wong'</span>,
+	gender:<span class="string">'male'</span>,
+	getName:<span class="keyword">function</span>(){
+		console.log(person.name);
+	}
+};
+person.getName();
+</pre></td></tr></table></figure>
+
+<p>定义了一个person对象，对象中包含了name、gender属性，还包括了一个getName的方法，其作用是输出person对象的name。在这种情况下，我们可以使用this来在person对象中代替person对象本身，所以上面的代码跟下面的直接结果是一样的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="keyword">var</span> person = {
+	name:<span class="string">'Theo Wong'</span>,
+	gender:<span class="string">'male'</span>,
+	getName:<span class="keyword">function</span>(){
+		console.log(<span class="keyword">this</span>.name);
+	}
+};
+person.getName();
+</pre></td></tr></table></figure>
+
+<p>请记住一点：<strong>this永远指向的是函数对象的所有者</strong>！上面的例子中getName的所有者是person对象，所以this指代的是person。</p>
+<h2>this和全局对象</h2>
+<p>我们再来看看再全局对象中，this指代的是什么，我们知道javascript是脚本语言，所以javascript的执行需要有一个宿主环境，在浏览器中这个宿主环境就是window对象，所以在全局函数中，this指代的是window对象（除非使用new，call，apply方法来改变this的指代关系）。懂得了这个关键点，下面的代码就好理解了：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="keyword">var</span> a = <span class="number">1</span>;
+console.log(a);<span class="comment">//1</span>
+console.log(<span class="keyword">this</span>.a);<span class="comment">//1</span>
+console.log(window.a);<span class="comment">//1</span>
+</pre></td></tr></table></figure>
+
+<p>很多<strong>前端开发</strong>工程师经常使用在函数名字之前添加个window来调用函数，这是因为在浏览器中全局对象就是window，所有的函数变量都是在window对象之中，所以下面的代码中的this指代window对象就好理解了：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="keyword">var</span> a = <span class="number">1</span>;
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span>{</span>
+	<span class="keyword">var</span> b = <span class="number">2</span>;
+	console.log(<span class="keyword">this</span>.a+b);<span class="comment">//3</span>
+}
+foo();
+</pre></td></tr></table></figure>
+
+<p>所以说，只要记住：<strong>this</strong>永远指向的是函数对象的所有者，即this的值是由激活执行上下文代码的调用者决定的，就好理解this的指代关系了。<br><a id="more"></a></p>
+<h2>函数构造器中的this</h2>
+<p>当函数作为构造器使用new关键字实例化时，this的指代关系又是怎样的呢？看下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> Person = <span class="keyword">function</span>(){
+	<span class="keyword">this</span>.name = <span class="string">'Theo Wong'</span>;
+}
+<span class="keyword">var</span> person = <span class="keyword">new</span> Person();
+console.log(person.name);
+</pre></td></tr></table></figure>
+
+<p>new执行过程会首先执行Person的构造器[[construct]]，然后在调用[[call]]方法给this赋值，这个执行过程可以简单理解为三步</p>
+<ol>
+<li>首先建立一个空的对象object，类似var obj={}</li>
+<li>然后将空对象使用Person的call操作，类似Person.call(obj)</li>
+<li>执行完Person之后再return this，完成new过程，赋值给person变量<br>所以经过new加工过的函数，this的函数调用者是Person本身，而不是window了。</li>
+</ol>
+<h2>嵌套函数中的this</h2>
+<p>在嵌套函数中，this的指代关系有会是怎样的呢？看下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre><span class="keyword">var</span> myObject = {
+  func1:<span class="keyword">function</span>() {
+     console.log(<span class="keyword">this</span>); <span class="comment">//myObject</span>
+     <span class="keyword">var</span> func2=<span class="keyword">function</span>() {
+        console.log(<span class="keyword">this</span>); <span class="comment">//window</span>
+        <span class="keyword">var</span> func3=<span class="keyword">function</span>() {
+           console.log(<span class="keyword">this</span>); <span class="comment">//window</span>
+        }();
+     }();
+  }
+};
+myObject.func1();
+</pre></td></tr></table></figure>
+
+<p>在嵌套函数中，由于嵌套函数的执行上下文是window，所以this指代的是window对象，其实这是ECMA-262-3的一个bug，在最新的ECMA-262-5中已经修复。</p>
+<h2>事件处理中的this</h2>
+<p>在javascript中处理事件函数中，this的指代关系就更加扑朔离迷了。我们建立一个showValue函数，函数内容如下：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="keyword">var</span> showValue = <span class="keyword">function</span>(){
+	console.log(<span class="keyword">this</span>.value);
+};
+</pre></td></tr></table></figure>
+
+<p>现在有个input，我们给input元素添加click事件，当点击input时触发showValue函数，看看现在的this指代的是什么对象。</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"test"</span> <span class="attribute">type</span>=<span class="value">"text"</span> /&gt;</span>
+</pre></td></tr></table></figure>
+
+<h3>通过dom.onclick绑定事件</h3>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>document.getElementById(<span class="string">'test'</span>).onclick = showValue;
+</pre></td></tr></table></figure>
+
+<p>运行代码会得到预期的结果，showValue虽然定义在全局对象中，但是当采用了onclick的绑定方式时，showValue是作为dom的onclick方法被调用的，所以它的this应该指代的是dom对象，而不再是<strong>window</strong>对象。</p>
+<h3>写在html标签内</h3>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"test"</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">onclick</span>=<span class="value">"showValue();"</span> /&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>当点击dom时，我们获取不到正确的this，这是为什么呢？</p>
+<p>此时的this指代的是window对象，因为window对象中没有定义value的值，所以获取不到<code>this.value</code>。其实此时的不是将showValue函数赋值给dom对象的onclick，而是引用！所以上面的代码跟下面的代码关系是一样的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>document.getElementById(<span class="string">'test'</span>).onclick = <span class="keyword">function</span>(){
+    showValue();
+};
+</pre></td></tr></table></figure>
+
+<p>根据上面说的<strong>javascript</strong>嵌套函数的this值，我们可以得出现在showValue的this其实是window。</p>
+<h3>通过addEventListener/attachEvent绑定事件监听</h3>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">id</span>=<span class="value">"test"</span> /&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+<span class="keyword">var</span> dom = document.getElementById(<span class="string">'test'</span>);
+id = <span class="string">'window'</span>;
+<span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span>{</span>
+	alert(<span class="keyword">this</span>.id);
+}
+dom.addEventListener?dom.addEventListener(<span class="string">'click'</span>,test,<span class="literal">false</span>):dom.attachEvent(<span class="string">'onclick'</span>,test);
+<span class="comment">//addEventListener test</span>
+<span class="comment">//attachEvent window</span>
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>这种绑定事件监听的方式，attachEvent this是window对象，而addEventListener则是dom对象的。@魔堕轮回 提出来的bug~嘎嘎</p>
+<h2>使用call和apply方法改变this</h2>
+<p>在Function对象原型（Function.prototype）中有两个方法：call和apply，通过call和apply可以改变this的值， 它们都接受第一个参数作为调用执行上下文中this的值。它们的不同点就是apply第二个参数为数组，call接收的参数是依次传入的。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="keyword">var</span> obj = {
+	name:<span class="string">'Theo Wong'</span>,
+	desc:<span class="string">'一个前端开发者'</span>
+};
+<span class="keyword">var</span> getInfo = <span class="keyword">function</span>(){
+	console.log(<span class="keyword">this</span>.name+<span class="keyword">this</span>.desc);
+};
+getInfo.call(obj);
+<span class="comment">//Theo Wong一个前端开发者</span>
+</pre></td></tr></table></figure>
+
+<h2>总结</h2>
+<p>this是javascript的重要关键字，理解掌握this关键字在不同的执行上下文指代关系，才能避免代码犯一些不必要的错误。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+
+
+<div class="articletags clearfix">
+	<i class="icon-tag"></i>Tags: <a href="/tags/this/">this</a><a href="/tags/javascript/">javascript</a>
+	<i class="icon-folder"></i>categories:  <a href="/categories/前端开发/">前端开发</a>
+</div>
+
+
+        
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more">分享到：</span>
+<a class="bds_tsina">新浪微博</a>
+<a class="bds_qzone">QQ空间</a>
+<a class="bds_tqq">腾讯微博</a>
+<a class="bds_renren">人人网</a>
+<a class="bds_douban">豆瓣网</a>
+<a class="bds_bdhome">百度首页</a>
+<a class="bds_youdao">有道云笔记</a>
+<a class="bds_copy">复制网址</a>
+</div>
+<script>
+var bds_config = {
+    wbUid:'2037334587',
+    tsina: '61439547',
+    pic:''
+};
+</script>
+
+
+
+        <div class="pagepart clearfix">
+ 
+	<a href="/2011/10/25/javascript作用域和作用域链/" class="prev" title="javascript作用域和作用域链">javascript作用域和作用域链</a>
+ 
+ 
+	<a href="/2011/10/23/chrome扩展应用开发教程之调试和打包上线/" class="next" title="chrome扩展应用开发教程之调试和打包上线">chrome扩展应用开发教程之调试和打包上线</a>
+ 
+</div>
+      
+      
+<div class="border"></div>
+<section class="comment">
+    <p class="title ico-comment">文章评论<a name="comments"></a></p>
+    <div class="ds-thread" data-title="正确理解javascript的this关键字"></div>
+</section>
+
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
+  
+    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+  
+    <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
+  
+    <li><a href="/categories/王婆卖瓜/">王婆卖瓜</a><small>4</small></li>
+  
+    <li><a href="/categories/读书笔记/">读书笔记</a><small>5</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签</h3>
+  <ul class="entry clearfix">
+  
+    <li><a href="/tags/DOM/">DOM<sup>2</sup></a></li>
+  
+    <li><a href="/tags/IE/">IE<sup>1</sup></a></li>
+  
+    <li><a href="/tags/IE6/">IE6<sup>2</sup></a></li>
+  
+    <li><a href="/tags/PPT/">PPT<sup>3</sup></a></li>
+  
+    <li><a href="/tags/VPS/">VPS<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ajax/">ajax<sup>5</sup></a></li>
+  
+    <li><a href="/tags/apache/">apache<sup>1</sup></a></li>
+  
+    <li><a href="/tags/audio/">audio<sup>2</sup></a></li>
+  
+    <li><a href="/tags/a标签/">a标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/canvas/">canvas<sup>1</sup></a></li>
+  
+    <li><a href="/tags/chrome/">chrome<sup>3</sup></a></li>
+  
+    <li><a href="/tags/css/">css<sup>15</sup></a></li>
+  
+    <li><a href="/tags/eAccelerator/">eAccelerator<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ecmascript/">ecmascript<sup>3</sup></a></li>
+  
+    <li><a href="/tags/escape/">escape<sup>1</sup></a></li>
+  
+    <li><a href="/tags/event/">event<sup>1</sup></a></li>
+  
+    <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
+  
+    <li><a href="/tags/handleEvent/">handleEvent<sup>1</sup></a></li>
+  
+    <li><a href="/tags/html5/">html5<sup>3</sup></a></li>
+  
+    <li><a href="/tags/iframe/">iframe<sup>1</sup></a></li>
+  
+    <li><a href="/tags/iptables/">iptables<sup>1</sup></a></li>
+  
+    <li><a href="/tags/javascript/">javascript<sup>79</sup></a></li>
+  
+    <li><a href="/tags/linux/">linux<sup>4</sup></a></li>
+  
+    <li><a href="/tags/livereload/">livereload<sup>1</sup></a></li>
+  
+    <li><a href="/tags/memcached/">memcached<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mixjs/">mixjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/mysql/">mysql<sup>2</sup></a></li>
+  
+    <li><a href="/tags/name/">name<sup>1</sup></a></li>
+  
+    <li><a href="/tags/nginx/">nginx<sup>2</sup></a></li>
+  
+    <li><a href="/tags/nodejs/">nodejs<sup>7</sup></a></li>
+  
+    <li><a href="/tags/php/">php<sup>19</sup></a></li>
+  
+    <li><a href="/tags/session/">session<sup>1</sup></a></li>
+  
+    <li><a href="/tags/storage/">storage<sup>1</sup></a></li>
+  
+    <li><a href="/tags/svn/">svn<sup>1</sup></a></li>
+  
+    <li><a href="/tags/this/">this<sup>1</sup></a></li>
+  
+    <li><a href="/tags/ueditor/">ueditor<sup>1</sup></a></li>
+  
+    <li><a href="/tags/uglifyjs/">uglifyjs<sup>1</sup></a></li>
+  
+    <li><a href="/tags/webbench/">webbench<sup>1</sup></a></li>
+  
+    <li><a href="/tags/websocket/">websocket<sup>1</sup></a></li>
+  
+    <li><a href="/tags/web前端开发/">web前端开发<sup>5</sup></a></li>
+  
+    <li><a href="/tags/windows7技巧/">windows7技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/wordpress/">wordpress<sup>3</sup></a></li>
+  
+    <li><a href="/tags/xss/">xss<sup>3</sup></a></li>
+  
+    <li><a href="/tags/严格模式/">严格模式<sup>1</sup></a></li>
+  
+    <li><a href="/tags/位运算/">位运算<sup>1</sup></a></li>
+  
+    <li><a href="/tags/作用域/">作用域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
+  
+    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+  
+    <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/压力测试/">压力测试<sup>1</sup></a></li>
+  
+    <li><a href="/tags/右键/">右键<sup>1</sup></a></li>
+  
+    <li><a href="/tags/安全/">安全<sup>1</sup></a></li>
+  
+    <li><a href="/tags/性能/">性能<sup>3</sup></a></li>
+  
+    <li><a href="/tags/我也八卦/">我也八卦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/执行环境/">执行环境<sup>1</sup></a></li>
+  
+    <li><a href="/tags/技巧/">技巧<sup>1</sup></a></li>
+  
+    <li><a href="/tags/播放器/">播放器<sup>1</sup></a></li>
+  
+    <li><a href="/tags/数组/">数组<sup>1</sup></a></li>
+  
+    <li><a href="/tags/标签/">标签<sup>1</sup></a></li>
+  
+    <li><a href="/tags/模块化/">模块化<sup>2</sup></a></li>
+  
+    <li><a href="/tags/算法/">算法<sup>1</sup></a></li>
+  
+    <li><a href="/tags/网络技术/">网络技术<sup>73</sup></a></li>
+  
+    <li><a href="/tags/虚拟主机/">虚拟主机<sup>1</sup></a></li>
+  
+    <li><a href="/tags/解耦/">解耦<sup>1</sup></a></li>
+  
+    <li><a href="/tags/语法限制/">语法限制<sup>1</sup></a></li>
+  
+    <li><a href="/tags/跨域/">跨域<sup>3</sup></a></li>
+  
+    <li><a href="/tags/路径/">路径<sup>1</sup></a></li>
+  
+    <li><a href="/tags/软件心得/">软件心得<sup>3</sup></a></li>
+  
+  </ul>
+</div>
+
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2013 三水清
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+    
+        <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6635976" ></script>
+        <script type="text/javascript" id="bdshell_js"></script>
+        <script type="text/javascript">
+        document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
+        </script>
+    
+    
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:"ksky521"};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = 'http://static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0]
+            || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+
+    <script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F1c76f5cc8274a56106b13b9c9b1fb046' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+
+</body>
+</html>
