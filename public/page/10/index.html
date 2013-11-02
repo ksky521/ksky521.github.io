@@ -55,6 +55,81 @@
       
       
   
+    <h1 class="title"><a href="/2010/12/07/css3-media-queries使用方法详解/">CSS3 Media Queries使用方法详解</a></h1>
+  
+
+      <time datetime="2010-12-07T13:57:34.000Z"><a href="/2010/12/07/css3-media-queries使用方法详解/">2010年12月7日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在css2中允许我们使用media的属性，例如使用screen和print，我也写过一篇关于<a href="http://js8.in/351.html" title="使用CSS控制打印页面格式">使用CSS media的print来定义打印网页</a>的样式的文章，关于css2中的media文章，推荐下<a href="http://www.w3.org/TR/CSS2/media.html" target="_blank">w3c的</a>。今天来说说CSS3的Media Queries。CSS3中不仅仅可以使用screen和print，而且支持多媒体多分辨率的样式表。</p>
+<p>我们先来看下CSS3 Media Queries的演示实例：<a href="http://js8.in/mywork/css3media.html" title="CSS3 Media Query 演示"><a href="http://js8.in/mywork/css3media.html">http://js8.in/mywork/css3media.html</a></a>，来自于（<a href="http://www.webdesignerwall.com/tutorials/css3-media-queries/" target="_blank">Web Designer Wall</a>）</p>
+<h3>Max Width</h3>
+<p>故名思意，就是最大宽度的意思，例如下面的代码是在宽度小于600px的时候才执行的。</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="at_rule">@<span class="keyword">media</span> screen and (max-width: <span class="number">600</span>px) </span>{
+  <span class="class">.class</span> <span class="rules">{
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#ccc</span>;</span></span>
+  <span class="rule">}</span></span>
+}
+</pre></td></tr></table></figure>
+
+<p>也可以在link标签里面使用media属性，即下面的写法：</p>
+<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>
+<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">media</span>=<span class="value">"screen and (max-width: 600px)"</span> <span class="attribute">href</span>=<span class="value">"small.css"</span> /&gt;</span>
+</pre></td></tr></table></figure>
+
+<h3>Min Width</h3>
+<p>跟Max Width相反，是最小宽度，例如当宽度大于900px的时候才运行下面的代码</p>
+<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="at_rule">@<span class="keyword">media</span> screen and (min-width: <span class="number">900</span>px) </span>{
+  <span class="class">.class</span> <span class="rules">{
+    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#666</span>;</span></span>
+  <span class="rule">}</span></span>
+}
+</pre></td></tr></table></figure>
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/12/07/css3-media-queries使用方法详解/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2010/12/03/使用mysqldump、into-outfile和load-data进行数据库导入导出备份/">使用mysqldump、into outfile和load data进行数据库导入导出备份</a></h1>
   
 
@@ -545,63 +620,16 @@ alert(<span class="string">'点击了一下!'</span>);
 
 
 
-  <article class="post">
+
+<nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/page/9/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2010/09/16/ie-event-stoppropagation阻止冒泡事件/">IE event.stopPropagation()阻止冒泡事件</a></h1>
   
-
-      <time datetime="2010-09-16T15:29:11.000Z"><a href="/2010/09/16/ie-event-stoppropagation阻止冒泡事件/">2010年9月16日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>在火狐Firefox、opera、IE下阻止冒泡事件是不同的代码的，火狐下使用的是<strong>event.stopPropagation()</strong>，而IE下使用的是<strong>cancelBubble</strong>，jQuery 可以使用<strong>e.stopPropagation()</strong>就可以兼容了，如果是纯粹的JavaScript需要下面的代码来统一：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="code"><pre>
-<span class="keyword">if</span> (event.stopPropagation) {
-<span class="comment">// this code is for Mozilla and Opera</span>
-event.stopPropagation();
-}
-<span class="keyword">else</span> <span class="keyword">if</span> (window.event) {
-<span class="comment">// this code is for IE</span>
-window.event.cancelBubble = <span class="literal">true</span>;
-}
-</pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-</div></div>
+    <a href="/page/11/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
     <aside id="sidebar" class="alignright">
   
 <div class="widget tag">
@@ -610,7 +638,7 @@ window.event.cancelBubble = <span class="literal">true</span>;
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -660,6 +688,10 @@ window.event.cancelBubble = <span class="literal">true</span>;
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -723,7 +755,7 @@ window.event.cancelBubble = <span class="literal">true</span>;
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

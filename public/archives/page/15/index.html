@@ -59,6 +59,44 @@
       
       
   
+    <h1 class="title"><a href="/2010/02/09/javascript事件触发列表与详解/">Javascript事件触发列表与详解</a></h1>
+  
+
+      <time datetime="2010-02-09T09:06:53.000Z"><a href="/2010/02/09/javascript事件触发列表与详解/">2010年2月9日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天在司徒正美（<a href="http://www.cnblogs.com/rubylouvre/archive/2010/02/09/1632990.html" target="_blank">原文</a>）的博客上看见一个关于javascript事件触发列表的文章，感觉不错，拿来给大家分享一下，本文中涉及到了很多javascript的事件，有不同浏览器差异的事件，大家必要的时候可以做以下参考<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/02/09/javascript事件触发列表与详解/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2010/02/08/cssjquery实现滑动幻灯片实例详解/">CSS+jQuery实现滑动幻灯片实例详解</a></h1>
   
 
@@ -540,89 +578,16 @@ color: @brand_color;
 
 
   
-    <article class="post">
+
+  <nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/archives/page/14/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2010/01/19/21个常用的-php-代码汇总/">21个常用的 PHP 代码汇总</a></h1>
   
-
-      <time datetime="2010-01-19T11:50:08.000Z"><a href="/2010/01/19/21个常用的-php-代码汇总/">2010年1月19日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p><strong>PHP</strong> 是目前使用最广泛的基于 Web 的编程语言，驱动着数以百万计的网站，其中也包括如 Facebook 等一些大型站点。这里收集了 21个日常开发中实用便捷的 PHP 代码，希望可以对一些 PHP 开发者都会有所帮助。</p>
-<h3>1. 可阅读随机字符串</h3>
-<p>此代码将创建一个可阅读的字符串，使其更接近词典中的单词，实用且具有密码验证功能。</p>
-<blockquote>
-<figure class="highlight lang-php"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-</pre></td><td class="code"><pre>
-&gt; <span class="comment">/**************
-&gt; *@length - length of random string (must be a multiple of 2)
-&gt; **************/</span>
-&gt; <span class="function"><span class="keyword">function</span> <span class="title">readable_random_string</span><span class="params">(<span class="variable">$length</span> = <span class="number">6</span>)</span>{</span>
-&gt;     <span class="variable">$conso</span>=<span class="keyword">array</span>(<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"f"</span>,<span class="string">"g"</span>,<span class="string">"h"</span>,<span class="string">"j"</span>,<span class="string">"k"</span>,<span class="string">"l"</span>,
-&gt;     <span class="string">"m"</span>,<span class="string">"n"</span>,<span class="string">"p"</span>,<span class="string">"r"</span>,<span class="string">"s"</span>,<span class="string">"t"</span>,<span class="string">"v"</span>,<span class="string">"w"</span>,<span class="string">"x"</span>,<span class="string">"y"</span>,<span class="string">"z"</span>);
-&gt;     <span class="variable">$vocal</span>=<span class="keyword">array</span>(<span class="string">"a"</span>,<span class="string">"e"</span>,<span class="string">"i"</span>,<span class="string">"o"</span>,<span class="string">"u"</span>);
-&gt;     <span class="variable">$password</span>=<span class="string">""</span>;
-&gt;     srand ((double)microtime()*<span class="number">1000000</span>);
-&gt;     <span class="variable">$max</span> = <span class="variable">$length</span>/<span class="number">2</span>;
-&gt;     <span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">1</span>; <span class="variable">$i</span>&lt;=<span class="variable">$max</span>; <span class="variable">$i</span>++)
-&gt;     {
-&gt;     <span class="variable">$password</span>.=<span class="variable">$conso</span>[rand(<span class="number">0</span>,<span class="number">19</span>)];
-&gt;     <span class="variable">$password</span>.=<span class="variable">$vocal</span>[rand(<span class="number">0</span>,<span class="number">4</span>)];
-&gt;     }
-&gt;     <span class="keyword">return</span> <span class="variable">$password</span>;
-&gt; }
-</pre></td></tr></table></figure>
-
-</blockquote>
-
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2010/01/19/21个常用的-php-代码汇总/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
+    <a href="/archives/page/16/" class="alignright next">下一页</a>
   
-
-  
+  <div class="clearfix"></div>
+</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   
@@ -632,7 +597,7 @@ color: @brand_color;
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -682,6 +647,10 @@ color: @brand_color;
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -745,7 +714,7 @@ color: @brand_color;
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

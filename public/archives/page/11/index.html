@@ -59,6 +59,61 @@
       
       
   
+    <h1 class="title"><a href="/2010/09/16/ie-event-stoppropagation阻止冒泡事件/">IE event.stopPropagation()阻止冒泡事件</a></h1>
+  
+
+      <time datetime="2010-09-16T15:29:11.000Z"><a href="/2010/09/16/ie-event-stoppropagation阻止冒泡事件/">2010年9月16日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在火狐Firefox、opera、IE下阻止冒泡事件是不同的代码的，火狐下使用的是<strong>event.stopPropagation()</strong>，而IE下使用的是<strong>cancelBubble</strong>，jQuery 可以使用<strong>e.stopPropagation()</strong>就可以兼容了，如果是纯粹的JavaScript需要下面的代码来统一：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>
+<span class="keyword">if</span> (event.stopPropagation) {
+<span class="comment">// this code is for Mozilla and Opera</span>
+event.stopPropagation();
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (window.event) {
+<span class="comment">// this code is for IE</span>
+window.event.cancelBubble = <span class="literal">true</span>;
+}
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2010/09/15/jquery中的offset和position方法详解/">Jquery中的offset()和position()方法详解</a></h1>
   
 
@@ -530,57 +585,16 @@ height: expression( this.scrollHeight &gt; 500 ? "500px" : "auto" ); /* sets max
 
 
   
-    <article class="post">
+
+  <nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/archives/page/10/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2010/08/28/解决ie下settimeout传参数的bug/">解决IE下setTimeout传参数的bug</a></h1>
   
-
-      <time datetime="2010-08-27T19:43:47.000Z"><a href="/2010/08/28/解决ie下settimeout传参数的bug/">2010年8月28日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>最近一次的开发中遇到了IE下<strong>setTimeout</strong>传参数的问题，在<strong>IE</strong>下setTimeout是不会传参数的，例如下面的代码，在IE下就不会传入a,b两个参数</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-</pre></td><td class="code"><pre>
-setTimeout(<span class="keyword">function</span>(a,b){
-alert(a+b);
-},<span class="number">1000</span>,<span class="string">'hello,'</span>,<span class="string">'world!'</span>);
-</pre></td></tr></table></figure>
-
-<p>在实际项目中我们有些需求必须传入参数要<strong>setTimeout</strong>的function进行处理，那么我们就需要利用js的call及其apply的方法，来解决IE下的setTimeout传参bug：<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2010/08/28/解决ie下settimeout传参数的bug/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
+    <a href="/archives/page/12/" class="alignright next">下一页</a>
   
-
-  
+  <div class="clearfix"></div>
+</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   
@@ -590,7 +604,7 @@ alert(a+b);
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -640,6 +654,10 @@ alert(a+b);
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -703,7 +721,7 @@ alert(a+b);
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

@@ -55,6 +55,67 @@
       
       
   
+    <h1 class="title"><a href="/2012/04/20/nodeppt-—-nodejs做的手机端控制pc端的ppt演示文档javascript框架/">nodePPT — nodejs做的手机端控制PC端的PPT演示文档javascript框架</a></h1>
+  
+
+      <time datetime="2012-04-20T10:47:01.000Z"><a href="/2012/04/20/nodeppt-—-nodejs做的手机端控制pc端的ppt演示文档javascript框架/">2012年4月20日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p><a href="https://github.com/ksky521/nodePPT" target="_blank">nodePPT</a>使用nodejs写的，可以手机端控制pc端的演示文档框架。<strong>nodePPT</strong>是在<a href="https://github.com/ksky521/webSlide" target="_blank">webSlide</a>基础上二次开发的，使用nodejs做服务器，通过websocket来实现手机端和PC的通信，主要功能是手机端可以控制pc端PPT播放进度，并且手机端可以给每张PPT做备注。</p>
+<p>第一次做个程序的<strong>nodejs</strong>作品，并且测试时间比较短，肯定会有很多问题和bug，希望大家一起斧正。另外页面样式css高手可以自己写，包括动画自定义都可以在css文件中直接修改添加。</p>
+<h2>说明</h2>
+<p>因为是PPT演示文档，所以需要投影仪分辨率，所以演示页面的最佳分辨率为全屏模式下的 <code>1024*768</code> ，如果在自己电脑上查看，可以通过 <code>ctrl + -</code> 和 <code>ctrl + +</code> 缩放到合适的比例查看效果。</p>
+<p>建议浏览器chrome 16+，全屏模式（F11），以达到最佳动画效果。在Firefox下会出现拖尾现象，个人认为是Firefox 8下对CSS3动画效果渲染太慢导致，其他浏览器未测试。<br><a href="/uploads/2012/04/796f423btw1ds70hjcu93j.jpg"><img src="/uploads/2012/04/796f423btw1ds70hjcu93j.jpg" alt="nodePPT iphone手机端截图" title="nodePPT iphone手机端截图"></a></p>
+<h4>使用说明</h4>
+<ol>
+<li>配置route.json</li>
+<li>配置ppt的文件</li>
+<li>启动node：node server.js</li>
+<li>PC访问：如127.0.0.1:3000/demo.ppt</li>
+<li>手机端访问：127.0.0.1:3000/ctrl</li>
+<li>手机端setup，选择控制用户后，开始控制</li>
+</ol>
+<p>具体使用方法启动node server.js之后访问127.0.0.1:3000/index.ppt，里面有详细的介绍</p>
+<h2>快捷键</h2>
+<ul>
+<li>空格/→/↓/Tab/pageDown：下一页</li>
+<li>←/↑/pageUp：上一页</li>
+<li>P：开画板</li>
+<li>C：清除画板</li>
+</ul>
+<h2>版本库地址</h2>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/04/20/nodeppt-—-nodejs做的手机端控制pc端的ppt演示文档javascript框架/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2012/03/07/addeventlistener第二个参数的handleevent/">addEventListener第二个参数的handleEvent</a></h1>
   
 
@@ -757,68 +818,16 @@ alert(iNum.toString(<span class="number">2</span>));	<span class="comment">//输
 
 
 
-  <article class="post">
+
+<nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/page/3/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2011/11/15/ie6中javascript文件开启gzip出现代码不执行情况/">IE6中javascript文件开启Gzip出现代码不执行情况</a></h1>
   
-
-      <time datetime="2011-11-14T20:25:23.000Z"><a href="/2011/11/15/ie6中javascript文件开启gzip出现代码不执行情况/">2011年11月15日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>今天处理IE6下的一个bug，经过调试才发现是<strong>javascript</strong>文件文件总是执行不了，</p>
-<p>后来中午吃完饭回来才想起以前同事遇见的html中的javascript不可以执行的问题，怀疑是gzip的原因，此次的问题就是因为动态加载javascript文件导致代码不执行，</p>
-<p>经过研究发现gzip压缩过的javascript文件，如果header里Cache-Control 数据有no-cache, no-store，就会出现IE6中js代码不执行的问题。下面是转发的文章内容：</p>
-<p>IE6下面调用开启了gzip压缩Javascript的时候，时常会碰到无法执行的情况，有可能是src调用，有可能是ajax调用，其它的浏览器工作正常，唯独IE6不能正常工作。<br>出现这个BUG的状况如下：</p>
-<ol>
-<li>用户使用IE6浏览器</li>
-<li>服务器没有设置 被请求文件(javascript) expires, cache-control.</li>
-<li>服务器端开启了chunked encoding模式</li>
-<li>通过javascrip的src调用方式或者ajax请求javascript文件</li>
-<li>有可能是通过php生成的javascript文件</li>
-<li>服务器端开启了gzip压缩</li>
-</ol>
-<p>解决这个问题，我们要在服务器的cache-control和expires 头信息上做点工作。<br>经过测试，header头信息如下的gzip压缩过的javascript调用可以正常工作。</p>
-<blockquote>
-<p>Cache-Control:maxage=1<br>Connection:keep-alive<br>Content-Encoding:gzip<br>Content-Type:application/x-javascript;charset=GBK<br>Date:Wed, 01 Dec 2010 01:24:07 GMT<br>Expires:Wed, 01 Dec 2010 01:24:08 GMT<br>Pragma:public<br>Server:nginx<br>Transfer-Encoding:chunked</p>
-</blockquote>
-<p>分析上面的头信息，我们可以注意到：</p>
-<ol>
-<li>cache-control必须要设置成maxage=time的格式，maxage是指定缓存生效时间，1为1秒</li>
-<li>Expires必须要设置，它的时间稍大于Date即可，Date是页面请求时间，Expires是过期时间</li>
-<li>Pragma设置为public</li>
-</ol>
-<p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2011/11/15/ie6中javascript文件开启gzip出现代码不执行情况/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-</div></div>
+    <a href="/page/5/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
     <aside id="sidebar" class="alignright">
   
 <div class="widget tag">
@@ -827,7 +836,7 @@ alert(iNum.toString(<span class="number">2</span>));	<span class="comment">//输
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -877,6 +886,10 @@ alert(iNum.toString(<span class="number">2</span>));	<span class="comment">//输
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -940,7 +953,7 @@ alert(iNum.toString(<span class="number">2</span>));	<span class="comment">//输
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

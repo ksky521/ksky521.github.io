@@ -55,6 +55,177 @@
       
       
   
+    <h1 class="title"><a href="/2012/07/27/ecmascript-5的严格模式：语法限制/">ECMAScript 5的严格模式：语法限制</a></h1>
+  
+
+      <time datetime="2012-07-27T09:08:23.000Z"><a href="/2012/07/27/ecmascript-5的严格模式：语法限制/">2012年7月27日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>在<strong>ECMAScript 5严格模式</strong>介绍的第一篇（<a href="/2012/07/26/ecmascript-5%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%9Astrict-mode%E4%BB%8B%E7%BB%8D/">ECMAScript 5的严格模式：strict mode介绍</a>）文章中提到了严格模式会在语法解析和代码执行两个方面做限制，抛出更多的异常。今天介绍的是<strong>ECMAScript 5严格模式</strong>的第一部分：语法限制。</p>
+<p>ECMAScript 5严格模式的语法限制有七个，下面一一介绍：</p>
+<h2>禁止函数出现相同的参数</h2>
+<p>我们知道在普通的函数中，多个参数可以相同（即使我们很少或者没有这样写过），但是在严格模式下，这样的行为是被禁止！<br>例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
+    alert(x+y);
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<p>在非严格模式下，后面的x会覆盖第一个x的传参，即运行结果实际为<code>2+3=5</code>。</p>
+<p>但是在严格模式下，上面的代码却会抛出类似“Strict mode function may not have duplicate parameter names”的语法异常。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
+    <span class="string">"use strict"</span>;
+    alert(x+y);
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<h2>禁止对象直接量的相同属性名</h2>
+<p>跟第一条相同，下面的代码在非严格模式是正常的，但是在严格模式却是禁止的，也是抛出语法异常（chrome 下为“Duplicate data property in object literal not allowed in strict mode”）</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">var</span> obj = {
+    a: <span class="number">1</span>,
+    a: <span class="number">2</span>
+}
+foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
+</pre></td></tr></table></figure>
+
+<h2>禁止重新定义eval和arguments</h2>
+<p>严格模式中不能声明或重写 <code>eval</code> 和 <code>arguments</code><br>这两个标识符，亦即是说，它们不能出现在赋值运算的左边，也不能使用 var 语句来声明。</p>
+<p>另外，由于 catch 子句以及具名函数都会隐式地声明变量名，因此在它们的语法中也不允许用 eval 和 arguments 作为标识符。最后要强调的是，arguments 或 eval 也不能使用 delete 去删除。所以下面的代码在严格模式下都会抛出语法异常：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span class="comment">//向 eval或 arguments赋值</span>
+eval = <span class="keyword">function</span>() { }
+
+<span class="comment">//重新声明 eval或 arguments</span>
+<span class="keyword">var</span> arguments;
+
+<span class="comment">//将 eval或 arguments用做 catch子句的异常对象名</span>
+<span class="keyword">try</span> {
+    <span class="comment">// …</span>
+}
+<span class="keyword">catch</span> (eval) {
+    <span class="comment">// …</span>
+}
+
+<span class="comment">//将 eval或 arguments用做函数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">arguments</span><span class="params">()</span> {</span> }
+
+<span class="comment">//删除 arguments，或形式参数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>
+    <span class="keyword">delete</span> arguments;
+}
+</pre></td></tr></table></figure>
+
+<h2>禁止使用 0 前缀声明的 8 进制直接量</h2>
+<p>例如下面的代码在严格模式下面是错误的：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="keyword">var</span> num = <span class="number">012</span>;
+alert(num);
+</pre></td></tr></table></figure>
+
+<p>而在非严格模式中，<code>num</code>因为0而被解析为八进制数值，所以<code>alert</code>出来的是十进制的<code>10</code></p>
+<h2>禁止delete显式声明的标识符、具名函数</h2>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre><span class="comment">//删除变量名</span>
+<span class="keyword">var</span> x;
+<span class="keyword">delete</span> x;
+
+<span class="comment">//删除具名函数</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>}
+<span class="keyword">delete</span> foo;
+
+<span class="comment">//删除 arguments，或形式参数名</span>
+<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x)</span> {</span>
+<span class="keyword">delete</span> x;
+}
+
+<span class="comment">//删除 catch子句中声明的异常对象</span>
+<span class="keyword">try</span>{} <span class="keyword">catch</span>(e) { <span class="keyword">delete</span> e }
+</pre></td></tr></table></figure>
+
+<p>在非严格模式中，通常这些操作只是“无效的”，并不会抛出异常。此外，用 delete操作其他一些不能被删除的对象属性、标识符时将导致执行期异常。</p>
+<h2>保留字增多</h2>
+<p>在严格模式中，在代码中使用一些扩展的保留字也会抛出异常。</p>
+<p>这些保留字包括：implements, interface, let,package, private, protected, public, static，以及 yield。</p>
+<h2>禁止使用with(){}</h2>
+<p>我们知道with会使作用域链延长，如果你使用严格模式编码，那么使用with语句会直接抛出语法异常。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2012/07/26/ecmascript-5的严格模式：strict-mode介绍/">ECMAScript5的严格模式strict mode介绍</a></h1>
   
 
@@ -696,69 +867,16 @@ iframe.name = <span class="string">'test'</span>;
 
 
 
-  <article class="post">
+
+<nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/page/2/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2012/04/20/nodeppt-—-nodejs做的手机端控制pc端的ppt演示文档javascript框架/">nodePPT — nodejs做的手机端控制PC端的PPT演示文档javascript框架</a></h1>
   
-
-      <time datetime="2012-04-20T10:47:01.000Z"><a href="/2012/04/20/nodeppt-—-nodejs做的手机端控制pc端的ppt演示文档javascript框架/">2012年4月20日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p><a href="https://github.com/ksky521/nodePPT" target="_blank">nodePPT</a>使用nodejs写的，可以手机端控制pc端的演示文档框架。<strong>nodePPT</strong>是在<a href="https://github.com/ksky521/webSlide" target="_blank">webSlide</a>基础上二次开发的，使用nodejs做服务器，通过websocket来实现手机端和PC的通信，主要功能是手机端可以控制pc端PPT播放进度，并且手机端可以给每张PPT做备注。</p>
-<p>第一次做个程序的<strong>nodejs</strong>作品，并且测试时间比较短，肯定会有很多问题和bug，希望大家一起斧正。另外页面样式css高手可以自己写，包括动画自定义都可以在css文件中直接修改添加。</p>
-<h2>说明</h2>
-<p>因为是PPT演示文档，所以需要投影仪分辨率，所以演示页面的最佳分辨率为全屏模式下的 <code>1024*768</code> ，如果在自己电脑上查看，可以通过 <code>ctrl + -</code> 和 <code>ctrl + +</code> 缩放到合适的比例查看效果。</p>
-<p>建议浏览器chrome 16+，全屏模式（F11），以达到最佳动画效果。在Firefox下会出现拖尾现象，个人认为是Firefox 8下对CSS3动画效果渲染太慢导致，其他浏览器未测试。<br><a href="/uploads/2012/04/796f423btw1ds70hjcu93j.jpg"><img src="/uploads/2012/04/796f423btw1ds70hjcu93j.jpg" alt="nodePPT iphone手机端截图" title="nodePPT iphone手机端截图"></a></p>
-<h4>使用说明</h4>
-<ol>
-<li>配置route.json</li>
-<li>配置ppt的文件</li>
-<li>启动node：node server.js</li>
-<li>PC访问：如127.0.0.1:3000/demo.ppt</li>
-<li>手机端访问：127.0.0.1:3000/ctrl</li>
-<li>手机端setup，选择控制用户后，开始控制</li>
-</ol>
-<p>具体使用方法启动node server.js之后访问127.0.0.1:3000/index.ppt，里面有详细的介绍</p>
-<h2>快捷键</h2>
-<ul>
-<li>空格/→/↓/Tab/pageDown：下一页</li>
-<li>←/↑/pageUp：上一页</li>
-<li>P：开画板</li>
-<li>C：清除画板</li>
-</ul>
-<h2>版本库地址</h2>
-<p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2012/04/20/nodeppt-—-nodejs做的手机端控制pc端的ppt演示文档javascript框架/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-</div></div>
+    <a href="/page/4/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
     <aside id="sidebar" class="alignright">
   
 <div class="widget tag">
@@ -767,7 +885,7 @@ iframe.name = <span class="string">'test'</span>;
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -817,6 +935,10 @@ iframe.name = <span class="string">'test'</span>;
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -880,7 +1002,7 @@ iframe.name = <span class="string">'test'</span>;
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

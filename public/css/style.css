@@ -74,7 +74,7 @@
   background-color: rgba(0,0,0,0.05);
 }
 body {
-  background: #f0f0f0;
+  background: url("../img/bg.jpg") fixed repeat center top #f0f0f0;
   color: #666;
   font-family: "Microsoft YaHei", Monaco, Menlo, Consolas, Courier New, monospace, Arial, sans-serif;
   font-size: 14px;
@@ -198,6 +198,7 @@ a:hover {
 #header #main-nav ul li {
   float: left;
   margin-left: 30px;
+  font-size: 1.3em;
 }
 article {
   -webkit-box-shadow: 1px 2px 3px #ddd;
@@ -585,23 +586,6 @@ article footer .addthis {
 article footer .addthis iframe {
   margin-top: 0;
 }
-.comment {
-  clear: both;
-}
-.comment p.title {
-  font-size: 22px;
-  line-height: 2em;
-  position: relative;
-  color: #333;
-}
-.comment .ico-comment:before {
-  content: "\f086";
-  position: absolute;
-  left: -54px;
-  font: 32px FontAwesome;
-  color: #333;
-  top: 10px;
-}
 #bdshare {
   margin-bottom: 20px;
 }
@@ -651,21 +635,27 @@ article footer .addthis iframe {
 .icon-folder:before {
   content: '\f07b';
 }
-#comment {
-  padding: 20px;
-  background: #fff;
-  -webkit-box-shadow: 1px 2px 3px #ddd;
-  box-shadow: 1px 2px 3px #ddd;
-  margin-bottom: 50px;
+.comment {
+  clear: both;
 }
-#comment .title {
-  font-weight: normal;
-  margin-bottom: 15px;
+.comment p.title {
+  font-size: 22px;
+  line-height: 2em;
+  position: relative;
+  color: #333;
+}
+.comment .ico-comment:before {
+  content: "\f086";
+  position: absolute;
+  left: -54px;
+  font: 32px FontAwesome;
+  color: #333;
+  top: 10px;
 }
 #pagination a {
   display: block;
   padding: 5px 10px;
-  background: #ddd;
+  background: #fff;
   color: #999;
   font-family: "Microsoft YaHei", Monaco, Menlo, Consolas, Courier New, monospace, Arial, sans-serif;
   text-shadow: 0 0 1px #fff;
@@ -741,7 +731,7 @@ article footer .addthis iframe {
 }
 #sidebar .widget .title {
   padding: 15px 20px;
-  font-size: 16px;
+  font-size: 1.5em;
   border-bottom: 1px solid #ddd;
   font-weight: normal;
 }

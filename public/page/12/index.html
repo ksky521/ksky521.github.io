@@ -55,6 +55,55 @@
       
       
   
+    <h1 class="title"><a href="/2010/08/28/解决ie下settimeout传参数的bug/">解决IE下setTimeout传参数的bug</a></h1>
+  
+
+      <time datetime="2010-08-27T19:43:47.000Z"><a href="/2010/08/28/解决ie下settimeout传参数的bug/">2010年8月28日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>最近一次的开发中遇到了IE下<strong>setTimeout</strong>传参数的问题，在<strong>IE</strong>下setTimeout是不会传参数的，例如下面的代码，在IE下就不会传入a,b两个参数</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+setTimeout(<span class="keyword">function</span>(a,b){
+alert(a+b);
+},<span class="number">1000</span>,<span class="string">'hello,'</span>,<span class="string">'world!'</span>);
+</pre></td></tr></table></figure>
+
+<p>在实际项目中我们有些需求必须传入参数要<strong>setTimeout</strong>的function进行处理，那么我们就需要利用js的call及其apply的方法，来解决IE下的setTimeout传参bug：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/08/28/解决ie下settimeout传参数的bug/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2010/08/22/通过php批量下载图片文件/">通过PHP批量下载图片文件</a></h1>
   
 
@@ -458,53 +507,16 @@ set_time_limit(<span class="number">0</span>);<span class="comment">//设置PHP�
 
 
 
-  <article class="post">
+
+<nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/page/11/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2010/06/18/imgscriptlink等标签为空可导致页面多余请求/">Img,Script,Link等标签为空可导致页面多余请求</a></h1>
   
-
-      <time datetime="2010-06-17T17:13:22.000Z"><a href="/2010/06/18/imgscriptlink等标签为空可导致页面多余请求/">2010年6月18日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>把页面中的<strong>img，script，link</strong>等标签为<strong>空链</strong>可以导致页面多余请求的问题，包括IE，Firefox，chrome，Safari！但是相对于img，script跟link的src、href为空时，在IE下不做请求，而Chrome, Safari, 和 Firefox则会出现一次多余的新请求。下面详细讲解一下：</p>
-<h3>img src为空的情况分析</h3>
-<p>无论是在html中写入<code>&amp;lt;img src=&#39;&#39; /&amp;gt;</code>还是在js中通过Image对象建立<code>var img = new Image(); img.src = &quot;&quot;;</code>，都会导致向你的服务器多做一次请求。而具体请求的情况分析如下：</p>
-<ol>
-<li>在IE中，这样做会请求一次当前页面所在的目录。如在<a href="http://js8.in/demo/a.html">http://js8.in/demo/a.html</a> 中出现这种空src的标签，会导致重新请求一次:<a href="http://js8.in/demo/">http://js8.in/demo/</a></li>
-<li>在Safari 和 Chrome中，将请求当前页面本身。</li>
-<li>在Firefox 3.5以前的版本中，有和Safari同样的问题，但是在3.5中修正了这个BUG。</li>
-<li>在Opera 中，不会做额外的请求。<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2010/06/18/imgscriptlink等标签为空可导致页面多余请求/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-</div></div>
+    <a href="/page/13/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
     <aside id="sidebar" class="alignright">
   
 <div class="widget tag">
@@ -513,7 +525,7 @@ set_time_limit(<span class="number">0</span>);<span class="comment">//设置PHP�
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -563,6 +575,10 @@ set_time_limit(<span class="number">0</span>);<span class="comment">//设置PHP�
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -626,7 +642,7 @@ set_time_limit(<span class="number">0</span>);<span class="comment">//设置PHP�
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

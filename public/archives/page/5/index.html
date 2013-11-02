@@ -59,6 +59,66 @@
       
       
   
+    <h1 class="title"><a href="/2011/11/15/ie6中javascript文件开启gzip出现代码不执行情况/">IE6中javascript文件开启Gzip出现代码不执行情况</a></h1>
+  
+
+      <time datetime="2011-11-14T20:25:23.000Z"><a href="/2011/11/15/ie6中javascript文件开启gzip出现代码不执行情况/">2011年11月15日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>今天处理IE6下的一个bug，经过调试才发现是<strong>javascript</strong>文件文件总是执行不了，</p>
+<p>后来中午吃完饭回来才想起以前同事遇见的html中的javascript不可以执行的问题，怀疑是gzip的原因，此次的问题就是因为动态加载javascript文件导致代码不执行，</p>
+<p>经过研究发现gzip压缩过的javascript文件，如果header里Cache-Control 数据有no-cache, no-store，就会出现IE6中js代码不执行的问题。下面是转发的文章内容：</p>
+<p>IE6下面调用开启了gzip压缩Javascript的时候，时常会碰到无法执行的情况，有可能是src调用，有可能是ajax调用，其它的浏览器工作正常，唯独IE6不能正常工作。<br>出现这个BUG的状况如下：</p>
+<ol>
+<li>用户使用IE6浏览器</li>
+<li>服务器没有设置 被请求文件(javascript) expires, cache-control.</li>
+<li>服务器端开启了chunked encoding模式</li>
+<li>通过javascrip的src调用方式或者ajax请求javascript文件</li>
+<li>有可能是通过php生成的javascript文件</li>
+<li>服务器端开启了gzip压缩</li>
+</ol>
+<p>解决这个问题，我们要在服务器的cache-control和expires 头信息上做点工作。<br>经过测试，header头信息如下的gzip压缩过的javascript调用可以正常工作。</p>
+<blockquote>
+<p>Cache-Control:maxage=1<br>Connection:keep-alive<br>Content-Encoding:gzip<br>Content-Type:application/x-javascript;charset=GBK<br>Date:Wed, 01 Dec 2010 01:24:07 GMT<br>Expires:Wed, 01 Dec 2010 01:24:08 GMT<br>Pragma:public<br>Server:nginx<br>Transfer-Encoding:chunked</p>
+</blockquote>
+<p>分析上面的头信息，我们可以注意到：</p>
+<ol>
+<li>cache-control必须要设置成maxage=time的格式，maxage是指定缓存生效时间，1为1秒</li>
+<li>Expires必须要设置，它的时间稍大于Date即可，Date是页面请求时间，Expires是过期时间</li>
+<li>Pragma设置为public</li>
+</ol>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/11/15/ie6中javascript文件开启gzip出现代码不执行情况/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2011/11/08/javascript的string-replace的妙用/">javascript的String.replace的妙用</a></h1>
   
 
@@ -785,88 +845,16 @@ foo(<span class="number">1</span>, <span class="number">2</span>);
 
 
   
-    <article class="post">
+
+  <nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/archives/page/4/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2011/10/18/html5的sessionstorage和localstorage/">HTMl5的sessionStorage和localStorage</a></h1>
   
-
-      <time datetime="2011-10-18T14:05:53.000Z"><a href="/2011/10/18/html5的sessionstorage和localstorage/">2011年10月18日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>html5中的Web Storage包括了两种存储方式：sessionStorage和localStorage。</p>
-<p><strong>sessionStorage</strong>用于本地存储一个会话（session）中的数据，这些数据只有在同一个会话中的页面才能访问并且当会话结束后数据也随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。</p>
-<p>而<strong>localStorage</strong>用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。</p>
-<h2>web storage和cookie的区别</h2>
-<p>Web Storage的概念和cookie相似，区别是它是为了更大容量存储设计的。Cookie的大小是受限的，并且每次你请求一个新的页面的时候Cookie都会被发送过去，这样无形中浪费了带宽，另外cookie还需要指定作用域，不可以跨域调用。</p>
-<p>除此之外，<strong>Web Storage</strong>拥有setItem,getItem,removeItem,clear等方法，不像cookie需要前端开发者自己封装setCookie，getCookie。</p>
-<p>但是Cookie也是不可以或缺的：Cookie的作用是与服务器进行交互，作为HTTP规范的一部分而存在 ，而Web Storage仅仅是为了在本地“存储”数据而生（来自@otakustay 的纠正）</p>
-<h2>html5 web storage的浏览器支持情况</h2>
-<p>浏览器的支持除了IE７及以下不支持外，其他标准浏览器都完全支持(ie及FF需在web服务器里运行)，值得一提的是IE总是办好事，例如IE7、IE6中的UserData其实就是<strong>javascript本地存储</strong>的解决方案。通过简单的代码封装可以统一到所有的浏览器都支持web storage。</p>
-<p>要判断浏览器是否支持localStorage可以使用下面的代码：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="code"><pre><span class="keyword">if</span>(window.localStorage){
-    alert(<span class="string">"浏览支持localStorage"</span>)
-}<span class="keyword">else</span>{
-   alert(<span class="string">"浏览暂不支持localStorage"</span>)
-}
-<span class="comment">//或者</span>
-<span class="keyword">if</span>(<span class="keyword">typeof</span> window.localStorage == <span class="string">'undefined'</span>){
-	alert(<span class="string">"浏览暂不支持localStorage"</span>)
-}
-</pre></td></tr></table></figure>
-
-<h2>localStorage和sessionStorage操作</h2>
-<p>localStorage和sessionStorage都具有相同的操作方法，例如setItem、getItem和removeItem等</p>
-<h3>localStorage和sessionStorage的方法</h3>
-<h4>setItem存储value</h4>
-<p>用途：将value存储到key字段<br>用法：.setItem( key, value)</p>
-<p>代码示例：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>sessionStorage.setItem(<span class="string">"key"</span>, <span class="string">"value"</span>);
-localStorage.setItem(<span class="string">"site"</span>, <span class="string">"js8.in"</span>);
-</pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2011/10/18/html5的sessionstorage和localstorage/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
+    <a href="/archives/page/6/" class="alignright next">下一页</a>
   
-
-  
+  <div class="clearfix"></div>
+</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   
@@ -876,7 +864,7 @@ localStorage.setItem(<span class="string">"site"</span>, <span class="string">"j
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -926,6 +914,10 @@ localStorage.setItem(<span class="string">"site"</span>, <span class="string">"j
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -989,7 +981,7 @@ localStorage.setItem(<span class="string">"site"</span>, <span class="string">"j
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

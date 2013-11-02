@@ -55,6 +55,82 @@
       
       
   
+    <h1 class="title"><a href="/2011/01/26/使用navigator-geolocation来获取用户的地理位置信息/">使用navigator.geolocation来获取用户的地理位置信息</a></h1>
+  
+
+      <time datetime="2011-01-26T15:25:05.000Z"><a href="/2011/01/26/使用navigator-geolocation来获取用户的地理位置信息/">2011年1月26日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>W3C 中新添加了一个名为 <strong>Geolocation</strong>的 API 规范，Geoloaction API的作用就是通过浏览器获取用户的地理位置。我们可以使用<code>navigator.geolocation</code>来简单的获取用户的地理位置信息。本文中将简单介绍下W3C的Geolocation。</p>
+<p>Geolocation在javascript的navigator 对象中，我们可以通过 navigator.geolocation 来使用它。不支持 geolocation 的浏览器并不包含这一对象，那么可以通过下面的代码来做能力检测，对不同的浏览器做不同的处理。</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+</pre></td><td class="code"><pre><span class="keyword">if</span> (navigator.geolocation) {
+        alert( <span class="string">' 浏览器支持 geolocation '</span> );
+}<span class="keyword">else</span>{
+        alert( <span class="string">' 浏览器不支持 geolocation '</span> );
+}
+</pre></td></tr></table></figure>
+
+<p>在访问 geolocation 对象时，即调用 geolocation 下面的方法时，浏览器会弹出提示，询问用户是否许可网站提供的位置服务，只有在得到用户许可过后，服务才会继续，否则将被停止，在稍后你将会了解到，我们能够捕获到用户拒绝服务的动作。下面这张图分别是 Chrome , Firefox 和 Opera 在初次访问 geolocation 时，给用户的提示：</p>
+<p><a href="http://js8.in/672.html/geolocation-warn-2"><img src="/uploads/2011/01/geolocation-warn1-300x186.png" alt="初次使用geolocation时的警告框" title="初次使用geolocation时的警告框"></a></p>
+<p>常用的navigator.geolocation对象有以下三种方法：</p>
+<ol>
+<li>获取当前地理位置：<strong>navigator.geolocation.getCurrentPosition</strong>(success_callback_function, error_callback_function, position_options)</li>
+<li>持续获取地理位置：<strong>navigator.geolocation.watchPosition</strong>(success_callback_function, error_callback_function, position_options)</li>
+<li><p>清除持续获取地理位置事件：<strong>navigator.geolocation.clearWatch</strong>(watch_position_id)<br>其中success_callback_function为成功之后处理的函数，error_callback_function为失败之后返回的处理函数，参数position_options是配置项，由JSON格式传入：</p>
+</li>
+<li><p>enableHighAccuracy：true/false，它将告诉浏览器是否启用高精度设备，所谓的高精度设备包含但不局限于前面所提到的 GPS 和 WIFI，值为 true 的时候，浏览器会尝试启用这些设备，默认指为 true，在这种情况下，浏览器会尽可能地进行更为精确的查询，简单地说，如果用户有可用的 GPS 设备，会返回 GPS 设备的查询结果，IP 是最后的选择，对于移动设备来说，网络接入点(基站)或许成为另一个选择，对此我还没有完全了解，但根据测试，即时没有任何额外功能的手机，也能够得到更为精确的查询结果。</p>
+</li>
+<li>maximumAge：单位毫秒，告诉设备缓存时间，主要用于设备的省电或者节省带宽方面。</li>
+<li>timeout：单位毫秒，超时事件，获取位置信息时超出设定的这个时长，将会触发错误，捕获错误的函数将被调用，并且错误码指向TIMEOUT。</li>
+</ol>
+<p>例如下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>
+<span class="keyword">var</span> geo=navigator.geolocation.getCurrentPosition(geo_success, geo_error, {enableHighAccuracy:<span class="literal">true</span>, 
+    maximumAge:<span class="number">30000</span>, 
+    timeout:<span class="number">27000</span>});
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/01/26/使用navigator-geolocation来获取用户的地理位置信息/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2011/01/25/提高网站访问速度的十个技巧/">提高网站访问速度的十个技巧</a></h1>
   
 
@@ -582,83 +658,16 @@
 
 
 
-  <article class="post">
+
+<nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/page/8/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2010/12/07/css3-media-queries使用方法详解/">CSS3 Media Queries使用方法详解</a></h1>
   
-
-      <time datetime="2010-12-07T13:57:34.000Z"><a href="/2010/12/07/css3-media-queries使用方法详解/">2010年12月7日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>在css2中允许我们使用media的属性，例如使用screen和print，我也写过一篇关于<a href="http://js8.in/351.html" title="使用CSS控制打印页面格式">使用CSS media的print来定义打印网页</a>的样式的文章，关于css2中的media文章，推荐下<a href="http://www.w3.org/TR/CSS2/media.html" target="_blank">w3c的</a>。今天来说说CSS3的Media Queries。CSS3中不仅仅可以使用screen和print，而且支持多媒体多分辨率的样式表。</p>
-<p>我们先来看下CSS3 Media Queries的演示实例：<a href="http://js8.in/mywork/css3media.html" title="CSS3 Media Query 演示"><a href="http://js8.in/mywork/css3media.html">http://js8.in/mywork/css3media.html</a></a>，来自于（<a href="http://www.webdesignerwall.com/tutorials/css3-media-queries/" target="_blank">Web Designer Wall</a>）</p>
-<h3>Max Width</h3>
-<p>故名思意，就是最大宽度的意思，例如下面的代码是在宽度小于600px的时候才执行的。</p>
-<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="at_rule">@<span class="keyword">media</span> screen and (max-width: <span class="number">600</span>px) </span>{
-  <span class="class">.class</span> <span class="rules">{
-    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#ccc</span>;</span></span>
-  <span class="rule">}</span></span>
-}
-</pre></td></tr></table></figure>
-
-<p>也可以在link标签里面使用media属性，即下面的写法：</p>
-<figure class="highlight lang-html"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre>
-<span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">media</span>=<span class="value">"screen and (max-width: 600px)"</span> <span class="attribute">href</span>=<span class="value">"small.css"</span> /&gt;</span>
-</pre></td></tr></table></figure>
-
-<h3>Min Width</h3>
-<p>跟Max Width相反，是最小宽度，例如当宽度大于900px的时候才运行下面的代码</p>
-<figure class="highlight lang-css"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="at_rule">@<span class="keyword">media</span> screen and (min-width: <span class="number">900</span>px) </span>{
-  <span class="class">.class</span> <span class="rules">{
-    <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#666</span>;</span></span>
-  <span class="rule">}</span></span>
-}
-</pre></td></tr></table></figure>
-
-<p>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2010/12/07/css3-media-queries使用方法详解/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-</div></div>
+    <a href="/page/10/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
     <aside id="sidebar" class="alignright">
   
 <div class="widget tag">
@@ -667,7 +676,7 @@
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -717,6 +726,10 @@
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -780,7 +793,7 @@
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

@@ -55,6 +55,94 @@
       
       
   
+    <h1 class="title"><a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/">javascript高效简洁代码的编写及优化技巧</a></h1>
+  
+
+      <time datetime="2009-11-27T22:46:59.000Z"><a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/">2009年11月28日</a></time>
+    </header>
+    <div class="entry">
+      
+        <h3>前言</h3>
+<p>随着互联网前端技术的革新，<strong>javascript</strong>越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函数可以放着不动，而js不同，如果加入很多很多无用的函数会大大的占有带宽，不利于用户体验。下面结合笔者实际开发过程中遇到的问题，以及自己收集的技巧，谈谈js高效简洁代码的编写及其优化的技巧。当然网上也有很多类似的文章，不过建议大家还是不要人云亦云，真正适合自己的技巧跟编写习惯才是最好的！</p>
+<h3>真假的判断</h3>
+<p>Javascript中有null、undefined、string、number、boolean五种基本的类型，一般判断真假或者为空的时候大家会使用下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre>
+<span class="keyword">if</span>(a==<span class="literal">true</span>){
+    <span class="comment">//doSomeTing();</span>
+}```但是这种方法很不简洁，我们完全可以使用<span class="number">1</span>，<span class="number">0</span>来判断，比如我们设定一个a，如果a为假，我们就改成真，而a在程序后面可能用于判断，最简单也是最好理解的方法就是下面的写法
+```javascript
+
+<span class="keyword">var</span> a=<span class="literal">false</span>;
+<span class="keyword">if</span>(a==<span class="literal">false</span>){
+    a=<span class="literal">true</span>;
+}
+```既然提到了<span class="number">0</span>，<span class="number">1</span>，肯定有人想到了第二种写法：
+```javascript
+
+<span class="keyword">var</span> a=<span class="number">0</span>;
+<span class="keyword">if</span>(!a){
+    a=<span class="number">1</span>;
+}
+```这个代码还可以进一步简写优化，就是使用js的三元运算符，也就是三目运算符：
+```javascript
+
+<span class="keyword">var</span> a=<span class="number">0</span>;
+!a?a=<span class="number">1</span>?<span class="literal">null</span>;
+</pre></td></tr></table></figure>
+
+<p>还有一点，对于空字符串的判断，往往采用<strong>if（a==“”）</strong>,其实对于空字符本身就是false，下面我总结了下Javascript中的真假值，希望对大家有用<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2009/11/22/css-3-0-参考手册-中文版下载/">CSS 3.0 参考手册 (中文版)下载</a></h1>
   
 
@@ -954,52 +1042,16 @@ $(<span class="string">"#chk2"</span>).attr(<span class="string">"checked"</span
 
 
 
-  <article class="post">
+
+<nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/page/17/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2008/10/16/一段代码解决prototype和jquery的冲突/">一段代码解决prototype和jquery的冲突</a></h1>
   
-
-      <time datetime="2008-10-15T19:13:51.000Z"><a href="/2008/10/16/一段代码解决prototype和jquery的冲突/">2008年10月16日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>那天做个人页面（i.2fool.cn），前面的css-dock仿MacOS的导航栏用的是jquery框架</p>
-<p>后面写的仿MacOS的导航是用了prototype框架，可是单独测试，效果很好~而放到了一起就出现了问题~</p>
-<p>后来想起来了是prototype和jquery有冲突~</p>
-<p>以前见过这样的文章，自己百度了一下，终于找到了答案，可是方法很多~</p>
-<p>最权威的是个外文的，读了点~也读懂了一点，可是就是不成功~</p>
-<p>最后我试着自己改写了一下~就是下面的代码~</p>
-<p>PS：校内肯定屏蔽关键字，所以采用了大写</p>
-<p>&lt;script type=“text/javascript”&gt;<br>var jQuery=$;<br>&lt;/script&gt;</p>
-<p>这个代码要吧jquery。js放到prototype。js的前面~才可以解决冲突</p>
-<p>具体的效果来我的网站看看吧~i.2fool.cn</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-</div></div>
+    <a href="/page/19/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
     <aside id="sidebar" class="alignright">
   
 <div class="widget tag">
@@ -1008,7 +1060,7 @@ $(<span class="string">"#chk2"</span>).attr(<span class="string">"checked"</span
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -1058,6 +1110,10 @@ $(<span class="string">"#chk2"</span>).attr(<span class="string">"checked"</span
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -1121,7 +1177,7 @@ $(<span class="string">"#chk2"</span>).attr(<span class="string">"checked"</span
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

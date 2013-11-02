@@ -55,6 +55,86 @@
       
       
   
+    <h1 class="title"><a href="/2011/10/18/html5的sessionstorage和localstorage/">HTMl5的sessionStorage和localStorage</a></h1>
+  
+
+      <time datetime="2011-10-18T14:05:53.000Z"><a href="/2011/10/18/html5的sessionstorage和localstorage/">2011年10月18日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>html5中的Web Storage包括了两种存储方式：sessionStorage和localStorage。</p>
+<p><strong>sessionStorage</strong>用于本地存储一个会话（session）中的数据，这些数据只有在同一个会话中的页面才能访问并且当会话结束后数据也随之销毁。因此sessionStorage不是一种持久化的本地存储，仅仅是会话级别的存储。</p>
+<p>而<strong>localStorage</strong>用于持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的。</p>
+<h2>web storage和cookie的区别</h2>
+<p>Web Storage的概念和cookie相似，区别是它是为了更大容量存储设计的。Cookie的大小是受限的，并且每次你请求一个新的页面的时候Cookie都会被发送过去，这样无形中浪费了带宽，另外cookie还需要指定作用域，不可以跨域调用。</p>
+<p>除此之外，<strong>Web Storage</strong>拥有setItem,getItem,removeItem,clear等方法，不像cookie需要前端开发者自己封装setCookie，getCookie。</p>
+<p>但是Cookie也是不可以或缺的：Cookie的作用是与服务器进行交互，作为HTTP规范的一部分而存在 ，而Web Storage仅仅是为了在本地“存储”数据而生（来自@otakustay 的纠正）</p>
+<h2>html5 web storage的浏览器支持情况</h2>
+<p>浏览器的支持除了IE７及以下不支持外，其他标准浏览器都完全支持(ie及FF需在web服务器里运行)，值得一提的是IE总是办好事，例如IE7、IE6中的UserData其实就是<strong>javascript本地存储</strong>的解决方案。通过简单的代码封装可以统一到所有的浏览器都支持web storage。</p>
+<p>要判断浏览器是否支持localStorage可以使用下面的代码：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="keyword">if</span>(window.localStorage){
+    alert(<span class="string">"浏览支持localStorage"</span>)
+}<span class="keyword">else</span>{
+   alert(<span class="string">"浏览暂不支持localStorage"</span>)
+}
+<span class="comment">//或者</span>
+<span class="keyword">if</span>(<span class="keyword">typeof</span> window.localStorage == <span class="string">'undefined'</span>){
+	alert(<span class="string">"浏览暂不支持localStorage"</span>)
+}
+</pre></td></tr></table></figure>
+
+<h2>localStorage和sessionStorage操作</h2>
+<p>localStorage和sessionStorage都具有相同的操作方法，例如setItem、getItem和removeItem等</p>
+<h3>localStorage和sessionStorage的方法</h3>
+<h4>setItem存储value</h4>
+<p>用途：将value存储到key字段<br>用法：.setItem( key, value)</p>
+<p>代码示例：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>sessionStorage.setItem(<span class="string">"key"</span>, <span class="string">"value"</span>);
+localStorage.setItem(<span class="string">"site"</span>, <span class="string">"js8.in"</span>);
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2011/10/18/html5的sessionstorage和localstorage/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2011/09/29/基于expresssocket-io的nodejs聊天室/">基于express+socket.io的nodejs聊天室</a></h1>
   
 
@@ -800,67 +880,16 @@ console.log(b.valueOf()===<span class="string">'123'</span>);<span class="commen
 
 
 
-  <article class="post">
+
+<nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/page/5/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2011/08/05/ie的fireevent方法/">IE的fireEvent方法</a></h1>
   
-
-      <time datetime="2011-08-04T19:51:20.000Z"><a href="/2011/08/05/ie的fireevent方法/">2011年8月5日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>在IE中提供了一个<strong>fireEvent</strong>方法，顾名思义就是触发某个事件发生的意思。刚开始我以为是会跟平时使用<code>onclick()</code>一样，没想到最近在写javascript入门ppt的时候发现了，原来自己太自以为是了！看来还有很多javascript的细节没有掌握好啊！</p>
-<p>现在根据自己的总结详细的记录下fireEvent方法的使用。fireEvent是IE提供的一种方法，msdn文档地址：<a href="http://msdn.microsoft.com/en-us/library/ms536423(v=vs.85).aspx" target="_blank">http://msdn.microsoft.com/en-us/library/ms536423(v=vs.85).aspx</a></p>
-<h3>onclick()</h3>
-<p>我们先看第一段实例代码：</p>
-<pre lang="html">
-
-*   i am one;
-*   i am two;
-*   i am three;
-<button onclick='document.getElementById("id1").onclick();'>click me!</button>
-</pre>
-这段代码中我们没有个id1的li添加onclick事件，点击button，会报错，提示“对象不支持此属性或方法”。由此可见，DOM.onclick()需要添加onclick事件之后才能使用。
-
-假如我们把以上的代码修改为：
-<pre lang="html">
-
-*   i am one;
-*   i am two;
-*   i am three;
-<button onclick='document.getElementById("id1").onclick();'>click me!</button>
-</pre>
-
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2011/08/05/ie的fireevent方法/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-
-</div></div>
+    <a href="/page/7/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
     <aside id="sidebar" class="alignright">
   
 <div class="widget tag">
@@ -869,7 +898,7 @@ console.log(b.valueOf()===<span class="string">'123'</span>);<span class="commen
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -919,6 +948,10 @@ console.log(b.valueOf()===<span class="string">'123'</span>);<span class="commen
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -982,7 +1015,7 @@ console.log(b.valueOf()===<span class="string">'123'</span>);<span class="commen
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

@@ -59,6 +59,51 @@
       
       
   
+    <h1 class="title"><a href="/2010/06/18/imgscriptlink等标签为空可导致页面多余请求/">Img,Script,Link等标签为空可导致页面多余请求</a></h1>
+  
+
+      <time datetime="2010-06-17T17:13:22.000Z"><a href="/2010/06/18/imgscriptlink等标签为空可导致页面多余请求/">2010年6月18日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>把页面中的<strong>img，script，link</strong>等标签为<strong>空链</strong>可以导致页面多余请求的问题，包括IE，Firefox，chrome，Safari！但是相对于img，script跟link的src、href为空时，在IE下不做请求，而Chrome, Safari, 和 Firefox则会出现一次多余的新请求。下面详细讲解一下：</p>
+<h3>img src为空的情况分析</h3>
+<p>无论是在html中写入<code>&amp;lt;img src=&#39;&#39; /&amp;gt;</code>还是在js中通过Image对象建立<code>var img = new Image(); img.src = &quot;&quot;;</code>，都会导致向你的服务器多做一次请求。而具体请求的情况分析如下：</p>
+<ol>
+<li>在IE中，这样做会请求一次当前页面所在的目录。如在<a href="http://js8.in/demo/a.html">http://js8.in/demo/a.html</a> 中出现这种空src的标签，会导致重新请求一次:<a href="http://js8.in/demo/">http://js8.in/demo/</a></li>
+<li>在Safari 和 Chrome中，将请求当前页面本身。</li>
+<li>在Firefox 3.5以前的版本中，有和Safari同样的问题，但是在3.5中修正了这个BUG。</li>
+<li>在Opera 中，不会做额外的请求。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/06/18/imgscriptlink等标签为空可导致页面多余请求/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2010/06/17/解决ie6-select-z-index无效，遮挡div的bug/">解决IE6 select z-index无效，遮挡div的bug</a></h1>
   
 
@@ -483,60 +528,16 @@ grayscale(getElementById(el));<span class="comment">//部分变黑白效果</spa
 
 
   
-    <article class="post">
+
+  <nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/archives/page/12/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2010/04/19/ubuntu安装samba实现跟windows文件共享/">Ubuntu安装Samba实现跟windows文件共享</a></h1>
   
-
-      <time datetime="2010-04-19T08:40:45.000Z"><a href="/2010/04/19/ubuntu安装samba实现跟windows文件共享/">2010年4月19日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>为了开发项目的方便，要实现Ubuntu跟windows文件共享，需要在Ubuntu下搭建samba服务器，下面来说说Ubuntu下安装、配置Samba的详细步骤~</p>
-<h3>Ubuntu下安装Samba</h3>
-<p>可以使用新立得来搜索Samba安装~没有请更新软件源，或者使用如下命令来安装Samba</p>
-<blockquote>
-<p>sudo apt-get install samba<br>sudo apt-get install smbfs</p>
-</blockquote>
-<h3>建立Samba共享文件夹</h3>
-<p>假如要创建/home/用户名/share首先创建这个文件夹 （这个用户名就是你的用户名，为了方便易懂我才这样写的，到时记得自己改啊）<br>新建share文件夹，终端命令如下:</p>
-<blockquote>
-<p>mkdir /home/用户名/share<br>设置该文件夹的权限使其让所有用户可读可写可运行，终端命令如下:<br>chmod 777 /home/用户名/share</p>
-</blockquote>
-<h3>配置Samba服务器</h3>
-<p>编辑smb.conf允许网络用户访问，终端代码如下:</p>
-<blockquote>
-<p>sudo gedit /etc/samba/smb.conf<br>搜寻这一行文字代码“security = user&quot;,修改为：<br>security = user<br>username map = /etc/samba/smbusers<br>
-      
-    </div>
-    <footer>
-      
-        
-          <div class="alignleft">
-            <a href="/2010/04/19/ubuntu安装samba实现跟windows文件共享/#more" class="more-link">全文</a>
-          </div>
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
+    <a href="/archives/page/14/" class="alignright next">下一页</a>
   
-
-  
+  <div class="clearfix"></div>
+</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   
@@ -546,7 +547,7 @@ grayscale(getElementById(el));<span class="comment">//部分变黑白效果</spa
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -596,6 +597,10 @@ grayscale(getElementById(el));<span class="comment">//部分变黑白效果</spa
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -659,7 +664,7 @@ grayscale(getElementById(el));<span class="comment">//部分变黑白效果</spa
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   

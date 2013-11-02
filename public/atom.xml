@@ -4,13 +4,172 @@
   <subtitle><![CDATA[专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧]]></subtitle>
   <link href="http://js8.in/atom.xml" rel="self"/>
   <link href="http://js8.in"/>
-  <updated>2013-11-02T08:35:11.187Z</updated>
+  <updated>2013-11-02T10:30:09.177Z</updated>
   <id>http://js8.in/</id>
   <author>
     <name><![CDATA[三水清]]></name>
     <email><![CDATA[ksky521@gmail.com]]></email>
   </author>
   <generator uri="http://zespia.tw/hexo">Hexo</generator>
+  <entry>
+    <title type="html"><![CDATA[FIS和FISP使用心得]]></title>
+    <link href="http://js8.in/2013/11/02/fis和fisp使用心得/"/>
+    <id>http://js8.in/2013/11/02/fis和fisp使用心得/</id>
+    <published>2013-11-02T10:20:10.000Z</published>
+    <updated>2013-11-02T10:28:33.000Z</updated>
+    <content type="html"><![CDATA[<p>fis的wiki整理的不是很好，结合最近几天的体会，整理了FIS常用的功能，加上自己对fis的理解，整理了这篇文章</p>
+<h2>FIS 和 FISP</h2>
+<p>fis是百度的开源的前端开发解决方案，另外还有个fisp（即fis-plus，前身是fis-pc），fisp可以说是百度业务定制版，主要集成（并扩展）了smarty模板，本地调试等功能。</p>
+<p>fisp是在fis基础上做的一层封装，订制了一些 <code>config</code> 配置，所以一些fis的配置，在fisp里面是会自动忽略，不会生效的，比如说jswraper配置。</p>
+<h2>FIS原理</h2>
+<p>fis其实是一个 <code>半成品</code> ，只有经过更多的包装（例如插件）才能发挥最大的作用，fis的核心是生成的 <code>map.json</code> ，很多想法可以通过 <code>map.json</code> 这个表来实现。比如我自己订制的require inline方式。</p>
+<p>fisp结合 <code>map.json</code> 和 <code>FISSource.class.php</code> ，对smarty语法进行了扩展，扩展出来了 html、widget、require、script等smarty自定义标签。</p>
+<p>想了解详情的童鞋，可以直接看下fisp的 <code>plugin</code> 。</p>
+<h2>FISP环境部署</h2>
+<h3>安装</h3>
+<ul>
+<li>安装node环境</li>
+<li>配置java环境，并放入环境变量</li>
+<li>安装php环境，并且将php.exe放进环境变量</li>
+</ul>
+<p>然后进入cmd，依次执行：</p>
+<figure class="highlight lang-shell"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre><span class="preprocessor">#安装fis-plus</span>
+$ npm install -g fis-plus
+<span class="preprocessor">#安装fis-plus调试环境</span>
+$ fisp server install pc
+<span class="preprocessor"># 启动fisp</span>
+$ fisp server start
+<span class="preprocessor"># 这时应该会自动打开系统默认浏览器访问127.0.0.1</span>
+<span class="preprocessor"># 查看www路径</span>
+$ fisp server open
+<span class="preprocessor"># 清理www路径，慎用，会清理掉之前安装的调试环境</span>
+$ fisp server clean
+</pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h3>fis部署</h3>
+<p><code>fisp release</code> 有很多参数，具体可以通过 <code>fisp release -h</code> 查看下。</p>
+<h4>常用的参数</h4>
+<ul>
+<li>-o 压缩文件/优化图片等</li>
+<li>-w watch功能</li>
+<li>-m md功能</li>
+</ul>
+<h2>FISP本地模板调试</h2>
+<p>fisp支持本地模板调试，每个模块下，可以放置test文件夹，作为调试数据，支持json和php格式，fe童鞋当然推荐JSON数据（注意严格json格式哦）了。</p>
+<p>本地模板调试就是使用自己写的smarty模板变量，渲染出想要的页面，可以在phper没有拼好数据的前提下，将前端模板提前测试好。</p>
+<h3>安装chrome调试插件</h3>
+<p>为了方便，简单写了个 chrome调试插件，调试时，在当前tab下，点击下插件icon即可。如果其他浏览器，可以通过添加浏览器书签方式：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>javascript: (<span class="keyword">function</span>() {<span class="keyword">var</span> d = <span class="keyword">new</span> Date();d.setFullYear(d.getFullYear() + <span class="number">1</span>);document.cookie=<span class="string">'FIS_DEBUG_DATA=4f10e208f47bfb4d35a5e6f115a6df1a;path=/;expires='</span> + d.toGMTString() + <span class="string">''</span>;location.reload(); })();
+</pre></td></tr></table></figure>
+
+<p>原理很简单，就是写个cookie，然后reload下页面。</p>
+<h3>添加要测试的数据</h3>
+<p>在调试数据页面，添加要测试的数据，点击 <code>save</code> 就会保存到对应的路径，点击顶部右上角的 <code>render</code> 按钮就可以看到添加了测试数据的页面。</p>
+<p>如果要想把数据放入项目对应模块的test文件夹（专门测试文件夹，不会上线）中，可以手动copy出来（<code>fisp server open</code>打开路径，然后复制）。</p>
+<h2>FIS高级教程</h2>
+<h3>fis-conf.js</h3>
+<p>fis的关键配置，具体配置查看下fis的wiki，另外可以看下其他fis项目学习下配置</p>
+<h3>namespace-inline.json</h3>
+<p>这是自己写的插件生成的map，此map会收集js和css，然后集合在此文件中，方便require调用直接从此表中读取数据，而不用通过php的file_get_contents，提升性能。</p>
+<p>此表生成方式：</p>
+<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre>fis.config.set(<span class="string">'modules.postpackager'</span>, <span class="keyword">function</span>(ret, conf, settings, opt) {
+    <span class="keyword">var</span> inlineMap = fis.util.clone(ret.map);
+    <span class="keyword">var</span> sourceMap = {};
+    <span class="comment">//blablabla</span>
+    fis.util.map(inlineMap.res, <span class="keyword">function</span>(id, res) {
+        <span class="keyword">if</span> (res.type === <span class="string">'js'</span> || res.type === <span class="string">'css'</span>) {
+            <span class="keyword">var</span> id = ret.ids[id];
+            sourceMap[res.uri] = {
+                content: id.getContent(),
+                hash: id.getHash()
+            };
+        } <span class="keyword">else</span> {
+            <span class="keyword">delete</span> inlineMap.res[id];
+        }
+    });
+    <span class="keyword">var</span> ns = fis.config.get(<span class="string">'namespace'</span>);
+    <span class="keyword">var</span> inlineMapFile = fis.file(fis.project.getProjectPath(ns + <span class="string">'-inline.json'</span>));
+    <span class="keyword">if</span> (inlineMapFile.release) {
+        inlineMapFile.setContent(JSON.stringify(sourceMap, <span class="literal">null</span>, opt.optimize ? <span class="literal">null</span> : <span class="number">4</span>));
+        ret.pkg[inlineMapFile.subpath] = inlineMapFile;
+    }
+});
+</pre></td></tr></table></figure>
+
+<h3>server.conf</h3>
+<p><code>server.conf</code> 是方便调试用的，对应编译到<code>server-conf/${namespace}-server.conf</code>目录下，<code>server.conf</code>的书写规则类似<code>.htaccess</code>。</p>
+<p>在使用时，需要首先安装 <code>rewrite</code>:</p>
+<figure class="highlight lang-bash"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>$ fisp server install rewrite
+</pre></td></tr></table></figure>
+
+<p>如果安装了pc（<code>fisp server install pc</code>），那么会自动带有这个功能的。</p>
+<ol>
+<li>对外提供match方法，供其他调试模块调用，具体方法参考代码注释说明。</li>
+<li>默认读取根目录server.conf文件，书写方式是：<ul>
+<li><code>rewrite</code>和<code>redirect</code>开头的会被翻译成一条匹配规则，自上而下的匹配。所有非rewrite和redirect开头的会被当做注释处理。</li>
+<li><code>rewrite</code>： 匹配规则后转发到一个文件</li>
+<li><code>redirect</code>： 匹配规则后重定向到另一个url</li>
+</ul>
+</li>
+</ol>
+<p>例如下面的：</p>
+<figure class="highlight lang-text"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="title">rewrite</span> ^\/news\?.*tn\=[a-zA-<span class="type">Z0</span>-<span class="number">9</span>]+.* app/<span class="typedef"><span class="keyword">data</span>/news.php</span>
+<span class="title">redirect</span> ^\/index\?.* /photo/index/a
+<span class="title">rewrite</span> ^\/(.*)\?.*  app/<span class="typedef"><span class="keyword">data</span>/$1.php</span>
+</pre></td></tr></table></figure>
+
+<h4>调试原理</h4>
+<p>fis会将请求都扔给www目录下面的index.php，index.php 会引入rewrite模块来解析server.conf文件，如果解析成功就按照rewrite格式来转发请求。</p>
+<h2>参考文档</h2>
+<ul>
+<li><a href="https://github.com/fis-dev/fis/wiki/" target="_blank"><a href="https://github.com/fis-dev/fis/wiki/">https://github.com/fis-dev/fis/wiki/</a></a></li>
+</ul>
+]]></content>
+    <category scheme="http://js8.in/tags/fis/" term="fis"/>
+    <category scheme="http://js8.in/tags/fisp/" term="fisp"/>
+    <category scheme="http://js8.in/tags/前端工具/" term="前端工具"/>
+    <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Gruntjs——前端任务管理工具]]></title>
     <link href="http://js8.in/2013/04/16/gruntjs——前端任务管理工具/"/>
@@ -2412,153 +2571,5 @@ n||(n=defaultValue);
     <category scheme="http://js8.in/tags/标签/" term="标签"/>
     <category scheme="http://js8.in/tags/路径/" term="路径"/>
     <category scheme="http://js8.in/categories/前端开发/" term="前端开发"/>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[ECMAScript 5的严格模式：语法限制]]></title>
-    <link href="http://js8.in/2012/07/27/ecmascript-5的严格模式：语法限制/"/>
-    <id>http://js8.in/2012/07/27/ecmascript-5的严格模式：语法限制/</id>
-    <published>2012-07-27T09:08:23.000Z</published>
-    <updated>2013-11-01T12:36:12.000Z</updated>
-    <content type="html"><![CDATA[<p>在<strong>ECMAScript 5严格模式</strong>介绍的第一篇（<a href="/2012/07/26/ecmascript-5%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%9Astrict-mode%E4%BB%8B%E7%BB%8D/">ECMAScript 5的严格模式：strict mode介绍</a>）文章中提到了严格模式会在语法解析和代码执行两个方面做限制，抛出更多的异常。今天介绍的是<strong>ECMAScript 5严格模式</strong>的第一部分：语法限制。</p>
-<p>ECMAScript 5严格模式的语法限制有七个，下面一一介绍：</p>
-<h2>禁止函数出现相同的参数</h2>
-<p>我们知道在普通的函数中，多个参数可以相同（即使我们很少或者没有这样写过），但是在严格模式下，这样的行为是被禁止！<br>例如下面的代码：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
-    alert(x+y);
-}
-foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
-</pre></td></tr></table></figure>
-
-<p>在非严格模式下，后面的x会覆盖第一个x的传参，即运行结果实际为<code>2+3=5</code>。</p>
-<p>但是在严格模式下，上面的代码却会抛出类似“Strict mode function may not have duplicate parameter names”的语法异常。</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
-    <span class="string">"use strict"</span>;
-    alert(x+y);
-}
-foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
-</pre></td></tr></table></figure>
-
-<h2>禁止对象直接量的相同属性名</h2>
-<p>跟第一条相同，下面的代码在非严格模式是正常的，但是在严格模式却是禁止的，也是抛出语法异常（chrome 下为“Duplicate data property in object literal not allowed in strict mode”）</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="keyword">var</span> obj = {
-    a: <span class="number">1</span>,
-    a: <span class="number">2</span>
-}
-foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
-</pre></td></tr></table></figure>
-
-<h2>禁止重新定义eval和arguments</h2>
-<p>严格模式中不能声明或重写 <code>eval</code> 和 <code>arguments</code><br>这两个标识符，亦即是说，它们不能出现在赋值运算的左边，也不能使用 var 语句来声明。</p>
-<p>另外，由于 catch 子句以及具名函数都会隐式地声明变量名，因此在它们的语法中也不允许用 eval 和 arguments 作为标识符。最后要强调的是，arguments 或 eval 也不能使用 delete 去删除。所以下面的代码在严格模式下都会抛出语法异常：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-</pre></td><td class="code"><pre><span class="comment">//向 eval或 arguments赋值</span>
-eval = <span class="keyword">function</span>() { }
-
-<span class="comment">//重新声明 eval或 arguments</span>
-<span class="keyword">var</span> arguments;
-
-<span class="comment">//将 eval或 arguments用做 catch子句的异常对象名</span>
-<span class="keyword">try</span> {
-    <span class="comment">// …</span>
-}
-<span class="keyword">catch</span> (eval) {
-    <span class="comment">// …</span>
-}
-
-<span class="comment">//将 eval或 arguments用做函数名</span>
-<span class="function"><span class="keyword">function</span> <span class="title">arguments</span><span class="params">()</span> {</span> }
-
-<span class="comment">//删除 arguments，或形式参数名</span>
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>
-    <span class="keyword">delete</span> arguments;
-}
-</pre></td></tr></table></figure>
-
-<h2>禁止使用 0 前缀声明的 8 进制直接量</h2>
-<p>例如下面的代码在严格模式下面是错误的：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre><span class="keyword">var</span> num = <span class="number">012</span>;
-alert(num);
-</pre></td></tr></table></figure>
-
-<p>而在非严格模式中，<code>num</code>因为0而被解析为八进制数值，所以<code>alert</code>出来的是十进制的<code>10</code></p>
-<h2>禁止delete显式声明的标识符、具名函数</h2>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-</pre></td><td class="code"><pre><span class="comment">//删除变量名</span>
-<span class="keyword">var</span> x;
-<span class="keyword">delete</span> x;
-
-<span class="comment">//删除具名函数</span>
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>}
-<span class="keyword">delete</span> foo;
-
-<span class="comment">//删除 arguments，或形式参数名</span>
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x)</span> {</span>
-<span class="keyword">delete</span> x;
-}
-
-<span class="comment">//删除 catch子句中声明的异常对象</span>
-<span class="keyword">try</span>{} <span class="keyword">catch</span>(e) { <span class="keyword">delete</span> e }
-</pre></td></tr></table></figure>
-
-<p>在非严格模式中，通常这些操作只是“无效的”，并不会抛出异常。此外，用 delete操作其他一些不能被删除的对象属性、标识符时将导致执行期异常。</p>
-<h2>保留字增多</h2>
-<p>在严格模式中，在代码中使用一些扩展的保留字也会抛出异常。</p>
-<p>这些保留字包括：implements, interface, let,package, private, protected, public, static，以及 yield。</p>
-<h2>禁止使用with(){}</h2>
-<p>我们知道with会使作用域链延长，如果你使用严格模式编码，那么使用with语句会直接抛出语法异常。</p>
-]]></content>
-    <category scheme="http://js8.in/tags/ecmascript/" term="ecmascript"/>
-    <category scheme="http://js8.in/tags/语法限制/" term="语法限制"/>
-    <category scheme="http://js8.in/categories/读书笔记/" term="读书笔记"/>
   </entry>
 </feed>

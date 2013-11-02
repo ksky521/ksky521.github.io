@@ -59,6 +59,52 @@
       
       
   
+    <h1 class="title"><a href="/2012/11/08/开源个html5播放器/">开源个html5播放器</a></h1>
+  
+
+      <time datetime="2012-11-07T20:53:15.000Z"><a href="/2012/11/08/开源个html5播放器/">2012年11月8日</a></time>
+    </header>
+    <div class="entry">
+      
+        <p>前言：人家都说没有几个项目在github，都不好意思说自己混前端的……</p>
+<p>好吧，看见越来越多的人都推自己的github主页，我也把自己的之前写的一些东西整理下，从sae的svn迁移到github上，开了几个项目，虽然说代码的确乱糟糟的，但是也凑凑数吧，今天开源的是html5音乐播放器</p>
+<h2>html5音乐播放器</h2>
+<ul>
+<li>github地址：<a href="https://github.com/ksky521/player" target="_blank"><a href="https://github.com/ksky521/player">https://github.com/ksky521/player</a></a></li>
+<li>在线演示地址：<a href="http://4.qdemo.sinaapp.com/html5/chrome/" target="_blank"><a href="http://4.qdemo.sinaapp.com/html5/chrome/">http://4.qdemo.sinaapp.com/html5/chrome/</a></a></li>
+</ul>
+<p>截图如下：<br><img src="http://ww2.sinaimg.cn/bmiddle/796f423btw1dvbr7xm7xdj.jpg" alt="" title="html5 player"></p>
+<p>之前放出的是jquery版本的，见文章《<a href="http://js8.in/1023.html">写了一个html5音乐播放器</a>》也整理到了<a href="https://github.com/ksky521/player" target="_blank">这个项目</a>中，文件夹是<code>withjQuery</code>内。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/11/08/开源个html5播放器/#more" class="more-link">全文</a>
+          </div>
+        
+        
+      
+      
+
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+      
+      
+  
     <h1 class="title"><a href="/2012/11/04/使用广播事件来实现模块解耦/">使用广播事件来实现模块解耦</a></h1>
   
 
@@ -1158,179 +1204,16 @@ n||(n=defaultValue);
 
 
   
-    <article class="post">
+
+  <nav id="pagination">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-      
-      
+    <a href="/archives/" class="alignleft prev">上一页</a>
   
-    <h1 class="title"><a href="/2012/07/27/ecmascript-5的严格模式：语法限制/">ECMAScript 5的严格模式：语法限制</a></h1>
   
-
-      <time datetime="2012-07-27T09:08:23.000Z"><a href="/2012/07/27/ecmascript-5的严格模式：语法限制/">2012年7月27日</a></time>
-    </header>
-    <div class="entry">
-      
-        <p>在<strong>ECMAScript 5严格模式</strong>介绍的第一篇（<a href="/2012/07/26/ecmascript-5%E7%9A%84%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%9Astrict-mode%E4%BB%8B%E7%BB%8D/">ECMAScript 5的严格模式：strict mode介绍</a>）文章中提到了严格模式会在语法解析和代码执行两个方面做限制，抛出更多的异常。今天介绍的是<strong>ECMAScript 5严格模式</strong>的第一部分：语法限制。</p>
-<p>ECMAScript 5严格模式的语法限制有七个，下面一一介绍：</p>
-<h2>禁止函数出现相同的参数</h2>
-<p>我们知道在普通的函数中，多个参数可以相同（即使我们很少或者没有这样写过），但是在严格模式下，这样的行为是被禁止！<br>例如下面的代码：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
-    alert(x+y);
-}
-foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
-</pre></td></tr></table></figure>
-
-<p>在非严格模式下，后面的x会覆盖第一个x的传参，即运行结果实际为<code>2+3=5</code>。</p>
-<p>但是在严格模式下，上面的代码却会抛出类似“Strict mode function may not have duplicate parameter names”的语法异常。</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x,x,y)</span>{</span>
-    <span class="string">"use strict"</span>;
-    alert(x+y);
-}
-foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
-</pre></td></tr></table></figure>
-
-<h2>禁止对象直接量的相同属性名</h2>
-<p>跟第一条相同，下面的代码在非严格模式是正常的，但是在严格模式却是禁止的，也是抛出语法异常（chrome 下为“Duplicate data property in object literal not allowed in strict mode”）</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-</pre></td><td class="code"><pre><span class="keyword">var</span> obj = {
-    a: <span class="number">1</span>,
-    a: <span class="number">2</span>
-}
-foo(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);
-</pre></td></tr></table></figure>
-
-<h2>禁止重新定义eval和arguments</h2>
-<p>严格模式中不能声明或重写 <code>eval</code> 和 <code>arguments</code><br>这两个标识符，亦即是说，它们不能出现在赋值运算的左边，也不能使用 var 语句来声明。</p>
-<p>另外，由于 catch 子句以及具名函数都会隐式地声明变量名，因此在它们的语法中也不允许用 eval 和 arguments 作为标识符。最后要强调的是，arguments 或 eval 也不能使用 delete 去删除。所以下面的代码在严格模式下都会抛出语法异常：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-</pre></td><td class="code"><pre><span class="comment">//向 eval或 arguments赋值</span>
-eval = <span class="keyword">function</span>() { }
-
-<span class="comment">//重新声明 eval或 arguments</span>
-<span class="keyword">var</span> arguments;
-
-<span class="comment">//将 eval或 arguments用做 catch子句的异常对象名</span>
-<span class="keyword">try</span> {
-    <span class="comment">// …</span>
-}
-<span class="keyword">catch</span> (eval) {
-    <span class="comment">// …</span>
-}
-
-<span class="comment">//将 eval或 arguments用做函数名</span>
-<span class="function"><span class="keyword">function</span> <span class="title">arguments</span><span class="params">()</span> {</span> }
-
-<span class="comment">//删除 arguments，或形式参数名</span>
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>
-    <span class="keyword">delete</span> arguments;
-}
-</pre></td></tr></table></figure>
-
-<h2>禁止使用 0 前缀声明的 8 进制直接量</h2>
-<p>例如下面的代码在严格模式下面是错误的：</p>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-</pre></td><td class="code"><pre><span class="keyword">var</span> num = <span class="number">012</span>;
-alert(num);
-</pre></td></tr></table></figure>
-
-<p>而在非严格模式中，<code>num</code>因为0而被解析为八进制数值，所以<code>alert</code>出来的是十进制的<code>10</code></p>
-<h2>禁止delete显式声明的标识符、具名函数</h2>
-<figure class="highlight lang-javascript"><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-</pre></td><td class="code"><pre><span class="comment">//删除变量名</span>
-<span class="keyword">var</span> x;
-<span class="keyword">delete</span> x;
-
-<span class="comment">//删除具名函数</span>
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> {</span>}
-<span class="keyword">delete</span> foo;
-
-<span class="comment">//删除 arguments，或形式参数名</span>
-<span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(x)</span> {</span>
-<span class="keyword">delete</span> x;
-}
-
-<span class="comment">//删除 catch子句中声明的异常对象</span>
-<span class="keyword">try</span>{} <span class="keyword">catch</span>(e) { <span class="keyword">delete</span> e }
-</pre></td></tr></table></figure>
-
-<p>在非严格模式中，通常这些操作只是“无效的”，并不会抛出异常。此外，用 delete操作其他一些不能被删除的对象属性、标识符时将导致执行期异常。</p>
-<h2>保留字增多</h2>
-<p>在严格模式中，在代码中使用一些扩展的保留字也会抛出异常。</p>
-<p>这些保留字包括：implements, interface, let,package, private, protected, public, static，以及 yield。</p>
-<h2>禁止使用with(){}</h2>
-<p>我们知道with会使作用域链延长，如果你使用严格模式编码，那么使用with语句会直接抛出语法异常。</p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      
-
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
+    <a href="/archives/page/3/" class="alignright next">下一页</a>
   
-
-  
+  <div class="clearfix"></div>
+</nav>
 </div></div>
     <aside id="sidebar" class="alignright">
   
@@ -1340,7 +1223,7 @@ alert(num);
   
     <li><a href="/categories/乱七八糟/">乱七八糟</a><small>30</small></li>
   
-    <li><a href="/categories/前端开发/">前端开发</a><small>116</small></li>
+    <li><a href="/categories/前端开发/">前端开发</a><small>117</small></li>
   
     <li><a href="/categories/后端运维/">后端运维</a><small>27</small></li>
   
@@ -1390,6 +1273,10 @@ alert(num);
     <li><a href="/tags/event/">event<sup>1</sup></a></li>
   
     <li><a href="/tags/express/">express<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fis/">fis<sup>1</sup></a></li>
+  
+    <li><a href="/tags/fisp/">fisp<sup>1</sup></a></li>
   
     <li><a href="/tags/grunt/">grunt<sup>1</sup></a></li>
   
@@ -1453,7 +1340,7 @@ alert(num);
   
     <li><a href="/tags/前端优化/">前端优化<sup>1</sup></a></li>
   
-    <li><a href="/tags/前端工具/">前端工具<sup>4</sup></a></li>
+    <li><a href="/tags/前端工具/">前端工具<sup>5</sup></a></li>
   
     <li><a href="/tags/加速器/">加速器<sup>1</sup></a></li>
   
