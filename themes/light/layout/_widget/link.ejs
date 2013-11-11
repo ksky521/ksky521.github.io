@@ -1,0 +1,10 @@
+<%if (theme.links.length){ %>
+<div class="widget tag">
+  <h3 class="title">友情链接</h3>
+  <ul class="entry">
+  <% for(var i=0; i < theme.links.length; i++) { %>
+        <li><a href="<%= theme.links[i].url %>" target="_blank"><%= theme.links[i].name %></a></li>
+    <% } %>
+  </ul>
+</div>
+<% } %>

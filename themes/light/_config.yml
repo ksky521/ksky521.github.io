@@ -1,15 +1,17 @@
 menu:
   首页: /
   关于: /about
+  PPTs: http://ppt.js8.in
   Github: https://github.com/ksky521
-  新浪微博: http://weibo.com/sanshuiqing
+  微博: http://weibo.com/sanshuiqing
+  友链: /links
 
 comments: true
 
 widgets:
 - category
+- weiboshow
 - tag
-- rss
 
 excerpt_link: 全文
 
@@ -32,4 +34,8 @@ baidushare:
 duoshuo: ksky521
 
 
-
+links:
+- name: 三水清
+  url: http://js8.in
+- name: 二水清
+  url: http://js8.in
