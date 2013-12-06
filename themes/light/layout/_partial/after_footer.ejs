@@ -2,7 +2,11 @@
 <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
 <script src="<%- config.root %>js/jquery.imagesloaded.min.js"></script>
 <script src="<%- config.root %>js/gallery.js?t=20131111"></script>
-
+<script>
+$(window).load(function(){
+    $('#weiboshow').attr('src','http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=350&fansRow=0&ptype=1&speed=0&skin=1&isTitle=0&noborder=0&isWeibo=1&isFans=1&uid=2037334587&verifier=95bc61d7&dpc=1')
+});
+</script>
 <% if (is_post()) {%>
     <% if (theme.baidushare.enable){ %>
         <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=<%= theme.baidushare.id %>" ></script>
@@ -15,7 +19,7 @@
         document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000);
         </script>
     <% } %>
-    <% if (theme.duoshuo && page.comments){ %>
+    <% if (theme.duoshuo && page.comments ){ %>
     <script type="text/javascript">
         var duoshuoQuery = {short_name:"<%= theme.duoshuo %>"};
         (function() {

@@ -1,6 +1,6 @@
-<% if (site.posts.length){ %>
+<% if (is_post() && site.posts.length){ %>
 <div class="widget tag">
-  <h3 class="title"><%= __('recent_posts') %></h3>
+  <h3 class="title">最新文章</h3>
   <ul class="entry">
     <% site.posts.sort('date', -1).limit(5).each(function(post){ %>
       <li>

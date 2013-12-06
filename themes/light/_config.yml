@@ -11,6 +11,7 @@ comments: true
 widgets:
 - category
 - weiboshow
+- recent_posts
 - tag
 
 excerpt_link: 全文

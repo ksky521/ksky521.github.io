@@ -29,12 +29,13 @@
           <a href="<%- item.permalink %>#disqus_thread" class="comment-link">Comments</a>
         </div>
         <% } %>
-      <% } else { %>
+      <% } else if(is_post()) { %>
         <%- partial('post/catetags') %>
         <%- partial('post/share') %>
         <%- partial('post/pagination') %>
+        <%- partial('post/comments') %>
       <% } %>
-      <%- partial('post/comments') %>
+
       <div class="clearfix"></div>
     </footer>
   </div>
