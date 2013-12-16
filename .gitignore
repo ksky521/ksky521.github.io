@@ -3,3 +3,5 @@ node_modules
 db.json
 /wordpress.2013-10-31.xml
 /public
+
+/debug.log
