@@ -133,7 +133,7 @@ function openIos(url, callback) {
 * 在实验中我使用了两个定时器，是因为切回浏览器之后，有时候timeout触发要在pagehide和pageshow之前
 * 计算timer实际执行时间差，也是不靠谱的
 
-最后附上研究的代码，算是比较靠谱的方法了，虽然还是有一定的失败（第三方浏览器pagehide和pageshow不触发）：
+查看[http://jsbin.com/uDUGADO/19](demo)，最后附上研究的代码，算是比较靠谱的方法了，虽然还是有一定的失败（第三方浏览器pagehide和pageshow不触发）：
 
 ```html
 <p><button id="btn">点我点我啊！alert，不会弹出</button></p>
