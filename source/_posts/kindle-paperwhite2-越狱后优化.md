@@ -61,9 +61,6 @@ mv *pt_BR.jar /mnt/us/.backup/opt/amazon/ebook/lib/
 
 /etc/upstart/framework start
 
-sync
-sync
-sync
 reboot
 ```
 保存在kindle上，然后执行下上面的shell就可以了
