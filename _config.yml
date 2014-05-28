@@ -84,5 +84,3 @@ exclude_generator:
 deploy:
   type: github
   repository: https://github.com/ksky521/ksky521.github.io.git
-
-

@@ -1,7 +1,7 @@
 .DS_Store
-node_modules
+Thumbs.db
 db.json
-/wordpress.2013-10-31.xml
-/public
-
-/debug.log
+debug.log
+node_modules/
+public/
+.deploy/
