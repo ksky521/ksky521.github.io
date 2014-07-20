@@ -12,9 +12,8 @@ categories:
 
 ## nodeppt Demo
 
-![nodePPT演示](https://raw.github.com/ksky521/nodePPT/master/demo.gif "nodePPT演示")
 
-查看demo：[http://ppt.js8.in/](http://ppt.js8.in/)
+查看demo：[http://qdemo.sinaapp.com/](http://qdemo.sinaapp.com/)
 
 ## 安装
 nodeppt
@@ -64,7 +63,7 @@ files: 引入js和css的地址，如果有的话~自动放在页面底部
 ```
 **目录关系**：可以在md同级目录下创建img、js、css等文件夹，然后在markdown里面引用，nodeppt默认会先查找md文件同级目录下面的静态资源，没有再找默认的 ``assets`` 文件夹下静态内容
 
-支持的转场动画包括：
+支持的18种转场动画包括：
 
 * horizontal3d
 * horizontal
@@ -72,6 +71,7 @@ files: 引入js和css的地址，如果有的话~自动放在页面底部
 * zoomin
 * zoomout
 * cards
+* 。。。
 
 如果设置单页动画，请参考下面的**单页动画设置**部分~
 
@@ -107,10 +107,12 @@ nodeppt：https://github.com/ksky521/nodePPT
 ```
 
 ### 插入html代码
-如果需要完全diy自己的ppt内容，可以使用``[code][/code]`` 来包裹html代码。例如：
+如果需要完全diy自己的ppt内容，可以markdown和html混编代码。例如：
 
 ```html
-[code]
+## 混编html和markdown
+----
+
 <div class="file-setting">
     <p>这是html</p>
 </div>
@@ -128,7 +130,6 @@ nodeppt：https://github.com/ksky521/nodePPT
     color: red;
 }
 </style>
-[/code]
 ```
 
 ### 出入回调
@@ -241,4 +242,4 @@ nodeppt -h
 
  * 执行 ``nodeppt start``
  * 访问 [http://127.0.0.1:8080/](http://127.0.0.1:8080/)
- * 查看在线demo：[http://ppt.js8.in/](http://ppt.js8.in/)
+ * 查看在线demo：[http://qdemo.sinaapp.com/](http://qdemo.sinaapp.com/)
