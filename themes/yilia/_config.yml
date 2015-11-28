@@ -1,0 +1,75 @@
+# Header
+menu:
+  主页: /
+  归档: /archives
+  关于: /about
+  nodePPT: http://qdemo.sinaapp.com/
+  # 随笔: /tags/随笔
+
+# SubNav
+subnav:
+  github: "//github.com/ksky521"
+  weibo: "//weibo.com/sanshuiqing"
+  rss: "/atom.xml"
+  # zhihu: "#"
+  #douban: "#"
+  mail: "mailto:ksky521@gmail.com"
+  #facebook: "#"
+  #google: "#"
+  #twitter: "#"
+  #linkedin: "#"
+
+rss: /atom.xml
+
+# Content
+excerpt_link: more
+fancybox: true
+mathjax: false
+
+# 是否开启动画效果
+animate: true
+
+# 是否在新窗口打开链接
+open_in_new: false
+
+# Miscellaneous
+google_analytics: ''
+favicon: /favicon.png
+
+#你的头像url
+avatar: http://tp4.sinaimg.cn/2037334587/180/5626160002/1
+#是否开启分享
+share: true
+#是否开启多说评论，填写你在多说申请的项目名称 duoshuo: duoshuo-key
+#若使用disqus，请在博客config文件中填写disqus_shortname，并关闭多说评论
+duoshuo: ksky521
+#是否开启云标签
+tagcloud: true
+
+baidutongji:
+  enable: true
+  id: 1c76f5cc8274a56106b13b9c9b1fb046
+
+baidushare:
+  enable: true
+  id: 6635976
+  tsina: 61439547
+  wbUid: 2037334587
+
+#是否开启友情链接
+#不开启——
+#friends: false
+#开启——
+friends:
+  welefen: http://www.welefen.com/
+  vifix: http://vifix.cn/
+  我爱互联网: http://www.woiweb.net/
+  美拓blog: http://blog.meituo.net/
+  kun的记事本: http://www.zipeng.info/
+  非常长: http://www.veryued.org/
+
+#是否开启“关于我”。
+#不开启——
+#aboutme: false
+#开启——
+aboutme: 三水清，前端从业者，先后就职于微博、腾讯、百度

@@ -10,7 +10,6 @@ date: 2013-11-04 21:44:54
 
 ## 友情链接
 
-* [新影吧](http://www.xinyingba.com)
 * [welefen](http://www.welefen.com/)
 * [vifix](http://vifix.cn/)
 * [我爱互联网](http://www.woiweb.net/)

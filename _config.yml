@@ -4,11 +4,12 @@
 
 # Site
 title: 三水清
-subtitle: 专注前端开发,分享Javascript/CSS/PHP等Web前端开发技巧
+subtitle: 程序媛鼓励师
 description:
 author: 三水清
 email: ksky521@gmail.com
 language: zh-CN
+
 
 
 # URL
@@ -33,7 +34,7 @@ max_open_file: 100
 multi_thread: true
 filename_case: 0
 highlight:
-  enable: true
+  enable: false
   line_number: true
   tab_replace: false
 
@@ -76,7 +77,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://github.com/tommy351/hexo/wiki/Plugins
 ## Themes: https://github.com/tommy351/hexo/wiki/Themes
-theme: light
+theme: yilia
 exclude_generator:
 
 # Deployment
