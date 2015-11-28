@@ -39,7 +39,12 @@ $(document).ready(function(){
    $('pre code').each(function(i, v){
         var $t = $(v);
         var lang = $t.attr('class');
-        var data = hljs.highlight(lang, $t.html());
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
         var lines = data.value.split('\n');
         var numbers = [];
         for (var i = 0, len = lines.length; i < len; i++){
@@ -47,12 +52,11 @@ $(document).ready(function(){
                 break;
             }
             numbers.push('<li>'+(i+1)+'</li>');
-
         }
         if(numbers.length){
             numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
         }
-        $t.addClass('hljs').html(numbers+data.value);
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
     })
 });
 </script>

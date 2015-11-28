@@ -84,5 +84,5 @@ exclude_generator:
 ## Docs: http://zespia.tw/hexo/docs/deploy.html
 deploy:
   type: git
-  repository: git@github.com:ksky521/ksky521.github.io.git
+  repo: git@github.com:ksky521/ksky521.github.io.git
   branch: master

@@ -7,6 +7,7 @@ tags:
 categories:
 - 前端开发
 ---
+
 在iOS中，需要调起一个app可以使用schema协议，这是iOS原生支持的，并且因为iOS系统中都不能使用自己的浏览器内核，所以所有的浏览器都支持，这跟android生态不一样，android是可以自己搞内核的，但是iOS不行。
 
 在iOS中提供了两种在浏览器中打开APP的方法：``Smart App Banner``和schema协议。
@@ -28,7 +29,7 @@ categories:
 
 schema类似自定义url协议，我们可以通过自定义的协议来打开自己的应用，形如：
 
-```shell
+```bash
 myapplink://
 # 例如 facebook的
 fb://
@@ -40,7 +41,7 @@ sms://
 
 如果要打开一个app，最简单的方式是通过一个链接，如我们在html中这样写：
 
-```
+```html
 <a href="myapplink://">打开我的app</a>
 ```
 
@@ -143,9 +144,7 @@ function openIos(url, callback) {
 
 ```javascript
 $(function(){
-
   var $info = $('#info');
-
   function info(msg){
     var p = $('<p>'+msg+'</p>');
     $info.append(p);
