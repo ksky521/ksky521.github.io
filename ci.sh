@@ -15,5 +15,6 @@ git init
 git add -A
 date_str=`date "+DATE: %m/%d/%Y%nTIME: %H:%M:%S"`
 git commit -m "build with nodeppt on $date_str"
+echo 'push remote github'
 git push -u git@github.com:ksky521/ksky521.github.io.git master:master --force
 
