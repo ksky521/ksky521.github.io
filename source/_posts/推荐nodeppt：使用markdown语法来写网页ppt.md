@@ -61,6 +61,7 @@ url: 可以设置链接
 transition: 转场效果，例如：zoomin
 files: 引入js和css的地址，如果有的话~自动放在页面底部
 ```
+
 **目录关系**：可以在md同级目录下创建img、js、css等文件夹，然后在markdown里面引用，nodeppt默认会先查找md文件同级目录下面的静态资源，没有再找默认的 ``assets`` 文件夹下静态内容
 
 支持的18种转场动画包括：
@@ -155,6 +156,7 @@ nodeppt：https://github.com/ksky521/nodePPT
 
 ### 插入iframe
 使用``data-src``作为iframe的url，这样只有切换到当前页才会加载url内容~
+
 ```html
 <iframe data-src="http://www.google.com/doodle4google/resources/history.html" src="about:blank;"></iframe>
 ```

@@ -6,16 +6,19 @@ tags:
 categories:
 - 前端开发
 ---
-今天遇见IE6一个**location.href**的bug，具体情况是这样的，IE6下，在a标签中，将href写成`javascript:;``javascript:void(0);`，并且给这个标签绑定onclick事件，点击后，执行location.href实现页面跳转，例如下面的代码：
+今天遇见IE6一个**location.href**的bug，具体情况是这样的，IE6下，在a标签中，将href写成`javascript:;` `javascript:void(0);`，并且给这个标签绑定onclick事件，点击后，执行location.href实现页面跳转，例如下面的代码：
 
 ```html
-[点击跳转](javascitp:;)```
+<a href="javascitp:;">点击跳转</a>
+```
+
 或者
 
 ```html
+<a href="javascitp:void(0);">点击跳转</a>
 
-[点击跳转](javascitp:void(0);)
 ```
+
 toURL函数的代码如下所示：
 
 ```javascript
@@ -32,8 +35,8 @@ function toURL(){
 例如下面的代码在IE6中是正常的：
 
 ```html
-
-[正常的跳转](###)```
+<a href="###">正常的跳转</a>
+```
 
 还有一种方式就是，在toURL函数里面将a标签的href通过setAttribute设置为“#”，然后再使用location.href跳转也是可以的。
 
@@ -54,4 +57,3 @@ for (var i=0;i<as.length;i++) {
 
 IE6——前端的噩梦还在继续。
 对于IE6真的不想说什么了，本小站已经不在支持IE6了，希望IE6尽快的退出历史舞台。
-<embed src="http://www.tudou.com/v/8nmFnHVLFWs/v.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400"></embed>

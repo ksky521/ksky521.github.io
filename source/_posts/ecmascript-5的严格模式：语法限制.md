@@ -88,6 +88,7 @@ function foo() {
 var num = 012;
 alert(num);
 ```
+
 而在非严格模式中，`num`因为0而被解析为八进制数值，所以`alert`出来的是十进制的`10`
 
 ## 禁止delete显式声明的标识符、具名函数

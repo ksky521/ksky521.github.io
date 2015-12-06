@@ -1,4 +1,4 @@
-title: "json_encode数组出现unicode \uxxxx的解决方案"
+title: "json_encode数组出现unicode uxxxx的解决方案"
 id: 697
 date: 2011-06-13 23:16:15
 tags:
@@ -6,7 +6,7 @@ tags:
 categories:
 - 后端运维
 ---
-端午和上个周末做的微博应用[送大礼](//dali.sinaapp.com)中设计到ajax返回json的数据格式中，我没有完全使用PHP默认的**json_encode**来编码，因为这样编码出来的是unicode编码的，也就是\\u的编码，虽然unicode编码可以在不同的页面中编码不会出现乱码问题。但是一个汉字编码成unicode会变成\\u+4个字符，这样在字符长度上要比汉字多。
+端午和上个周末做的微博应用[送大礼](//dali.sinaapp.com)中设计到ajax返回json的数据格式中，我没有完全使用PHP默认的**json_encode**来编码，因为这样编码出来的是unicode编码的，也就是`\u`的编码，虽然unicode编码可以在不同的页面中编码不会出现乱码问题。但是一个汉字编码成unicode会变成`\u+4`个字符，这样在字符长度上要比汉字多。
 
 因为我的php文件和html声明中都是使用的UTF-8，不会出现编码乱码问题，所以就放弃了直接使用json_encode的方法，而是把汉字先**urlencode**然后再使用json_encode，json_encode之后再次使用urldecode来解码，这样编码出来的json数组中的汉字就不会出现unicode编码了~
 代码如下
@@ -18,7 +18,9 @@ $array = array(
 );
 $array = json_encode($array);
 echo urldecode($array);
-//{"test":"我是测试"}```
+//{"test":"我是测试"}
+```
+
 此举主要是为了节省传输字符数，因为我的[送大礼](//dali.sinaapp.com)默认会引入几百个好友信息，对于数据的流量还是比较大的~所以采用汉字传输要比unicode字符编码传输要节省带宽~而且处理好了页面编码问题，不会出现乱码现象。
 
 ### json_encode出null的问题

@@ -61,6 +61,7 @@ chrome应用的弹窗界面也是可以在manifest.json中设置的：
     "default_popup": "popup.html"
   },
 ```
+
 > 值得一提的是chrome应用里面的HTML页面可以互相访问各自DOM树中的全部元素，或者互相调用其中的函数。
 
 下图显示了一个chrome应用的弹窗的架构。弹窗的内容是由HTML文件（popup.html）定义的web页面。它不必复制背景页面(background.html)里的代码，因为它可以直接调用背景页面中的函数！
@@ -129,7 +130,9 @@ chrome应用的弹窗界面也是可以在manifest.json中设置的：
 "permissions": [
   "http://www.google.com/",
   "https://www.google.com/"
-]```
+]
+
+```
 
 
 ### 跨域的安全性
@@ -149,7 +152,9 @@ xhr.onreadystatechange = function() {
 }
 xhr.send();
 ```
+
 要处理这些问题，需要用到json的解析器`JSON.parse`，在高级浏览器（比如chrome）中已经集成了JSON的操作，不需要引入json.js就可以操作了，所以上面的代码可以改写成：
+
 ```javascript
 var xhr = new XMLHttpRequest();
 xhr.open("GET", "http://api.example.com/data.json", true);
@@ -164,4 +169,5 @@ xhr.onreadystatechange = function() {
 }
 xhr.send();
 ```
+
 今天关于**chrome应用开发**的教程就先写到这里，明天继续！

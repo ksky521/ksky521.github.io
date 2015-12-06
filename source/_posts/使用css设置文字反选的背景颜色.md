@@ -14,23 +14,24 @@ categories:
 能不能改变选择的默认颜色呢，也许很多人对这个问题不是很在意，也可能你早就见到过这个效果了，但是却忽略了。[查看示例](http://www.quirksmode.org/css/selection.html)(<span style="color: #00ccff;">请在非IE浏览器下查看</span>)
 
 从博客里可以看到PPK给出了如下的CSS代码：
-> 
+
 ```css
 ::-moz-selection{    /*针对Firefox*/
->     background:#cc0000;
->     color:#fff;
-> }
-> 
-> ::selection {
->     background:#cc0000;
->     color:#fff;
-> }
-> 
-> code::-moz-selection {  /*code是标签选择器，可以换成p或span等*/
->     background: #333333;
-> }
-> 
-> code::selection {
->     background: #333333;
-> }```
+    background:#cc0000;
+    color:#fff;
+}
+
+::selection {
+    background:#cc0000;
+    color:#fff;
+}
+
+code::-moz-selection {  /*code是标签选择器，可以换成p或span等*/
+    background: #333333;
+}
+
+code::selection {
+    background: #333333;
+}
+```
 通过以上代码可以看出，你完全可以给不同的容器定义不同的反选背景颜色，

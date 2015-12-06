@@ -24,28 +24,30 @@ Ajax跨域一直是个比较麻烦的问题，例如：断桥残雪在一个项�
 首先我们假设主页面地址为：[http://js8.in/mywork/crossdomain/index.html](http://js8.in/mywork/crossdomain/index.html)，我们要加载的内容是位于work.2fool.cn域名下的helloworld.txt。我们需要在主页面中设置**document.domain**为2fool.cn，然后主页面添加一个iframe，src为域名work.2fool.cn下的一个url，在iframe页面中同样设置document.domain为2fool.cn，同时**iframe**中需要添加Ajax的函数，例如引入jQuery.js。
 
 主页index.html的主要代码如下：
-> 
-```html"><button onclick="crossDomain();
-开始跨域</button>
-> <div id="ajax"></div>
-> <iframe src="http://work.2fool.cn/crossdomain/iframe.html" id="iframe" style="display:none;">
-> </iframe>
-> <script type="text/javascript">
-> document.domain = '2fool.cn';
-> function crossDomain(){
->     var iframe=document.getElementById('iframe').contentWindow.$;        
->     iframe.get("http://work.2fool.cn/crossdomain/helloworld.txt",function(data){
->         document.getElementById("ajax").innerHTML=data;
->     });
-> }
-> </script>```
-iframe页面主要代码如下：
-> 
-```html"><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js
+
+```html
+<button onclick="crossDomain();">开始跨域</button>
+<div id="ajax"></div>
+<iframe src="http://work.2fool.cn/crossdomain/iframe.html" id="iframe" style="display:none;">
+</iframe>
+<script type="text/javascript">
+document.domain = '2fool.cn';
+function crossDomain(){
+    var iframe=document.getElementById('iframe').contentWindow.$;        
+    iframe.get("http://work.2fool.cn/crossdomain/helloworld.txt",function(data){
+        document.getElementById("ajax").innerHTML=data;
+    });
+}
 </script>
-> <script type="text/javascript">
-> document.domain = '2fool.cn';
-> </script>```
+```
+iframe页面主要代码如下：
+
+```html
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+document.domain = '2fool.cn';
+</script>
+```
 
 ### 演示Demo
 

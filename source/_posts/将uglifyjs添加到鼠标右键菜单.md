@@ -47,7 +47,8 @@ C:\Program Files\nodejs\node_modules\npm\node_modules\uglify-js\bin
 主要的代码还是根据YUICompressor的安装文件改的，压缩的时候首先将源文件copy为dev作为备份，然后压缩替换原文件。例如a.js,压缩后变成a.dev.js原文件和压缩后的js文件。美化则是将美化后的代码存到bea.js，即a.js美化后为a.bea.js
 <!--more-->
 主要压缩的批处理代码如下：
-```shell
+
+```bash
 @echo off
 color 03
 REM =====================================
@@ -90,8 +91,10 @@ echo.
 ENDLOCAL
 pause
 ```
+
 美化的批处理文件如下：
-```shell
+
+```bash
 @echo off
 color 03
 REM =====================================
@@ -135,6 +138,7 @@ pause
 ```
 
 安装信息文件内容如下：
+
 ```shell
 [Version]
 Signature="$CHICAGO$"

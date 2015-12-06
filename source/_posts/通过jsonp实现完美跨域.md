@@ -19,38 +19,40 @@ JSONP即JSON with Padding。由于同源策略的限制，XmlHttpRequest只允�
 
 ### 最简单的JSONP
 
-> 
+
 ```javascript
 var JSONP = document.createElement("script") ;
-> //FF:onload IE:onreadystatechange
-> JSONP.onload = JSONP.onreadystatechange = function(){
-> 	//onreadystatechange，仅IE
-> 	if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") {
-> 		alert($("#demo").html());
-> 		JSONP.onload = JSONP.onreadystatechange = null//请内存，防止IE memory leaks
-> 	}
-> }
-> JSONP.type = "text/javascript";
-> JSONP.src = "http://a.pojaaimg.cn/2010/js/jquery.js";
-> //在head之后添加js文件
-> document.getElementsByTagName("head")[0].appendChild(JSONP);```
+//FF:onload IE:onreadystatechange
+JSONP.onload = JSONP.onreadystatechange = function(){
+	//onreadystatechange，仅IE
+	if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete") {
+		alert($("#demo").html());
+		JSONP.onload = JSONP.onreadystatechange = null//请内存，防止IE memory leaks
+	}
+}
+JSONP.type = "text/javascript";
+JSONP.src = "http://a.pojaaimg.cn/2010/js/jquery.js";
+//在head之后添加js文件
+document.getElementsByTagName("head")[0].appendChild(JSONP);
+```
 简单解释：我们通过创建script，然后指定它的src等属性，然后插入到head执行
 <span style="color: #ff6600;"> 建议</span>：onload、onreadystatechange 写在src赋值之前，防止载入js太快而没有给onload、onreadystatechange 赋值（[Image对象在IE下具有此类现象](http://js8.in/501.html "IE中image onload失效")）
 
 ### JSONP实例
 
 我们可以首先定义一个函数来执行JSONP返回的数据，然后通过JSONP的src传此函数给后台，进行处理，返回可执行的函数。例如下面代码：
-> 
+
 ```javascript
 function jsonpHandle(a){
->     alert(a);
-> }
-> var JSONP = document.createElement("script") ;
-> JSONP.type = "text/javascript";
-> JSONP.src = "http://js8.in/jsonp.php?callback=jsonpHandle";
-> //在head之后添加js文件
-> document.getElementsByTagName("head")[0].appendChild(JSONP);```
+    alert(a);
+}
+var JSONP = document.createElement("script") ;
+JSONP.type = "text/javascript";
+JSONP.src = "http://js8.in/jsonp.php?callback=jsonpHandle";
+//在head之后添加js文件
+document.getElementsByTagName("head")[0].appendChild(JSONP);```
 后台jsonp.php的代码：
-> 
+
 ```php
-echo $_GET["callback"]."('hello,world')";```
+echo $_GET["callback"]."('hello,world')";
+```
