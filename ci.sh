@@ -6,6 +6,8 @@ hexo generate
 # 发布nodeppt
 nodeppt generate slide ./public/slide -a
 
+sed -i "" "s/<title>nodePPT List/<title>三水清的分享 - Powered by nodePPT/g" public/slide/index.html
+
 cd public
 
 rm -rf debug.log
