@@ -3,6 +3,10 @@
 hexo clean
 hexo generate
 
+cd slide
+git submodule init
+git submodule update
+cd ..
 # 发布nodeppt
 nodeppt generate slide ./public/slide -a
 
