@@ -44,15 +44,17 @@
       <div class="clearfix"></div>
     </div>
     <% } %>
+
+    <% if (!index && theme.share){ %>
+      <%- partial('post/share') %>
+    <% } %>
   </div>
   <% if (!index){ %>
     <%- partial('post/nav') %>
   <% } %>
 </article>
 
-<% if (!index && theme.share){ %>
-<%- partial('post/share') %>
-<% } %>
+
 
 <% if (!index && theme.duoshuo && post.comments){ %>
 <%- partial('post/duoshuo', {
