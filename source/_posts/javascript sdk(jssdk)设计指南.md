@@ -89,3 +89,90 @@ $name: avUI;
 ```
 
 <!--more-->
+### appid等参数的传入
+一般在引入sdkjs代码的时候需要加参数或者版本号，比如开放平台需要配置`appid`，所以url写法是：
+`sdk.js?appid=xxxx&namespace=xxx` 。jssdk需要拿到url中的这些参数，方法有以下两种比较通用的：
+
+* 给script标签增加特殊属性，例如`<script src="path/sdk.js?appid=123" id="_jssdk">` 
+* 使用查找script标签方式：
+```js
+//get url args function
+function parserUrl(){
+    var scripts = document.getElementsByTagName("script"),
+        len = scripts.length,
+        url;
+    if (len > 0) {
+        for (var i = 0; i < len; i++) {
+            if (scripts[i].src.indexOf("path/to/sdk.js") !== -1) {
+                return scripts[i].src.split("?").pop();
+            }
+        }
+    }
+}
+```
+
+所以appid，namespace这些都可以解析出来
+
+## 如何实现跨域通信
+对于不在一个域名下的第三方页面引入的jssdk少不了的是跨域请求，这块移动上可以直接使用`postMessage`方法，将来可以使用xhr2+CORS，相兼容IE，可以参考《[三水清跨域tag](http://js8.in/tags/%E8%B7%A8%E5%9F%9F/)》的内容，这里不做过多介绍
+
+## 如何实现优雅api的设计
+这里的api指的是开放平台提供的http接口，一般都会有一些标准的规范，比如：
+* 获取用户信息：http://domain.com/api/getUserInfo.json
+* 更新用户信息：http://domain.com/api/updateUserInfo.json
+
+我们设计这个函数接口的时候，应该充分考虑到将来server接口的增加，所以应该做成通用的服务，比如我们设计个`sdkjs.api`方法，接受四个参数：url\data\callback\method，默认如果data是函数就后面参数自动前提。
+
+```js
+api: function(url, data, callback, method) {
+    var _args = $.toArray(arguments),
+        _callback = _args[2] || $.emptyFn;
+
+    if (_args.length < 3) {
+        throw Error("api arguments length wrong");
+    }
+
+    if (!$.isString(_args[0]) || !$.isObject(_args[1]) || !$.isFunction(_callback)) {
+        throw Error("api arguments format error");
+    }
+
+    var _cbid = 0;
+
+    if ($.isFunction(_callback)) {
+        _cbid = _CallbackManager.add(_callback);
+    }
+    //跨域发起请求
+    xDomain.send("api", {
+        url: _args[0],
+        data: _args[1],
+        method: _args[3] || "get",
+        _cbid: _cbid
+    });
+    return back;
+}
+```
+
+## 公共资源的使用
+公共资源的使用，指的是一些跟宿主环境共享的资源，比如cookie、localstorage这些，使用的时候应该做前缀处理，尽量不污染宿主页面环境，同时保证不被轻易的删除。
+## 代码组件化
+代码的组织在一些带有UI的jssdk中使用较多，比如按需加载某个UI模块。这时候就充分利用到了第一节提到的「小拖大，动拖静」的引入方式，一开始小文件我们叫seed，里面有UI组件和sdk主代码的url，seed.js加载后，先加载sdk的核心js文件，然后如果使用某个UI组件，就按需加载。
+
+```js
+var MAP = {
+    core: ['sdk-core.js'],
+    ui: {
+        loginDialog: ['path/loginDialog.css', 'path/loginDialog.js']
+    }
+}
+load(MAP.core);
+
+//使用
+SDKJS.ready(function($){
+    //$实际是SDKJS
+    $.use('loginDialog', function(loginDialog){
+        loginDialog(xxxxx);
+    })
+});
+```
+
+其中`.use`方法，有些类似`require`方法，起到按需加载的功能。
