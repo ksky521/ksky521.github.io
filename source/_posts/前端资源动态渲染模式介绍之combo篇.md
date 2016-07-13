@@ -9,7 +9,7 @@ categories:
 
 今天继续介绍前端资源动态渲染模式中的combo模式，combo模式是利用静态服务器的combo服务，结合静态分析页面使用的js或者css文件，然后动态输出combo url地址的方式。
 
-### 静态资源combo服务
+## 静态资源combo服务
 公司静态集群使用的是nginx服务，nginx有个concat模块可以将url进行打包。使用它之后，需要合并输出的静态资源需要在`??`两个问号后面加`,`逗号隔开，例如：
 
 ```
@@ -26,7 +26,7 @@ location /static/ {
 }
 ```
 
-### combo渲染模式
+## combo渲染模式
 前文介绍过基本原理，现在就拿smarty模板的`{%require name="life:js/demo"%}`说下具体的代码实现步骤，其他语言参考即可，我们还有个node版本的，node我们采用了yog2框架，其实是一样的，如果是直接php，其实就是个引入的函数而已（从第二步开始）
 
 1. 执行`{%require name="life:js/demo"%}`，进入smarty的扩展语法require标签的实现
@@ -95,7 +95,7 @@ class Resouce {
 }
 ```
 
-### 静态combo方法
+## 静态combo方法
 上面说的是动态combo，即通过php这些动态语言，边分析边使用combo，适合多平台，多判断的情况，缺点是：需要动态读取map.json分析需要合并那些文件。如果是简单的静态服务，一开始就合并起来，那么可以使用`fis3-postpackager-loader` 这个模块，我已经提交了pr：https://github.com/fex-team/fis3-postpackager-loader/pull/49/files
 
 使用方法：
