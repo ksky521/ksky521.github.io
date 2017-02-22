@@ -1,3 +1,6 @@
 [submodule "slide"]
 	path = slide
 	url = git@github.com:ksky521/share.git
+[submodule "mpeditor"]
+	path = mpeditor
+	url = git@github.com:ksky521/mpeditor.git
