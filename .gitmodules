@@ -4,3 +4,6 @@
 [submodule "mpeditor"]
 	path = mpeditor
 	url = git@github.com:ksky521/mpeditor.git
+[submodule "welicai"]
+	path = welicai
+	url = git@github.com:ksky521/welicai.git

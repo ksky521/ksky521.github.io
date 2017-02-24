@@ -18,6 +18,7 @@ sed -i "" "s/<title>nodePPT List/<title>三水清的分享 - Powered by nodePPT/
 mkdir -p public/mpeditor
 cp -r mpeditor/dist/* public/mpeditor/
 
+exit
 cd public
 
 rm -rf debug.log
