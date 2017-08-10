@@ -231,3 +231,4 @@ function openIos(url, callback) {
 ## update
 * ios9开始不支持在iframe内调起，需要直接使用`location.href = scheme`
 * pagehide，pageshow方法已经失效，目前没有合适的检测是否调起成功的方法，有找到请告知， 谢谢
+a

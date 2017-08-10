@@ -27,9 +27,9 @@ location /static/ {
 ```
 
 ## combo渲染模式
-前文介绍过基本原理，现在就拿smarty模板的`{%require name="life:js/demo"%}`说下具体的代码实现步骤，其他语言参考即可，我们还有个node版本的，node我们采用了yog2框架，其实是一样的，如果是直接php，其实就是个引入的函数而已（从第二步开始）
+前文介绍过基本原理，现在就拿smarty模板的`{% require name="life:js/demo" %}`说下具体的代码实现步骤，其他语言参考即可，我们还有个node版本的，node我们采用了yog2框架，其实是一样的，如果是直接php，其实就是个引入的函数而已（从第二步开始）
 
-1. 执行`{%require name="life:js/demo"%}`，进入smarty的扩展语法require标签的实现
+1. 执行`{% require name="life:js/demo" %}`，进入smarty的扩展语法require标签的实现
 2. 实际执行的是 `Resource.class`的load函数：`Resource::load('life:js/demo')`
 3. load函数根据传入的id（life:js/demo），读取`life-map.json`（fis生成的静态资源表），根据id找到类似下面的内容：
 ```json
