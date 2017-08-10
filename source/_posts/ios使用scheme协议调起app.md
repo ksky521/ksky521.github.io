@@ -1,4 +1,4 @@
-title: iOS使用schema协议调起APP
+title: iOS使用scheme协议调起APP
 date: 2013-12-16 10:49:32
 tags:
 - ios
@@ -8,9 +8,9 @@ categories:
 - 前端开发
 ---
 
-在iOS中，需要调起一个app可以使用schema协议，这是iOS原生支持的，并且因为iOS系统中都不能使用自己的浏览器内核，所以所有的浏览器都支持，这跟android生态不一样，android是可以自己搞内核的，但是iOS不行。
+在iOS中，需要调起一个app可以使用scheme协议，这是iOS原生支持的，并且因为iOS系统中都不能使用自己的浏览器内核，所以所有的浏览器都支持，这跟android生态不一样，android是可以自己搞内核的，但是iOS不行。
 
-在iOS中提供了两种在浏览器中打开APP的方法：``Smart App Banner``和schema协议。
+在iOS中提供了两种在浏览器中打开APP的方法：``Smart App Banner``和scheme协议。
 
 ## Smart App Banner
 
@@ -22,12 +22,12 @@ categories:
 
 具体可以看下开发文档：[https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/PromotingAppswithAppBanners/PromotingAppswithAppBanners.html](https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/PromotingAppswithAppBanners/PromotingAppswithAppBanners.html)
 
-今天Smart APP Banner不是我们的主角，我们说的是*schema*
+今天Smart APP Banner不是我们的主角，我们说的是*scheme*
 
 
-## 使用schema URL来打开iOS APP
+## 使用scheme URL来打开iOS APP
 
-schema类似自定义url协议，我们可以通过自定义的协议来打开自己的应用，形如：
+scheme类似自定义url协议，我们可以通过自定义的协议来打开自己的应用，形如：
 
 ```bash
 myapplink://
@@ -52,7 +52,7 @@ sms://
 但是实际中我们更多的情况是绑定事件，比如做个弹层啥的，不能一味的用a标签啊，所以可以通过两种方式来解决：``location.href``和``iframe``。
 
 * ``location.href``，简单，但是容易出现问题，比如没有安装可能会跳转啦。
-* ``iframe``，比较复杂，需要创建一个iframe，然后把schema扔给src
+* ``iframe``，比较复杂，需要创建一个iframe，然后把scheme扔给src
 
 iframe的方式是开发中常用的，但是他也有一些问题：
 
@@ -127,7 +127,7 @@ function openIos(url, callback) {
 
 结论：
 
-* 使用iframe调用schema URL
+* 使用iframe调用scheme URL
 * 使用定时器判断在一段时间内是否调起成功
 * 使用pageshow和pagehide来辅助定时器做更详细的判断
 * 定时器中如果有alert可能不会被弹出，这一点很吃惊！后面的dom竟然执行了，但是alert没弹出，可能跟alert的实现有关系吧
@@ -227,3 +227,7 @@ function openIos(url, callback) {
     }, 60);
 }
 ```
+
+## update
+* ios9开始不支持在iframe内调起，需要直接使用`location.href = scheme`
+* pagehide，pageshow方法已经失效，目前没有合适的检测是否调起成功的方法，有找到请告知， 谢谢
