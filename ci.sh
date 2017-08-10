@@ -14,11 +14,7 @@ nodeppt generate slide ./public/slide -a
 
 sed -i "" "s/<title>nodePPT List/<title>三水清的分享 - Powered by nodePPT/g" public/slide/index.html
 
-# 复制MPEditor
-mkdir -p public/mpeditor
-cp -r mpeditor/dist/* public/mpeditor/
 
-exit
 cd public
 
 rm -rf debug.log
