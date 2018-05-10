@@ -9,7 +9,8 @@ git submodule init
 git submodule update
 cd ..
 # 发布nodeppt
-# npm i nodeppt -generate
+echo 'nodeppt generate'
+# npm i nodeppt -g
 nodeppt generate slide ./public/slide -a
 
 sed -i "" "s/<title>nodePPT List/<title>三水清的分享 - Powered by nodePPT/g" public/slide/index.html
