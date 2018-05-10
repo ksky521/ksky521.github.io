@@ -11,8 +11,4 @@ date: 2013-11-04 21:44:54
 ## 友情链接
 
 * [welefen](http://www.welefen.com/)
-* [vifix](http://vifix.cn/)
 * [我爱互联网](http://www.woiweb.net/)
-* [美拓blog](http://blog.meituo.net/)
-* [kun的记事本](http://www.zipeng.info/)
-* [非常长](http://www.veryued.org/)
