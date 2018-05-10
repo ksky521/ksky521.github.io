@@ -12,7 +12,11 @@ date: 2013-11-02 15:30:00
 
 ## 我能干什么
 
-我的工作是web前端开发工程师。喜欢关注用户体验，评论下交互设计等前端涉及的领域。
+我主职工作是web前端开发工程师。喜欢关注用户体验，评论下交互设计等前端涉及的领域。
+
+## 三水清公众号
+
+![关注三水清](https://raw.githubusercontent.com/ksky521/mpeditor/master/static/qrcode_for_me.jpg)
 
 ## 关于本站
 
@@ -22,7 +26,7 @@ date: 2013-11-02 15:30:00
 
 ## 联系我
 
-有事可以给我发邮件：`ksky521#gmail.com`，或者通过下面的表单提直接交给我邮件；没事可以关注我的微博：[@三水清](http://weibo.com/sanshuiqing)，还有[我的Github](https://github.com/ksky521)
+有事可以给我发邮件：`ksky521#gmail.com`，或者通过下面的表单提直接交给我邮件；没事可以关注我的微博：[@三水清](//weibo.com/sanshuiqing)，还有[我的Github](//github.com/ksky521)
 
 ## 本站立场
 
