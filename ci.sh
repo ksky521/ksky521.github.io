@@ -1,8 +1,10 @@
 #! /bin/sh
 # 发布hexo
 # npm i hexo -g
-hexo clean
-hexo generate
+# hexo clean
+# hexo generate
+npm run clean
+npm run build
 
 cd slide
 git submodule init
