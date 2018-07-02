@@ -48,7 +48,7 @@ duoshuo: ksky521
 tagcloud: true
 
 baidutongji:
-  enable: true
+  enable: false
   id: 1c76f5cc8274a56106b13b9c9b1fb046
 
 baidushare:

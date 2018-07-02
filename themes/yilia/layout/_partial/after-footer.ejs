@@ -1,6 +1,4 @@
-<% if (theme.fancybox){ %>
-  <%- css('fancybox/jquery.fancybox') %>
-<% } %>
+
 
 <script>
 	var yiliaConfig = {
@@ -16,7 +14,13 @@
 	}
 </script>
 <%- js('//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min') %>
+
 <%- js('js/main') %>
+
+<% if (theme.fancybox){ %>
+  <%- js('fancybox/jquery.fancybox') %>
+<% } %>
+
 
 <% if (theme.share){ %>
     <link rel="stylesheet" href="/css/share.min.css">
@@ -36,8 +40,10 @@
     </script>
 <% } %>
 
+<!--设置代码高亮-->
 <link rel="stylesheet" href="/css/github.css">
 <script src="/js/highlight.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
    $('pre code').each(function(i, v){

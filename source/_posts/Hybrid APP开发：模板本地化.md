@@ -1,4 +1,4 @@
-title: "Hybrid APP开发：模板本地"
+title: "Hybrid APP开发：模板本地化"
 date: 2017-04-06 11:38:35
 tags:
 - hybrid

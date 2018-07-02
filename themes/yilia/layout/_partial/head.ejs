@@ -29,4 +29,8 @@
     <link rel="icon" href="<%- theme.favicon %>">
   <% } %>
   <%- css('css/style') %>
+  
+  <% if (theme.fancybox){ %>
+    <%- css('fancybox/jquery.fancybox') %>
+  <% } %>
 </head>
