@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[转]利用跨域资源共享（CORS）实现ajax跨域调用 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前几天看了一篇E文说部署CORS的文章，CORS是一中跨域的方式，于是上网找了下Nicholas C. Zakas 的文章《Cross-domain Ajax with Cross-Origin Resource Sharing》，并且找到了中文的翻译，感觉不错，转来分享之。
+几年前，网站开发者都因为ajax的同源策略而撞了南墙。当我们惊叹于XMLHttpRequest对象跨浏览器支持所带来的巨大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]利用跨域资源共享（CORS）实现ajax跨域调用">
+<meta property="og:url" content="http://js8.in/2011/04/26/转利用跨域资源共享（cors）实现ajax跨域调用/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="前几天看了一篇E文说部署CORS的文章，CORS是一中跨域的方式，于是上网找了下Nicholas C. Zakas 的文章《Cross-domain Ajax with Cross-Origin Resource Sharing》，并且找到了中文的翻译，感觉不错，转来分享之。
+几年前，网站开发者都因为ajax的同源策略而撞了南墙。当我们惊叹于XMLHttpRequest对象跨浏览器支持所带来的巨大">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]利用跨域资源共享（CORS）实现ajax跨域调用">
+<meta name="twitter:description" content="前几天看了一篇E文说部署CORS的文章，CORS是一中跨域的方式，于是上网找了下Nicholas C. Zakas 的文章《Cross-domain Ajax with Cross-Origin Resource Sharing》，并且找到了中文的翻译，感觉不错，转来分享之。
+几年前，网站开发者都因为ajax的同源策略而撞了南墙。当我们惊叹于XMLHttpRequest对象跨浏览器支持所带来的巨大">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-转利用跨域资源共享（cors）实现ajax跨域调用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2011/04/26/转利用跨域资源共享（cors）实现ajax跨域调用/" class="article-date">
+  	<time datetime="2011-04-25T18:18:45.000Z" itemprop="datePublished">2011年4月26日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [转]利用跨域资源共享（CORS）实现ajax跨域调用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前几天看了一篇E文说部署<strong>CORS</strong>的<a href="http://feedproxy.google.com/~r/remysharp/~3/b5_CQ7MoWNU/" target="_blank" rel="external">文章</a>，CORS是一中跨域的方式，于是上网找了下Nicholas C. Zakas 的文章《<a href="http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/" target="_blank" rel="external">Cross-domain Ajax with Cross-Origin Resource Sharing</a>》，并且找到了中文的翻译，感觉不错，转来分享之。</p>
+<p>几年前，网站开发者都因为ajax的<a href="https://developer.mozilla.org/en/Same_origin_policy_for_JavaScript" target="_blank" rel="external">同源策略</a>而撞了南墙。当我们惊叹于XMLHttpRequest对象跨浏览器支持所带来的巨大进步时，我们很快发现没有一个方法可以使我们用<strong>JavaScript实现请求跨域</strong>访问，对此我们哀叹不已。每个人在他们自己的网站上建立代理（which was the onset of a new host of open redirect problems）来摆脱这种限制。虽然开发者利用服务器代理和其它技巧避开了这种限制，而在社区的抗议者允许ajax在本地跨域调用。许多人还没意识到当前几乎所有的浏览器（Internet Explorer 8+， Firefox 3.5+， Safari 4+和 Chrome）都可通过名为<strong>Cross-Origin Resource Sharing</strong>的协议支持ajax跨域调用。</p>
+<h3 id="跨域资源共享（CORS）">跨域资源共享（CORS）</h3><p><a href="http://www.w3.org/TR/access-control/" target="_blank" rel="external">Cross-Origin Resource Sharing</a> (<strong>CORS</strong>)是W3c工作草案，它定义了在跨域访问资源时浏览器和服务器之间如何通信。CORS背后的基本思想是使用自定义的HTTP头部允许浏览器和服务器相互了解对方，从而决定请求或响应成功与否。</p>
+<p>对一个简单的请求，没有自定义头部，要么使用GET，要么使用POST，它的主体是text/plain,请求用一个名叫Orgin的额外的头部发送。Origin头部包含请求页面的头部（协议，域名，端口），这样服务器可以很容易的决定它是否应该提供响应。</p>
+<blockquote>
+<p>Origin: <a href="http://www.nczonline.net" target="_blank" rel="external">http://www.nczonline.net</a></p>
+</blockquote>
+<p>如果服务器确定请求被通过，它将发送一个Access-Control-Allow-Origin头部响应发送请求的同一个源，如果是一个公共资源，则返回“*”。如：</p>
+<blockquote>
+<p>Access-Control-Allow-Origin: <a href="http://www.nczonline.net" target="_blank" rel="external">http://www.nczonline.net</a><br><a id="more"></a></p>
+</blockquote>
+<p>如果头部丢失，或者源不匹配，那么浏览器将拒绝请求。如果一切顺利，浏览器将处理请求。注意，请求和响应都不包括cookie信息。</p>
+<p>先前提到的所有浏览器都支持这些简单的请求。FF3.5 +，Safari 4和chrome通过使用XMLHttpRequest对象支持其使用。当尝试在不同域打开一个资源时，不需任何代码，这个行为会自动触发。如：</p>
+<pre><code class="javascript">
+var xhr = new XMLHttpRequest();
+xhr.open(&quot;get&quot;, &quot;http://www.nczonline.net/some_resource/&quot;, true);
+xhr.onload = function(){  //instead of onreadystatechange
+    //do something
+};
+xhr.send(null);
+</code></pre>
+<p>在IE8中也是一样，用同样的方式你需要使用<a href="http://msdn.microsoft.com/en-us/library/cc288060%28VS.85%29.aspx" target="_blank" rel="external">XDomainRequest object</a>。</p>
+<pre><code class="javascript">
+var xdr = new XDomainRequest();
+xdr.open(&quot;get&quot;, &quot;http://www.nczonline.net/some_resource/&quot;);
+xdr.onload = function(){
+    //do something
+};
+xdr.send();
+</code></pre>
+<p>Mozilla小组在他们关于<a href="http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/" target="_blank" rel="external">CORS的留言</a>中建议应该检查withCredentials属性的存在性，从而决定浏览器是否通过XHR支持CORS。你可以合并<strong>XDomainRequest </strong>对象的存在性来支持所有的浏览器：</p>
+<pre><code class="javascript">
+function createCORSRequest(method, url){
+    var xhr = new XMLHttpRequest();
+    if (&quot;withCredentials&quot; in xhr){
+        xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != &quot;undefined&quot;){
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+    } else {
+        xhr = null;
+    }
+    return xhr;
+}
+
+var request = createCORSRequest(&quot;get&quot;, &quot;http://www.nczonline.net/&quot;);
+if (request){
+    request.onload = function(){
+        //do something with request.responseText
+    };
+    request.send();
+}
+</code></pre>
+<p>Firefox, Safari, 和Chrome的XMLHttpRequest对象与IE的XDomainRequest对象有着相似的充分的接口，这些模式运行的很好。常见的接口属性/方法:</p>
+<ul>
+<li>abort()——用来终止已在进程中请求。</li>
+<li>Onerror()——替代onreadystatechange方法来探测错误。</li>
+<li>Onload()——替代onreadystatechange方法来探测成功。</li>
+<li>responseText——用来取得响应地文本。</li>
+<li>send()——用来发送请求。</li>
+</ul>
+<h3 id="Preflighted请求">Preflighted请求</h3><p>除了GET或POST，通过一种称之为<strong>preflighted</strong>请求的服务器透明验证机制，CORS允许使用自定义的头部和方法，以及不同主体内容类型。当你尝试使用高级选项中的一个来试着建立一个请求时，这时就建立了一个preflighted请求。该请求使用可选的方法，并发送如下头部：</p>
+<ul>
+<li>Origin——与简单请求相同。</li>
+<li>Access-Control-Request-Method——请求将要使用的方法。</li>
+<li>Access-Control-Request-Headers——（可选）一个逗号分开的正被使用的自定义头部列表。</li>
+</ul>
+<p>例子假定一个头部自定义为NCZ的POST请求：</p>
+<blockquote>
+<p>Origin: <a href="http://www.nczonline.net" target="_blank" rel="external">http://www.nczonline.net</a><br>Access-Control-Request-Method: POST<br>Access-Control-Request-Headers: NCZ</p>
+</blockquote>
+<p>在请求期间，服务器能决定是否允许这类请求。服务器通过在响应中发送以下头部来与浏览器通信。</p>
+<ul>
+<li>Access-Control-Allow-Origin——与简单请求相同。</li>
+<li>Access-Control-Allow-Methods——用逗号分开的可接受的方法列表。</li>
+<li>Access-Control-Allow-Headers——用逗号分开的服务器可接受的头部列表。</li>
+<li>Access-Control-Max-Age——preflighted 请求应该被缓存的时间。</li>
+</ul>
+<p>如：</p>
+<blockquote>
+<p>Access-Control-Allow-Origin: <a href="http://www.nczonline.net" target="_blank" rel="external">http://www.nczonline.net</a><br>Access-Control-Allow-Methods: POST, GET<br>Access-Control-Allow-Headers: NCZ<br>Access-Control-Max-Age: 1728000</p>
+</blockquote>
+<p>preflighted 请求一旦作出，结果将按响应中规定的时间缓存下来；第一次做出这样的请求，你将引发一次额外的HTTP请求。</p>
+<p>Firefox 3.5+, Safari 4+和Chrome都支持preflighted 请求，IE8则不支持。</p>
+<h3 id="Credentialed请求">Credentialed请求</h3><p>默认状态下，跨域请求不提供证书（cookie、HTTP身份验证、客户端SSL证书）。你可以规定一个请求应该通过设置withCredentials属性为true来发送证书。如果服务器允许credentialed请求，那么它将用下面的头部作出响应：</p>
+<p>如果一个<strong>credentialed</strong>请求被发送，这个头部不会作为响应地一部分被发送。浏览器不会将响应传递给JavaScript(responseText是一个空字符串，状态为0，onerror()被调用)。注意，服务器也能发送这个HTTP头部作为preflight响应的一部分，以此来表明该源允许发送credentialed请求。</p>
+<blockquote>
+<p>Access-Control-Allow-Credentials: true</p>
+</blockquote>
+<p></p><p style="margin-top: 0px; margin-right: 0px; margin-bottom: 10px; margin-left: 0px; text-indent: 2em; padding: 0px;">IE8不支持withCredentials属性，Firefox 3.5+, Safari 4+和Chrome都支持它。</p>
+<p><strong>结论</strong></p>
+<p>在现代web浏览器中对跨域AJAX调用有许多可靠地支持，然而，大多数开发者仍没意识这些强大的功能力。只需在JavaScript和服务器端做一点额外的工作以保证正确的头部被发送即可使用它。在允许高级请求和credentialed请求方面，IE8的执行有些滞后，但希望它对CORS的支持将会继续改进。如果你想了解更多，我强烈建议你检查<a href="http://arunranga.com/examples/access-control/" target="_blank" rel="external">Arun Ranganathan的示例页</a>。</p>
+<h3 id="相关阅读">相关阅读</h3><ul>
+<li><a href="http://www.nczonline.net/blog/2008/04/27/cross-domain-xhr-removed-from-firefox-3/" title="Cross-domain XHR removed from Firefox 3" target="_blank" rel="external">Cross-domain XHR removed from Firefox 3</a></li>
+<li><a href="http://www.nczonline.net/blog/2009/07/09/firefox-35firebug-xmlhttprequest-and-readystatechange-bug/" title="Firefox 3.5/Firebug XMLHttpRequest and readystatechange bug" target="_blank" rel="external">Firefox 3.5/Firebug XMLHttpRequest and readystatechange bug</a></li>
+<li><a href="http://www.nczonline.net/blog/2008/07/05/mentioned-in-microsoft-whitepaper/" title="Mentioned in Microsoft whitepaper" target="_blank" rel="external">Mentioned in Microsoft whitepaper</a></li>
+<li><a href="http://www.nczonline.net/blog/2006/03/14/xmlhttp-requests-for-ajax/" title="XMLHttp Requests For Ajax" target="_blank" rel="external">XMLHttp Requests For Ajax</a></li>
+<li><a href="http://www.nczonline.net/blog/2006/03/05/firebug/" title="Firebug" target="_blank" rel="external">Firebug</a></li>
+<li><a href="http://www.nczonline.net/blog/2009/09/29/web-definitions-dom-ajax-and-more/" title="Web definitions: DOM, Ajax, and more" target="_blank" rel="external">Web definitions: DOM, Ajax, and more</a></li>
+</ul>
+<p><strong>原文地址：</strong><a href="http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/" target="_blank" rel="external">http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/</a><br><strong>转载地址：</strong> <a href="http://www.denisdeng.com/?p=1024" target="_blank" rel="external">http://www.denisdeng.com/?p=1024</a></p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2011/05/13/ie6下javascript不能隐藏select标签的bug/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          IE6下javascript不能隐藏select标签的bug
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2011/04/22/使用javascript将xml解析为json/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用javascript将XML解析为JSON</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="转利用跨域资源共享（cors）实现ajax跨域调用" data-title="[转]利用跨域资源共享（CORS）实现ajax跨域调用" data-url="http://js8.in/2011/04/26/转利用跨域资源共享（cors）实现ajax跨域调用/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

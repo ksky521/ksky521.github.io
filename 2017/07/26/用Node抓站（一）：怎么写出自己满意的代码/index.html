@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用Node抓站（一）：怎么写出自己满意的代码 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如果只写怎么抓取网页，肯定会被吐槽太水，满足不了读者的逼格要求，所以本文会通过不断的审视代码，做到令自己满意（撸码也要不断迸发新想法！
+
+本文目标：抓取什么值得买网站国内优惠的最新商品，并且作为对象输出出来，方便后续入库等操作
+
+抓取常用到的npm模块本文就介绍两个：request 和 cheerio，另外lodash是个工具库，不做介绍，后面篇幅会继续介绍其他用到的npm库。
+
+request：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Node抓站（一）：怎么写出自己满意的代码">
+<meta property="og:url" content="http://js8.in/2017/07/26/用Node抓站（一）：怎么写出自己满意的代码/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="如果只写怎么抓取网页，肯定会被吐槽太水，满足不了读者的逼格要求，所以本文会通过不断的审视代码，做到令自己满意（撸码也要不断迸发新想法！
+
+本文目标：抓取什么值得买网站国内优惠的最新商品，并且作为对象输出出来，方便后续入库等操作
+
+抓取常用到的npm模块本文就介绍两个：request 和 cheerio，另外lodash是个工具库，不做介绍，后面篇幅会继续介绍其他用到的npm库。
+
+request：">
+<meta property="og:image" content="http://js8.in/uploads/2017/03/node-spider.png">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Node抓站（一）：怎么写出自己满意的代码">
+<meta name="twitter:description" content="如果只写怎么抓取网页，肯定会被吐槽太水，满足不了读者的逼格要求，所以本文会通过不断的审视代码，做到令自己满意（撸码也要不断迸发新想法！
+
+本文目标：抓取什么值得买网站国内优惠的最新商品，并且作为对象输出出来，方便后续入库等操作
+
+抓取常用到的npm模块本文就介绍两个：request 和 cheerio，另外lodash是个工具库，不做介绍，后面篇幅会继续介绍其他用到的npm库。
+
+request：">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-用Node抓站（一）：怎么写出自己满意的代码" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/26/用Node抓站（一）：怎么写出自己满意的代码/" class="article-date">
+  	<time datetime="2017-07-26T15:25:54.000Z" itemprop="datePublished">2017年7月26日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用Node抓站（一）：怎么写出自己满意的代码
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓站/">抓站</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如果只写怎么抓取网页，肯定会被吐槽太水，满足不了读者的逼格要求，所以本文会通过不断的审视代码，做到令自己满意（撸码也要不断迸发新想法！</p>
+<blockquote>
+<p>本文目标：抓取什么值得买网站国内优惠的最新商品，并且作为对象输出出来，方便后续入库等操作</p>
+</blockquote>
+<h2 id="抓取常用到的npm模块">抓取常用到的npm模块</h2><p>本文就介绍两个：<code>request</code> 和 <code>cheerio</code>，另外<code>lodash</code>是个工具库，不做介绍，后面篇幅会继续介绍其他用到的npm库。</p>
+<ul>
+<li><strong>request</strong>：是一个http请求库，封装了很多常用的配置，而且也有promise版本（还有next版本。</li>
+<li><strong>cheerio</strong>：是一个类似jQuery的库，可以将html String转成类似jQ的对象，增加jQ的操作方法（实际是htmlparser2</li>
+</ul>
+<h3 id="request_示例">request 示例</h3><pre><code class="js">var request = require(&#39;request&#39;);
+request(&#39;http://www.smzdm.com/youhui/&#39;, (err, req)=&gt;{
+  if(!err){
+    console.log(Object.keys(req))
+  }
+})
+</code></pre>
+<p>通过上面的代码就看到<code>req</code>实际是个<code>response</code>对象，包括<code>headers</code> 、<code>statusCode</code>、<code>body</code> 等，我们用<code>body</code>就是网站的html内容</p>
+<a id="more"></a>
+<h3 id="cheerio_示例">cheerio 示例</h3><pre><code class="js">var request = require(&#39;request&#39;)
+var cheerio = require(&#39;cheerio&#39;)
+
+cheerio.prototype.removeTagText = function () {
+  var html = this.html()
+  return html.replace(/&lt;([\w\d]+)\b[^&lt;]+?&lt;\/\1&gt;/g, (m) =&gt; {
+    return &#39;&#39;
+  })
+}
+request(&#39;http://www.smzdm.com/youhui/&#39;, (err, req) =&gt; {
+  if (!err) {
+    var body = req.body
+    var $ = cheerio.load(body, {
+      decodeEntities: false
+    })
+    $(&#39;.list.list_preferential&#39;).each((i, item) =&gt; {
+      var $title = $(&#39;.itemName a&#39;, item)
+      var url = $title.attr(&#39;href&#39;)
+      var title = $title.removeTagText().trim()
+
+      var hl = $title.children().text().trim()
+      var img = $(&#39;img&#39;, item).attr(&#39;src&#39;)
+      var desc = $(&#39;.lrInfo&#39;, item).html().trim()
+      desc = desc.replace(/&lt;a\b.+?&gt;阅读全文&lt;\/a&gt;/g, &#39;&#39;)
+      var mall = $(&#39;.botPart a.mall&#39;, item).text().trim()
+
+      console.log({title, hl, url, img, desc, mall})
+    })
+  }
+})
+</code></pre>
+<p>简单解释下，<code>removeTagText</code>是直接扩展了<code>cheerio</code>的一个方法，目的是去掉类似</p>
+<pre><code class="html">再特价：QuanU 全友 布艺沙发组合&lt;span class=&quot;z-highlight&quot;&gt;2798元包邮（需定金99元，3.1付尾款）&lt;/span&gt;
+</code></pre>
+<p>里面<code>span</code>之后的文字。执行后得到下面的结果：<br>￼<br>￼<img src="/uploads/2017/03/node-spider.png" alt=""></p>
+<h2 id="怎么写出自己满意的代码">怎么写出自己满意的代码</h2><p>从上面需求来看，只需要提取列表页面的商品信息，而取到数据之后，使用<code>cheerio</code>进行了解析，然后通过一些「选择器」对数据进行「提取加工」，得到想要的数据。</p>
+<p>重点是<strong>选择器</strong> 和 <strong>提取加工</strong>，如果想要的字段多了，那么代码会越写越多，维护困难，最重要的是「不环保」，今天抓什么值得买，明天抓惠惠网，代码还要copy一份改一改！一来二去，抓的越多，那么代码越乱，想想哪天不用<code>request</code>了，是不是要挨个修改呢？所以要抓重点，从最后需要的<strong>数据结构</strong>入手，关注<strong>选择器</strong> 和 <strong>提取加工</strong>。</p>
+<h3 id="handlerMap">handlerMap</h3><p>从最后需要的<strong>数据结构</strong>入手，关注<strong>选择器</strong> 和 <strong>提取加工</strong>。我设计一种对象结构，作为参数传入，这个参数我起名：<code>handlerMap</code>，最后实现一个<code>spider</code>的函数，用法如下：</p>
+<pre><code class="js">spider(url, callback, handlerMap)
+</code></pre>
+<p>从目标数据结构出发，最后数据什么样子，那么<code>handlerMap</code>结构就是什么样子，<code>key</code>就是最后输出数据的<code>key</code>，是由<code>selector</code>和<code>handler</code>两个key组成的对象，类似我们需要最后产出的数据是：</p>
+<pre><code class="json">[{
+  title: &#39;&#39;,
+  ht: &#39;&#39;,
+  url: &#39;&#39;,
+  img: &#39;&#39;,
+  mall: &#39;&#39;,
+  desc: &#39;&#39;
+}, {item2..}...]
+</code></pre>
+<p>那么需要的<code>handlerMap</code>就是：</p>
+<pre><code class="json">{
+  title: {
+    selector: &#39;.itemName a&#39;,
+    handler: &#39;removeTagText&#39;
+  },
+  ht: {
+    selector: &#39;.itemName a span&#39;,
+    handler: &#39;text&#39;
+  },
+  url: {
+    selector: &#39;.itemName a&#39;,
+    handler: &#39;atrr:href&#39;
+  },
+  img: {
+    selector: &#39;img&#39;,
+    handler: &#39;attr:src&#39;
+  },
+  mall: {
+    selector: &#39;.botPart a.mall&#39;,
+    handler: &#39;text&#39;
+  },
+  desc: {
+    selector: &#39;.lrInfo&#39;,
+    handler: function (data){
+      return data.replace(/&lt;a\b.+?&gt;阅读全文&lt;\/a&gt;/g, &#39;&#39;)
+    }
+  }
+}
+</code></pre>
+<p>再酷一点，就是简写方法：<code>url:&quot;.itemName a!attr:href”</code>，另外再加上如果抓取的是<code>JSON</code>数据，也要一起处理的情况。经过分析之后，开始改造代码，代码最后分为了两个模块：</p>
+<ul>
+<li><code>spider.js</code>：包装request 模块，负责抓取页面将页面交给<code>parser.js</code>解析出来想要的数据</li>
+<li><code>parser.js</code>：负责解析handlerMap，同时支持json和html两种类型的页面进行解析</li>
+</ul>
+<p>虽然增加不少代码工作量，但是抽象后的代码在使用的时候就更加方便了，自己还是别人在使用的时候，不用关心代码实现，只需要关注抓取的页面url、要提取的页面内容和数据得到后的继续操作即可，使用起来要比之前混杂在一起的代码更加清晰简洁；并且抓取任意页面都不需要动核心的代码，只需要填写前面提到的<code>handlerMap</code>。</p>
+<h2 id="总结">总结</h2><p>其实Node抓取页面很简单，本文只是通过一个简单的抓取任务，不断深入思考，进行抽象，写出自己满意的代码，以小见大，希望本文对读者有所启发😄</p>
+<p>今天到此结束，完成一个基础抓取的库，有空继续介绍Node抓站的知识，欢迎大家交流讨论</p>
+<p>本文的完整代码，在<a href="https://github.com/ksky521/mpdemo/" target="_blank" rel="external">github/ksky521/mpdemo/</a> 对应文章名文件夹下可以找到</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/28/为什么我们的业务适合用Node/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          为什么我们的业务适合用Node？
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/26/Hybrid APP开发：JSSDK/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hybrid APP开发：JSSDK</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="用Node抓站（一）：怎么写出自己满意的代码" data-title="用Node抓站（一）：怎么写出自己满意的代码" data-url="http://js8.in/2017/07/26/用Node抓站（一）：怎么写出自己满意的代码/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

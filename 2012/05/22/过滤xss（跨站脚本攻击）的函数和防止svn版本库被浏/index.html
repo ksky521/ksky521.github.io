@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>过滤XSS（跨站脚本攻击）的函数和防止svn版本库被浏览 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="别处看到的php去除xss的函数，自己备份下，以备不时之需。
+php过滤xss函数&amp;lt;?php
+/**
+* @过滤XSS（跨站脚本攻击）的函数
+* @par $val 字符串参数，可能包含恶意的脚本代码如
+* &amp;lt;script language=&amp;quot;javascript&amp;quot;&amp;gt;alert(&amp;quot;hello world&amp;quot;);&amp;lt;/script&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="过滤XSS（跨站脚本攻击）的函数和防止svn版本库被浏览">
+<meta property="og:url" content="http://js8.in/2012/05/22/过滤xss（跨站脚本攻击）的函数和防止svn版本库被浏/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="别处看到的php去除xss的函数，自己备份下，以备不时之需。
+php过滤xss函数&amp;lt;?php
+/**
+* @过滤XSS（跨站脚本攻击）的函数
+* @par $val 字符串参数，可能包含恶意的脚本代码如
+* &amp;lt;script language=&amp;quot;javascript&amp;quot;&amp;gt;alert(&amp;quot;hello world&amp;quot;);&amp;lt;/script&amp;gt;">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="过滤XSS（跨站脚本攻击）的函数和防止svn版本库被浏览">
+<meta name="twitter:description" content="别处看到的php去除xss的函数，自己备份下，以备不时之需。
+php过滤xss函数&amp;lt;?php
+/**
+* @过滤XSS（跨站脚本攻击）的函数
+* @par $val 字符串参数，可能包含恶意的脚本代码如
+* &amp;lt;script language=&amp;quot;javascript&amp;quot;&amp;gt;alert(&amp;quot;hello world&amp;quot;);&amp;lt;/script&amp;gt;">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-过滤xss（跨站脚本攻击）的函数和防止svn版本库被浏" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2012/05/22/过滤xss（跨站脚本攻击）的函数和防止svn版本库被浏/" class="article-date">
+  	<time datetime="2012-05-22T09:19:36.000Z" itemprop="datePublished">2012年5月22日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      过滤XSS（跨站脚本攻击）的函数和防止svn版本库被浏览
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xss/">xss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全/">安全</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/后端运维/">后端运维</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>别处看到的php去除xss的函数，自己备份下，以备不时之需。</p>
+<h2 id="php过滤xss函数">php过滤xss函数</h2><pre><code class="php">&lt;?php
+/**
+* @过滤XSS（跨站脚本攻击）的函数
+* @par $val 字符串参数，可能包含恶意的脚本代码如
+* &lt;script language=&quot;javascript&quot;&gt;alert(&quot;hello world&quot;);&lt;/script&gt;
+* @return  处理后的字符串
+* @Recoded By Androidyue
+**/
+function RemoveXSS($val) {
+   // remove all non-printable characters. CR(0a) and LF(0b)
+   // and TAB(9) are allowed
+   // this prevents some character re-spacing such as &lt;java\0script&gt;
+   // note that you have to handle splits with \n, \r,
+   // and \t later since they *are* allowed in some inputs
+   $val = preg_replace(&#39;/([\x00-\x08,\x0b-\x0c,\x0e-\x19])/&#39;, &#39;&#39;, $val);
+
+   // straight replacements, the user should never need these
+   // since they&#39;re normal characters
+   // this prevents like ![](@avascript:alert()
+   $search = &#39;abcdefghijklmnopqrstuvwxyz&#39;;
+   $search .= &#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;;
+   $search .= &#39;1234567890!@#$%^&amp;*()&#39;;
+   $search .= &#39;~`&quot;;:?+/={}[]-_|\&#39;\\&#39;;
+   for ($i = 0; $i &lt; strlen($search); $i++) {
+      // ;? matches the ;, which is optional
+      // 0{0,7} matches any padded zeros, which are optional and go up to 8 chars
+
+      // @ @ search for the hex values
+      $val = preg_replace(&#39;/(&amp;#[xX]0{0,8}&#39;.dechex(ord($search[$i])).&#39;;?)/i&#39;, $search[$i], $val); // with a ;
+      // @ @ 0{0,7} matches &#39;0&#39; zero to seven times
+      $val = preg_replace(&#39;/(&amp;#0{0,8}&#39;.ord($search[$i]).&#39;;?)/&#39;, $search[$i], $val); // with a ;
+   }
+
+   // now the only remaining whitespace attacks are \t, \n, and \r
+   $ra1 = Array(&#39;javascript&#39;, &#39;vbscript&#39;, &#39;expression&#39;, &#39;applet&#39;, &#39;meta&#39;, &#39;xml&#39;, &#39;blink&#39;, &#39;link&#39;, &#39;style&#39;, &#39;script&#39;, &#39;embed&#39;, &#39;object&#39;, &#39;iframe&#39;, &#39;frame&#39;, &#39;frameset&#39;, &#39;ilayer&#39;, &#39;layer&#39;, &#39;bgsound&#39;, &#39;title&#39;, &#39;base&#39;);
+   $ra2 = Array(&#39;onabort&#39;, &#39;onactivate&#39;, &#39;onafterprint&#39;, &#39;onafterupdate&#39;, &#39;onbeforeactivate&#39;, &#39;onbeforecopy&#39;, &#39;onbeforecut&#39;, &#39;onbeforedeactivate&#39;, &#39;onbeforeeditfocus&#39;, &#39;onbeforepaste&#39;, &#39;onbeforeprint&#39;, &#39;onbeforeunload&#39;, &#39;onbeforeupdate&#39;, &#39;onblur&#39;, &#39;onbounce&#39;, &#39;oncellchange&#39;, &#39;onchange&#39;, &#39;onclick&#39;, &#39;oncontextmenu&#39;, &#39;oncontrolselect&#39;, &#39;oncopy&#39;, &#39;oncut&#39;, &#39;ondataavailable&#39;, &#39;ondatasetchanged&#39;, &#39;ondatasetcomplete&#39;, &#39;ondblclick&#39;, &#39;ondeactivate&#39;, &#39;ondrag&#39;, &#39;ondragend&#39;, &#39;ondragenter&#39;, &#39;ondragleave&#39;, &#39;ondragover&#39;, &#39;ondragstart&#39;, &#39;ondrop&#39;, &#39;onerror&#39;, &#39;onerrorupdate&#39;, &#39;onfilterchange&#39;, &#39;onfinish&#39;, &#39;onfocus&#39;, &#39;onfocusin&#39;, &#39;onfocusout&#39;, &#39;onhelp&#39;, &#39;onkeydown&#39;, &#39;onkeypress&#39;, &#39;onkeyup&#39;, &#39;onlayoutcomplete&#39;, &#39;onload&#39;, &#39;onlosecapture&#39;, &#39;onmousedown&#39;, &#39;onmouseenter&#39;, &#39;onmouseleave&#39;, &#39;onmousemove&#39;, &#39;onmouseout&#39;, &#39;onmouseover&#39;, &#39;onmouseup&#39;, &#39;onmousewheel&#39;, &#39;onmove&#39;, &#39;onmoveend&#39;, &#39;onmovestart&#39;, &#39;onpaste&#39;, &#39;onpropertychange&#39;, &#39;onreadystatechange&#39;, &#39;onreset&#39;, &#39;onresize&#39;, &#39;onresizeend&#39;, &#39;onresizestart&#39;, &#39;onrowenter&#39;, &#39;onrowexit&#39;, &#39;onrowsdelete&#39;, &#39;onrowsinserted&#39;, &#39;onscroll&#39;, &#39;onselect&#39;, &#39;onselectionchange&#39;, &#39;onselectstart&#39;, &#39;onstart&#39;, &#39;onstop&#39;, &#39;onsubmit&#39;, &#39;onunload&#39;);
+   $ra = array_merge($ra1, $ra2);
+
+   $found = true; // keep replacing as long as the previous round replaced something
+   while ($found == true) {
+      $val_before = $val;
+      for ($i = 0; $i &lt; sizeof($ra); $i++) {
+         $pattern = &#39;/&#39;;
+         for ($j = 0; $j &lt; strlen($ra[$i]); $j++) {
+            if ($j &gt; 0) {
+               $pattern .= &#39;(&#39;;
+               $pattern .= &#39;(&amp;#[xX]0{0,8}([9ab]);)&#39;;
+               $pattern .= &#39;|&#39;;
+               $pattern .= &#39;|(&amp;#0{0,8}([9|10|13]);)&#39;;
+               $pattern .= &#39;)*&#39;;
+            }
+            $pattern .= $ra[$i][$j];
+         }
+         $pattern .= &#39;/i&#39;;
+         $replacement = substr($ra[$i], 0, 2).&#39;&lt;x&gt;&#39;.substr($ra[$i], 2);
+         // add in &lt;&gt; to nerf the tag
+         $val = preg_replace($pattern, $replacement, $val);
+         // filter out the hex tags
+         if ($val_before == $val) {
+            // no replacements were made, so exit the loop
+            $found = false;
+         }
+      }
+   }
+   return $val;
+}
+//测试一下效果
+//echo RemoveXSS(&quot;&lt;script language=&#39;javascript&#39;&gt;alert(&#39;hello world&#39;);&lt;/script&gt;&quot;) ;
+?&gt;
+</code></pre>
+<a id="more"></a>
+<h2 id="javascript过滤xss">javascript过滤xss</h2><p>javascript过滤xss只是一种防君子不防小人的方法，可以两种方式，第一种是将尖括号和引号转义掉，如下面大代码：</p>
+<pre><code class="javascript">function(cont){
+    cont = cont.replace(/&amp;/g, &#39;&amp;amp;&#39;);
+    cont = cont.replace(/&lt;/g, &#39;&amp;lt;&#39;).replace(/&gt;/g, &#39;&amp;gt;&#39;);
+    cont = cont.replace(/\&#39;/g, &#39;&amp;#39;&#39;).replace(/\&quot;/g, &#39;&amp;quot;&#39;);
+    return cont;
+};
+</code></pre>
+<p>第二种是动态创建一个dom，然后将str作为innerText，之后动态的取innerHTML出来，就可以是经过转义的内容了，<br>注：感谢 Jackmasa 指出问题，其实这里还是会有问题，详细见文章：《<a href="http://www.csser.com/board/4f93781fac1fd192290005dc#/post/4f94a0c978adca754d000129" target="_blank" rel="external">前端安全</a>》</p>
+<h2 id="apache防止svn版本库被浏览">apache防止svn版本库被浏览</h2><p>前几天炒的比较热的svn版本库被爆的问题，自己查了下找到了简单的解决apache的svn版本库被浏览方式，nginx也是类似的禁用.svn的浏览</p>
+<h3 id="apache禁用svn">apache禁用svn</h3><pre><code class="shell">&lt;Directory ~ &quot;.svn&quot;&gt;
+Order allow,deny
+Deny from all
+&lt;/Directory&gt;
+</code></pre>
+<pre><code>### nginx禁用svn
+
+```text
+location ~ /.svn/ {
+  deny all;
+}
+</code></pre>
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2012/06/07/踩了apache配置虚拟主机的坑/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          踩了apache配置虚拟主机的坑
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2012/05/21/ie动态创建带name的iframe跳转问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">IE动态创建带name的iframe跳转问题</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="过滤xss（跨站脚本攻击）的函数和防止svn版本库被浏" data-title="过滤XSS（跨站脚本攻击）的函数和防止svn版本库被浏览" data-url="http://js8.in/2012/05/22/过滤xss（跨站脚本攻击）的函数和防止svn版本库被浏/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Javascript正则表达式详解 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="js正则表达式是很多js开发人员比较头疼的事情，也很多人不愿意学习，只是必要的时候上网查一下就可以啦~本文中详细的把javascript正则表达式的用法进行了列表，希望对于大家学习javascript正则表达式有一定的帮助。
+建立正则表达式对象语法
+re = new RegExp(/pattern/[flags])
+flags 参数说明：
+g （全文查找出现的所有 pattern）i （忽略大小写">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript正则表达式详解">
+<meta property="og:url" content="http://js8.in/2010/02/04/javascript正则表达式详解/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="js正则表达式是很多js开发人员比较头疼的事情，也很多人不愿意学习，只是必要的时候上网查一下就可以啦~本文中详细的把javascript正则表达式的用法进行了列表，希望对于大家学习javascript正则表达式有一定的帮助。
+建立正则表达式对象语法
+re = new RegExp(/pattern/[flags])
+flags 参数说明：
+g （全文查找出现的所有 pattern）i （忽略大小写">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript正则表达式详解">
+<meta name="twitter:description" content="js正则表达式是很多js开发人员比较头疼的事情，也很多人不愿意学习，只是必要的时候上网查一下就可以啦~本文中详细的把javascript正则表达式的用法进行了列表，希望对于大家学习javascript正则表达式有一定的帮助。
+建立正则表达式对象语法
+re = new RegExp(/pattern/[flags])
+flags 参数说明：
+g （全文查找出现的所有 pattern）i （忽略大小写">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-javascript正则表达式详解" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2010/02/04/javascript正则表达式详解/" class="article-date">
+  	<time datetime="2010-02-03T17:57:08.000Z" itemprop="datePublished">2010年2月4日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Javascript正则表达式详解
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络技术/">网络技术</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>js正则表达式</strong>是很多js开发人员比较头疼的事情，也很多人不愿意学习，只是必要的时候上网查一下就可以啦~本文中详细的把javascript正则表达式的用法进行了列表，希望对于大家学习<strong>javascript正则</strong>表达式有一定的帮助。</p>
+<p><strong>建立正则表达式对象语法
+</strong>re = new <span style="color: #008080; padding: 0px; margin: 0px;">RegExp</span>(/pattern/[flags])</p>
+<p><strong>flags 参数说明：
+</strong><span style="color: #ff6600; padding: 0px; margin: 0px;">g</span> （全文查找出现的所有 <em>pattern</em>）<br><span style="color: #ff6600; padding: 0px; margin: 0px;">i</span> （忽略大小写）<br><span style="color: #ff6600; padding: 0px; margin: 0px;">m</span> （多行查找）</p>
+<a id="more"></a>
+<table style="padding: 0px; margin: 0px;" border="0" cellspacing="1" cellpadding="3" frame="box" rules="all" bgcolor="#339999"><br><tbody style="padding: 0px; margin: 0px;"><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="16%">普通字符</th><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="84%">描述</th><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">将下一个字符标记为一个特殊字符、或一个原义字符、或一个 后向引用、或一个八进制转义符。例如，’n’ 匹配字符 “n”。’\n’ 匹配一个换行符。序列 ‘\\‘ 匹配 “\“ 而 “\(“ 则匹配 “(“。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">.</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配除 “\n” 之外的任何单个字符。要匹配包括 ‘\n’ 在内的任何字符，请使用象 ‘[.\n]’ 的模式。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">_x_|_y_</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配 _x_ 或 _y_。例如，’z|food’ 能匹配 “z” 或 “food”。’(z|f)ood’ 则匹配 “zood” 或 “food”。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">[<em>xyz</em>]</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">字符集合。匹配所包含的任意一个字符。例如， ‘[abc]’ 可以匹配 “plain” 中的 ‘a’。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">[^<em>xyz</em>]</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">负值字符集合。匹配未包含的任意字符。例如， ‘[^abc]’ 可以匹配 “plain” 中的’p’。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">[<em>a-z</em>]</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">字符范围。匹配指定范围内的任意字符。例如，’[a-z]’ 可以匹配 ‘a’ 到 ‘z’ 范围内的任意小写字母字符。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">[^<em>a-z</em>]</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">负值字符范围。匹配任何不在指定范围内的任意字符。例如，’[^a-z]’ 可以匹配任何不在 ‘a’ 到 ‘z’ 范围内的任意字符。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\c_x_</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配由_x_指明的控制字符。例如， \cM 匹配一个 Control-M 或回车符。 _x_ 的值必须为 A-Z 或 a-z 之一。否则，将 c 视为一个原义的 ‘c’ 字符。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\d</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配一个数字字符。等价于 [0-9]。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\D</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配一个非数字字符。等价于 [^0-9]。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\w</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配包括下划线的任何单词字符。等价于’[A-Za-z0-9_]’。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\W</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配任何非单词字符。等价于 ‘[^A-Za-z0-9_]’。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\x_n_</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配 _n_，其中 _n_ 为十六进制转义值。十六进制转义值必须为确定的两个数字长。例如， ‘\x41’ 匹配 “A”。’\x041’ 则等价于 ‘\x04’ &amp; “1”。正则表达式中可以使用 ASCII 编码。.</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\<em>num</em></td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配 <em>num</em>，其中 <em>num</em> 是一个正整数。对所获取的匹配的引用。例如，’(.)\1’ 匹配两个连续的相同字符。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\_n_</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">标识一个八进制转义值或一个后向引用。如果 \_n_ 之前至少 _n_ 个获取的子表达式，则 _n_ 为后向引用。否则，如果 _n_ 为八进制数字 (0-7)，则_n_ 为一个八进制转义值。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\_nm_</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">标识一个八进制转义值或一个后向引用。如果 \_nm_ 之前至少有is preceded by at least _nm_ 个获取得子表达式，则 _nm_ 为后向引用。如果 \_nm_ 之前至少有 _n_ 个获取，则 _n_ 为一个后跟文字 _m _的后向引用。如果前面的条件都不满足，若? _n_ 和 _m_ 均为八进制数字 (0-7)，则 \_nm_将匹配八进制转义值 _nm_。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\<em>nml</em></td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">如果 _n_ 为八进制数字 (0-3)，且 _m_ 和 _l_ 均为八进制数字 (0-7)，则匹配八进制转义值 <em>nml。</em></td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\u_n_</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配 _n_，其中 _n_ 是一个用四个十六进制数字表示的 Unicode 字符。例如， \u00A9 匹配版权符号 (?)。</td><br></tr><br></tbody></table>
+
+<table style="padding: 0px; margin: 0px;" border="0" cellspacing="1" cellpadding="3" frame="box" rules="all" bgcolor="#339999"><br><tbody style="padding: 0px; margin: 0px;"><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="16%">特殊字符</th><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="84%">说明</th><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">$</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配输入字符串的结尾位置。如果设置了 <strong>RegExp</strong> 对象的 <strong>Multiline</strong> 属性，则 $ 也匹配 ‘\n’ 或 ‘\r’。要匹配 $ 字符本身，请使用 \$。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">( )</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">标记一个子表达式的开始和结束位置。子表达式可以获取供以后使用。要匹配这些字符，请使用 \( 和 \)。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff"><strong>*</strong></td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配前面的子表达式零次或多次。要匹配 <em> 字符，请使用 \</em>。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff"><strong>+</strong></td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配前面的子表达式一次或多次。要匹配 + 字符，请使用 +。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff"><strong>.</strong></td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配除换行符 \n之外的任何单字符。要匹配 .，请使用 \。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">[</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">标记一个中括号表达式的开始。要匹配 [，请使用 \[。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">?</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配前面的子表达式零次或一次，或指明一个非贪婪限定符。要匹配 ? 字符，请使用 \?。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">将下一个字符标记为或特殊字符、或原义字符、或后向引用、或八进制转义符。例如， ‘n’ 匹配字符 ‘n’。’\n’ 匹配换行符。序列 ‘\\’ 匹配 “\“，而 ‘\(‘ 则匹配 “(“。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">^</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配输入字符串的开始位置，除非在方括号表达式中使用，此时它表示不接受该字符集合。要匹配 ^ 字符本身，请使用\^。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">{</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">标记限定符表达式的开始。要匹配 {，请使用 \{。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">|</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">指明两项之间的一个选择。要匹配 |，请使用 \|。</td><br></tr><br></tbody></table>
+
+<table style="padding: 0px; margin: 0px;" border="0" cellspacing="1" cellpadding="3" frame="box" rules="all" bgcolor="#339999"><br><tbody style="padding: 0px; margin: 0px;"><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="16%">非打印字符</th><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="84%">含义</th><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\c_x_</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配由_x_指明的控制字符。例如， \cM 匹配一个 Control-M 或回车符。 _x_ 的值必须为 A-Z 或 a-z 之一。否则，将 c 视为一个原义的 ‘c’ 字符。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\f</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配一个换页符。等价于 \x0c 和 \cL。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\n</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配一个换行符。等价于 \x0a 和 \cJ。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\r</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配一个回车符。等价于 \x0d 和 \cM。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\s</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配任何空白字符，包括空格、制表符、换页符等等。等价于 [?\f\n\r\t\v]。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\S</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配任何非空白字符。等价于 [^?\f\n\r\t\v]。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\t</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配一个制表符。等价于 \x09 和 \cI。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\v</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配一个垂直制表符。等价于 \x0b 和 \cK。</td><br></tr><br></tbody></table>
+
+<table style="padding: 0px; margin: 0px;" border="0" cellspacing="1" cellpadding="3" frame="box" rules="all" bgcolor="#339999"><br><tbody style="padding: 0px; margin: 0px;"><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="16%">限定符</th><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="84%">描述</th><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff"><em></em></td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配前面的子表达式零次或多次。例如，zo 能匹配 “z” 以及 “zoo”。 <em> 等价于{0,}。</em></td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">+</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配前面的子表达式一次或多次。例如，’zo+’ 能匹配 “zo” 以及 “zoo”，但不能匹配 “z”。+ 等价于 {1,}。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">?</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配前面的子表达式零次或一次。例如，”do(es)?” 可以匹配 “do” 或 “does” 中的”do” 。? 等价于 {0,1}。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">{_n_}</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">_n_ 是一个非负整数。匹配确定的 _n_ 次。例如，’o{2}’ 不能匹配 “Bob” 中的 ‘o’，但是能匹配 “food” 中的两个 o。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">{_n_,}</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">_n_ 是一个非负整数。至少匹配_n_ 次。例如，’o{2,}’ 不能匹配 “Bob” 中的 ‘o’，但能匹配 “foooood” 中的所有 o。’o{1,}’ 等价于 ‘o+’。’o{0,}’ 则等价于 ‘o‘。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">{_n_,_m_}</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">_m_ 和 _n_ 均为非负整数，其中_n_ &lt;= _m_。最少匹配 _n_ 次且最多匹配 _m_ 次。刘， “o{1,3}” 将匹配 “fooooood” 中的前三个 o。’o{0,1}’ 等价于 ‘o?’。请注意在逗号和两个数之间不能有空格。</td><br></tr><br></tbody></table>
+
+<table style="padding: 0px; margin: 0px;" border="0" cellspacing="1" cellpadding="3" frame="box" rules="all" bgcolor="#339999"><br><tbody style="padding: 0px; margin: 0px;"><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="16%">定位符</th><br><th style="font-weight: bold; color: #000000; padding: 0px; margin: 0px;" width="84%">描述</th><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">^</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配输入字符串的开始位置。如果设置了 <strong>RegExp</strong> 对象的 <strong>Multiline</strong> 属性，^ 也匹配 ‘\n’ 或 ‘\r’ 之后的位置。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">$</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配输入字符串的结束位置。如果设置了<strong>RegExp</strong> 对象的 <strong>Multiline</strong> 属性，$ 也匹配 ‘\n’ 或 ‘\r’ 之前的位置。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\b</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配一个单词边界，也就是指单词和空格间的位置。</td><br></tr><br><tr style="padding: 0px; margin: 0px;" valign="top"><br><td style="padding: 0px; margin: 0px;" width="16%" bgcolor="#ffffff">\B</td><br><td style="padding: 0px; margin: 0px;" width="84%" bgcolor="#ffffff">匹配非单词边界。</td><br></tr><br></tbody></table>
+
+<h3 id="是否有匹配">是否有匹配</h3><pre><code class="javascript">regexpObject.test(string)
+</code></pre>
+<p>返回值为Boolean型</p>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">var re = new RegExp(/\bbe\b/g);
+&gt; var str = &quot;To be, or not to be:That is the question:&quot;;
+&gt; alert(str.search(re));
+</code></pre>
+<pre><code class="javascript">string.search(regexpObject)
+</code></pre>
+<p>返回匹配字符的位置，无匹配返回-1</p>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">var re = new RegExp(/\bbe\b/g);
+&gt; var str = &quot;To be, or not to be:That is the question:&quot;;
+&gt; alert(re.test(str));
+</code></pre>
+<h3 id="取得正则匹配信息">取得正则匹配信息</h3><pre><code class="javascript">regexpObject.exec(string)
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">var re = new RegExp(/be/g);
+&gt; var str = &quot;To be, or not to be:That is the question:&quot;;
+&gt; var f;
+&gt; do
+&gt; {
+&gt;     f = re.exec(str);
+&gt;     alert(f + &quot;:&quot; + f.index);
+&gt; } while (f!=null);
+</code></pre>
+<h3 id="使用正则表达式进行字符串替换">使用正则表达式进行字符串替换</h3><pre><code class="javascript">string.replace(re, replaceString)
+</code></pre>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">var re = new RegExp(/be/g);
+&gt; var str = &quot;To be, or not to be:That is the question:&quot;;
+&gt; alert(str.replace(re, &quot;*&quot;));
+</code></pre>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2010/02/05/php二维数组去重复项函数/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          PHP二维数组去重复项函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/02/03/简单修改-htaccess来提高yslow等级/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">简单修改.htaccess来提高Yslow等级</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="javascript正则表达式详解" data-title="Javascript正则表达式详解" data-url="http://js8.in/2010/02/04/javascript正则表达式详解/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

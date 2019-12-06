@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hybrid 开发：JsBridge - Web和客户端双向通信 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Hybrid开发中，web页面往往会跟native进行交互，而JSBridge就是web页面和native进行通信的桥梁，通过JSBridge可以实现web调用native的方法，native可以通过webview.loadUrl之类的方法，将javascript:xxx代码放在页面执行，这有点类似在浏览器地址栏直接输入：javascript:xxx
+
+本文较长，先把目录列出来：
+
+JSBridg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hybrid 开发：JsBridge - Web和客户端双向通信">
+<meta property="og:url" content="http://js8.in/2017/03/16/Hybrid 开发：JsBridge - Web和客户端双向通信/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="Hybrid开发中，web页面往往会跟native进行交互，而JSBridge就是web页面和native进行通信的桥梁，通过JSBridge可以实现web调用native的方法，native可以通过webview.loadUrl之类的方法，将javascript:xxx代码放在页面执行，这有点类似在浏览器地址栏直接输入：javascript:xxx
+
+本文较长，先把目录列出来：
+
+JSBridg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/263551-4f807d9fa671a5f7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/620">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201203/3/16423_13307557171Ru7.png">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hybrid 开发：JsBridge - Web和客户端双向通信">
+<meta name="twitter:description" content="Hybrid开发中，web页面往往会跟native进行交互，而JSBridge就是web页面和native进行通信的桥梁，通过JSBridge可以实现web调用native的方法，native可以通过webview.loadUrl之类的方法，将javascript:xxx代码放在页面执行，这有点类似在浏览器地址栏直接输入：javascript:xxx
+
+本文较长，先把目录列出来：
+
+JSBridg">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Hybrid 开发：JsBridge - Web和客户端双向通信" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/16/Hybrid 开发：JsBridge - Web和客户端双向通信/" class="article-date">
+  	<time datetime="2017-03-16T02:38:35.000Z" itemprop="datePublished">2017年3月16日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hybrid 开发：JsBridge - Web和客户端双向通信
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hybrid/">hybrid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Hybrid开发中，web页面往往会跟native进行交互，而JSBridge就是web页面和native进行通信的桥梁，通过JSBridge可以实现web调用native的方法，native可以通过<code>webview.loadUrl</code>之类的方法，将<code>javascript:xxx</code>代码放在页面执行，这有点类似在浏览器地址栏直接输入：<code>javascript:xxx</code></p>
+</blockquote>
+<p>本文较长，先把目录列出来：</p>
+<ul>
+<li>JSBridge多种形式<ul>
+<li>js Interface 直接注入到window对象</li>
+<li>改写浏览器原有对象：alert/console/prompt</li>
+<li>URL scheme</li>
+</ul>
+</li>
+<li>唤起APP技术<ul>
+<li>intent</li>
+<li>localserver</li>
+<li>scheme：deeplink/applink/Universal link</li>
+<li>smart app banner</li>
+</ul>
+</li>
+<li>JSBridge安全</li>
+<li>JSBridge的最佳实践<ul>
+<li>协议规范</li>
+<li>回调函数</li>
+<li>预留升级/统计能力</li>
+<li>简单JSBridge调用封装</li>
+</ul>
+</li>
+</ul>
+<h2 id="JSBridge多种形式">JSBridge多种形式</h2><p>web和native进行通信，方法有很多，接下来一一列举一下JSBridge的多种形式，及其利弊。</p>
+<h3 id="JavaScriptInterface">JavaScriptInterface</h3><p>JSInterface是安卓4.2-官方推荐的解决方案，原理是通过WebView提供的<code>addJavascriptInterface</code>方法给浏览器<code>window</code>注入一个命名空间，然后给Web增加一些可以操作Java的反射。</p>
+<pre><code class="java">// Android java代码
+mWebView.addJavascriptInterface(new Class(), &#39;android&#39;);  
+
+public class Class(){
+  @JavascriptInterface
+  public void method(){
+
+  }
+} 
+// js 代码
+window.android.method();
+</code></pre>
+<p>JSInterface在4.2之前的版本都可以，但是存在严重的安全隐患，容易被利用提权，从而调用各种Java的类和权限，甚至页面可以挂马。在我们实际产品（手机百度）开始阶段，用过这个方法，不过现在已经不使用了。</p>
+<a id="more"></a>
+<h3 id="改写浏览器原有对象">改写浏览器原有对象</h3><p>这个方法主要是通过修改原来浏览器的<code>window</code>某些方法，然后拦截固定规则的参数，然后分发给Java对应的方法去处理。这里常用的是以下四个方法：</p>
+<ul>
+<li>alert，可以被webview的<code>onJsAlert</code>监听</li>
+<li>confirm，可以被webview的<code>onJsConfirm</code>监听</li>
+<li>console.log，可以被webview的<code>onConsoleMessage</code>监听</li>
+<li>prompt，可以被webview的<code>onJsPrompt</code>监听</li>
+</ul>
+<p>prompt简单举例说明，Web页面通过调用<code>prompt()</code>方法，安卓客户端通过监听<code>onJsPrompt</code>事件，拦截传入的参数，如果参数符合一定协议规范，那么就解析参数，扔给后续的Java去处理。这种协议规范，最好是跟iOS的协议规范一样，这样跨端调起协议是一致的，但具体实现不一样而已。比如：<code>hybrid://action?arg1=1</code> 这样的协议，而其他格式的<code>prompt</code>参数，是不会监听的，即除了<code>hybrid://action?arg1=1</code> 这样的规范协议，<code>prompt</code>还是原来的<code>prompt</code>。</p>
+<p>这四个方法也是各有利弊，比如：</p>
+<ul>
+<li><code>alert</code>/<code>console.log</code>是调试最常用的，如果你要看看协议是不是写错了，但是传入协议却被拦截了。。</li>
+<li><code>confirm</code>和<code>prompt</code>都带返回值，<code>prompt</code>是四个里面唯一可以自定义返回值，可以做同步的交互，要比写各种回调更「顺」，但是一旦串行调用了，就要骂爹了</li>
+</ul>
+<p><code>prompt</code>是我们目前安卓用的比较多的JSBridge解决方案。</p>
+<h3 id="URL_scheme">URL scheme</h3><p>这个叫法不是特别贴切，scheme是URI的一种格式，上文提到的<code>hybrid://action?arg1=1</code> 就是一个scheme协议，这里说的scheme（或者schema）泛指安卓和iOS的schema协议，因为它通用。</p>
+<p>安卓和iOS都可以通过拦截跳页URL请求，然后解析这个scheme协议，符合约定规则的就扔个Native的方法处理。安卓和iOS分别用到拦截URL请求的方法是：</p>
+<ul>
+<li>安卓：shouldOverrideUrlLoading方法</li>
+<li>iOS：UIWebView的delegate函数</li>
+</ul>
+<h2 id="唤起APP技术">唤起APP技术</h2><p>上文介绍到的JSBridge是在APP内的Web页面跟APP进行交换，还有一种特别多的需求，就是在APP外（浏览器、微信等）调起APP自己，给APP进行导流。这时候就要用到APP的唤起技术。这里有一下几种方法：</p>
+<ul>
+<li>intent：安卓</li>
+<li>localserver：安卓</li>
+<li>Universal links：iOS 9+</li>
+<li>Deep link/Applink：安卓</li>
+<li>smart app banner：iOS</li>
+</ul>
+<h3 id="安卓intent">安卓intent</h3><p>intent格式示例如下：</p>
+<pre><code class="txt">intent:
+   HOST/URI-path // Optional host 
+   #Intent; 
+      package=[string]; 
+      action=[string]; 
+      category=[string]; 
+      component=[string]; 
+      scheme=[string]; 
+      S.xxx=xxx
+   end;
+</code></pre>
+<ul>
+<li>第一部分：host和path是跟url无异</li>
+<li>第二部分：#intent到end是完整的intent，包含了调起的app包名，action等是常用的配置项</li>
+</ul>
+<p>因为Intent不仅仅是调起APP，而是安卓客户端内部模块通信也会用，所以权限很大，一般浏览器都给封掉了，💔</p>
+<h3 id="安卓localserver">安卓localserver</h3><p>这是一个黑科技😈，早前安卓允许在本地启动一个本地server，这个server是在后台守候的，通过这个localserver都可以进行各种需求：app间通信、app调起、收集数据、基础服务。百度的moplus就是这样的一个localserver。</p>
+<p>举例说明：启动一个本地server，端口号是：<code>8888</code>，那么在手机上，网页就可以通过：<code>http://127.0.0.1:8888</code> 访问这个server，server接收到请求就可以进行一些native的操作，对于需要回调数据的，就通过返回请求内容来执行，比如：</p>
+<ol>
+<li>获取个定位信息，js执行<code>$.get(&#39;http://127.0.0.1:8888/getGeoLocation?callback=cbname&#39;)</code></li>
+<li>server收到请求之后，调用native方法，获取GPS的定位信息，然后将数据通过response：<code>window.cbname&amp;&amp;cbname({xxx})</code>给页面返回定位数据</li>
+</ol>
+<p>如果控制不好权限，因为localserver是一直后台守候的，容易被利用，比如提权获取通讯录、甚至给通讯录发短信、容易造成蠕虫攻击，感兴趣的可以搜下moplus的文章。另外安卓各种安全软件，都会清理内存和后台程序，很容易被干掉进程。浏览器也会封杀本地server调起，碰见127.0.0.1的请求就直接拦截。</p>
+<h3 id="Universal_links_/_Deep_link_/_Applink">Universal links / Deep link / Applink</h3><p>这三个是官方推荐的调起方法，调起协议格式也是可以统一的，比如前文提到的<code>hybrid://action?arg1=xxx</code>这类scheme协议就是。这样可以统一安卓和iOS调起和JSBridge通信。</p>
+<p>其实简单来说，这三个出发点是想给应用做分发，但是如果用户手机没有安装这个APP，那么就调起失败，这时候直接不管不问，肯定体验不好，而且浪费了点击资源，那么做成分发吧！将调起协议做成一个调起页面，放到一个域名下，点击这个URL就可以打开这个页面，页面执行代码调起APP，如果调起失败就展现APP的介绍，做分发。</p>
+<p>Universal links / Deep link / Applink，就是这样的一个过程，通过这个域名授权，把URL分发给APP进行处理，唯一不同的是：如果用户安装了APP，那么就不用打开这个分发页面了。</p>
+<h3 id="Universal_Links">Universal Links</h3><p>iOS 9新出的一个功能，需要在App内声明一个https域名（ul.test.com），然后在该网站根目录放置apple-app-site-association文件，文件指明了转发规则，例如：</p>
+<pre><code>{
+  &quot;applinks&quot;: {
+    &quot;apps&quot;: [],
+    &quot;details&quot;: [
+      {
+        &quot;appID&quot;: “xxx.com.baidu.SomeApp”,
+        &quot;paths&quot;: [&quot;*&quot;]
+      }
+    ]
+  }
+}
+</code></pre><p>当APP安装成功之后，会下载这个文件，明确知道遇见<code>ul.test.com</code>的域名的URL时候，会把这个URL扔给你的APP，让你去解析，APP拿到这个URL就可以解析出来需要做什么事情。</p>
+<p>Universal Link是iOS 9+的底层实现，所以在任何地方都可以直接调起APP，不受微信这类封闭APP的限制。</p>
+<h3 id="Deep_link_/_Applink">Deep link / Applink</h3><p>Deep link 是安卓一开始推出的，主要用于搜索调起APP，后来推出 Applink，实际是Deep link的升级版。</p>
+<p>这里需要提到微信的APPlink，毕竟微信作为SuperApp，是很大的分发资源，微信有自己的分发方法，安卓内可以申请微信的APPlink，跟Universal link一样，也是一个域名下面的URL，符合一定规则就由微信（ios是底层系统）扔个对应的域名APP进行解析。</p>
+<h4 id="smart_app_banner">smart app banner</h4><p>在页面的head中添加下面meta，在Safari浏览器中就会出现下面的banner</p>
+<pre><code class="html">&lt;meta name=&quot;apple-itunes-app&quot; content=&quot;app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL&quot;&gt;
+</code></pre>
+<p><img src="http://upload-images.jianshu.io/upload_images/263551-4f807d9fa671a5f7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/620" alt=""></p>
+<h2 id="JSBridge安全">JSBridge安全</h2><p>在APP内JSBridge可以实现Web和Native的通信，但是如果APP打开一个恶意的页面，页面可以任意调用JSBridge方法，获取各种隐私的数据，就会引起安全问题。</p>
+<p>JSBridge的安全有两个方法：通过Native进行白名单配置，通过Server云端授权。Server的云端授权这块，放到后续JSSDK的设计部分进行详细讲解。本文主要说下通过Native的方式来控制JSBridge的安全。</p>
+<p>假设JSBridge的协议格式如下：</p>
+<pre><code>hybrid://action/method?arg1=xxx&amp;arg2=xxx
+</code></pre><p>可以通过下面方式进行安全设置：</p>
+<ol>
+<li>配置某些方法的使用范围，比如固定的Webview，固定的domain</li>
+<li>通过正则来设置细化的权限，比如：baidu.com网页可以使用<code>*</code>，hao123.com可以使用：<code>hybrid://hao123/*</code></li>
+</ol>
+<h2 id="JSBridge的最佳实践">JSBridge的最佳实践</h2><p>介绍了这么多，什么是最佳实践的JSBridge呢？结合文章内容，要求JSBridge做到以下几点：</p>
+<ul>
+<li>官方认可，不走「歪门邪道」</li>
+<li>跨平台通用</li>
+<li>APP内和APP外规范通用</li>
+<li>安全可靠</li>
+<li>约定大于配置的原则</li>
+</ul>
+<p>综合上文介绍的内容，JSBridge的最佳实践是：</p>
+<ol>
+<li>协议规范都使用：<code>hybrid://action/method?arg1=xxx&amp;arg2=xxx</code></li>
+<li>iOS使用Universal Link和UIWebview的delegate</li>
+<li>安卓使用shouldOverrideUrlLoading和Applink</li>
+</ol>
+<h3 id="规范和约定">规范和约定</h3><p>先贴个URL scheme的图片，理解下URL的组成部分：</p>
+<p><img src="http://img.my.csdn.net/uploads/201203/3/16423_13307557171Ru7.png" alt=""></p>
+<p>约定我们的规范如下：</p>
+<pre><code>yourappscheme://module/action?arg1=x&amp;arg2=x&amp;ios_version=xxx&amp;andr_version=xxx&amp;upgrade=1/0&amp;callback=xxx&amp;sendlog=1/0
+</code></pre><ul>
+<li>整体小写</li>
+<li>yourappscheme：就是你的scheme，可辨识，别冲突，通过这个可以进行Universal Link和Applink的分发</li>
+<li>module和action：某个模块组件的某个方法</li>
+<li><code>?</code>后面是querystring，这里预定了几个特殊的参数：<ul>
+<li><code>ios_version/andr_version</code>：非必须，iOS和安卓的最小版本，即本协议从哪个版本开始支持的，低版本不支持则忽略，配合upgrade使用进行APP升级</li>
+<li>upgrade：是否强制升级，即当版本低于设置的ios/andr_version是否弹出提示用户升级的对话框（yourappscheme已经可以调起app，只不过功能可能因为版本低不支持，这时候可以引导用户升级）</li>
+<li>callback：异步回调函数，下面详细树下callback的最佳实践</li>
+<li>sendlog：调起后是否打点发送日志</li>
+</ul>
+</li>
+</ul>
+<p>举例：</p>
+<pre><code># 账号相关
+## 打开用户个人主页
+fb://account/userprofile?id=xxx
+## 打开登录界面
+fb://account/login?callback=xxx
+# 工具类
+## 获取定位
+fb://utils/getgeolocation?callback=xx
+</code></pre><h4 id="callback的设计">callback的设计</h4><p>当native操作成功之后，会将处理结束后的结果或者数据通过<code>callback</code>回调传给Web，当然有成果就又失败，<code>callback</code>的参数设计有两种方式：</p>
+<h5 id="错误优先">错误优先</h5><p>即下面的回调方法格式：</p>
+<pre><code class="js">function callback(error, data){
+  if(error){
+    throw error
+  }
+  console.log(data)
+}
+</code></pre>
+<h5 id="JSON_API式">JSON API式</h5><p>即回调方法只接收一个JSON对象，JSON格式如下：</p>
+<pre><code class="js">{
+  error_code: 0,
+  data: {}
+}
+</code></pre>
+<h4 id="预留升级/日志能力">预留升级/日志能力</h4><p>做APP开发经常会遇见下面的问题：</p>
+<ol>
+<li>功能/端能力是从某个版本开始的，低版本用不了，但是scheme还是会调起APP（APP懵逼。。</li>
+<li>对于低版本，PM希望提示用户升级</li>
+<li>统计调起成功率，分发次数之类的统计需求</li>
+</ol>
+<p>scheme的querystring部分由 <code>ios_version/andr_version</code>和upgrade这三个成对的参数，可以解决升级问题，sendlog解决日志统计问题。</p>
+<ul>
+<li><code>ios_version/andr_version</code>：是标示该协议的最低支持版本，如果低于这个版本可能因为功能并未实现而能识别。</li>
+<li>upgrade：是是否强制低版本弹出升级对话框</li>
+<li>sendlog：当为1的时候，则发送调起成功失败之类的统计需求</li>
+</ul>
+<h3 id="简单JSBridge调用封装">简单JSBridge调用封装</h3><p>简单封装下JSBridge调用的方法，参数如下：</p>
+<ul>
+<li>module：类名称，如果account</li>
+<li>action：具体操作方法，如login</li>
+<li>args：非必须，协议参数，支持string和对象</li>
+<li>callback：非必须，回调单独提出来，方便全局方法命名</li>
+</ul>
+<p>具体代码如下</p>
+<pre><code class="js">function invoke (module, action, args, callback) {
+  let scheme = `yourappscheme://${module}/${action}?`
+  if (isFunction(args)) {
+    callback = args
+    args = null
+  }
+  // 处理下参数
+  if (isString(args)) {
+    scheme += args
+  } else if (isObject(args)) {
+    each(args, (k, v) =&gt; {
+      if (isObject(v) || isArray(v)) {
+        v = JSON.stringify(v)
+      }
+      scheme += `${k}=${v}`
+    })
+  }
+  // callback独立传，方便全局函数名命名
+  if (isFunction(callback)) {
+    var funcName = &#39;_jsbridge_cb_&#39; + getId()
+    window[funcName] = function () {
+      callback.apply(window, ([]).slice.call(arguments, 0))
+    }
+    scheme += (!~scheme.indexOf(&#39;?&#39;) ? &#39;&amp;&#39; : &#39;?&#39;) + `callback=${funcName}`
+  }
+
+  if (os.ios &amp;&amp; versionCompare(os.version, &#39;9.0&#39;) &gt;= 0) {
+    window.location.href = scheme
+  } else {
+    var $node = document.createElement(&#39;iframe&#39;)
+    $node.style.display = &#39;none&#39;
+    $node.src = scheme
+    var body = document.body || document.getElementsByTagName(&#39;body&#39;)[0]
+    body.appendChild($node)
+    setTimeout(function () {
+      body.removeChild($node)
+      $node = null
+    }, 10)
+  } 
+}
+</code></pre>
+<h2 id="打完收工">打完收工</h2><p>今天写的有点多，介绍了JSBridge常用的方法，然后介绍了APP外如何唤起APP，还介绍了scheme协议，最后比较了优缺点，做个最佳实践。希望有用~</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/28/在腾讯工作是怎样一种感受/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          在腾讯工作是怎样一种感受
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/10/怎么进行一场好的面试：面试官篇/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">怎么进行一场好的面试：面试官篇</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Hybrid 开发：JsBridge - Web和客户端双向通信" data-title="Hybrid 开发：JsBridge - Web和客户端双向通信" data-url="http://js8.in/2017/03/16/Hybrid 开发：JsBridge - Web和客户端双向通信/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

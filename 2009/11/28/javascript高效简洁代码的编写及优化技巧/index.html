@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>javascript高效简洁代码的编写及优化技巧 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言随着互联网前端技术的革新，javascript越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript高效简洁代码的编写及优化技巧">
+<meta property="og:url" content="http://js8.in/2009/11/28/javascript高效简洁代码的编写及优化技巧/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="前言随着互联网前端技术的革新，javascript越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript高效简洁代码的编写及优化技巧">
+<meta name="twitter:description" content="前言随着互联网前端技术的革新，javascript越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-javascript高效简洁代码的编写及优化技巧" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2009/11/28/javascript高效简洁代码的编写及优化技巧/" class="article-date">
+  	<time datetime="2009-11-27T22:46:59.000Z" itemprop="datePublished">2009年11月28日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      javascript高效简洁代码的编写及优化技巧
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络技术/">网络技术</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言">前言</h3><p>随着互联网前端技术的革新，<strong>javascript</strong>越来越重要，并且js的轻便，非严格的写法，使越来越多的人掌握了js，可是谈到js的写法，很多人都觉得自己很熟悉，很了解，但是笔者在实践中发现js并非大家想象的那么简单，就像同事一句话：php会的很多，一抓一大把，而真正会js的却不多。仔细想想，原因很简单，js的加载到客户端运行的，不像php可以一个include就可以搞定，而且引入的文件中不用的函数可以放着不动，而js不同，如果加入很多很多无用的函数会大大的占有带宽，不利于用户体验。下面结合笔者实际开发过程中遇到的问题，以及自己收集的技巧，谈谈js高效简洁代码的编写及其优化的技巧。当然网上也有很多类似的文章，不过建议大家还是不要人云亦云，真正适合自己的技巧跟编写习惯才是最好的！</p>
+<h3 id="真假的判断">真假的判断</h3><p>Javascript中有null、undefined、string、number、boolean五种基本的类型，一般判断真假或者为空的时候大家会使用下面的代码：</p>
+<pre><code class="javascript">
+if(a==true){
+    //doSomeTing();
+}```但是这种方法很不简洁，我们完全可以使用1，0来判断，比如我们设定一个a，如果a为假，我们就改成真，而a在程序后面可能用于判断，最简单也是最好理解的方法就是下面的写法
+```javascript
+
+var a=false;
+if(a==false){
+    a=true;
+}
+```既然提到了0，1，肯定有人想到了第二种写法：
+```javascript
+
+var a=0;
+if(!a){
+    a=1;
+}
+```这个代码还可以进一步简写优化，就是使用js的三元运算符，也就是三目运算符：
+```javascript
+
+var a=0;
+!a?a=1?null;
+</code></pre>
+<p>还有一点，对于空字符串的判断，往往采用<strong>if（a==””）</strong>,其实对于空字符本身就是false，下面我总结了下Javascript中的真假值，希望对大家有用<br><a id="more"></a>&gt; JavaScript 中的真假值</p>
+<blockquote>
+<p>类型    真假值<br>Null    总是为假（false）<br>Undefined    总是为假（false）<br>Boolean    保持真假值不变<br>Number    +0，-0 或是 NaN 的时候为假，其它值为真<br>String    空字符串的时候为假，其它值为真<br>Object    总是为真（true）</p>
+</blockquote>
+<h3 id="数组跟对象的定义">数组跟对象的定义</h3><p>对于类似下面的正统数组跟对象的定义</p>
+<pre><code class="javascript">
+var a=new Array;
+var b=new obj;
+obj.name=&quot;WYQ&quot;;
+obj.webSite=&quot;http://js8.in&quot;;
+```我们可以使用
+```javascript
+
+var a=[];
+var b={name:&quot;WYQ&quot;,webSite:&quot;http://js8.in&quot;};
+```来代替
+
+### 循环的控制
+在使用循环遍历时候要注意提前把长度或者要计算的长度记录下来，如下面的写法
+```javascript
+
+var list = document.getElementsByTagName(&#39;p&#39;);
+for (var i = 0, l = list.length; i &lt; l; i++) {//注意此处把list的长度提前计算出来，避免了每次循环重复计算
+    ……
+}
+```**注意**循环体**内部的写法，该放在外面的放在外面**如下面的代码
+```javascript
+
+var list = $(&quot;.abc&quot;);
+for (var i = 0, l = list.length; i &lt; l; i++) {//注意此处把list的长度提前计算出来，避免了每次循环重复计算
+    var a=list[i].html();
+    $(&quot;#abc&quot;).after(a);
+}
+```我们分析一下：每次循环的时候，都要首先解析$(&quot;#abc&quot;);势必效率变低，接着在使用after插入到#abc中去。这样子写效率会很低的，而下面的写法就高效了
+```javascript
+
+var list = $(&quot;.abc&quot;);
+var b = $(&quot;#abc&quot;);
+for (var i = 0, l = list.length; i &lt; l; i++) {//注意此处把list的长度提前计算出来，避免了每次循环重复计算
+    var a=list[i].html();
+    b.after(a);
+}
+```这样的写法还不是最高效的，看下面的方法
+```javascript
+
+var list = $(&quot;.abc&quot;);
+var b = &quot;&quot;;
+for (var i = 0, l = list.length; i &lt; l; i++) {//注意此处把list的长度提前计算出来，避免了每次循环重复计算
+    b+=list[i].html();
+}
+$(&quot;#abc&quot;).after(b);
+```_看似简单的Javascript代码，其实要做的功夫很多！_
+
+### 用while还是for？
+
+对于我来说，那个使用的方便，那个用的变量少使用那个，如对顺序没有关系的循环可以使用**while**，如下面的两段代码，前者使用了for，后者使用了while，两者明显while使用的变量少，虽然for容易使大家理解
+```javascript
+
+//使用for
+var arr = [1,2,3,4,5,6,7];
+var sum = 0;
+for (var i = 0, l = arr.length; i &lt; l; i++) {
+    sum += arr[i];
+}   
+//使用while
+var arr = [1,2,3,4,5,6,7];
+var sum = 0, l = arr.length;
+while (l--) {
+    sum += arr[l];
+}
+</code></pre>
+<h3 id="条件判断的优化技巧">条件判断的优化技巧</h3><p><strong>1、对于可能性的排列按照从高到底的顺序进行排列</strong></p>
+<p>原因很简单，可以减少程序的试探次数。<br><strong>2、使用三目运算符**</strong>三目运算符<strong>比if else判断语句</strong>效率**高，而且往往代码比较简洁如下面的两段代码</p>
+<pre><code class="javascript">
+//使用if else
+if (a &gt; b) {
+    num = a;
+} else {
+    num = b;
+}
+//三目运算符
+num = a &gt; b ? a : b;
+//谁说三目不能代替if else的function？
+c=a&gt;b?function(){
+            }:function(){
+                 };
+c();
+</code></pre>
+<p><strong>使用switch 代替if</strong>对于同一个条件不同情况的判断，使用switch简洁易懂，并且switch本身比if效率要高，在IE下尤为明显！</p>
+<h3 id="==与===的区别">==与===的区别</h3><p>看过jQuery源码的朋友发现，其中很多使用的是===，而不是==，这是因为===的效率比==要高，但是使用===要注意，===不会进行类型的转换，比如如果你确定比较两者类型相同，推荐使用<strong>===</strong>，这也是大家在编写代码时候自己细节的养成。当然也有一定的注意情况，下面仔细的说说==跟===的区别</p>
+<blockquote>
+<p>=== 操作符的判断算法</p>
+<p>在使用 === 来判断两个值是否相等的时候，如判断x===y，会首先比较两个值的类型是否相等，如果不相等的话，直接返回 false 。接着根据 x 的类型有不同的判断逻辑。</p>
+<p>如果 x 的类型是 Undefined 或 Null，则返回 true 。<br>如果 x 的类型是 Number，只要 x 或 y 中有一个值为 NaN，就返回 false ；如果 x 和 y 的数字值相等，就返回 true ；如果 x 或 y 中有一个是 +0，另外一个是 -0，则返回 true 。<br>如果 x 的类型是 String，当 x 和 y 的字符序列完全相同时返回 true，否则返回 false 。<br>如果 x 的类型是 Boolean，当 x 和 y 同为 true 或 false 时返回 true，否则返回 false 。<br>当 x 和 y 引用相同的对象时返回 true，否则返回 false 。<br>== 操作符的判断算法</p>
+<p>在使用 == 来判断两个值是否相等的时候，如判断x==y，当 x 和 y 的类型一样的时候，判断逻辑与 === 一样；如果 x 和 y 的类型不一样，== 不是简单的返回 false，而是会做一定的类型转换。</p>
+<p>如果 x 和 y 中有一个是 null，另外一个是 undefined 的话，返回 true 。如null == undefined。<br>如果 x 和 y 中一个的类型是 String，另外一个的类型是 Number 的话，会将 String 类型的值转换成 Number 来比较。如3 == “3”。<br>如果 x 和 y 中一个的类型是 Boolean 的话，会将 Boolean 类型的值转换成 Number 来比较。如true == 1、true == “1”<br>如果 x 和 y 中一个的类型是 String 或 Number，另外一个的类型是 Object 的话，会将 Object 类型的值转换成基本类型来比较。如[3,4] == “3,4”<br>需要注意的是 == 操作符不一定是传递的，即从A == B, B == C并不能一定得出A == C。考虑下面的例子，var str1 = new String(“Hello”); var str2 = new String(“Hello”); str1 == “Hello”; str2 == “Hello”，但是str1 != str2。</p>
+</blockquote>
+<h3 id="typeof使用时候注意">typeof使用时候注意</h3><p>对于同一个<strong>var a=”abc”;</strong><br>在FF下typeof a==string 返回 true<br>在IE下返回false，IE就是这样的娇贵！<br>推荐写法：</p>
+<blockquote>
+<p>typeof a==”string”</p>
+</blockquote>
+<h3 id="最后，尽量避免使用eval等语句！">最后，尽量避免使用eval等语句！</h3><p><strong>eval</strong>、Function、execScript等语句会再次使用javascript解析引擎进行解析，需要消耗大量的执行时间。</p>
+<p><em>P.S.</em><strong>此文章不断整理更新中，有好的想法，大家可以提出来讨论</strong></p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2009/12/01/使用css控制打印页面格式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          使用CSS控制打印页面格式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2009/11/22/css-3-0-参考手册-中文版下载/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CSS 3.0 参考手册 (中文版)下载</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="javascript高效简洁代码的编写及优化技巧" data-title="javascript高效简洁代码的编写及优化技巧" data-url="http://js8.in/2009/11/28/javascript高效简洁代码的编写及优化技巧/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

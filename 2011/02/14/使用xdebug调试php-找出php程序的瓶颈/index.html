@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用xdebug调试PHP 找出PHP程序的瓶颈 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="xdebug是PHP的一个扩展应用，有了xdebug就可以轻松的调试PHP程序，有了它，我们就不用使用var_dump()，print_r()之类的傻瓜调试函数了。Xdebug则提供了更多的功能，能全方位的对PHP脚本进行调试。Xdebug主要的功能如下：
+
+堆栈追踪和函数追踪；
+错误信息；
+内存分配；
+剖析php脚本的信息；
+代码覆盖率分析；
+远程调试分析；
+
+1、Ubuntu搭建xdebug调">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用xdebug调试PHP 找出PHP程序的瓶颈">
+<meta property="og:url" content="http://js8.in/2011/02/14/使用xdebug调试php-找出php程序的瓶颈/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="xdebug是PHP的一个扩展应用，有了xdebug就可以轻松的调试PHP程序，有了它，我们就不用使用var_dump()，print_r()之类的傻瓜调试函数了。Xdebug则提供了更多的功能，能全方位的对PHP脚本进行调试。Xdebug主要的功能如下：
+
+堆栈追踪和函数追踪；
+错误信息；
+内存分配；
+剖析php脚本的信息；
+代码覆盖率分析；
+远程调试分析；
+
+1、Ubuntu搭建xdebug调">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用xdebug调试PHP 找出PHP程序的瓶颈">
+<meta name="twitter:description" content="xdebug是PHP的一个扩展应用，有了xdebug就可以轻松的调试PHP程序，有了它，我们就不用使用var_dump()，print_r()之类的傻瓜调试函数了。Xdebug则提供了更多的功能，能全方位的对PHP脚本进行调试。Xdebug主要的功能如下：
+
+堆栈追踪和函数追踪；
+错误信息；
+内存分配；
+剖析php脚本的信息；
+代码覆盖率分析；
+远程调试分析；
+
+1、Ubuntu搭建xdebug调">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-使用xdebug调试php-找出php程序的瓶颈" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2011/02/14/使用xdebug调试php-找出php程序的瓶颈/" class="article-date">
+  	<time datetime="2011-02-14T15:24:17.000Z" itemprop="datePublished">2011年2月14日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用xdebug调试PHP 找出PHP程序的瓶颈
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/后端运维/">后端运维</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>xdebug</strong>是PHP的一个扩展应用，有了xdebug就可以轻松的调试PHP程序，有了它，我们就不用使用<code>var_dump()</code>，<code>print_r()</code>之类的傻瓜调试函数了。<br>Xdebug则提供了更多的功能，能全方位的对PHP脚本进行调试。<strong>Xdebug</strong>主要的功能如下：</p>
+<ol>
+<li>堆栈追踪和函数追踪；</li>
+<li>错误信息；</li>
+<li>内存分配；</li>
+<li>剖析php脚本的信息；</li>
+<li>代码覆盖率分析；</li>
+<li>远程调试分析；</li>
+</ol>
+<h3 id="1、Ubuntu搭建xdebug调试环境">1、Ubuntu搭建xdebug调试环境</h3><h4 id="安装Xdebug模块">安装Xdebug模块</h4><p>在终端中使用apt-get安装xdebug，命令如下</p>
+<blockquote>
+<p>sudo apt-get install php5-dev php-pear<br>sudo apt-get install php5-xdebug<br>然后打开php.ini文件(例如gedit /etc/php5/apache2/php.ini)。进行如下配置；<br>;加载xdebug动态链接库<br>extension=xdebug.so<br>;xdebug分析文件输出路径<br>xdebug.profiler_output_dir = “/var/www/xdebug/“<br>;分析器默认是关闭，调试的时候在url中加入XDEBUG_PROFILE=true即可<br>xdebug.profiler_enable = Off<br>xdebug.profiler_enable_trigger = 1<br>重启apache，这样就可以使用xdebug调试PHP了。</p>
+</blockquote>
+<h3 id="2、windows下安装xdebug">2、windows下安装xdebug</h3><p>以PHP5.1.4，Windows平台为例（其它PHP版本，其它平台请参看官网文档）：<br>1． 登录<a href="http://www.xdebug.org，在首页右侧有一个Windows" target="_blank" rel="external">www.xdebug.org，在首页右侧有一个Windows</a> modules，选择其中的PHP5.1.2+，下载php_xdebug-5.1.2-2.0.0beta6.dll文件；<br>2． 将下载的php_xdebug-5.1.2-2.0.0beta6.dll放到C:\php5\ext目录，重命名为php_xdebug.dll；<br>3． 编辑php.ini，加入下面几行：</p>
+<blockquote>
+<p>extension=php_xdebug.dll<br>[Xdebug]<br>xdebug.profiler_enable=on<br>xdebug.trace_output_dir=”I:\Projects\xdebug”<br>xdebug.profiler_output_dir=”I:\Projects\xdebug”<br>xdebug.dump.GET=*<br>xdebug.show_local_vars=1<br>具体参数PHP.ini说明参见ubuntu下的注释。</p>
+</blockquote>
+<h3 id="3、使用xdebug进行PHP调试">3、使用xdebug进行PHP调试</h3><h4 id="xdebug调试变量更加友好">xdebug调试变量更加友好</h4><p>Xdebug重写了php里面<code>var_dump()</code>函数。<br>xdebug里的var_dump()给变量对象有不同的颜色，显示类型长度，还可以控制显示层次，显示的方式经过格式化，清晰友好。<br>需要使用此功能，有如下参数需注意。<br><a id="more"></a></p>
+<blockquote>
+<p>;是否覆盖php里面的函数var_dump();默认是开启的，值为1；设为0，则关闭；<br>xdebug.overload_var_dump = 1<br>;控制数组子元素显示的大小默认为256<br>xdebug.var_display_max_children = 256<br>;控制变量打印的大小，默认为512<br>xdebug.var_display_max_data = 512<br>;控制数组和对象元素显示的层级。默认为3<br>xdebug.var_display_max_depth = 3</p>
+</blockquote>
+<h4 id="xdebug的堆栈追踪功能">xdebug的堆栈追踪功能</h4><p>如果脚本中出现函数参数不正确，方法重复，语法错误等错误的时候。xdebug能追踪其错误产生的产生的过程。</p>
+<p>参数配置请参考<a href="http://xdebug.com/docs/stack_trace" target="_blank" rel="external">http://xdebug.com/docs/stack_trace</a>；一般来说，很少需要配置。</p>
+<h3 id="4、使用xdebug进行脚本性能测试">4、使用xdebug进行脚本性能测试</h3><p>在php.ini做如下配置</p>
+<blockquote>
+<p>;默认为0,不开启xdebug调试器；<br>xdebug.profiler_enable = 0<br>;默认为0；这里设为1，可以通过XDEBUG_PROFILE参数通过GET/POST传递<br>xdebug.profiler_enable_trigger = 1</p>
+</blockquote>
+<h4 id="测试性能结果查看工具">测试性能结果查看工具</h4><p>测试完毕后，我们需要查看下测试结果，从而找到PHP的瓶颈。<br>这里推荐使用两款查看工具，ubuntu下可以使用<strong>KCachegrind</strong>，windows下可以使用<strong><a href="http://sourceforge.net/projects/wincachegrind/" target="_blank" rel="external">WinCacheGrind</a></strong>。具体查看xdebug测试结果工具使用方法自己谷歌，很简单。懂点E文就可以看懂的。</p>
+<h3 id="5、xdebug使用注意及相关参数说明">5、xdebug使用注意及相关参数说明</h3><h4 id="xdebug使用注意">xdebug使用注意</h4><p>如果您在 phpinfo() 的输出中没有看到 <strong>Xdebug </strong>部分，则 Xdebug 装入失败。Apache 错误日志会列出原因。常见错误包括 zend_extension 的路径错误或者与其他扩展发生冲突。例如，如果需要使用 XCache 和 Xdebug，一定要先装入 XCache。但是，由于 Xdebug 适于在开发时使用并假定 xdebug.so 的路径正确，因此需要禁用其他扩展并重试。然后您可以重新启用扩展以执行其他测试，如缓存的效果。</p>
+<p>Xdebug 站点还有其他一些故障检修技巧。</p>
+<h4 id="xdebug相关参数设置">xdebug相关参数设置</h4><h5 id="xdebug-default_enable">xdebug.default_enable</h5><p>类型：布尔型 默认值：On<br>如果这项设置为On，堆栈跟踪将被默认的显示在错误事件中。你可以通过在代码中使用xdebug_disable()来禁止堆叠跟踪的显示。因为这是xdebug基本功能之一，将这项参数设置为On是比较明智的。</p>
+<h5 id="xdebug-max_nesting_level">xdebug.max_nesting_level</h5><p>类型：整型 默认值：100<br>The value of this setting is the maximum level of nested functions that are allowed before the script will be aborted.<br>限制无限递归的访问深度。这项参数设置的值是脚本失败前所允许的嵌套程序的最大访问深度。</p>
+<h5 id="xdebug-dump_globals">xdebug.dump_globals</h5><p>类型：布尔型 默认值：1<br>限制是否显示被xdebug.dump.*设置定义的超全局变量的值<br>例如，xdebug.dump.SERVER = REQUEST_METHOD,REQUEST_URI,HTTP_USER_AGENT 将打印 PHP 超全局变量 $_SERVER[‘REQUEST_METHOD’]、$_SERVER[‘REQUEST_URI’] 和 $_SERVER[‘HTTP_USER_AGENT’]。</p>
+<h5 id="xdebug-dump_once">xdebug.dump_once</h5><p>类型：布尔型 默认值：1<br>限制是否超全局变量的值应该转储在所有出错环境(设置为Off时)或仅仅在开始的地方(设置为On时)</p>
+<h5 id="xdebug-dump_undefined">xdebug.dump_undefined</h5><p>类型：布尔型 默认值：0<br>如果你想从超全局变量中转储未定义的值，你应该把这个参数设置成On，否则就设置成Off</p>
+<h5 id="xdebug-show_exception_trace">xdebug.show_exception_trace</h5><p>类型：整型 默认值：0<br>当这个参数被设置为1时，即使捕捉到异常，xdebug仍将强制执行异常跟踪当一个异常出现时。</p>
+<h5 id="xdebug-show_local_vars">xdebug.show_local_vars</h5><p>类型：整型 默认值：0<br>当这个参数被设置为不等于0时，xdebug在错环境中所产生的堆栈转储还将显示所有局部变量，包括尚未初始化的变量在最上面。要注意的是这将产生大量的信息，也因此默认情况下是关闭的。</p>
+<h5 id="xdebug-profiler_append">xdebug.profiler_append</h5><p>类型：整型 默认值：0<br>当这个参数被设置为1时，文件将不会被追加当一个新的需求到一个相同的文件时(依靠xdebug.profiler_output_name的设置)。相反的设置的话，文件将被附加成一个新文件。</p>
+<h5 id="xdebug-profiler_enable">xdebug.profiler_enable</h5><p>类型：整型 默认值：0<br>开放xdebug文件的权限，就是在文件输出目录中创建文件。那些文件可以通过KCacheGrind来阅读来展现你的数据。这个设置不能通过在你的脚本中调用ini_set()来设置。</p>
+<h5 id="xdebug-profiler_output_dir">xdebug.profiler_output_dir</h5><p>类型：字符串 默认值：/tmp<br>这个文件是profiler文件输出写入的，确信PHP用户对这个目录有写入的权限。这个设置不能通过在你的脚本中调用ini_set()来设置。</p>
+<h5 id="xdebug-profiler_output_name">xdebug.profiler_output_name</h5><p>类型：字符串 默认值：cachegrind.out%p<br>这个设置决定了转储跟踪写入的文件的名称。</p>
+<h5 id="xdebug-remote_autostart">xdebug.remote_autostart</h5><p>类型：布尔型 默认值：0<br>一般来说，你需要使用明确的HTTP GET/POST变量来开启远程debug。而当这个参数设置为On，xdebug将经常试图去开启一个远程debug session并试图去连接客户端，即使GET/POST/COOKIE变量不是当前的。</p>
+<h5 id="xdebug-remote_enable">xdebug.remote_enable</h5><p>类型：布尔型 默认值：0<br>这个开关控制xdebug是否应该试着去连接一个按照xdebug.remote_host和xdebug.remote_port来设置监听主机和端口的debug客户端。</p>
+<h5 id="xdebug-remote_host">xdebug.remote_host</h5><p>类型：字符串 默认值：localhost<br>选择debug客户端正在运行的主机，你不仅可以使用主机名还可以使用IP地址</p>
+<h5 id="xdebug-remote_port">xdebug.remote_port</h5><p>类型：整型 默认值：9000<br>这个端口是xdebug试着去连接远程主机的。9000是一般客户端和被绑定的debug客户端默认的端口。许多客户端都使用这个端口数字，最好不要去修改这个设置。</p>
+<p>注意：所有以上参数修改后，要重启Apache才能生效！</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2011/03/03/如何写出高质量的javascript代码/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          如何写出高质量的Javascript代码
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2011/01/26/使用navigator-geolocation来获取用户的地理位置信息/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用navigator.geolocation来获取用户的地理位置信息</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="使用xdebug调试php-找出php程序的瓶颈" data-title="使用xdebug调试PHP 找出PHP程序的瓶颈" data-url="http://js8.in/2011/02/14/使用xdebug调试php-找出php程序的瓶颈/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

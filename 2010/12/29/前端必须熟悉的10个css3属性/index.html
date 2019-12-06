@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>前端必须熟悉的10个CSS3属性 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="随着Css3和html5的风靡，越来越多的前端人员开始学习Css3，今天的文章就是来说说前端应该掌握10个Css3属性。  上篇博文提到了《前端必须掌握30个CSS3选择器》，但是对于Css3的新属性，你又了解多少呢？虽然大多数的css3属性在很多流行的浏览器中不支持，但是我们鼓励在前端开发中要学会并且运行这些css3属性，因为这是未来的趋势。  关键是首先确定你是否对各个浏览器之间的细微的差别有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端必须熟悉的10个CSS3属性">
+<meta property="og:url" content="http://js8.in/2010/12/29/前端必须熟悉的10个css3属性/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="随着Css3和html5的风靡，越来越多的前端人员开始学习Css3，今天的文章就是来说说前端应该掌握10个Css3属性。  上篇博文提到了《前端必须掌握30个CSS3选择器》，但是对于Css3的新属性，你又了解多少呢？虽然大多数的css3属性在很多流行的浏览器中不支持，但是我们鼓励在前端开发中要学会并且运行这些css3属性，因为这是未来的趋势。  关键是首先确定你是否对各个浏览器之间的细微的差别有">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/201012220003115125.png">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151251.png">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151252-254x300.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151253-300x242.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151254-300x187.png">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151255-300x123.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151256-300x89.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151257-300x103.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151258-300x192.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/2010122200031151259-300x221.png">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/20101222000311512510-300x176.png">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/20101222000311512511-300x159.png">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/20101222000311512512-300x158.png">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/20101222000311512513-300x106.png">
+<meta property="og:image" content="http://js8.in/uploads/2010/12/20101222000311512514-300x249.png">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端必须熟悉的10个CSS3属性">
+<meta name="twitter:description" content="随着Css3和html5的风靡，越来越多的前端人员开始学习Css3，今天的文章就是来说说前端应该掌握10个Css3属性。  上篇博文提到了《前端必须掌握30个CSS3选择器》，但是对于Css3的新属性，你又了解多少呢？虽然大多数的css3属性在很多流行的浏览器中不支持，但是我们鼓励在前端开发中要学会并且运行这些css3属性，因为这是未来的趋势。  关键是首先确定你是否对各个浏览器之间的细微的差别有">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-前端必须熟悉的10个css3属性" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2010/12/29/前端必须熟悉的10个css3属性/" class="article-date">
+  	<time datetime="2010-12-29T10:59:57.000Z" itemprop="datePublished">2010年12月29日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      前端必须熟悉的10个CSS3属性
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络技术/">网络技术</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>随着Css3和html5的风靡，越来越多的前端人员开始学习Css3，今天的文章就是来说说前端应该掌握10个Css3属性。  上篇博文提到了《<a href="http://js8.in/647.html" title="前端必须掌握30个CSS3选择器">前端必须掌握30个CSS3选择器</a>》，但是对于Css3的新属性，你又了解多少呢？虽然大多数的css3属性在很多流行的浏览器中不支持，但是我们鼓励在前端开发中要学会并且运行这些css3属性，因为这是未来的趋势。  关键是首先确定你是否对各个浏览器之间的细微的差别有所了解，你能肯定的说IE显示的90度的角就不圆滑嘛？这取决于你的决定。但是要永远记住，网站设计不必看到所有浏览器的不同。在文章的最后，我们将显示一个有趣的最终的案例。</p>
+<h3 id="1、border-radius">1、border-radius</h3><p><a href="http://js8.in/648.html/attachment/201012220003115125"><img src="/uploads/2010/12/201012220003115125.png" alt="border-radius" title="border-radius"></a></p>
+<p><strong>border-radius</strong>是一大堆CSS3属性中最受欢迎的一种，border-radius是CSS3中级别最高的一个属性。当设计者害怕一个层在将在不同的浏览器之间以不同的方式显示时，CSS圆角，一个很初级的知识，将引导他们开始学习。  我们为移动浏览器提供一个备用的观看体验的想法都非常好。奇怪的是，当这种方法出现在桌面浏览器上时，他们却又不这么认为。  border-radius是一大堆CSS3属性中最受欢迎的一种，border-radius是CSS3中级别最高的一个属性。当设计者害怕一个层在将在不同的浏览器之间以不同的方式显示时，CSS圆角，一个很初级的知识，将引导他们开始学习。  我们为移动浏览器提供一个备用的观看体验的想法都非常好。奇怪的是，当这种方法出现在桌面浏览器上时，他们却又不这么认为。</p>
+<pre><code class="css">
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+</code></pre>
+<p>注意：请在Safari 5 和 IE9浏览器中执行”border-radius”语法。<br> <strong>圆</strong><br>许多读者也许不会意识到我们可以用这个属性来做一个圆。<br><a id="more"></a></p>
+<pre><code class="css">
+-moz-border-radius: 50px;
+-webkit-border-radius: 50px;
+ border-radius: 50px;
+</code></pre>
+<p><a href="http://js8.in/648.html/201012220003115125-2"><img src="/uploads/2010/12/2010122200031151251.png" alt="圆" title="圆"></a></p>
+<p>如果想再添加点效果，我们可以利用Flexible Box Model（详情在8中）来使得文字在垂直在水平方向都居中。这需要加点代码，但这仅仅是对不同浏览器的补偿。</p>
+<pre><code class="css">
+display: -moz-box;
+display: -webkit-box;
+display: box;
+-moz-box-orient: horizontal; /* the default, so not really necessary here */
+-webkit-box-orient: horizontal;
+box-orient: horizontal;
+-moz-box-pack: center;
+-moz-box-align: center;
+-webkit-box-pack: center;
+-webkit-box-align: center;
+box-pack: center;
+box-align: center;
+</code></pre>
+<h3 id="2、_box-shadow">2、 box-shadow</h3><p><a href="http://js8.in/648.html/201012220003115125-3"><img src="/uploads/2010/12/2010122200031151252-254x300.jpg" alt="box-shadow" title="box-shadow"></a></p>
+<p>接下来是非常普遍的<strong>box-shadow</strong>，可以使你的元素立即美化，只是记得不要把值设得太离谱。</p>
+<pre><code class="css">
+-webkit-box-shadow: 1px 1px 3px #292929;
+-moz-box-shadow: 1px 1px 3px #292929;
+box-shadow: 1px 1px 3px #292929;
+</code></pre>
+<p>box-shadow的四个参数</p>
+<ol>
+<li>x-offset x轴偏移</li>
+<li>y-offset y轴偏移</li>
+<li>blur 模糊值</li>
+<li>color of shadow 阴影颜色<br>现在，许多人不知道可以一次运用多个box-shadows，这样做会产生一些有趣的效果。在下图中，我使用蓝色和绿色阴影来放大一下效果。</li>
+</ol>
+<p><a href="http://js8.in/648.html/201012220003115125-4"><img src="/uploads/2010/12/2010122200031151253-300x242.jpg" alt="box-shadow" title="box-shadow"></a></p>
+<pre><code class="css">
+-webkit-box-shadow: 1px 1px 3px green, -1px -1px blue;
+-moz-box-shadow: 1px 1px 3px green,-1px -1px blue;
+box-shadow: 1px 1px 3px green, -1px -1px blue;
+</code></pre>
+<p><strong>Clever Shadows </strong></p>
+<pre><code class="html">
+&lt;div class=&quot;box&quot;&gt;
+   ![Tuts](tuts.jpg)
+&lt;/div&gt;
+</code></pre>
+<p><strong>The CSS</strong></p>
+<pre><code class="css">
+.box:after {
+   content: &#39;&#39;;
+   position: absolute;
+
+   z-index: -1; /* hide shadow behind image */
+
+   /* The Shadow */
+   -webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+   -moz-box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+   -box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);                
+
+   width: 70%;
+   left: 15%; /* one half of the remaining 30% (see width above) */
+
+   height: 100px;
+   bottom:  0;
+}
+</code></pre>
+<p><a href="http://js8.in/648.html/201012220003115125-5"><img src="/uploads/2010/12/2010122200031151254-300x187.png" alt="box-shadow" title="box-shadow"></a></p>
+<h3 id="3、_text-shadow">3、 text-shadow</h3><p><a href="http://js8.in/648.html/201012220003115125-6"><img src="/uploads/2010/12/2010122200031151255-300x123.jpg" alt="text-shadow" title="text-shadow"></a></p>
+<p><strong>text-shadow</strong>是我们可以省略前缀的几个CSS属性之一，类似的还有box-shadow，它必须应用于文本，并它们有相同的四个参数：</p>
+<ol>
+<li>x-offset 水平位移</li>
+<li>y-offest 垂直位移</li>
+<li>blur 模糊值</li>
+<li>color of shadow 阴影颜色</li>
+</ol>
+<pre><code class="css">
+ h1 {
+    text-shadow: 0 1px 0 white;
+    color: #292929;
+ }
+</code></pre>
+<p><strong>Text-Outline</strong> 和box-shadow一样，它可以设置多个阴影通过逗号分隔符。例如，我们创建文本框的轮廓，当webkit不支持stroke效果，我们可以使用下面的代码让更多的浏览器支持（虽然不是很美观）。</p>
+<pre><code class="css">
+body { background: white; }
+
+h1 {
+   text-shadow: 0 1px 0 black, 0 -1px 0 black, 1px 0 0 black, -1px 0 0 black;
+   color: white;
+}
+</code></pre>
+<p><a href="http://js8.in/648.html/201012220003115125-7"><img src="/uploads/2010/12/2010122200031151256-300x89.jpg" alt="Text-Outline" title="Text-Outline"></a></p>
+<h3 id="4、_Text-Stroke">4、 Text-Stroke</h3><p><a href="http://js8.in/648.html/201012220003115125-8"><img src="/uploads/2010/12/2010122200031151257-300x103.jpg" alt="Text-Stroke" title="Text-Stroke"></a></p>
+<p>使用这个方法时要注意了，只有webkit（Safari， Chrome， iPhone）在最后的几年内还支持这个属性。其实，虽然我可能是错的，<strong>text-stroke</strong>还不属于CSS3范畴的一部分。在这种情况下，使用白 色字体时，firefox会显示一个空白页面。要解决此问题，你即可以使用Javascript，也可以通过使用一种不同于背景颜色的文字颜色。</p>
+<pre><code class="css">
+h1 {
+   -webkit-text-stroke: 3px black;
+   color: white;
+}
+</code></pre>
+<p><strong>Feature Detection</strong> 我们如何为firefox提供一组可用的样式，和为另外的一组Safari或Chrome？解决办法就是多做测试。  通过feature detection，我们可以利用JavaScript来测试某属性是否可用，如果不行，我可就要采用备用的。  再回到text-stroke的问题上，为不支持此属性的浏览器设定一个备用黑色（目前的除webkit外）。</p>
+<pre><code class="javascript">
+var h1 = document.createElement(&#39;h1&#39;);
+if ( !( &#39;webkitTextStroke&#39; in h1.style ) ) {
+   var heading = document.getElementsByTagName(&#39;h1&#39;)[0];
+   heading.style.color = &#39;black&#39;;
+}
+</code></pre>
+<p>首先我们设定一个h1元素，然后执行，通过样式属性以确定-webkit-text-stroke是否支持此元素。如果不支持，我们会把标题由白色设置成黑色。</p>
+<h3 id="5、_Multiple_Backgrounds">5、 Multiple Backgrounds</h3><p><a href="http://js8.in/648.html/201012220003115125-9"><img src="/uploads/2010/12/2010122200031151258-300x192.jpg" alt="Multiple Backgrounds" title="Multiple Backgrounds"></a></p>
+<p><strong>Background</strong>属性在CSS3样式中已经彻底改革，开始支持多背景图片。  举个简单的例子，如果没和合适的图像，我们将使用两个教程的图像作为我们的背景，当然在程序中你可能会用纹理，也许是渐变作为图像。</p>
+<pre><code class="css">
+.box {
+background: url(image/path.jpg) 0 0 no-repeat,
+ url(image2/path.jpg) 100% 0 no-repeat;
+}
+</code></pre>
+<p>以上，通过逗号分隔符，插入了两张背景图像，第一个的定位是（0，0），第二个的定位是（100%，0）。  要确定你对不支持的浏览器使用了备用图片，否则，它将跳此属性，使背景图像留空。  <strong>对旧浏览器的补偿</strong> 要添加一张单独的图像给老浏览器用，像IE7。要定义两遍background，一遍是为老浏览器，另一遍是重写。或者你可以再次查看下Modernizr。</p>
+<pre><code class="css">
+.box {
+/* fallback */
+background: url(image/path.jpg) no-repeat;
+
+/* modern browsers */
+background: url(image/path.jpg) 0 0 no-repeat,
+ url(image2/path.jpg) 100% 0 no-repeat;
+}
+</code></pre>
+<h3 id="6、_background-size">6、 background-size</h3><p>目前我们已经可以使用这种比较灵活的方式去重定义背景图像的大小。</p>
+<pre><code class="css">
+background: url(path/to/image.jpg) no-repeat;
+background-size: 100% 100%;
+</code></pre>
+<p>上面的代码使得背景图像已经占据了整个可用空间。但是，如果我们使用一个特殊的图片去占据body元素的整个空间而无论窗口有多宽，那又怎么做？</p>
+<pre><code class="css">
+body, html { height: 100%; }
+
+body {
+ background: url(path/to/image.jpg) no-repeat;
+ background-size: 100% 100%;
+}
+</code></pre>
+<p>对，就是这么做，分别定义background-size的x，y参数。 最新版本的Chrome 和 Safari支持此属性，但我们还是要用旧的方法支持旧的浏览器。</p>
+<pre><code class="css">
+body {
+ background: url(path/to/image.jpg) no-repeat;
+ -moz-background-size: 100% 100%;
+ -o-background-size: 100% 100%;
+ -webkit-background-size: 100% 100%;
+ background-size: 100% 100%;
+}
+</code></pre>
+<h3 id="7、_text-overflow">7、 text-overflow</h3><p>浏览器最初开发文本溢出属性可以设定两个值：clip ellipsis 此属性支持切断容器中的文本，而且也给出了一个省略号的特性。</p>
+<p><a href="http://js8.in/648.html/201012220003115125-10"><img src="/uploads/2010/12/2010122200031151259-300x221.png" alt="text-overflow" title="text-overflow"></a></p>
+<pre><code class="css">
+.box {
+   -o-text-overflow: ellipsis;
+   text-overflow:ellipsis;
+   overflow:hidden;
+   white-space:nowrap;
+   border: 1px solid black;
+   width: 400px;
+   padding: 20px;
+   cursor: pointer;
+}
+</code></pre>
+<p>或许你会考虑当鼠标经过时显示全部的文本内容。</p>
+<pre><code class="css">
+#box:hover {
+  white-space: normal;
+  color: rgba(0,0,0,1);
+  background: #e3e3e3;
+  border: 1px solid #666;
+}
+</code></pre>
+<p>有点奇怪，这看起来并不像是重置text-overflow属性或是停用它，使之生效，在on:hover中我们可以使得white-space的normal属性。现在正常了。  知道吗？您还可以指定自己的字符串，应使用省略号的位置。这样做来修饰要显示的文本字符串。</p>
+<h3 id="8、_Flexible_Box_Model">8、 Flexible Box Model</h3><p>Flexible Box Model将最终使我们远离类似float的困扰。虽然是要给你的头部换一个新的属性，但一旦你这么做了，将终身受益。 做个演示，创建简单的两列布局。</p>
+<pre><code class="html">
+&lt;div id=&quot;container&quot;&gt;
+ &lt;div id=&quot;main&quot;&gt; Main content here &lt;/div&gt;
+ &lt;aside&gt; Aside content here &lt;/aside&gt;
+&lt;/div&gt;
+</code></pre>
+<p>首先我们要设定一个容器，然后指定它的宽和高，即便是没有实质性的内容在里面。</p>
+<pre><code class="css">
+#container {
+    width: 960px;
+    height: 500px; /* just for demo */
+
+    background: #e3e3e3;
+    margin: auto;
+
+    display: -moz-box;
+    display: -webkit-box;
+    display: box;
+</code></pre>
+<p>接下来分别定义#main和aside的背景色</p>
+<pre><code class="css">
+#main {
+   background: yellow;
+}   
+
+aside {
+   background: red;
+}
+</code></pre>
+<p>到目前为了还没有看出什么效果来。</p>
+<p><dl></dl></p>
+<p><dt><a href="http://js8.in/648.html/201012220003115125-11"><img src="/uploads/2010/12/20101222000311512510-300x176.png" alt="Flexible Box Model" title="Flexible Box Model"></a></dt> <dd style="font-size: 11px; line-height: 17px; padding-top: 0px; padding-right: 4px; padding-bottom: 5px; padding-left: 4px; margin: 0px;"> </dd><br>值得一提的是，虽然我们设置了display:box模型，它的子元素会占据整个垂直空间。这就是它的默认box-align属性stretch。  看看有什么效果产生，当我们设置了#main的宽度后。</p>
+<pre><code class="css">
+#main {
+  background: yellow;
+  width: 800px;
+}
+</code></pre>
+<p><a href="http://js8.in/648.html/201012220003115125-12"><img src="/uploads/2010/12/20101222000311512511-300x159.png" alt="Flexible Box Model" title="Flexible Box Model"></a></p>
+<p>但是我们仍有个疑问，为什么aside不占据剩余的全部空间呢？我们可以用新属性box-flex来试下。  box-flex 使得元素占据整个空间。</p>
+<pre><code class="css">
+aside {
+    display: block; /* cause is HTML5 element */
+    background: red;
+
+   /* take up all available space */
+    -moz-box-flex: 1;
+    -webkit-box-flex: 1;
+    box-flex: 1;
+ }
+</code></pre>
+<p>使用这个属性后，不管#main有多宽，aside都将占据整个可用的空间。同时你也不必担心诸如float等产生的问题，像使得元素被排挤到下一行。</p>
+<p><a href="http://js8.in/648.html/201012220003115125-13"><img src="/uploads/2010/12/20101222000311512512-300x158.png" alt="Flexible Box Model" title="Flexible Box Model"></a></p>
+<p>我只是在这儿肤浅的说一下，请参阅保罗爱尔兰优秀文章的详细信息。然而，使用此方法的时候也应注意一下兼容问题，例如老的浏览器应该先测试下，并且提供必要的备注。</p>
+<h3 id="9、_Resize">9、 Resize</h3><p>只有Firefox 4和Safari 3支持此属性。Resize是CSS3 UI模型中的一部分，可用于重定义textarea的大小。</p>
+<pre><code class="html">
+&lt;textarea name=&quot;elem&quot; id=&quot;elem&quot; rows=&quot;5&quot; cols=&quot;50&quot;&gt;&lt;/textarea&gt;
+</code></pre>
+<p>默认情况下webkit浏览器和Firefox 4支持水平和垂直方向上的重定义。</p>
+<pre><code class="css">
+textarea {
+   -moz-resize: vertical;
+   -webkit-resize: vertical;
+   resize: vertical;
+}
+</code></pre>
+<p>可能的值：</p>
+<ol>
+<li>both： 重定义水平和垂直方向</li>
+<li>horizontal： 水平调整大小限制</li>
+<li>vertical： 垂直调整大小限制</li>
+<li>none： 不支持重定义<br><a href="http://js8.in/648.html/201012220003115125-14"><img src="/uploads/2010/12/20101222000311512513-300x106.png" alt="Resize" title="Resize"></a></li>
+</ol>
+<h3 id="10、_Transition">10、 Transition</h3><p>也许CSS3最令人兴奋的增补，就是在没有 JavaScript 的元素的情况下产生动画。  好像IE9还不支持此功能，但这并不代表你不能使用这个功能，关键是在于提高技能。  现在模仿一个效果，当鼠标滑过右侧链接时，文本向右滑动。<br><strong>The HTML</strong></p>
+<pre><code class="html">
+
+*   [ Hover Over Me ](#)
+*   [ Hover Over Me ](#)
+*   [ Hover Over Me ](#)
+*   [ Hover Over Me ](#)
+</code></pre>
+<p><strong>The CSS</strong></p>
+<pre><code class="css">
+ul a {
+    -webkit-transition: padding .4s;
+    -moz-transition: padding .4s;
+    -o-transition: padding .4s;
+    transition: padding .4s;
+ }
+
+ a:hover {
+    padding-left: 6px;
+ }
+</code></pre>
+<p>transition 有三个参数：</p>
+<ol>
+<li>The property to transition. （Set this value to all if needed） 转换属性。（设置此值为所有如有需要）</li>
+<li>The duration 持续时间</li>
+<li>The easing type 缓动类型<br>为什么我们不将transition直接应用到hover上呢？是因为我们只是在mouseover时生效，当mouseout时元素将立即返回到其最初的状态。 因为我们对效果做了调整，所有对旧的浏览器不会产生任何影响。 接下来是通过文章所学，我们来建立的一个简洁的效果。大家可以通过查看源码来学习来。具体如何创建我就不翻译了。</li>
+</ol>
+<p><a href="http://js8.in/648.html/201012220003115125-15"><img src="/uploads/2010/12/20101222000311512514-300x249.png" alt="实例" title="实例"></a></p>
+<p>原文地址：<a href="http://net.tutsplus.com/tutorials/html-css-techniques/10-css3-properties-you-need-to-be-familiar-with/" target="_blank" rel="external">10 CSS3 Properties you Need to be Familiar with</a></p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2011/01/14/iframe自适用高度代码/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          iframe自适用高度代码
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/12/28/前端必须掌握30个css3选择器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">前端必须掌握30个CSS3选择器</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="前端必须熟悉的10个css3属性" data-title="前端必须熟悉的10个CSS3属性" data-url="http://js8.in/2010/12/29/前端必须熟悉的10个css3属性/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

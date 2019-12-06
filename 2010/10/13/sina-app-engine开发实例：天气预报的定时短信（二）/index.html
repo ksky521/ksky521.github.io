@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Sina App Engine开发实例：天气预报的定时短信（二） | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="昨天简单介绍了下新浪App Engine的应用，并且介绍了通过weather.com.cn的接口获取天气预报的方法。今天继续开始我们的SAE开发实例之旅。今天主要介绍下使用飞信接口发送短信和使用Sina App Engine的crontab（计划任务）功能。
+Sina App Engine开发实例：天气预报的定时短信（一） | 天气预报的定时短信（二）
+
+广告时间：
+新浪微博送祝福方法1、在发布新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sina App Engine开发实例：天气预报的定时短信（二）">
+<meta property="og:url" content="http://js8.in/2010/10/13/sina-app-engine开发实例：天气预报的定时短信（二）/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="昨天简单介绍了下新浪App Engine的应用，并且介绍了通过weather.com.cn的接口获取天气预报的方法。今天继续开始我们的SAE开发实例之旅。今天主要介绍下使用飞信接口发送短信和使用Sina App Engine的crontab（计划任务）功能。
+Sina App Engine开发实例：天气预报的定时短信（一） | 天气预报的定时短信（二）
+
+广告时间：
+新浪微博送祝福方法1、在发布新">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sina App Engine开发实例：天气预报的定时短信（二）">
+<meta name="twitter:description" content="昨天简单介绍了下新浪App Engine的应用，并且介绍了通过weather.com.cn的接口获取天气预报的方法。今天继续开始我们的SAE开发实例之旅。今天主要介绍下使用飞信接口发送短信和使用Sina App Engine的crontab（计划任务）功能。
+Sina App Engine开发实例：天气预报的定时短信（一） | 天气预报的定时短信（二）
+
+广告时间：
+新浪微博送祝福方法1、在发布新">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-sina-app-engine开发实例：天气预报的定时短信（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2010/10/13/sina-app-engine开发实例：天气预报的定时短信（二）/" class="article-date">
+  	<time datetime="2010-10-13T09:00:54.000Z" itemprop="datePublished">2010年10月13日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Sina App Engine开发实例：天气预报的定时短信（二）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/后端运维/">后端运维</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天简单介绍了下新浪App Engine的应用，并且介绍了通过weather.com.cn的接口获取天气预报的方法。今天继续开始我们的SAE开发实例之旅。今天主要介绍下使用<strong>飞信</strong>接口发送短信和使用Sina App Engine的<strong>crontab</strong>（计划任务）功能。</p>
+<p><a href="http://js8.in/633.html">Sina App Engine开发实例：天气预报的定时短信（一）</a> | <a href="http://js8.in/634.html">天气预报的定时短信（二）</a></p>
+<blockquote>
+<p>广告时间：</p>
+<h3 id="新浪微博送祝福方法">新浪微博送祝福方法</h3><p>1、在发布新浪微博的时候，采用以下格式，会在5分钟之内把您的祝福发送出去，并且收到一个@回复：</p>
+<p><span style="color: #ff0000;"><strong>@微博送祝福：祝××：祝福的内容</strong></span></p>
+<p>2、登录<a href="http://js8.in/love" title="新浪微博送祝福">http://js8.in/love</a>，使用新浪微博账号登陆，然后给自己的粉丝、好友送祝福</p>
+<p>每一个祝福都会收到一个@回复，并且具有自己独一无二的永久URL地址，你可以复制发送给自己的好友，要TA知道你送的祝福~</p>
+</blockquote>
+<h3 id="介绍下这次开发实例中使用的飞信接口">介绍下这次开发实例中使用的飞信接口</h3><p>此次开发使用的Fetion（飞信）接口是由张宴提供的第三方Fetion API，通过这个接口可以方便的给自己和自己的好友发送短信，具体的介绍，请移步<a href="http://blog.s135.com/fetion_api/" title="飞信接口" target="_blank" rel="external">这里</a>。<br>调用的格式如下：</p>
+<blockquote>
+<p><a href="http://sms.api.bz/fetion.php?username=您的移动飞信登录手机号&amp;password=您的移动飞信登录密码&amp;sendto=接收短信的飞信好友手机号（也可以是你自己的手机号）&amp;message=短信内容" target="_blank" rel="external">http://sms.api.bz/fetion.php?username=您的移动飞信登录手机号&amp;password=您的移动飞信登录密码&amp;sendto=接收短信的飞信好友手机号（也可以是你自己的手机号）&amp;message=短信内容</a><br>可以使用GET，POST方法。<br>结合<a href="http://js8.in/633.html">上篇</a>中介绍的SAE的<strong>FetchURL</strong>方法，我们可以很轻松的写出来，飞信接口发短信的PHP代码：</p>
+</blockquote>
+<pre><code class="php"> $sms[&quot;username&quot;] = 13812345678;
+ $sms[&quot;password&quot;] = &quot;password&quot;;
+ $sms[&quot;sendto&quot;] = 13812345678;
+ $sms[&quot;message&quot;] = &quot;这是一条测试短信！&quot;;
+$f = new SaeFetchurl();
+ $f-&amp;gt;setMethod(&#39;post&#39;);
+ $f-&amp;gt;setPostData( $sms);
+ $ret = $f-&amp;gt;fetch(&#39;http://sms.api.bz/fetion.php&#39;);
+ var_dump($ret);
+</code></pre>
+<p><strong>PS</strong>:对于该接口是否记录飞信密码，断桥残雪不清楚，不过张宴说自己不记录，大家自己辨别。</p>
+<h3 id="Sina_App_Engine的Crontab服务">Sina App Engine的Crontab服务</h3><p>用过linux系统的应该知道crontab是Linux系统下的计划任务，也就是我们可以通过配置Crontab，让电脑在固定的时间运行固定的程序。断桥残雪通过crontab的服务实现了在新浪微博以：“<span style="color: #ff0000;"><strong>@微博送祝福：祝××：祝福的内容</strong></span>”的格式发布微博，可以在5分钟内送出祝福，并且收到@回复的功能。<br><strong>新浪App Engin</strong>e对cron的介绍可以移步：<a href="http://sae.sina.com.cn/?m=devcenter&amp;catId=26" target="_blank" rel="external">http://sae.sina.com.cn/?m=devcenter&amp;catId=26</a><br>我们可以通过修改SDK文件夹里面的<strong>config.yaml</strong>来开启crontab任务。格式如下：<br><a id="more"></a></p>
+<blockquote>
+<p>name: App Name<br>version: 1<br>accesskey: App KEY<br>cron:</p>
+<pre><code>- description: cron test
+  url: test.php
+  schedule: every day of month 9:00
+  timezone: Beijing
+</code></pre></blockquote>
+<blockquote>
+<p>说明：<br>1，url 是cron 需要执行的代码的相对路径，如myapp/code/test.php，url 则写为test.php<br>2，login 表示安全选项，如果用户需要对此url 进行权限控制（如不希望web 用户通过http访问到该文件），则按格式填写username 和password<br>3，times 表示执行的次数，默认是循环执行，如果该值大于零，则每执行一次减一，直到等于零<br>4，$符号表示第几，$2 表示第二，$13 表示第十三<br>5，每项符合yaml语法<br>6，最低时间间隔为1 分钟<br>7，description 不是必填，默认为空；timezone 不是必填，默认为北京时间；login 不是必填，默认为无特殊权限<br>8，目前时区支持：北京时间、纽约时间、伦敦时间、悉尼时间、莫斯科时间、柏林时间、东京时间和洛杉矶时间<br>8，目前每个项目支持最多32 个item</p>
+</blockquote>
+<h3 id="全部PHP代码">全部PHP代码</h3><pre><code class="php">
+$id = &quot;101120201&quot;;
+
+$url = &quot;http://m.weather.com.cn/data/&quot;.$id.&quot;.html&quot;;
+//$data = sendCurl($url);
+$f = new SaeFetchurl();
+ $f-&gt;setMethod(&#39;get&#39;);
+ $data = $f-&gt;fetch($url);
+
+$json = json_decode($data, TRUE);
+$data = $json[&quot;weatherinfo&quot;];
+$date_y = mb_substr($data[&quot;date_y&quot;], mb_strpos($data[&#39;date_y&#39;], &quot;年&quot;) + 1, mb_strlen($data[&#39;date_y&#39;]), &#39;utf-8&#39;);
+$date = mb_substr($data[&quot;date&quot;], 3, mb_strlen($data[&#39;date&#39;]), &#39;utf-8&#39;);
+$week = str_replace(&quot;星期&quot;, &quot;周&quot;, $data[&#39;week&#39;]);
+
+$data[&#39;index48_d&#39;]=matchSTR($data[&#39;index48_d&#39;]);
+$data[&#39;index_d&#39;]=matchSTR($data[&#39;index_d&#39;]);
+
+$str = $sug.&quot;{$data[&#39;city&#39;]}({$date_y},{$date},{$week})：{$data[&#39;weather1&#39;]},{$data[&#39;temp1&#39;]},{$data[&#39;wind1&#39;]},紫外线{$data[&#39;index_uv&#39;]},{$data[&#39;index_d&#39;]}明天{$data[&#39;weather2&#39;]},{$data[&#39;temp2&#39;]},{$data[&#39;wind2&#39;]},紫外线{$data[&#39;index48_uv&#39;]},{$data[&#39;index48_d&#39;]}后天{$data[&#39;weather3&#39;]},{$data[&#39;temp3&#39;]}&quot;;
+
+//echo $str;
+sendFetion($str);
+function sendFetion($str){
+     $sms[&quot;username&quot;] = 13812345678;  
+     $sms[&quot;password&quot;] = &quot;password&quot;;  
+     $sms[&quot;sendto&quot;] = 13812345678;  
+     $sms[&quot;message&quot;] = $str; 
+     $f = new SaeFetchurl();
+     $f-&gt;setMethod(&#39;post&#39;);
+     $f-&gt;setPostData( $sms );
+     $ret = $f-&gt;fetch(&#39;http://sms.api.bz/fetion.php&#39;); 
+}
+function matchSTR($str){
+    if(preg_match_all(&#39;/([^\]]*)。年老体弱者([^\]]*)。([^\]]*)。/s&#39;,$str,$matchResult,PREG_SET_ORDER)){
+        $str =$matchResult[0][1].&#39;,&#39;.$matchResult[0][3].&#39;。&#39;;
+    }elseif(preg_match_all(&#39;/([^\]]*)。年老体弱者([^\]]*)。/s&#39;,$str,$matchResult,PREG_SET_ORDER)){
+        $str = $matchResult[0][1].&#39;。&#39;;
+    }  
+      return $str;
+}
+</code></pre>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2010/11/09/再谈iframe的问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          再谈Iframe的问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/10/12/sina-app-engine开发实例：天气预报的定时短信（一）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Sina App Engine开发实例：天气预报的定时短信（一）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="sina-app-engine开发实例：天气预报的定时短信（二）" data-title="Sina App Engine开发实例：天气预报的定时短信（二）" data-url="http://js8.in/2010/10/13/sina-app-engine开发实例：天气预报的定时短信（二）/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hybrid APP开发：模板本地化 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上次文章介绍了Hybrid开发中常用到的Web和NA的通信方案：JSBridge，通过比较之后，最终推荐安卓和iOS通用的scheme协议，可以保证APP内和外都可以使用，今天开始正式介绍整个Hybrid架构内容。就像本系列「开篇语」提到的，这里的Hybrid是「狭义的Hybrid」，而不是所有的NA套个webapp就是Hybrid。
+
+好的架构不是随波逐流，应该经得起考研Hybrid技术体系是一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hybrid APP开发：模板本地化">
+<meta property="og:url" content="http://js8.in/2017/04/06/Hybrid APP开发：模板本地化/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="上次文章介绍了Hybrid开发中常用到的Web和NA的通信方案：JSBridge，通过比较之后，最终推荐安卓和iOS通用的scheme协议，可以保证APP内和外都可以使用，今天开始正式介绍整个Hybrid架构内容。就像本系列「开篇语」提到的，这里的Hybrid是「狭义的Hybrid」，而不是所有的NA套个webapp就是Hybrid。
+
+好的架构不是随波逐流，应该经得起考研Hybrid技术体系是一">
+<meta property="og:image" content="http://js8.in/uploads/2017/04/1.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2017/04/2.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2017/04/3.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2017/04/4.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/04/5.jpg">
+<meta property="og:updated_time" content="2018-07-02T05:17:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hybrid APP开发：模板本地化">
+<meta name="twitter:description" content="上次文章介绍了Hybrid开发中常用到的Web和NA的通信方案：JSBridge，通过比较之后，最终推荐安卓和iOS通用的scheme协议，可以保证APP内和外都可以使用，今天开始正式介绍整个Hybrid架构内容。就像本系列「开篇语」提到的，这里的Hybrid是「狭义的Hybrid」，而不是所有的NA套个webapp就是Hybrid。
+
+好的架构不是随波逐流，应该经得起考研Hybrid技术体系是一">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Hybrid APP开发：模板本地化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/06/Hybrid APP开发：模板本地化/" class="article-date">
+  	<time datetime="2017-04-06T03:38:35.000Z" itemprop="datePublished">2017年4月6日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hybrid APP开发：模板本地化
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hybrid/">hybrid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>上次文章介绍了Hybrid开发中常用到的Web和NA的通信方案：JSBridge，通过比较之后，最终推荐安卓和iOS通用的scheme协议，可以保证APP内和外都可以使用，今天开始正式介绍整个Hybrid架构内容。就像本系列「开篇语」提到的，这里的Hybrid是「狭义的Hybrid」，而不是所有的NA套个webapp就是Hybrid。</p>
+</blockquote>
+<h2 id="好的架构不是随波逐流，应该经得起考研">好的架构不是随波逐流，应该经得起考研</h2><p>Hybrid技术体系是一套很多技术组成的完整知识架构。拿手百Hybrid方案，包括规范/约定、开发、联调、服务支撑等整个开发流程，而随着PWA之类「新」技术的产生又在考研技术架构面向未来的设计能力，所以手百Hybrid还在不断完善，注意是不断完善，不是推到重来！手百Hybrid技术整体架构如下：</p>
+<p><img src="/uploads/2017/04/1.jpg" alt=""><br>￼</p>
+<p>接下来系列会围绕本架构图中重要的部分依次展开，全面的介绍Hybrid开发知识，本文介绍模板本地化开发方案。</p>
+<p>所谓「模板本地化」，就是将Web页面内置到APP内，随版发布上线，然后通过云端接口实现更新，再直白一点：将H5网站的页面预先放到客户端发版，然后云端更新新版本。</p>
+<p>这个方案好处在于：</p>
+<ul>
+<li>本地化模板提高页面打开速度，减少用户等待时间</li>
+<li>模板可更新，版本控制更方便可控，收敛快</li>
+<li>Web页面和NA内置代码实现一套代码，减少开发成本</li>
+<li>上手成本小，开发就是实际开发Web（H5）页面，通过构建工具，生成Web页面和NA模板包不同的代码</li>
+<li>标准H5代码，迁移成本小，通过Node和构建工具，可以做到H5版本前后同构，将来还可以不改代码的前提下适配PWA</li>
+</ul>
+<p>本文提到的JSBridge调起协议是统一使用<code>hybrid://</code>开头，只是提供思路和介绍整体Hybrid模板包架构和用到的技术，不涉及到具体代码，<strong>但是文章保证干货和诚意都满满</strong>😄。</p>
+<h2 id="模板本地化实现方案">模板本地化实现方案</h2><p>本文会介绍两种模板本地化方案，分别是：依赖客户端拦截器（proxy）的方案一；完全无域名限制的方案二，两个方案的实现流程如下：<br><img src="/uploads/2017/04/2.jpg" alt=""><br>￼</p>
+<a id="more"></a>
+<p>通过流程图来看，方案一比方案二多了拦截器。</p>
+<ul>
+<li><p><strong>方案一</strong>是「可感知」的，根据本地缓存的模板包域名（可下发、可完全根据缓存的模板域名）进行过滤，如果本地有则读取本地缓存，如果本地没有则还是访问线上（无损）。</p>
+</li>
+<li><p><strong>方案二</strong> 是「预置型」的方案，只有发版时候规定的某些页面或者频道（插件）开通了Hybrid功能，才能使用Hybrid模板包缓存。</p>
+</li>
+</ul>
+<h2 id="模板包设计方案">模板包设计方案</h2><p>根据上面提到的两种方案，对应的模板包打包内容也不一样。具体包内容目录结构如下所示：<br><img src="/uploads/2017/04/3.jpg" alt=""><br>￼</p>
+<h2 id="两种方案对比">两种方案对比</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>方案一：拦截器</th>
+<th>方案二：无拦截器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cookie</td>
+<td>带域名符合http规范</td>
+<td>需要native支持</td>
+</tr>
+<tr>
+<td>入口开放</td>
+<td>方便，无需发版</td>
+<td>需要发版</td>
+</tr>
+<tr>
+<td>NA开发成本</td>
+<td>拦截器开发</td>
+<td>浏览器能力对齐</td>
+</tr>
+<tr>
+<td>开发联调成本</td>
+<td>较低</td>
+<td>较高</td>
+</tr>
+<tr>
+<td>webapp改造成本</td>
+<td>方便</td>
+<td>不方便</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>域名限制</td>
+<td>需要独立控制</td>
+</tr>
+<tr>
+<td>打包方案</td>
+<td>按照网站目录打包</td>
+<td>按照插件/频道打包</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>依照PWA模式扩展能力</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>方案一相对来说客户端开发量较大，而且拦截域名太多会有性能问题，但是优点也相对较多一些，具体需要自己权衡，<strong>本系列本意是扫盲和普及Hybrid开发知识，尽量全面的介绍Hybrid技术，不针对某种方案深入展开，后续讨论内容也是如此</strong>。</p>
+<h2 id="浏览器能力对齐">浏览器能力对齐</h2><p>模板本地化之后，客户端实际是通过<code>file://</code>协议访问本地模板，这样会导致跟域名相关的操作和方法需要客户端提供端能力支持，目前最重要的是一下几个：</p>
+<ul>
+<li>http请求：如果在file协议下直接请求http[s]会引起跨域（Tips：跨域的几种情况有哪些？</li>
+<li>cookie操作：域名没了，cookie怎么办？session也是cookie的实现</li>
+<li>localstorage/sessionstorage：这俩是根据域名划分存储空间和读写的</li>
+</ul>
+<p>这些浏览器的基本能力需要依靠客户端为页面提供端能力来补齐。<strong>浏览器根据域名做了限制的端能力，是遵守「同源策略」，所以在补齐端能力的时候，应该考虑进去「同源策略」，不能无节制的开通端能力</strong></p>
+<h3 id="同源策略">同源策略</h3><p>考虑到同源策略，每个模板包会对应一个域名限制（系列文章中上一篇提到过JSBridge的安全鉴权问题），两种方案分别对应的同源策略解决方案是：</p>
+<ul>
+<li>方案一拦截器：代理的域名就是要限制的域名范围</li>
+<li>方案二无拦截器：在package.json/manifest.json中添加域名权限申请，比如<code>domain:xxx.baidu.com</code></li>
+</ul>
+<h3 id="http请求">http请求</h3><p>根据本系列上篇JSBridge的最佳实践结合常用的请求方式，设计http请求的接口如下：</p>
+<ul>
+<li>GET：hybrid://http/get?url=<a href="http://baidu.com&amp;query={key1:value1,key2:value2}" target="_blank" rel="external">http://baidu.com&amp;query={key1:value1,key2:value2}</a></li>
+<li>POST：hybrid://http/post?url=<a href="http://baidu.com&amp;data={key1:value1,key2:value2}" target="_blank" rel="external">http://baidu.com&amp;data={key1:value1,key2:value2}</a></li>
+</ul>
+<p>从协议上来看，post和get并没有差异，但是hybrid的JSBridge协议设计是基于URL schema协议的，所以会有长度限制，对于简单的post操作使用这个协议就可以，但是对于post的data太大的情况下（不考虑上传文件等多媒体类POST操作，这方面可以通过后面文章提到的device API增强解决），需要提供</p>
+<h3 id="cookie操作">cookie操作</h3><p>为了防止网站cookie被恶意修改，很多网站已经使用httponly的方式来操作cookie，这种情况下cookie其实是没有必要通过前端使用js操作的，而且在<code>file://</code>协议下发送<code>http[s]://</code>API请求，http协议也会带上域名和路径下的cookie，所以cookie的操作我是不建议开端能力的。但是凡事都有但是。。。cookie操作还是设计上吧：</p>
+<pre><code>hybrid://cookie/[get/set/delete]?name=value,expire=xxx;name2=value2,path=/
+</code></pre><h3 id="浏览器缓存">浏览器缓存</h3><p>浏览器缓存的设计参考web storage的key-value存储设计，然后增加过期时间，类似memcached这类内存缓存，因为value是string类型，所以不像redis那样支持多种存储类型格式。</p>
+<pre><code>hybrid://cache/save?key=xxx&amp;value=xxx&amp;callback=xxx[&amp;expire=xxx]
+hybrid://cache/get?key=xxx&amp;callback=xxx
+hybrid://cache/delete?key=xxx&amp;callback=xxx
+</code></pre><h2 id="构建工具">构建工具</h2><p>为了保证后续一套代码，在不同的构建流程打出不一样的模板包（比如H5版本和hybrid版本），构建过程不再是简单的压缩资源，而是根据打包类型对组件进行有选择性的pick，这里我们使用 <code>FIS3</code>，根据不同的 <code>media</code> 打出不一样的包。例如：</p>
+<pre><code class="js">fis.media(&#39;hybrid&#39;).match(…)
+fis.media(&#39;webapp&#39;).match(…)
+</code></pre>
+<p>详细用法请查看fis.baidu.com ，这里不再展开。</p>
+<h3 id="为什么要用pick？">为什么要用pick？</h3><p>我们的H5代码和Hybrid的代码都在一起，完全组件化之后，除了Hybrid的差异化的功能性组件，其他组件都是可以通用的。这些差异化的组件包括：</p>
+<ul>
+<li>上一章节提到的Http、cache和cookie这类跟域名相关的代码，我们分别封装了Hybrid内和H5版本，比如Http都叫Fetch，但是内部实现：hybrid是调用NA接口，H5是Fetch+ajax</li>
+<li>浏览和导航类：比如跳转/打开新页面，NA内是打开一个新的webview，H5是 <code>location</code> 跳转或直接A标签</li>
+<li>端能力和增强类组件：同样是大图浏览器，为了更好的交互，NA上做了增强，H5是纯web实现</li>
+</ul>
+<p>这些差异性的代码都封装在不同的组件内，通过设计模式中的「接口模式」对外暴漏一样的接口和使用方法。</p>
+<p>这种设计，可以更好的提高业务同事学习和编写程序的成本，同时统一的组件化管理方便单元测试和联调，（<strong>划重点：等本系列联调部分会再重提这种设计的好处，那时候会发现这设计太赞了！</strong>）</p>
+<h3 id="代码pick怎么实现？">代码pick怎么实现？</h3><p>这里安利集鹄大叔的jdists（有对应的fis插件）：<a href="https://github.com/zswang/jdists" target="_blank" rel="external">https://github.com/zswang/jdists</a></p>
+<p>通过jdists可以通过注释的方式对代码进行区域化裁剪和联调功能，比如下面代码可以通过fis3的media来触发trigger，从而在不同的条件下暴漏不同的代码区域：</p>
+<pre><code class="js">/*&lt;debug&gt;*/
+console.log(debug);
+/*&lt;/debug&gt;*/
+
+/*&lt;jdists trigger=&quot;hybrid&quot;&gt;
+var fetch = require(&#39;na/fetch&#39;)
+&lt;/jdists&gt;*/
+
+/*&lt;jdists trigger=&quot;webapp&quot;&gt;
+var fetch = require(&#39;web/fetch&#39;)
+&lt;/jdists&gt;*/
+</code></pre>
+<h3 id="构建模板包">构建模板包</h3><p>除了代码pick之外，构建工具还要和模板包管理平台配合，增加额外的文件生成（比如生成版本号、签名、diff包）做到完全自动化，然后包管理平台去拉取构建工具生成的zip包，上传到CDN平台，在数据库创建一条记录，关于模板包管理平台的内容，在下一篇文章详细介绍。</p>
+<h2 id="模板更新和容错策略">模板更新和容错策略</h2><p>模板包设计好了之后，就需要考虑下发和更新的流程。除了考虑模板的更新，还需要考虑到容错机制，保证模板包升级不断出现问题或者某些极端情况下，服务可用。</p>
+<h3 id="模板更新">模板更新</h3><p>模板更新时机是很讲究的，不同的APP产品可以利用的时机可能不一样，目前针对手百产品合适的时机有：</p>
+<ul>
+<li>APP冷热启动</li>
+<li>接口检测</li>
+<li>频道异步检查，当打开某个Hybrid频道后台开始更新</li>
+<li>页面主动检测</li>
+<li>推送</li>
+</ul>
+<p>综合来说，不管怎样的更新时机，都逃不出两种更新的途径：</p>
+<ol>
+<li>通过专门的NA更新接口上传本地版本号，server下发最新版本信息，完全有NA完成模板包更新</li>
+<li>通过页面JS接口主动检测进行更新</li>
+</ol>
+<p>第一种途径，比如冷热启动、接口和频道异步都是通过上行请求将APP内单个或者多个频道的当前模板版本号上传给server，server根据模板维护cms推送过来的最新版本挨个频道依次比较版本号，如果版本号有更新，就下发对应的最新流量包地址和校验信息。</p>
+<p>而页面主动检测包括两种：</p>
+<ol>
+<li>在页面发起请求的API接口中带有当前的版本号，如果接口判断有更新，则下发对应的更新包信息（下载地址和校验信息），然后页面js通过NA接口通知客户端更新</li>
+<li>页面js直接调用NA接口强制进行一次单独的检测，这样客户端会带着版本号走专门的接口只进行模板版本的更新检测，然后走NA的更新流程</li>
+</ol>
+<h3 id="容错机制">容错机制</h3><p>当得知某个版本号存在不可修复的bug，需要紧急容错，可以通过server下发对应的command（app调起协议，也是一种schema）来指定在某个版本（模板版本、客户端版本）或者版本号范围内不调用Hybrid，而直接访问H5页面，达到快速止损。</p>
+<blockquote>
+<p>举例说明：新闻列表是NA实现的，新闻的详情页是Hybrid的做的，所以Hybrid的上游是NA做的list，Hybrid详情页是通过NA的列表调起展现的。NA的list数据和调起协议（command）是由server下发的，如果server下发的是调起Hybrid页面，那么用户点击list打开Hybrid详情页；当Hybrid版本在某些情况下有问题（比如在某些客户端版本上有bug或者直接Hybrid某版本包就有bug），那么Server下发给NA调起详情页的Command就变成直接打开H5 webapp，而不是打开Hybrid，从而将有问题的Hybrid切换到线上H5，达到容错止损。</p>
+</blockquote>
+<h4 id="版本包回滚">版本包回滚</h4><p>除了server端止损之外，我们还设计了回滚机制，在包管理平台，可以将任意一个已经上线的版本包作为回滚包，然后生成新的版本号进行下发回滚。</p>
+<h4 id="客户端回滚">客户端回滚</h4><p>客户端在安装更新包之前，先将老的版本包进行备份，然后开始安装，如果安装过程遇见问题，比如覆盖失败，或者空间不够等各种问题，就需要删除之前的安装操作，将备份包重新解压，保证整个安装过程是完整的，而不是安装一半。</p>
+<h2 id="提高模板包的更新成功率">提高模板包的更新成功率</h2><p>针对模板包的收敛率率，除了更新时机之外，还应该从链路优化和包体积方面进行优化。</p>
+<p>具体策略如下所列：</p>
+<ul>
+<li>针对模板包做专门的通信线路和协议优化<ul>
+<li>使用CDN就近存储</li>
+<li>断点续传</li>
+<li>分块下载</li>
+<li>重试策略</li>
+</ul>
+</li>
+<li>减小包体积<ul>
+<li>增量更新包设计</li>
+</ul>
+</li>
+</ul>
+<h2 id="增量包设计">增量包设计</h2><p>增量包的设计一般有两种方式，可以根据不同的场景和开发周期进行选择：</p>
+<ol>
+<li>按文件diff进行增量下发</li>
+<li>按二进制包进行增量下发</li>
+</ol>
+<h3 id="按文件diff进行增量">按文件diff进行增量</h3><p>这种方式对于打包工具来说很简单，而且客户端没有开发工作量。</p>
+<p>客户端拿到模板更新包是整体覆盖安装的，覆盖安装的意思是：遇见新的文件就直接新增，遇见重名的文件就直接覆盖安装。这就有点像前端静态资源管理，可以打md5进行增量，可以同名覆盖。</p>
+<p>我们做法是当发版的时候，编译工具打出一个全量包，然后从版本库中找到最近的3次版本包，对文件进行遍历，找出diff，然后形成<code>Vn-Vn+1</code>的diff包，而这一切都是自动维护的。</p>
+<blockquote>
+<p>我什么是最近3个版本包做diff，而不是全部？</p>
+</blockquote>
+<p>因为如果全部随着发版越来越多，diff包会呈现指数增长，增加维护成本；而且模板收敛好了，两个之前老版本的量就很小了，没有必要为这些版本做增量包；再说全量包也不会大到哪里去嘛~</p>
+<h3 id="按二进制包进行增量下发">按二进制包进行增量下发</h3><p>这种方式是将模板zip包，根据bsdiff差分算法打出不同的patch，然后将下发给客户端，客户端再加上上一个版本的包生成新的全量包。</p>
+<p>两种方式各有利弊，实际应用要权衡成本和收益。</p>
+<h2 id="模板包安全">模板包安全</h2><p>模板包在下发的过程中，会遇见被篡改的问题，而且包如果不完整，也会对Hybrid模板包的完整性和功能构成威胁。</p>
+<p>首先整个模板包的更新接口和模板包zip的CDN都是使用<strong>HTTPS</strong>。另外在包安全性方面我们分别做了两个校验：</p>
+<ol>
+<li>模板完整性检测</li>
+<li>模板合法性校验</li>
+</ol>
+<p>结合整个更新流程（客户端和server交互部分）来讲下：<br>￼<br><img src="/uploads/2017/04/4.png" alt=""></p>
+<p>在server升级接口会返回两个最重要的字段：<code>md5</code>和<code>signature</code>。</p>
+<ul>
+<li>md5用于校验zip的完整性，保证zip是完整的，可解压的；</li>
+<li>signature是签名，签名算法是结合私钥、请求参数、版本号、客户端特征值和模板包的md5等组合计算的，签名算法是保证了包的安全性；这样即使包被劫持替换，不知道签名算法也不会通过校验。<br>￼<br><img src="/uploads/2017/04/5.jpg" alt=""><h2 id="写在最后">写在最后</h2>知识是相通的，要学会举一反三，文章为了通俗易懂，很多技术介绍根据前端常见的场景做了类比。只要有心，涉猎范围够广，你会发现：</li>
+</ul>
+<ol>
+<li>写过chrome扩展的对于模板本地化方案是不是似曾相识？</li>
+<li>如果觉得和开发chrome扩展类似，能不能利用chrome的调试功能进行调试？</li>
+<li>而模板本地化方案又跟PWA是不是可以通用？</li>
+<li>PWA解决的痛点是什么？和本文的模板本地化方案怎么快速切换？</li>
+</ol>
+<p>这些问题都值得深入思考，且听后续文章慢慢道来~</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/13/Vue SSR从入门到Case Study/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Vue SSR从入门到Case Study
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/28/在腾讯工作是怎样一种感受/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在腾讯工作是怎样一种感受</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Hybrid APP开发：模板本地化" data-title="Hybrid APP开发：模板本地化" data-url="http://js8.in/2017/04/06/Hybrid APP开发：模板本地化/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

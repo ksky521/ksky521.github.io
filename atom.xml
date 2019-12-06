@@ -1,0 +1,3078 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[三水清]]></title>
+  <subtitle><![CDATA[程序媛鼓励师]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://js8.in/"/>
+  <updated>2018-07-02T05:31:59.000Z</updated>
+  <id>http://js8.in/</id>
+  
+  <author>
+    <name><![CDATA[三水清]]></name>
+    <email><![CDATA[ksky521@gmail.com]]></email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[JS写小游戏「跳一跳」外挂之自己动]]></title>
+    <link href="http://js8.in/2018/01/08/JS%E5%86%99%E5%B0%8F%E6%B8%B8%E6%88%8F%E3%80%8C%E8%B7%B3%E4%B8%80%E8%B7%B3%E3%80%8D%E5%A4%96%E6%8C%82%E4%B9%8B%E8%87%AA%E5%B7%B1%E5%8A%A8/"/>
+    <id>http://js8.in/2018/01/08/JS写小游戏「跳一跳」外挂之自己动/</id>
+    <published>2018-01-08T05:25:54.000Z</published>
+    <updated>2018-07-02T05:31:59.000Z</updated>
+    <content type="html"><![CDATA[<p>上篇文章写道怎么通过Canvas识别跳转位置，本篇文章重点介绍怎样使用adb命令操作「小人」自己挑动。</p>
+<h2 id="adb是什么">adb是什么</h2><p>adb是<code>Andorid Debug Bridge</code>，可以将安卓手机打开USB调试模式，然后连接USB线到电脑，就可以通过adb执行调试命令。</p>
+<h3 id="adb安装">adb安装</h3><p>mac下面使用brew安装</p>
+<pre><code class="bash">brew cask install android-platform-tools
+</code></pre>
+<p>windows下面去搜索下载，然后放到环境变量里面去，保证命令行执行adb可以成功。</p>
+<h3 id="测试连接成功">测试连接成功</h3><p>使用<code>adb devices</code>查看是否连接成功，如果连接成功会出现设备的编号。</p>
+<h2 id="小人跳转需要的命令">小人跳转需要的命令</h2><p>整个自动跳动的流程是这样的：</p>
+<ol>
+<li>调用adb命令获取手机当前屏幕截图</li>
+<li>拉取截图到本地路径</li>
+<li>通过js读取图片分析中心点位置计算跳转需要按压时长</li>
+<li>同adb命令发送长按命令</li>
+</ol>
+<p>通过node的<code>child_process</code>核心代码执行adb的命令如下：</p>
+<pre><code class="bash">//截屏，放到sdcard的根目录下
+adb shell screencap -p /sdcard/screencap.png
+//拉取截图图片到本地电脑
+//   将remote路径的图片拉取到本地的路径
+adb pull ${SCREENCAP_REMOTE_PATH} ${SCREENCAP_PATH}/screencap.png
+//发起长按，swipe后面是开始和结束的手指位置坐标，timeout是时长
+adb shell input swipe ${r + 10} ${r + 20} ${r - 10} ${r - 2} ${timeout}
+</code></pre>
+<h3 id="特殊说明">特殊说明</h3><p><code>2.04</code>是跳转系数，这个是从其他代码里面直接拿过来的，对应的是720宽度的手机会比较准确，可能不同的手机dpi和屏幕宽度会有不同的值，具体实践中需要根据自己手机情况调整一下。</p>
+<p>我在红米4手机上面可以轻松几乎每次都是中心点，轻松过千。</p>
+<p>可以看下面的红米机器的视频：</p>
+<p><a href="https://v.qq.com/x/page/t1331wmep7e.html" target="_blank" rel="external">https://v.qq.com/x/page/t1331wmep7e.html</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>上篇文章写道怎么通过Canvas识别跳转位置，本篇文章重点介绍怎样使用adb命令操作「小人」自己挑动。</p>
+<h2 id="adb是什么">adb是什么</h2><p>adb是<code>Andorid Debug Bridge</code>，可以将安卓手机打开USB调]]>
+    </summary>
+    
+      <category term="Nodejs" scheme="http://js8.in/tags/Nodejs/"/>
+    
+      <category term="游戏" scheme="http://js8.in/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+      <category term="练手" scheme="http://js8.in/tags/%E7%BB%83%E6%89%8B/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[JS写小游戏「跳一跳」外挂之Canvas图像识别]]></title>
+    <link href="http://js8.in/2018/01/06/JS%E5%86%99%E5%B0%8F%E6%B8%B8%E6%88%8F%E3%80%8C%E8%B7%B3%E4%B8%80%E8%B7%B3%E3%80%8D%E5%A4%96%E6%8C%82%E4%B9%8BCanvas%E5%9B%BE%E5%83%8F%E8%AF%86%E5%88%AB/"/>
+    <id>http://js8.in/2018/01/06/JS写小游戏「跳一跳」外挂之Canvas图像识别/</id>
+    <published>2018-01-06T15:25:54.000Z</published>
+    <updated>2018-07-02T05:30:37.000Z</updated>
+    <content type="html"><![CDATA[<p>17年结尾的时候微信发布新版重点推出了「小游戏」概念，H5的游戏再次火了起来，新版微信开屏的游戏就是「跳一跳」游戏可玩度很高，网上也出现了各种语言版本的外挂，前几天看到一篇用nodejs搭建的外挂，需要手动点击截屏图片来判断当前和下一步的位置然后跳转，于是就起了用Canvas来实现图像的想法，后面有实现了自动跳转，算是齐活了。今天来完整说下图像识别。</p>
+<blockquote>
+<p>代码都放到了：<a href="https://github.com/ksky521/wechat-jump-game-hack" target="_blank" rel="external">https://github.com/ksky521/wechat-jump-game-hack</a> 欢迎自己去尝试</p>
+</blockquote>
+<p>先来看最终效果视频：<a href="https://v.qq.com/x/page/o1331igmskh.html" target="_blank" rel="external">https://v.qq.com/x/page/o1331igmskh.html</a></p>
+<h2 id="Canvas图像处理的原理">Canvas图像处理的原理</h2><p>Canvas可以通过<code>drawImage</code>在上面添加图片，然后通过<code>getImageData</code>方法获取一个<code>imageData</code>对象，此对象包括了<code>data</code>、<code>width</code>和<code>height</code>，其中data为图片width<em>height</em>4长度的数组，每个像素点表现在数组内为：RGBA四个0~255的值，即Red、Green、Blue和Alpha值。</p>
+<p>通过对这个<code>imageData.data</code>进行遍历操作，可以利用图像差值比较找出图片内物体的边缘、物体的中心点，也可以根据图像中某个固定颜色范围的物体，进行匹配，从而找到「小人」的位置。</p>
+<h2 id="颜色值差值比较函数">颜色值差值比较函数</h2><p>先介绍一个函数<code>tolerenceHelper</code>，用来比较颜色差值，即传入需要比较的<code>r</code>、<code>g</code>和<code>b</code>，然后跟对比的<code>rt</code>、<code>gt</code>、<code>bt</code>和差值范围的<code>t</code>进行对比的函数，在范围内则返回<code>true</code>。</p>
+<pre><code class="js">function tolerenceHelper(r, g, b, rt, gt, bt, t) {
+    return r &gt; rt - t &amp;&amp; r &lt; rt + t 
+            &amp;&amp; g &gt; gt - t &amp;&amp; g &lt; gt + t 
+            &amp;&amp; b &gt; bt - t &amp;&amp; b &lt; bt + t;
+}
+</code></pre>
+<h2 id="获取小人当前位置">获取小人当前位置</h2><p>小人获取位置用的方式是差值比较，首先通过截屏中的紫色小人颜色范围，可以大致拿到小人的颜色值为：</p>
+<pre><code class="js">// 小人的颜色值
+const playerR = 40;
+const playerG = 43;
+const playerB = 86;
+</code></pre>
+<a id="more"></a>
+<p>这个值可以从小人的底部中心取色得到。所以找到小人的底部中心点的方式就是，在一定范围内（即<code>tolerenceHelper</code>的t参数，这里取值为16）查找，如果像素点rgb在这个范围内，则加入待选，最后像素点集合中最低点（最大y）的位置就是小人底部中心所在点的y，x为最大和最小宽度的中心位置。为了好理解，我画了图：</p>
+<p><img src="/img/posts/jump-game/1.png" alt=""></p>
+<p>下面三图是<code>t=16</code>、<code>t=26</code>、<code>t=36</code>分别识别的效果，为了便于分辨，我将匹配到的像素点颜色都设置为了红色（rgb=255，0，0）。<br><img src="/img/posts/jump-game/2.png" alt=""><br><img src="/img/posts/jump-game/3.png" alt=""><br><img src="/img/posts/jump-game/4.png" alt=""></p>
+<p>为了准确，防止相近颜色的干扰<code>t=16</code>就够用了，这样小人的底部位置<code>pos</code>就得到了：</p>
+<pre><code class="js">// x, y
+pos[0] = Math.floor((maxX + minX) / 2);
+pos[1] = maxY;
+</code></pre>
+<h3 id="优化">优化</h3><p>很容易一眼就看出来小人不能在图片的顶部和底部，而是在画面的中心区域范围内，所以可以直接从图片高度的<code>height/4</code>~<code>height*3/4</code>的范围内查找，这样可以提高不必要的工作量。</p>
+<h3 id="完整查找小人点代码如下">完整查找小人点代码如下</h3><pre><code class="js">function getCurCenter(data, width, height) {
+    // 小人的颜色值
+    const playerR = 40;
+    const playerG = 43;
+    const playerB = 86;
+
+    let minX = Infinity;
+    let maxX = -1;
+    let maxY = -1;
+    // 找到小人当前的底部位置
+    let pos = [0, 0];
+
+    let startY = Math.floor(height / 4);
+    let endY = Math.floor(height * 3 / 4);
+    for (let x = 0; x &lt; width; x++) {
+        for (let y = startY; y &lt; endY; y++) {
+            let i = y * (width * 4) + x * 4;
+            let r = data[i];
+            let g = data[i + 1];
+            let b = data[i + 2];
+            if (y &gt; pos[1] &amp;&amp; tolerenceHelper(r, g, b, playerR, playerG, playerB, 16)) {
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x);
+                maxY = Math.max(maxY, y);
+            }
+        }
+    }
+    pos[0] = Math.floor((maxX + minX) / 2);
+    pos[1] = maxY;
+    // console.log(`player position (x, y)= (${pos[0]}, ${pos[1]})`);
+    return pos;
+}
+</code></pre>
+<h2 id="获取的跳转位置">获取的跳转位置</h2><p>怎样获取小人下一步跳转的位置呢？</p>
+<p>按照上面的逻辑，我们还是从图片高度的<code>height/4</code>~<code>height*3/4</code>的范围查找，这是我们先取出当前的背景色，然后在高度范围内扫描图片，当出现跟背景色相差很大的第一个点时，这时候就是下一个物体的主颜色值了！如果为四边体之类的，则这个点就是顶点了！</p>
+<p>知道这个物体的主体颜色值，我们就可以以这个值为基准继续扫描，在这个颜色值范围的像素点就是物体的顶面，然后根据顶面像素点坐标<code>minY</code>和<code>maxY</code>得到中心点的坐标（圆形和正方形都是对称的，所以都可以用这个方法）。</p>
+<p>看图理解下：</p>
+<p><img src="/img/posts/jump-game/5.png" alt=""></p>
+<p>下图是将背景色涂红，这样就可以看到识别出来的第一个点就是顶点（圆形一样）</p>
+<p><img src="/img/posts/jump-game/6.png" alt=""><br><img src="/img/posts/jump-game/7.png" alt=""></p>
+<h3 id="优化-1">优化</h3><ol>
+<li>找到顶点之后，下一行肯定不是maxY，一次类推，可以大胆将Y的值增加60个像素，即从顶点往下的60个像素重新开始查找中心点；</li>
+<li>另外可以将Y的查找范围缩小到上一步找到小人的中心点Y值，即y取值为<code>height/4~Math.min(height*3/4, 小人中心Y)</code> ，这样即使maxY我们没有找到，也可以以小人为底取中心点，保证下一步的跳转位置尽量不会超出物体顶面范围。</li>
+<li>我们找的是maxY，所以只要出现了跟顶点像素点颜色一致（范围内）的点，这一行（坐标Y相同，X不同）就不需要查找了，因为查找也没有意义，Y值不变了，所以可以直接<code>break</code>出循环，进行下一个Y的查找</li>
+</ol>
+<h3 id="完整代码">完整代码</h3><pre><code class="js">function getNextCenter(data, width, height, y = -1) {
+    let startY = Math.floor(height / 4);
+    let endY = Math.floor(height * 3 / 4);
+
+    // 去除背景色
+    let startX = startY * width * 4;
+    let r = data[startX],
+        g = data[startX + 1],
+        b = data[startX + 2];
+    let maxY = -1;
+    let apex = [];
+    let pos = [0, 0];
+    // 保证从当前小人位置底部点往上
+    endY = Math.min(endY, y);
+    let endX = width;
+    let gapCount = 0;
+    for (let y = startY; y &lt; endY; y++) {
+        let find = 0;
+        for (let x = 1; x &lt; endX; x++) {
+            let i = y * (width * 4) + x * 4;
+            let rt = data[i];
+            let gt = data[i + 1];
+            let bt = data[i + 2];
+            // 不是默认背景颜色
+            if (!tolerenceHelper(rt, gt, bt, r, g, b, 30)) {
+                if (apex.length === 0) {
+                    if (!tolerenceHelper(data[i + 4], data[i + 5], data[i + 6], r, g, b, 30)) {
+                        //椭圆形找中心，往后找30个像素点
+                        let len = 2;
+                        while (len++ !== 30) {
+                            i += len * 4;
+                            if (tolerenceHelper(data[i + 4], data[i + 5], data[i + 6], r, g, b, 30)) {
+                                break;
+                            }
+                        }
+                        x += len;
+                    }
+                    //找出顶点
+                    apex = [rt, gt, bt, x, y];
+                    pos[0] = x;
+                    // 减少循环范围
+                    endX = x;
+                    break;
+                } else if (tolerenceHelper(rt, gt, bt, apex[0], apex[1], apex[2], 5)) {
+                    //存在顶点了，则根据颜色值开始匹配
+                    maxY = Math.max(maxY, y);
+                    find = x;
+                    break;
+                }
+            }
+        }
+        if (apex.length !== 0 &amp;&amp; !find) {
+            gapCount++;
+        }
+        if (gapCount === 3) {
+            break;
+        }
+    }
+    pos[1] = Math.floor((maxY + apex[4]) / 2);
+    // console.log(points_top, points_left, points_right);
+    console.log(`next position center (x,y)=${pos[0]},${pos[1]}`);
+    return pos;
+}
+</code></pre>
+<h2 id="最后">最后</h2><p>在整个测试的过程中，还尝试了其他的方式，比如先将边缘找出再找中心点，各种尝试，想练手的可以直接改下看看。</p>
+<p>为了调试方便，我将这部分代码单独一个router，可以直接github clone下来代码访问<code>localhost:3000/test</code> ，然后边改边尝试边看效果。</p>
+<p>本篇文章介绍了怎么识别出来图片中「小人」和下一个跳转的位置，下一篇介绍下怎么让「小人」自动跳转过去，敬请期待。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>17年结尾的时候微信发布新版重点推出了「小游戏」概念，H5的游戏再次火了起来，新版微信开屏的游戏就是「跳一跳」游戏可玩度很高，网上也出现了各种语言版本的外挂，前几天看到一篇用nodejs搭建的外挂，需要手动点击截屏图片来判断当前和下一步的位置然后跳转，于是就起了用Canvas来实现图像的想法，后面有实现了自动跳转，算是齐活了。今天来完整说下图像识别。</p>
+<blockquote>
+<p>代码都放到了：<a href="https://github.com/ksky521/wechat-jump-game-hack">https://github.com/ksky521/wechat-jump-game-hack</a> 欢迎自己去尝试</p>
+</blockquote>
+<p>先来看最终效果视频：<a href="https://v.qq.com/x/page/o1331igmskh.html">https://v.qq.com/x/page/o1331igmskh.html</a></p>
+<h2 id="Canvas图像处理的原理">Canvas图像处理的原理</h2><p>Canvas可以通过<code>drawImage</code>在上面添加图片，然后通过<code>getImageData</code>方法获取一个<code>imageData</code>对象，此对象包括了<code>data</code>、<code>width</code>和<code>height</code>，其中data为图片width<em>height</em>4长度的数组，每个像素点表现在数组内为：RGBA四个0~255的值，即Red、Green、Blue和Alpha值。</p>
+<p>通过对这个<code>imageData.data</code>进行遍历操作，可以利用图像差值比较找出图片内物体的边缘、物体的中心点，也可以根据图像中某个固定颜色范围的物体，进行匹配，从而找到「小人」的位置。</p>
+<h2 id="颜色值差值比较函数">颜色值差值比较函数</h2><p>先介绍一个函数<code>tolerenceHelper</code>，用来比较颜色差值，即传入需要比较的<code>r</code>、<code>g</code>和<code>b</code>，然后跟对比的<code>rt</code>、<code>gt</code>、<code>bt</code>和差值范围的<code>t</code>进行对比的函数，在范围内则返回<code>true</code>。</p>
+<pre><code class="js">function tolerenceHelper(r, g, b, rt, gt, bt, t) {
+    return r &gt; rt - t &amp;&amp; r &lt; rt + t 
+            &amp;&amp; g &gt; gt - t &amp;&amp; g &lt; gt + t 
+            &amp;&amp; b &gt; bt - t &amp;&amp; b &lt; bt + t;
+}
+</code></pre>
+<h2 id="获取小人当前位置">获取小人当前位置</h2><p>小人获取位置用的方式是差值比较，首先通过截屏中的紫色小人颜色范围，可以大致拿到小人的颜色值为：</p>
+<pre><code class="js">// 小人的颜色值
+const playerR = 40;
+const playerG = 43;
+const playerB = 86;
+</code></pre>]]>
+    
+    </summary>
+    
+      <category term="Nodejs" scheme="http://js8.in/tags/Nodejs/"/>
+    
+      <category term="游戏" scheme="http://js8.in/tags/%E6%B8%B8%E6%88%8F/"/>
+    
+      <category term="练手" scheme="http://js8.in/tags/%E7%BB%83%E6%89%8B/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[用Node抓站（三）：防止被封]]></title>
+    <link href="http://js8.in/2017/08/19/%E7%94%A8Node%E6%8A%93%E7%AB%99%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E9%98%B2%E6%AD%A2%E8%A2%AB%E5%B0%81/"/>
+    <id>http://js8.in/2017/08/19/用Node抓站（三）：防止被封/</id>
+    <published>2017-08-19T08:59:26.000Z</published>
+    <updated>2018-06-26T03:45:11.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>抓取如果抓取的太快太频繁会被源站封IP，本文会介绍下通过限流、限速和使用代理的方式来防止被封</p>
+</blockquote>
+<p>上篇文章，抓取「电影天堂」最新的170部电影，在抓取首页电影list之后，会同时发出170个请求抓取电影的详情页，这样在固定时间点集中爆发式的访问页面，很容易在日志中被找出来，而且并发请求大了，很可能会中网站的防火墙之类的策略，IP被加到黑名单就悲剧了</p>
+<h2 id="限流&amp;限速">限流&amp;限速</h2><p>先说下<strong>限流</strong>的方法，将批量的并发请求，分成多次固定请求个数，等上一次抓取结束后，再开始下一次抓取，直到全部抓取结束。</p>
+<p>这里我使用<code>async</code>模块限制并发次数，<code>async</code>主要有：集合、流程和工具三大类方法，这里我使用<code>eachLimit(arr, limit, iterator, [callback])</code>，所有修改是上篇文章的<code>fetchContents</code>方法，该方法接受抓取到的170个文章的url list，这次通过<code>eachLimit</code>将170个url按照3个一组并发，依次执行，具体代码如下：</p>
+<pre><code class="js">function fetchContents (urls) {
+  return new Promise((resolve, reject) =&gt; {
+    var results = []
+    async.eachLimit(urls, 3, (url, callback) =&gt; {
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        results.push(d)
+        callback()
+      }, () =&gt; {
+        callback()
+      })
+    }, () =&gt; {
+      resolve(results)
+    })
+  })
+}
+</code></pre>
+<p>限流只是控制了一次并发的请求数，并没有让抓取程序慢下来，所以还需要<strong>限速</strong>，在限流的基础上限速就变得很简单，只需要在执行<code>eachLimit</code>的<code>callback</code>的时候，加上个<code>Timer</code>就好了，为了方便查看限速的效果，每次抓取成功之后，都<code>console.log</code>显示时间，所以改完的代码如下：</p>
+<pre><code class="js">function fetchContents (urls) {
+  return new Promise((resolve, reject) =&gt; {
+    var results = []
+    async.eachLimit(urls, 3, (url, callback) =&gt; {
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        var time = moment().format(‘HH:MM:ss&#39;)
+        console.log(`${url}===&gt;success, ${time}`)
+        results.push(d)
+        setTimeout(callback, 2e3)
+      }, () =&gt; {
+        callback()
+      })
+    }, () =&gt; {
+      resolve(results)
+    })
+  })
+}
+</code></pre>
+<p>效果如下：<br>￼<br><img src="/img/posts/spider1.png" alt=""></p>
+<h2 id="避免重复抓取">避免重复抓取</h2><p>因为一些网站更新比较慢，我们写的抓取程序在定时脚本任务（crontab）跑的时候，可能网站还没有更新，如果不做处理会造成资源的浪费，尤其国内不少VPS都是有流量限制的，不做控制，真金白银就打水漂了。。</p>
+<a id="more"></a>
+<p>继续拿「电影天堂」最新更新的内容进行抓取，如果假设每五分钟执行一次抓取脚本，那么需要记录下已经抓取过的文章（电影），这里我简单处理一下，通过一个<code>_fetchedList.json</code>的文件，记录抓取完的文章（电影）。具体思路如下：</p>
+<ol>
+<li>抓取每个电影详情页成功后，将抓取到的url放入一个数组Array</li>
+<li>等全部抓取结束，将这个数组Array，写到文件<code>_fetchedList.json</code></li>
+<li>下次抓取的时候，require这个<code>_fetchedList.json</code>，得到数组Array，抓取之前判断要抓取的url是否在这个数组内</li>
+<li>数组保持长度是300（170个电影够用了），保证先入先出，即超过300长度将最早的移出</li>
+</ol>
+<p>具体代码讲解如下：</p>
+<h5 id="引入抓取的记录文件">引入抓取的记录文件</h5><pre><code class="js">var fs = require(&#39;fs-extra&#39;)
+var path = require(&#39;path&#39;)
+var uniqueArray = []
+const UNIQUE_ARRAY_URL = &#39;./_fetchedList.json&#39;
+try {
+  uniqueArray = require(UNIQUE_ARRAY_URL)
+} catch (e) {
+}
+</code></pre>
+<h5 id="改造url处理函数，过滤下url数组，已经抓取过的就不要抓取了">改造url处理函数，过滤下url数组，已经抓取过的就不要抓取了</h5><pre><code class="js">function dealListData (data) {
+  return new Promise((resolve, reject) =&gt; {
+    var urls = _.get(data, &#39;items&#39;)
+    if (urls) {
+      urls = urls.map(url =&gt; {
+        return &#39;http://www.dytt8.net&#39; + url
+      }).filter(url =&gt; {
+        return uniqueArray.indexOf(url) === -1
+      })
+      // 如果为空就reject
+      urls.length ? resolve(urls) : reject(&#39;empty urls&#39;)
+    } else {
+      reject(urls)
+    }
+  })
+}
+</code></pre>
+<h5 id="增加一个处理方法，保持uniqueArray长度是300，不要无限增加">增加一个处理方法，保持<code>uniqueArray</code>长度是300，不要无限增加</h5><pre><code class="js">function addUniqueArray (url) {
+  uniqueArray.push(url)
+  if (uniqueArray.length &gt; 300) {
+    // 超长就删掉多余的
+    uniqueArray.shift()
+  }
+}
+</code></pre>
+<h5 id="在抓取完之后，记录新的uniqueArray数组内容到json文件：">在抓取完之后，记录新的<code>uniqueArray</code>数组内容到<code>json</code>文件：</h5><pre><code class="js">fetchList().then(dealListData).then(fetchContents).then((d) =&gt; {
+  console.log(d, d.length)
+  // json落地
+  fs.writeJson(path.join(__dirname, UNIQUE_ARRAY_URL), uniqueArray)
+}).catch((e) =&gt; {
+  console.log(e)
+})
+</code></pre>
+<h2 id="代理">代理</h2><p>为了迷惑被抓取的网站，除了伪装User-Agent等方法，最重要的是使用代理服务，如果有钱的主可以买代理，然后用，对于我们做demo，那就直接抓取代理吧！下面代码是抓取快代理网站的代理代码：</p>
+<pre><code class="js">var spider = require(&#39;../lib/spider&#39;)
+
+function fetchProxy () {
+  return spider({
+    url: &#39;http://www.kuaidaili.com/proxylist/1/&#39;
+  }, {
+    selector: &#39;#index_free_list tbody tr&#39;,
+    handler: function ($tr, $) {
+      var proxy = []
+      $tr.find(&#39;td&#39;).each(function (i) {
+        proxy[i] = $(this).html().trim()
+      })
+      if (proxy[0] &amp;&amp; proxy[1] &amp;&amp; /\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}/.test(proxy[0]) &amp;&amp; /\d{2,6}/.test(proxy[1])) {
+      } else {
+        // console.log(proxy);
+      }
+      return proxy
+    }
+  })
+}
+
+fetchProxy().then(data =&gt; {
+  console.log(data.map(p =&gt; p.join(&#39;,&#39;)))
+})
+</code></pre>
+<p><img src="/img/posts/spider2.png" alt=""><br>￼</p>
+<p>抓取之后的代理不一定直接就可以用，还需要测试下代理是否可以访问成功我们要抓取的网站，先写个<code>checkProxy(proxy)</code>的方法，用于检测使用传入的proxy是否抓取成功：</p>
+<pre><code class="js">function checkProxy (proxy) {
+  return spider({
+    url: &#39;http://www.dytt8.net/index.htm&#39;,
+    proxy: proxy,
+    timeout: 5e3,
+    decoding: &#39;gb2312&#39;
+  }, {
+    items: {
+      selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+    }
+  })
+}
+</code></pre>
+<p>然后将从快代理网站抓取到的代理一次传入进去：</p>
+<pre><code class="js">fetchProxy().then(data =&gt; {
+  var len = data.length
+  var succArray = []
+  data.forEach(p =&gt; {
+    checkProxy(`http://${p[0]}:${p[1]}`).then(() =&gt; {
+      succArray.push(p)
+    }).finally(done).catch(e =&gt; void (e))
+  })
+
+  function done () {
+    len--
+    if (len === 0) {
+      console.log(succArray)
+    }
+  }
+})
+</code></pre>
+<p>这里最后<code>console.log</code>出来的就是通过代理抓取成功的代理，可以存入到数据库，以后抓取使用。</p>
+<h4 id="代理的维护">代理的维护</h4><p>最后在简单说下代理的维护，抓取到了代理，因为是免费的，一般过一段时间就会不能用了，所以在使用的时候，可以将代理放到一个数据库中维护，数据库中有字段：<code>succCount</code>和<code>failCount</code> 用于记录每次使用该代理成功和失败的次数。每次使用代理抓取的时候，要有个反馈机制，如果成功就<code>succCount</code> +1 ，失败就<code>failCount</code> +1。当失败次数过多的时候，这个代理就不要再使用了。</p>
+<h2 id="后语">后语</h2><p>本系列写到第三篇了，后面还会有一些常见问题解答。周末看到一篇用Python抓知乎导出txt或者markdown的文章，以后手痒就会放出番外篇 😁</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>抓取如果抓取的太快太频繁会被源站封IP，本文会介绍下通过限流、限速和使用代理的方式来防止被封</p>
+</blockquote>
+<p>上篇文章，抓取「电影天堂」最新的170部电影，在抓取首页电影list之后，会同时发出170个请求抓取电影的详情页，这样在固定时间点集中爆发式的访问页面，很容易在日志中被找出来，而且并发请求大了，很可能会中网站的防火墙之类的策略，IP被加到黑名单就悲剧了</p>
+<h2 id="限流&amp;限速">限流&amp;限速</h2><p>先说下<strong>限流</strong>的方法，将批量的并发请求，分成多次固定请求个数，等上一次抓取结束后，再开始下一次抓取，直到全部抓取结束。</p>
+<p>这里我使用<code>async</code>模块限制并发次数，<code>async</code>主要有：集合、流程和工具三大类方法，这里我使用<code>eachLimit(arr, limit, iterator, [callback])</code>，所有修改是上篇文章的<code>fetchContents</code>方法，该方法接受抓取到的170个文章的url list，这次通过<code>eachLimit</code>将170个url按照3个一组并发，依次执行，具体代码如下：</p>
+<pre><code class="js">function fetchContents (urls) {
+  return new Promise((resolve, reject) =&gt; {
+    var results = []
+    async.eachLimit(urls, 3, (url, callback) =&gt; {
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        results.push(d)
+        callback()
+      }, () =&gt; {
+        callback()
+      })
+    }, () =&gt; {
+      resolve(results)
+    })
+  })
+}
+</code></pre>
+<p>限流只是控制了一次并发的请求数，并没有让抓取程序慢下来，所以还需要<strong>限速</strong>，在限流的基础上限速就变得很简单，只需要在执行<code>eachLimit</code>的<code>callback</code>的时候，加上个<code>Timer</code>就好了，为了方便查看限速的效果，每次抓取成功之后，都<code>console.log</code>显示时间，所以改完的代码如下：</p>
+<pre><code class="js">function fetchContents (urls) {
+  return new Promise((resolve, reject) =&gt; {
+    var results = []
+    async.eachLimit(urls, 3, (url, callback) =&gt; {
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        var time = moment().format(‘HH:MM:ss&#39;)
+        console.log(`${url}===&gt;success, ${time}`)
+        results.push(d)
+        setTimeout(callback, 2e3)
+      }, () =&gt; {
+        callback()
+      })
+    }, () =&gt; {
+      resolve(results)
+    })
+  })
+}
+</code></pre>
+<p>效果如下：<br>￼<br><img src="/img/posts/spider1.png" alt=""></p>
+<h2 id="避免重复抓取">避免重复抓取</h2><p>因为一些网站更新比较慢，我们写的抓取程序在定时脚本任务（crontab）跑的时候，可能网站还没有更新，如果不做处理会造成资源的浪费，尤其国内不少VPS都是有流量限制的，不做控制，真金白银就打水漂了。。</p>]]>
+    
+    </summary>
+    
+      <category term="Node" scheme="http://js8.in/tags/Node/"/>
+    
+      <category term="抓取" scheme="http://js8.in/tags/%E6%8A%93%E5%8F%96/"/>
+    
+      <category term="Promise" scheme="http://js8.in/tags/Promise/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[用Node抓站（二）：Promise使代码更优雅]]></title>
+    <link href="http://js8.in/2017/08/14/%E7%94%A8Node%E6%8A%93%E7%AB%99%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9APromise%E4%BD%BF%E4%BB%A3%E7%A0%81%E6%9B%B4%E4%BC%98%E9%9B%85/"/>
+    <id>http://js8.in/2017/08/14/用Node抓站（二）：Promise使代码更优雅/</id>
+    <published>2017-08-14T08:59:26.000Z</published>
+    <updated>2018-06-25T03:33:19.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>本文主要目的是通过抓取「电影天堂」的最新电影名称和下载地址，展现如何抓取列表之后，继续抓取正文内容</p>
+</blockquote>
+<p>使用《用Node抓站（一）》（没看过的可以翻看下本公众号的历史文章）当中写的<code>spider.js</code> 代码可以直接用下面的代码把列表抓出来：</p>
+<pre><code class="js">var spider = require(&#39;../lib/spider&#39;)
+
+spider({
+  url: &#39;http://www.dytt8.net/index.htm&#39;,
+  decoding: &#39;gb2312&#39;
+}, (err, data, body, req) =&gt; {
+  if (!err) {
+    console.log(data)
+  }
+}, {
+  items: {
+    selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+  }
+})
+</code></pre>
+<p>这里不同的是涉及到一个编码问题，「电影天堂」用的是<code>gb2312</code>编码，需要转成<code>utf8</code>，不然抓的内容会乱码。我扩展了<code>request</code>模块的参数增加了<code>decoding</code>：因为<code>encoding</code>被占用了，而且为了转码方便，我将<code>encoding</code>设为<code>null</code>，这样出来的数据就是<code>Buffer</code>，可以直接用<code>iconv-lite</code>之类的进行转码，涉及到编码问题不是本文讨论内容，就不多说了。</p>
+<p>抓取列表后，发现title是被截断的，也要在正文页面抓取一下；继续写抓取下载地址和电影title的代码：</p>
+<pre><code class="js">spider({
+  url: &#39;http://www.dytt8.net/index.htm&#39;,
+  decoding: &#39;gb2312&#39;
+}, (err, data, body, req) =&gt; {
+  if (!err) {
+    if (data &amp;&amp; data.items) {
+      var urls = data.items
+      urls.forEach(function (url) {
+        url = &#39;http://www.dytt8.net&#39; + url
+        spider({url: url, decoding: &#39;gb2312&#39;}, (e, d) =&gt; {
+          if (!e) {
+            console.log(d)
+          }
+        }, {
+          url: {
+            selector: &#39;#Zoom table td a!text&#39;
+          },
+          title: {
+            selector: &#39;.title_all h1!text&#39;
+          }
+        })
+      })
+    }
+  }
+}, {
+  items: {
+    selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+  }
+})
+</code></pre>
+<p>看上去挺简单的，但是回调好多啊。。。</p>
+<p>处理这种异步回调可以使用Promise！</p>
+<a id="more"></a>
+<h2 id="Promise">Promise</h2><p>Promise是CommonJS提出来的这一种规范，有多个版本，在ES6当中已经纳入规范，原生支持Promise 对象，非ES6环境可以用类似Bluebird、Q这类库来支持。</p>
+<p>Promise可以将回调变成链式调用写法，流程更加清晰，代码更加优雅。</p>
+<p>简单归纳下Promise：三个状态、两个过程、一个方法，3-2-1</p>
+<ul>
+<li>三个状态：pending、fulfilled、rejected</li>
+<li>两个过程：<ul>
+<li>pending→fulfilled（resolve）</li>
+<li>pending→rejected（reject）</li>
+</ul>
+</li>
+<li>一个方法：then</li>
+</ul>
+<p>当然还有其他概念，比如：<code>catch</code>、<code>Promise.all/race</code>这里就不展开了。</p>
+<h2 id="代码的Promise改造">代码的Promise改造</h2><p>了解了Promise之后，先把<code>spider.js</code>改成Promise的</p>
+<pre><code class="js">return new Promise((resolve, reject) =&gt; {
+  opts.callback = function (error, response, body) {
+    if (!error) {
+      body = iconv.decode(body, opts.decoding || &#39;utf8&#39;)
+      // 处理json
+      try {
+        body = JSON.parse(body)
+      } catch (e) {
+      }
+      var data = parser(body, handlerMap)
+      callback(error, data, response)
+      resolve(data, response)
+    } else {
+      callback(error, body, response)
+      reject(error)
+    }
+  }
+  request(opts)
+})
+</code></pre>
+<p>这里<code>Promise</code>是个类，接受一个函数，函数参数是两个函数：<code>resolve</code>和<code>reject</code>，当成功的时候<code>resolve(结果)</code>，当失败的时候<code>reject(原因)</code></p>
+<p>完成<code>spider.js</code>改造之后，使用<code>spider</code>抓取代码变成了下面这样：</p>
+<pre><code class="js">spider({
+  url: &#39;http://www.dytt8.net/index.htm&#39;,
+  decoding: &#39;gb2312&#39;
+}, {
+  items: {
+    selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+  }
+}).then(function (data) {
+  // 第一页成功
+  if (data &amp;&amp; data.items) {
+    var urls = data.items
+    urls.forEach(function (url) {
+      url = &#39;http://www.dytt8.net&#39; + url
+      // 遍历开始抓取第二页面
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        console.log(d)
+      })
+    })
+  }
+})
+</code></pre>
+<p>上面的代码能够实现需求，但是没有充分利用<code>Promise</code>的链式写法，还是出现了回调，没有专注程序流程，看上去还是乱糟糟的。</p>
+<h2 id="Promise的链式调用"><code>Promise</code>的链式调用</h2><p>提到链式调用，最多的是<code>jQuery</code>的写法：<code>$(document).click(handler).addClass()….</code>。</p>
+<p>这里简单代码实现一个可以链式调用的类，方便大家举一反三：</p>
+<pre><code class="js">
+class M {
+  constructor (number) {
+    this.number = number
+  }
+  add (n) {
+    this.number += n
+    return this
+  }
+  sub (n) {
+    this.number -= n
+    return this
+  }
+  result () {
+    return this.number
+  }
+}
+
+var m = new M(1)
+m.add(2).sub(3).result()
+</code></pre>
+<p>在Promise中，每个<code>then</code>或者<code>catch</code> 返回的都是一个Promise对象，所以可以继续用<code>then</code>/<code>catch</code>，而且每次<code>then</code>都是上一次<code>then</code>的<code>return</code>结果，如果没有<code>return</code>那么就是<code>undefined</code>，例如下面：</p>
+<pre><code class="js">var resolve = Promise.resolve(1)
+
+resolve.then((d) =&gt; {
+  console.log(`第1个：${d}`) // 1
+}).then((d) =&gt; {
+  console.log(`第2个：${d}`) // undefined
+})
+</code></pre>
+<p>而如果<code>return</code> 则是<code>return</code>后的结果：</p>
+<pre><code class="js">var resolve = Promise.resolve(1)
+
+resolve.then((d) =&gt; {
+  console.log(`第1个：${d}`) // 1
+  return 2 // 2
+}).then((d) =&gt; {
+  console.log(`第2个：${d}`) //2
+})
+</code></pre>
+<p>上面的代码和下面的代码实现一样，建议每个<code>then</code>都返回一个Promise对象</p>
+<pre><code class="js">var resolve = Promise.resolve(1)
+
+resolve.then((d) =&gt; {
+  console.log(`第1个：${d}`)
+  return Promise.resolve(2)
+}).then((d) =&gt; {
+  console.log(`第2个：${d}`)
+})
+</code></pre>
+<p>了解了上面的知识之后，我将整个流程划分为三部分：获取列表<code>fetchList</code>，处理列表数据<code>dealListData</code>和获取正文内容<code>fetchContents</code></p>
+<p>然后将三个相互关联串行的流程，通过<code>then</code>串联起来：</p>
+<pre><code class="js">fetchList().then(dealListData).then(fetchContents).then((d) =&gt; {
+  console.log(d, d.length)
+}).catch((e) =&gt; {
+  console.log(e)
+})
+</code></pre>
+<p>再来看下特殊处理的<code>fetchContents</code>，因为传进来的是一堆需要抓取的正文页面的url，如果我们使用<code>Promise.all</code>这个方法，其中一个正文页面抓取失败，就会导致Promise都<code>rejected</code>，则后续<code>then</code>都失败，<strong>Promise状态只会改变一次，而且回调只会执行一次</strong>。我们的需求是正文页面一个抓取失败不要紧，其他的页面继续抓取。所以特殊处理下：</p>
+<pre><code class="js">function fetchContents (urls) {
+  return new Promise((resolve, reject) =&gt; {
+    var count = 0
+    var len = urls.length
+    var results = []
+    while (len--) {
+      var url = urls[len]
+      count++
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        results.push(d)
+      }).finally(() =&gt; {
+        count--
+        if (count === 0) {
+          resolve(results)
+        }
+      })
+    }
+  })
+}
+</code></pre>
+<h2 id="总结">总结</h2><p>本文通过抓取「电影天堂」下载地址的实例，粗略的讲解了Promise的使用方法。后面抓取系列文章还会介绍怎么避免封IP等知识，敬请关注本公众号后续文章。</p>
+<p>本文的完整代码，在github/ksky521/mpdemo/ 对应文章名文件夹下可以找到</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>本文主要目的是通过抓取「电影天堂」的最新电影名称和下载地址，展现如何抓取列表之后，继续抓取正文内容</p>
+</blockquote>
+<p>使用《用Node抓站（一）》（没看过的可以翻看下本公众号的历史文章）当中写的<code>spider.js</code> 代码可以直接用下面的代码把列表抓出来：</p>
+<pre><code class="js">var spider = require(&#39;../lib/spider&#39;)
+
+spider({
+  url: &#39;http://www.dytt8.net/index.htm&#39;,
+  decoding: &#39;gb2312&#39;
+}, (err, data, body, req) =&gt; {
+  if (!err) {
+    console.log(data)
+  }
+}, {
+  items: {
+    selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+  }
+})
+</code></pre>
+<p>这里不同的是涉及到一个编码问题，「电影天堂」用的是<code>gb2312</code>编码，需要转成<code>utf8</code>，不然抓的内容会乱码。我扩展了<code>request</code>模块的参数增加了<code>decoding</code>：因为<code>encoding</code>被占用了，而且为了转码方便，我将<code>encoding</code>设为<code>null</code>，这样出来的数据就是<code>Buffer</code>，可以直接用<code>iconv-lite</code>之类的进行转码，涉及到编码问题不是本文讨论内容，就不多说了。</p>
+<p>抓取列表后，发现title是被截断的，也要在正文页面抓取一下；继续写抓取下载地址和电影title的代码：</p>
+<pre><code class="js">spider({
+  url: &#39;http://www.dytt8.net/index.htm&#39;,
+  decoding: &#39;gb2312&#39;
+}, (err, data, body, req) =&gt; {
+  if (!err) {
+    if (data &amp;&amp; data.items) {
+      var urls = data.items
+      urls.forEach(function (url) {
+        url = &#39;http://www.dytt8.net&#39; + url
+        spider({url: url, decoding: &#39;gb2312&#39;}, (e, d) =&gt; {
+          if (!e) {
+            console.log(d)
+          }
+        }, {
+          url: {
+            selector: &#39;#Zoom table td a!text&#39;
+          },
+          title: {
+            selector: &#39;.title_all h1!text&#39;
+          }
+        })
+      })
+    }
+  }
+}, {
+  items: {
+    selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+  }
+})
+</code></pre>
+<p>看上去挺简单的，但是回调好多啊。。。</p>
+<p>处理这种异步回调可以使用Promise！</p>]]>
+    
+    </summary>
+    
+      <category term="Node" scheme="http://js8.in/tags/Node/"/>
+    
+      <category term="抓取" scheme="http://js8.in/tags/%E6%8A%93%E5%8F%96/"/>
+    
+      <category term="Promise" scheme="http://js8.in/tags/Promise/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Web前端页面劫持和反劫持]]></title>
+    <link href="http://js8.in/2017/08/04/Web%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2%E5%8A%AB%E6%8C%81%E5%92%8C%E5%8F%8D%E5%8A%AB%E6%8C%81/"/>
+    <id>http://js8.in/2017/08/04/Web前端页面劫持和反劫持/</id>
+    <published>2017-08-04T01:59:26.000Z</published>
+    <updated>2018-06-25T03:33:12.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>前几天看到一篇写js文件反劫持的文章，想起15年主导做百度搜索结果页面反劫持项目做得一些研究，整理成文章，跟大家分享。</p>
+</blockquote>
+<h2 id="常见劫持手段">常见劫持手段</h2><p>按照劫持的方法不同，我将劫持分为下面两类：</p>
+<ul>
+<li>跳转型劫持：用户输入地址A，但是跳转到地址B</li>
+<li>注入型劫持：有别于跳转型型劫持，指通过在正常的网页中注入广告代码（js、iframe等），实现页面弹窗提醒或者底部广告等，又分为下面三个小类：<ul>
+<li>注入js类劫持：在正常页面注入劫持的js代码实现的劫持</li>
+<li>iframe类劫持：将正常页面嵌入iframe或者页面增加iframe页面</li>
+<li>篡改页面类劫持：正常页面出现多余的劫持网页标签，导致页面整体大小发生变化</li>
+</ul>
+</li>
+</ul>
+<h3 id="跳转型劫持">跳转型劫持</h3><p>为了获取流量，一些电商或者类似百度这样需要流量合作的网站都会有自己的联盟系统，通过给予一些奖励来获取导流，比如：百度或者电商会有渠道分成。</p>
+<p>为了区分哪些是第三方给予导流过来的，通常会在url地址增加类似source、from之类的参数，或者进入页面之前通过「中间页」种cookie。</p>
+<p>这样，当用户输入一个正常网址的时候，劫持方会在网络层让其跳转到带分成或者渠道号的「中间页」或者带渠道号的页面。这样用户进行下单或者搜索等行为，劫持方会得到「佣金」。</p>
+<p>上面说的这类case还算友好，至少用户一般体验不到页面变化，还有类似跳转到<strong>钓鱼网站的case</strong>，也有不正当竞争的case：<strong>用户输入baidu.com跳转到so.com或者sm.cn，而对方网站有故意做成和百度搜索差不多的样子</strong>，那时候也帮助法务做了很多案例收集。</p>
+<p><strong>题外话</strong>：前些年，用户使用百度搜索某些医疗类query，立即用户就会收到电话推广医院，很多用户投诉，不明真相的群众也指责百度，实际这类是运营商把url的关键词卖给了医疗机构，百度只不过是躺枪。。。那时候还做了个项目是加密query。。。</p>
+<h3 id="注入型劫持">注入型劫持</h3><p>页面在传输的过程中，被网络层进行内容「再加工」，常见有：注入js、iframe、篡改页面。</p>
+<h4 id="注入js">注入js</h4><p>注入js的方式可以通过<code>document.write</code>或者直接改html代码片段等方式，给页面增加外链js，为了做到更难检测，有些运营商会捏造一个不存在的url地址，从而不被过滤或者检测。</p>
+<p><strong>案例1</strong>：运营商会用自己识别的ip或者域名做js网址，wap.zjtoolbar.10086.cn这类只有在浙江移动网络下才会被解析出来，同理ip也是</p>
+<p><strong>案例2</strong>：运营商很聪明，知道页面可以检测所有外链js的域名，比如：m.baidu.com我只允许m.baidu.com/static的外链js，其他js都会被记录反馈；为了不被检测出来，我遇见个case电信会访问一个不存在的地址，比如：m.baidu.com/static/abc.js，这个地址在运营商直接返回劫持的js代码，请求不会发到百度的服务器。</p>
+<h4 id="被放入iframe或者iframe其他页面">被放入iframe或者iframe其他页面</h4><p>这类case比较少见，但是一些擦边球的网站或者没有内容的垃圾站会用这种方式，他们一般是通过热门关键词之类做SEO，打开网站实际去了广告之类没有任何实际内容，而页面却是内嵌了一个其他网站，我们要是识别出来不被内嵌就需要检测。</p>
+<h4 id="篡改页面内容">篡改页面内容</h4><p>这类case很少见，一般是在页面底部增加js之外的div，然后展现一些非网站内容。</p>
+<h2 id="劫持检测方法">劫持检测方法</h2><p>讲了常见的劫持手段有哪些，我们再来看看怎么识别上面提到的这些劫持。<br>￼<br>上图是15年8月11日这天百度某页面的劫持情况，那天数据还算不错，之前浙江移动网络劫持率高达40%+，多数劫持来自<code>zjtoolbar.10086.cn</code>这个域名，就是移动的流量提示（还专门启用个域名zjtoolbar，浙江toolbar）。。。</p>
+<p><img src="/img/posts/hijack.png" alt=""></p>
+<a id="more"></a>
+<h3 id="跳转型劫持-1">跳转型劫持</h3><p>跳转型劫持如果用单纯靠Web页面进行检测比较困难，当时我们做检测是在手机百度（手百）内做检测，所以比较简单，用户输入搜索词（query），打开百度的页面URL，然后当页面加载结束，APP对比访问的URL是否是之前要访问的URL，如果URL不一致，则记录上报。</p>
+<h3 id="注入js类页面">注入js类页面</h3><ol>
+<li>改写<code>document.write</code>方法</li>
+<li>遍历页面<code>script</code>标签，给外链js增加白名单，不在白名单内js外链都上报</li>
+</ol>
+<h3 id="检测是否被iframe嵌套">检测是否被iframe嵌套</h3><p>这个通过比较<code>parent</code>对象，如果页面被嵌套，则<code>parent!==window</code>，要获取我们页面的URL地址，可以使用下面的代码：</p>
+<pre><code class="js">function getParentUrl() {
+        var url;
+        if (parent !== window) {
+            try {
+                url = parent.location.href;
+            } catch (e) {
+                url = document.referrer;
+            }
+        }
+        return url;
+    }
+
+</code></pre>
+<h3 id="特殊方法">特殊方法</h3><p>前面提到类似电信捏造在白名单内的js URL和篡改页面内容的，我们用上面提到的方法检测不到这些信息，如果是在APP内，可以做的事情就比较多了，除了上面之外，还可以比较页面的<code>content-length</code>。当时手百的做法是：</p>
+<blockquote>
+<p>在用户开始输入query的时候，APP访问一个空白页面，页面内只有html、title、head、body、script，而script标签内主要代码就是嗅探是否被劫持。<br>因为一般劫持不会针对某个页面，而是针对整个网站域名，所以我们的空白页面也会被劫持。<br>一旦被劫持，那么这么简单的页面结构就很容易做页面劫持分析，分析出来劫持手段就上报case</p>
+</blockquote>
+<p>script内核心代码如下：</p>
+<pre><code class="js">
+function hiJackSniffer() {
+    var files = $.toArray(D.querySelectorAll(&#39;script[src]&#39;));
+    var arr = [];
+    for (var i = 0, len = files.length; i &lt; len; i++) {
+        files[i].src &amp;&amp; arr.push(files[i].src);
+    }
+    if (arr.length) {
+        return sendImg(arr, 1);
+    }
+    arr = getParentUrl();
+    if (arr &amp;&amp; arr.length) {
+        //被嵌入iframe
+        return sendImg([arr], 2);
+    }
+    if (D.documentElement.outerHTML.length &gt; 4e3) {
+        var tmp = {};
+        var headjs = $.toArray(D.head.querySelectorAll(&#39;script&#39;));
+        var unknownCode = [];
+        if (headjs.length) {
+            unknownCode = unknownCode.concat(headjs.map(function(v) {
+                return v.innerHTML;
+            }).filter(function(v) {
+                return !!v;
+            }));
+        }
+        var body = $.toArray(D.body.querySelectorAll(&#39;*&#39;));
+
+        if (body.length &gt; 1) {
+            unknownCode = unknownCode.concat(body.map(function(v) {
+                return v.outerHTML.split(&#39;\n&#39;).join(&#39;&#39;);
+            }).filter(function(str) {
+                if (/^&lt;script id=&quot;b&quot;&gt;/.test(str)) {
+                    return false;
+                }
+                return true;
+            }));
+        }
+        return sendImg(unknownCode, 3);
+    }
+    sendImg([], 0);
+}
+
+</code></pre>
+<p>这样做除了可以检测到多余的js外链，还可以检测出来篡改页面内容等case。除了检测域名劫持之外，在用户输入query的时刻访问空白的页面也可以提前完成DNS解析，另外还可以做劫持防御，所谓「一石三鸟」！</p>
+<h2 id="劫持防御">劫持防御</h2><p>最简单粗暴的就是直接上<code>HTTPS</code>，一劳永逸。再就是取证，去打官司或者警告渠道作弊者。除此之外，我们还可以继续利用空白页面做劫持检测。</p>
+<p>手百在没有全量https时期（毕竟全站https牵扯的工作量不小），利用空白页面嗅探出当前网络环境存在劫持风险的时候，那么就通过调用客户端的接口，告诉客户端本次启动期间使用<code>https</code>，这样既可以降低劫持风险，又可以通过这个页面小流量测试https数据，将来https全量后，还可以通过空白页面将老版本的APP全量打开https。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>前几天看到一篇写js文件反劫持的文章，想起15年主导做百度搜索结果页面反劫持项目做得一些研究，整理成文章，跟大家分享。</p>
+</blockquote>
+<h2 id="常见劫持手段">常见劫持手段</h2><p>按照劫持的方法不同，我将劫持分为下面两类：</p>
+<ul>
+<li>跳转型劫持：用户输入地址A，但是跳转到地址B</li>
+<li>注入型劫持：有别于跳转型型劫持，指通过在正常的网页中注入广告代码（js、iframe等），实现页面弹窗提醒或者底部广告等，又分为下面三个小类：<ul>
+<li>注入js类劫持：在正常页面注入劫持的js代码实现的劫持</li>
+<li>iframe类劫持：将正常页面嵌入iframe或者页面增加iframe页面</li>
+<li>篡改页面类劫持：正常页面出现多余的劫持网页标签，导致页面整体大小发生变化</li>
+</ul>
+</li>
+</ul>
+<h3 id="跳转型劫持">跳转型劫持</h3><p>为了获取流量，一些电商或者类似百度这样需要流量合作的网站都会有自己的联盟系统，通过给予一些奖励来获取导流，比如：百度或者电商会有渠道分成。</p>
+<p>为了区分哪些是第三方给予导流过来的，通常会在url地址增加类似source、from之类的参数，或者进入页面之前通过「中间页」种cookie。</p>
+<p>这样，当用户输入一个正常网址的时候，劫持方会在网络层让其跳转到带分成或者渠道号的「中间页」或者带渠道号的页面。这样用户进行下单或者搜索等行为，劫持方会得到「佣金」。</p>
+<p>上面说的这类case还算友好，至少用户一般体验不到页面变化，还有类似跳转到<strong>钓鱼网站的case</strong>，也有不正当竞争的case：<strong>用户输入baidu.com跳转到so.com或者sm.cn，而对方网站有故意做成和百度搜索差不多的样子</strong>，那时候也帮助法务做了很多案例收集。</p>
+<p><strong>题外话</strong>：前些年，用户使用百度搜索某些医疗类query，立即用户就会收到电话推广医院，很多用户投诉，不明真相的群众也指责百度，实际这类是运营商把url的关键词卖给了医疗机构，百度只不过是躺枪。。。那时候还做了个项目是加密query。。。</p>
+<h3 id="注入型劫持">注入型劫持</h3><p>页面在传输的过程中，被网络层进行内容「再加工」，常见有：注入js、iframe、篡改页面。</p>
+<h4 id="注入js">注入js</h4><p>注入js的方式可以通过<code>document.write</code>或者直接改html代码片段等方式，给页面增加外链js，为了做到更难检测，有些运营商会捏造一个不存在的url地址，从而不被过滤或者检测。</p>
+<p><strong>案例1</strong>：运营商会用自己识别的ip或者域名做js网址，wap.zjtoolbar.10086.cn这类只有在浙江移动网络下才会被解析出来，同理ip也是</p>
+<p><strong>案例2</strong>：运营商很聪明，知道页面可以检测所有外链js的域名，比如：m.baidu.com我只允许m.baidu.com/static的外链js，其他js都会被记录反馈；为了不被检测出来，我遇见个case电信会访问一个不存在的地址，比如：m.baidu.com/static/abc.js，这个地址在运营商直接返回劫持的js代码，请求不会发到百度的服务器。</p>
+<h4 id="被放入iframe或者iframe其他页面">被放入iframe或者iframe其他页面</h4><p>这类case比较少见，但是一些擦边球的网站或者没有内容的垃圾站会用这种方式，他们一般是通过热门关键词之类做SEO，打开网站实际去了广告之类没有任何实际内容，而页面却是内嵌了一个其他网站，我们要是识别出来不被内嵌就需要检测。</p>
+<h4 id="篡改页面内容">篡改页面内容</h4><p>这类case很少见，一般是在页面底部增加js之外的div，然后展现一些非网站内容。</p>
+<h2 id="劫持检测方法">劫持检测方法</h2><p>讲了常见的劫持手段有哪些，我们再来看看怎么识别上面提到的这些劫持。<br>￼<br>上图是15年8月11日这天百度某页面的劫持情况，那天数据还算不错，之前浙江移动网络劫持率高达40%+，多数劫持来自<code>zjtoolbar.10086.cn</code>这个域名，就是移动的流量提示（还专门启用个域名zjtoolbar，浙江toolbar）。。。</p>
+<p><img src="/img/posts/hijack.png" alt=""></p>]]>
+    
+    </summary>
+    
+      <category term="劫持" scheme="http://js8.in/tags/%E5%8A%AB%E6%8C%81/"/>
+    
+      <category term="安全" scheme="http://js8.in/tags/%E5%AE%89%E5%85%A8/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[为什么我们的业务适合用Node？]]></title>
+    <link href="http://js8.in/2017/07/28/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%88%91%E4%BB%AC%E7%9A%84%E4%B8%9A%E5%8A%A1%E9%80%82%E5%90%88%E7%94%A8Node/"/>
+    <id>http://js8.in/2017/07/28/为什么我们的业务适合用Node/</id>
+    <published>2017-07-28T15:25:54.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>本文从业务场景来谈谈为什么选择Node，以及前端写后端代码需要补足的短板。</p>
+</blockquote>
+<p>这些日子一直在做Node方面的尝试，或多或少会收到周围的异样的目光甚至背后的质疑，于是促使我好好思考为什么我在做Node。网上搜下「为什么要用Node」，找到的文章多数是介绍Node多么多么牛逼，无非是从Node本身特性来说，比如：并发、事件驱动、非阻塞I/O、单线程、流、社区生态……诸如此类，很少谈业务场景。<br>我是「实用主义」者，说过：<strong>脱离业务场景谈架构都是耍流氓</strong>。因为个人是从一线业务做起的，经过几年对业务的思考，我觉得可以从业务场景来说说为什么我们的业务更适合用Node。</p>
+<h2 id="从业务场景说起">从业务场景说起</h2><p>现在我们的业务模块化越来越普遍，很少有业务比较纯粹只有链接一个数据库就可以搞定，往往前台业务后面会有N多的API服务做支撑。比如：下面两种情况在我们实际开发中经常遇见：</p>
+<ol>
+<li>某个页面需要的数据来自两个以上接口，而两个接口来自不同的团队/部门，比如：用户信息来自账号部门，而UGC数据来自业务部门</li>
+<li>某个页面存在接口依赖，需要先调用接口A，然后根据接口A数据调取接口B，比如：个性化推荐，往往需要根据某些维度请求推荐系统拿到推荐数据的ID，至于内容，需要拿ID根据页面需要去获取具体元数据</li>
+</ol>
+<p>上面两种情况，站在后台开发的角度来看，我们业务模块要分开要独立，而站在前端的角度来看，这些数据都是一个页面需要的，前端希望是一个接口给我返回。这是一个开始。。</p>
+<p>当然后台开发，比如PHP也有并发请求的解决方案，好（上）心的后台工程师，会帮助在后台统一合并请求处理成一份数据或者接口，然后扔给页面使用。比如在实际开发中，我们的前端会写（并且维护）一个<code>Template.class.php</code>（我敢说我们80%的后台工程师都没看过这个代码。。），在View层使用，然后在Action当中将数据传给View层做渲染，下面的代码：</p>
+<pre><code class="php">$this-&gt;render(&#39;xxx/xx.tpl&#39;, $tplData);
+</code></pre>
+<p>这样增加的沟通成本，降低了开发效率。为了一个页面，需要前端根据页面想要的数据，和后台沟通页面的数据格式，然后后台工程师找他们后面的API模块要数据、处理数据。这个过程中会有一些「灰色地带」，不好明确谁做更合适，完全靠自觉。</p>
+<p>往往开发的时候会想各种方法来解耦，比如：引入后台模板（smarty之类），然后约定数据格式，前端根据数据格式来写Mock接口，写后台模板的前端就叫「大前端」；再Low一点的团队，会采取前端做好页面扔给后台工程师「套页面」，比如：PHP代码写HTML，各种<code>&lt;?php echo xxx;?&gt;</code>，代码很不友好，后台工程师幸福感也急剧下降。</p>
+<p>还有一种做法是，干脆后台沦为「代理服务器」，收到请求我转给后面的API，拿到数据我返回给前端页面，做成可以「跨域」的接口，所以就成了好多webapp。</p>
+<p>另外，站在后台工程师的个人发展来看，可能他们觉得：这些「包接口」的重复性工作，跟自己的晋升和技术发展又有毛线关系呢？</p>
+<p>说道这里，肯定有人心里在嘀咕：这是你们大公司才有的问题，我们小公司不会有这样的问题！那我下面再从技术方面来说。<br><a id="more"></a></p>
+<h2 id="从技术方面说起">从技术方面说起</h2><p>从性能优化、工程化、解决方案这三个开发中最最常见的方面来说明为什么前端的事情前端做更合适。</p>
+<h3 id="性能优化">性能优化</h3><p>前端页面是重要的载体，出现问题或者页面体验不好会对用户造成直接的伤害（我们都是背锅侠）。页面性能这些问题显然是前端的头等大事，但是这些事情跟后台工程师关系多大呢？当你发现该优化的项目都优化完了，剩下的优化项目就需要跟后台工程师一起优化了，而这时候再去push后台工程师一起参与前端优化项目。</p>
+<h3 id="工程化方案">工程化方案</h3><p>除了前端页面的性能优化这种项目，还会有一些工程化的工作，帮助提高前端的开发效率和体验，但实际上只有前端是搞不定的，比如：</p>
+<ol>
+<li>根据打包工具做的resourcemap，实现页面静态资源的CDN地址合并（combo）输出和分开输出（调试阶段）</li>
+<li>扩展Smarty语法，实现模板组件化</li>
+<li>模拟后台数据接口，输出假数据渲染的页面</li>
+</ol>
+<p>这些工程化的工作本身前端自己理解的很清楚，但是后台工程师会有多少了解呢？怎么不可能让对前端不了解的后台工程师参与进来呢？解释要做什么就花费不少时间。</p>
+<h3 id="解决方案">解决方案</h3><p>再说解决方案，简单点如果我们要实现页面chunked输出，将动态和静态数据分开，不依赖接口数据的数据首先展现（比如首屏的Nav），那么也要依赖后台工程师的代码。再大一点，我们上个类似Bigpipe的方案，那么对后台的依赖和改造更大。</p>
+<h3 id="技术这些问题怎么办？">技术这些问题怎么办？</h3><p>上面的这些诉求，有两种方案：前端自己撸袖子来搞，他们或者是直接写类似PHP来实现，或者是写不伦不类的Smarty扩展代码；再者就是可以出一个「技术产品经理」，专门立项来搞这些项目，由「技术产品经理」来协调两边需求，避免「鸡同鸭讲」。可是业务部门项目压力是非常大的，很少有这样的项目，而专门做技术的团队呢，又很难深入业务，往往高高在上，搞出来的东西要么不合实际、要么太高新尖端，导致水土不服，强推起来，业务团队哀声哉道。<strong>我也说过：脱离业务的架构都是耍流氓</strong>。。</p>
+<h2 id="为什么用Node">为什么用Node</h2><p>根据上面说的，大概得出使用Node有下面的好处：</p>
+<ol>
+<li>天然的事件驱动可以用于处理并发</li>
+<li>降低前后端协作成本，提高开发效率</li>
+<li>职责分明，前端的问题前端er自己负责，自己解决</li>
+<li>前后端同构，前端解决方案同步到Server-side</li>
+<li>有利于前后端同学的个人发展</li>
+</ol>
+<h2 id="什么业务场景使用Node">什么业务场景使用Node</h2><p>同时，大概得出什么样子的业务场景使用Node：</p>
+<ol>
+<li>页面需求大，从样式到性能都一直迭代</li>
+<li>后端接口丰富，页面数据资源方多</li>
+<li>纯渲染，对安全性要求不高，无计算能力</li>
+<li>最后，最重要的是团队的能力（<strong>我还说过：脱离团队的架构都是耍流氓</strong>。。）</li>
+</ol>
+<h2 id="对Node的质疑">对Node的质疑</h2><p>当谈到「我们要用Node」，往往会遭到如下具体的质疑（注意是具体，不是纯怼）：</p>
+<ol>
+<li>稳定性：主要是单线程异常处理</li>
+<li>异步回调导致程序复杂度提高，不利于调试</li>
+<li>和后台接口的对接能力</li>
+<li>工作流程：代码部署、上线</li>
+<li>运维支持：接入、容量管理、日志、监控等</li>
+<li>Node版本升级太快了，NPM包靠谱吗？</li>
+</ol>
+<p>先说这些前面三个问题： </p>
+<ol>
+<li>稳定性：选择的Node框架对异常处理要友好，进程守候有forever/pm2这些包可以帮我们，目前已经成熟，而且Node也越来越完善和稳定</li>
+<li>调试：现在用前端流程的IDE很容易调试</li>
+<li>后台接口通信协议如果过于复杂，可以通过C的Node模块来解决，PHP不也是吗？</li>
+</ol>
+<p>后面两个问题主要是跟公司运维能力有关系：</p>
+<ol>
+<li>工作流程：目前百度内部的工作流程做的很好，从代码提交到打包编译和上线都是一整套解决方案，而每个环节之间只需要按照约定进行输入输出即可</li>
+<li>运维：百度内部的ORP是很好的PaaS解决方案，提供了虚拟化的实例，Node代码部署在实例上，通过统一的nginx反向代理分发给不同端口号的实例处理，支持资源弹性调度，日志只需要按照约定放在某个文件夹，可以配置采集任务，进行采集和监控</li>
+</ol>
+<p>所以我们厂子内部已经为Node大规模使用在流程和运维方面已经做好了准备。</p>
+<p>最后说下Node生态问题，Node版本的确升级很快，但是只关注LTS版本，等发版一段时间之后跟进更新即可，目前百度内部的Node Runtime是6.10版本，听说很快就要生7.0了。对于框架和业务代码用到的NPM包，完全可以做版本指定，也可以做自动测试，跑过了case则提交进master，随着下个版本回归上线。</p>
+<h2 id="前端写后台代码会有什么问题？">前端写后台代码会有什么问题？</h2><p>不管怎样，我们用Node已经变得顺理成章，但是我们也要知道自己的不足，拓宽自己的视野。</p>
+<p>首先是[‘green’ 后台思想]，在前端开发中，我们的代码是跑在每个用户自己的浏览器里面，代码之间是隔离的，所以不管你代码写的好坏，只要是说的过去，就不会有大的问题，比如：偶尔内存泄漏一下，似乎也影响不大。但是server的代码是长久执行下去的，不是用户走了就释放的，所以一个小的内存泄漏，长时间下去也会引起大的问题。再比如：浏览器的JS你可以偶尔使用个全局变量（少写个var），但是如果在Node的代码，将用户相关的个性数据放在<code>global</code>，那么当下个请求过来，而代码还没有处理完当前请求，会导致自己用的数据不是当前用户的，碰到这种问题，只能把个性化的数据一层层的传下去。还有缺乏优化意识或者过度优化，该用缓存的时候不用，不该用的时候乱用。</p>
+<p>再举个case，看下面的代码：</p>
+<pre><code class="js">module.exports = function (ip) {
+  var ipfinder = require(&#39;ipfinder&#39;);
+  ipfinder.loadData(&#39;ip.data&#39;);
+  return ipfinder.findSync(ip);
+}
+</code></pre>
+<p>这个是数据实时分析项目的一段类似的代码，ipfinder是我写的一个IP查找库，<code>ipfinder.loadData(&#39;ip.data’);</code>会引入一个二进制的ip数据库，这个比较消耗资源，写在<code>module.exports</code>是没有必要的，每次执行module都加载一遍，很费资源，拿到<code>module.exports</code>之外，程序的CPU从99%降到了5%….</p>
+<p>第二个是[‘green’ 安全意识]，之前在「Vue项目重构」中提到<code>proxy.js</code>的代码弊端，就是缺乏安全意识导致的。前端写后台程序，因为缺乏安全意识，往往在接口设计、页面片段拼接等方面犯错误，比如：接口设计的过于简单，缺乏校验，容易导致CSRF攻击，如果有数据库操作，手动拼接SQL语句容易导致SQL注入。</p>
+<p>最后是[‘green’ 运维知识]，前端工程师写Node服务，就不在简单的对浏览器负责，而还应该对服务器负责，服务器的稳定性、各种监控指标都应该有所了解，对于<strong>机房配置</strong>、<strong>资源调配</strong>、<strong>运维架构</strong>、<strong>服务架构</strong>都应该了熟于心，避免出现线上事故了自己还不知道从哪里排查的窘态。</p>
+<p>当然你可能会说，刚刚开始接触是可以允许犯错的，但是要知道：[‘red’ 技术的调整是不应该损害产品服务的]。以上三点内容需要刚刚转Node开发的前端工程师注意加强学习，能力越大责任越大！开始时候可能会犯错和抓瞎，该请教就请教，时间长了能够点亮新的技能点~</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>本文从业务场景来谈谈为什么选择Node，以及前端写后端代码需要补足的短板。</p>
+</blockquote>
+<p>这些日子一直在做Node方面的尝试，或多或少会收到周围的异样的目光甚至背后的质疑，于是促使我好好思考为什么我在做Node。网上搜下「为什么要用Node」，找到的文章多数是介绍Node多么多么牛逼，无非是从Node本身特性来说，比如：并发、事件驱动、非阻塞I/O、单线程、流、社区生态……诸如此类，很少谈业务场景。<br>我是「实用主义」者，说过：<strong>脱离业务场景谈架构都是耍流氓</strong>。因为个人是从一线业务做起的，经过几年对业务的思考，我觉得可以从业务场景来说说为什么我们的业务更适合用Node。</p>
+<h2 id="从业务场景说起">从业务场景说起</h2><p>现在我们的业务模块化越来越普遍，很少有业务比较纯粹只有链接一个数据库就可以搞定，往往前台业务后面会有N多的API服务做支撑。比如：下面两种情况在我们实际开发中经常遇见：</p>
+<ol>
+<li>某个页面需要的数据来自两个以上接口，而两个接口来自不同的团队/部门，比如：用户信息来自账号部门，而UGC数据来自业务部门</li>
+<li>某个页面存在接口依赖，需要先调用接口A，然后根据接口A数据调取接口B，比如：个性化推荐，往往需要根据某些维度请求推荐系统拿到推荐数据的ID，至于内容，需要拿ID根据页面需要去获取具体元数据</li>
+</ol>
+<p>上面两种情况，站在后台开发的角度来看，我们业务模块要分开要独立，而站在前端的角度来看，这些数据都是一个页面需要的，前端希望是一个接口给我返回。这是一个开始。。</p>
+<p>当然后台开发，比如PHP也有并发请求的解决方案，好（上）心的后台工程师，会帮助在后台统一合并请求处理成一份数据或者接口，然后扔给页面使用。比如在实际开发中，我们的前端会写（并且维护）一个<code>Template.class.php</code>（我敢说我们80%的后台工程师都没看过这个代码。。），在View层使用，然后在Action当中将数据传给View层做渲染，下面的代码：</p>
+<pre><code class="php">$this-&gt;render(&#39;xxx/xx.tpl&#39;, $tplData);
+</code></pre>
+<p>这样增加的沟通成本，降低了开发效率。为了一个页面，需要前端根据页面想要的数据，和后台沟通页面的数据格式，然后后台工程师找他们后面的API模块要数据、处理数据。这个过程中会有一些「灰色地带」，不好明确谁做更合适，完全靠自觉。</p>
+<p>往往开发的时候会想各种方法来解耦，比如：引入后台模板（smarty之类），然后约定数据格式，前端根据数据格式来写Mock接口，写后台模板的前端就叫「大前端」；再Low一点的团队，会采取前端做好页面扔给后台工程师「套页面」，比如：PHP代码写HTML，各种<code>&lt;?php echo xxx;?&gt;</code>，代码很不友好，后台工程师幸福感也急剧下降。</p>
+<p>还有一种做法是，干脆后台沦为「代理服务器」，收到请求我转给后面的API，拿到数据我返回给前端页面，做成可以「跨域」的接口，所以就成了好多webapp。</p>
+<p>另外，站在后台工程师的个人发展来看，可能他们觉得：这些「包接口」的重复性工作，跟自己的晋升和技术发展又有毛线关系呢？</p>
+<p>说道这里，肯定有人心里在嘀咕：这是你们大公司才有的问题，我们小公司不会有这样的问题！那我下面再从技术方面来说。<br>]]>
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://js8.in/tags/javascript/"/>
+    
+      <category term="Nodejs" scheme="http://js8.in/tags/Nodejs/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[用Node抓站（一）：怎么写出自己满意的代码]]></title>
+    <link href="http://js8.in/2017/07/26/%E7%94%A8Node%E6%8A%93%E7%AB%99%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E6%80%8E%E4%B9%88%E5%86%99%E5%87%BA%E8%87%AA%E5%B7%B1%E6%BB%A1%E6%84%8F%E7%9A%84%E4%BB%A3%E7%A0%81/"/>
+    <id>http://js8.in/2017/07/26/用Node抓站（一）：怎么写出自己满意的代码/</id>
+    <published>2017-07-26T15:25:54.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<p>如果只写怎么抓取网页，肯定会被吐槽太水，满足不了读者的逼格要求，所以本文会通过不断的审视代码，做到令自己满意（撸码也要不断迸发新想法！</p>
+<blockquote>
+<p>本文目标：抓取什么值得买网站国内优惠的最新商品，并且作为对象输出出来，方便后续入库等操作</p>
+</blockquote>
+<h2 id="抓取常用到的npm模块">抓取常用到的npm模块</h2><p>本文就介绍两个：<code>request</code> 和 <code>cheerio</code>，另外<code>lodash</code>是个工具库，不做介绍，后面篇幅会继续介绍其他用到的npm库。</p>
+<ul>
+<li><strong>request</strong>：是一个http请求库，封装了很多常用的配置，而且也有promise版本（还有next版本。</li>
+<li><strong>cheerio</strong>：是一个类似jQuery的库，可以将html String转成类似jQ的对象，增加jQ的操作方法（实际是htmlparser2</li>
+</ul>
+<h3 id="request_示例">request 示例</h3><pre><code class="js">var request = require(&#39;request&#39;);
+request(&#39;http://www.smzdm.com/youhui/&#39;, (err, req)=&gt;{
+  if(!err){
+    console.log(Object.keys(req))
+  }
+})
+</code></pre>
+<p>通过上面的代码就看到<code>req</code>实际是个<code>response</code>对象，包括<code>headers</code> 、<code>statusCode</code>、<code>body</code> 等，我们用<code>body</code>就是网站的html内容</p>
+<a id="more"></a>
+<h3 id="cheerio_示例">cheerio 示例</h3><pre><code class="js">var request = require(&#39;request&#39;)
+var cheerio = require(&#39;cheerio&#39;)
+
+cheerio.prototype.removeTagText = function () {
+  var html = this.html()
+  return html.replace(/&lt;([\w\d]+)\b[^&lt;]+?&lt;\/\1&gt;/g, (m) =&gt; {
+    return &#39;&#39;
+  })
+}
+request(&#39;http://www.smzdm.com/youhui/&#39;, (err, req) =&gt; {
+  if (!err) {
+    var body = req.body
+    var $ = cheerio.load(body, {
+      decodeEntities: false
+    })
+    $(&#39;.list.list_preferential&#39;).each((i, item) =&gt; {
+      var $title = $(&#39;.itemName a&#39;, item)
+      var url = $title.attr(&#39;href&#39;)
+      var title = $title.removeTagText().trim()
+
+      var hl = $title.children().text().trim()
+      var img = $(&#39;img&#39;, item).attr(&#39;src&#39;)
+      var desc = $(&#39;.lrInfo&#39;, item).html().trim()
+      desc = desc.replace(/&lt;a\b.+?&gt;阅读全文&lt;\/a&gt;/g, &#39;&#39;)
+      var mall = $(&#39;.botPart a.mall&#39;, item).text().trim()
+
+      console.log({title, hl, url, img, desc, mall})
+    })
+  }
+})
+</code></pre>
+<p>简单解释下，<code>removeTagText</code>是直接扩展了<code>cheerio</code>的一个方法，目的是去掉类似</p>
+<pre><code class="html">再特价：QuanU 全友 布艺沙发组合&lt;span class=&quot;z-highlight&quot;&gt;2798元包邮（需定金99元，3.1付尾款）&lt;/span&gt;
+</code></pre>
+<p>里面<code>span</code>之后的文字。执行后得到下面的结果：<br>￼<br>￼<img src="/uploads/2017/03/node-spider.png" alt=""></p>
+<h2 id="怎么写出自己满意的代码">怎么写出自己满意的代码</h2><p>从上面需求来看，只需要提取列表页面的商品信息，而取到数据之后，使用<code>cheerio</code>进行了解析，然后通过一些「选择器」对数据进行「提取加工」，得到想要的数据。</p>
+<p>重点是<strong>选择器</strong> 和 <strong>提取加工</strong>，如果想要的字段多了，那么代码会越写越多，维护困难，最重要的是「不环保」，今天抓什么值得买，明天抓惠惠网，代码还要copy一份改一改！一来二去，抓的越多，那么代码越乱，想想哪天不用<code>request</code>了，是不是要挨个修改呢？所以要抓重点，从最后需要的<strong>数据结构</strong>入手，关注<strong>选择器</strong> 和 <strong>提取加工</strong>。</p>
+<h3 id="handlerMap">handlerMap</h3><p>从最后需要的<strong>数据结构</strong>入手，关注<strong>选择器</strong> 和 <strong>提取加工</strong>。我设计一种对象结构，作为参数传入，这个参数我起名：<code>handlerMap</code>，最后实现一个<code>spider</code>的函数，用法如下：</p>
+<pre><code class="js">spider(url, callback, handlerMap)
+</code></pre>
+<p>从目标数据结构出发，最后数据什么样子，那么<code>handlerMap</code>结构就是什么样子，<code>key</code>就是最后输出数据的<code>key</code>，是由<code>selector</code>和<code>handler</code>两个key组成的对象，类似我们需要最后产出的数据是：</p>
+<pre><code class="json">[{
+  title: &#39;&#39;,
+  ht: &#39;&#39;,
+  url: &#39;&#39;,
+  img: &#39;&#39;,
+  mall: &#39;&#39;,
+  desc: &#39;&#39;
+}, {item2..}...]
+</code></pre>
+<p>那么需要的<code>handlerMap</code>就是：</p>
+<pre><code class="json">{
+  title: {
+    selector: &#39;.itemName a&#39;,
+    handler: &#39;removeTagText&#39;
+  },
+  ht: {
+    selector: &#39;.itemName a span&#39;,
+    handler: &#39;text&#39;
+  },
+  url: {
+    selector: &#39;.itemName a&#39;,
+    handler: &#39;atrr:href&#39;
+  },
+  img: {
+    selector: &#39;img&#39;,
+    handler: &#39;attr:src&#39;
+  },
+  mall: {
+    selector: &#39;.botPart a.mall&#39;,
+    handler: &#39;text&#39;
+  },
+  desc: {
+    selector: &#39;.lrInfo&#39;,
+    handler: function (data){
+      return data.replace(/&lt;a\b.+?&gt;阅读全文&lt;\/a&gt;/g, &#39;&#39;)
+    }
+  }
+}
+</code></pre>
+<p>再酷一点，就是简写方法：<code>url:&quot;.itemName a!attr:href”</code>，另外再加上如果抓取的是<code>JSON</code>数据，也要一起处理的情况。经过分析之后，开始改造代码，代码最后分为了两个模块：</p>
+<ul>
+<li><code>spider.js</code>：包装request 模块，负责抓取页面将页面交给<code>parser.js</code>解析出来想要的数据</li>
+<li><code>parser.js</code>：负责解析handlerMap，同时支持json和html两种类型的页面进行解析</li>
+</ul>
+<p>虽然增加不少代码工作量，但是抽象后的代码在使用的时候就更加方便了，自己还是别人在使用的时候，不用关心代码实现，只需要关注抓取的页面url、要提取的页面内容和数据得到后的继续操作即可，使用起来要比之前混杂在一起的代码更加清晰简洁；并且抓取任意页面都不需要动核心的代码，只需要填写前面提到的<code>handlerMap</code>。</p>
+<h2 id="总结">总结</h2><p>其实Node抓取页面很简单，本文只是通过一个简单的抓取任务，不断深入思考，进行抽象，写出自己满意的代码，以小见大，希望本文对读者有所启发😄</p>
+<p>今天到此结束，完成一个基础抓取的库，有空继续介绍Node抓站的知识，欢迎大家交流讨论</p>
+<p>本文的完整代码，在<a href="https://github.com/ksky521/mpdemo/" target="_blank" rel="external">github/ksky521/mpdemo/</a> 对应文章名文件夹下可以找到</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>如果只写怎么抓取网页，肯定会被吐槽太水，满足不了读者的逼格要求，所以本文会通过不断的审视代码，做到令自己满意（撸码也要不断迸发新想法！</p>
+<blockquote>
+<p>本文目标：抓取什么值得买网站国内优惠的最新商品，并且作为对象输出出来，方便后续入库等操作</p>
+</blockquote>
+<h2 id="抓取常用到的npm模块">抓取常用到的npm模块</h2><p>本文就介绍两个：<code>request</code> 和 <code>cheerio</code>，另外<code>lodash</code>是个工具库，不做介绍，后面篇幅会继续介绍其他用到的npm库。</p>
+<ul>
+<li><strong>request</strong>：是一个http请求库，封装了很多常用的配置，而且也有promise版本（还有next版本。</li>
+<li><strong>cheerio</strong>：是一个类似jQuery的库，可以将html String转成类似jQ的对象，增加jQ的操作方法（实际是htmlparser2</li>
+</ul>
+<h3 id="request_示例">request 示例</h3><pre><code class="js">var request = require(&#39;request&#39;);
+request(&#39;http://www.smzdm.com/youhui/&#39;, (err, req)=&gt;{
+  if(!err){
+    console.log(Object.keys(req))
+  }
+})
+</code></pre>
+<p>通过上面的代码就看到<code>req</code>实际是个<code>response</code>对象，包括<code>headers</code> 、<code>statusCode</code>、<code>body</code> 等，我们用<code>body</code>就是网站的html内容</p>]]>
+    
+    </summary>
+    
+      <category term="Nodejs" scheme="http://js8.in/tags/Nodejs/"/>
+    
+      <category term="抓站" scheme="http://js8.in/tags/%E6%8A%93%E7%AB%99/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Hybrid APP开发：JSSDK]]></title>
+    <link href="http://js8.in/2017/05/26/Hybrid%20APP%E5%BC%80%E5%8F%91%EF%BC%9AJSSDK/"/>
+    <id>http://js8.in/2017/05/26/Hybrid APP开发：JSSDK/</id>
+    <published>2017-05-26T11:28:35.000Z</published>
+    <updated>2018-07-02T05:17:09.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>拖稿了好久的「Hybrid APP开发系列」又更新了~<br>今天继续写JSSDK</p>
+</blockquote>
+<h2 id="为什么会有JSSDK">为什么会有JSSDK</h2><p>我之前文章介绍了通过 JSBridge 实现页面和NA的相互调用，并且介绍了模板本地包的开发和后台维护系统。今天介绍的是JSSDK，通过 JSSDK 可以实现：</p>
+<ol>
+<li>抹平JSBridge的平台实现差异</li>
+<li>对齐端能力，内部消化版本差异</li>
+<li>sdk封装后的代码更加符合前端习惯</li>
+<li>权限控制、鉴权、对外开放，实现生态建设</li>
+</ol>
+<blockquote>
+<p>关于sdk的代码级别的设计，可以参考文章：《JSSDK设计指南》</p>
+</blockquote>
+<p>如果做过微信页面开发的，应该都知道<code>wx.js</code>，这就是微信的JSSDK，在微信内需要调用微信的端能力就需要引入这个js。</p>
+<h2 id="JSSDK的设计">JSSDK的设计</h2><p>JSSDK的设计包括两部分：</p>
+<ol>
+<li>随着每个NA客户端版本内置的js，称为：<code>inject.js</code>，他的主要作用是封装JSBridge逻辑，通过随版更新实现减少端能力的版本分裂，降低整个sdk的代码复杂性。<code>inject.js</code>是一段js代码，当客户端加载一个页面的时候，由客户端在适当的时机注入到webview内执行，执行后的代码就会有给webview增加js方法，例如微信的<code>_WeixinJSBridge</code>，类比chrome开发插件当中的<code>content_scripts</code>，可以在<code>document_start</code> 、<code>document_end</code>等时机进行执行。</li>
+<li>云端JS，即实际暴漏给开发者使用的js，称为：<code>jssdk.js</code>，这个是真正开发者使用的sdk文件，通过<code>script</code>外链引入，例如<code>wx.js</code>，这个js文件通过和<code>inject.js</code>进行交换，完成端能力的调用、鉴权和客户端事件监听等操作</li>
+</ol>
+<p><img src="/uploads/2017/04/12.png" alt=""></p>
+<a id="more"></a>
+<p>￼</p>
+<h3 id="inject-js_和_jssdk-js工作机制">inject.js 和 jssdk.js工作机制</h3><p>￼<br><img src="/uploads/2017/04/13.jpg" alt=""></p>
+<p><code>inject.js</code>是客户端和<code>jssdk</code>的「翻译官」，他接受页面<code>jssdk</code>的方法调用，将调用的命令解析成客户端可以理解的「语言」（JSBridge）然后传给客户端，同时当客户端有事件/回调响应的时候，也通过<code>inject.js</code>进行分发/回调。</p>
+<h2 id="举例：NA分享能力">举例：NA分享能力</h2><p>例如，客户端实现了一个分享面板的UI组件，开放给web页面可以调用，这时候需要调用NA的端能力，JS需要将分享的：icon_url、title、content、link、type甚至订制的NA面板信息等传给NA，NA开始弹出这个面板，用户进入NA层进行交互；</p>
+<p>当用户分享成功、失败、取消等事件发生的时候，需要回调JS代码，用户由回到了web页面，NA回调了JS callback，JS实现后续的逻辑。</p>
+<p><img src="/uploads/2017/04/14.jpg" alt=""><br>￼</p>
+<p>jsbridge为：<code>demoapp://share/dialog?title=三水清&amp;link=http://js8.in&amp;icon_url=xxx&amp;content=我发现一个很有用的前端公众号</code></p>
+<p><code>inject.js</code>代码封装如下：</p>
+<pre><code class="js">;(function (window, document) {
+
+  function invoke (module, action, args, callback) {
+    let scheme = `demoapp://${module}/${action}?`
+    if (isFunction(args)) {
+      callback = args
+      args = null
+    }
+    // 处理下参数
+    if (isString(args)) {
+      scheme += args
+    } else if (isObject(args)) {
+      each(args, (k, v) =&gt; {
+        if (isObject(v) || isArray(v)) {
+          v = JSON.stringify(v)
+        }
+        scheme += `${k}=${v}`
+      })
+    }
+    // callback独立传，方便全局函数名命名
+    if (isFunction(callback)) {
+      var funcName = &#39;_jsbridge_cb_&#39; + getId()
+      window[funcName] = function () {
+        callback.apply(window, ([]).slice.call(arguments, 0))
+      }
+      scheme += (!~scheme.indexOf(&#39;?&#39;) ? &#39;&amp;&#39; : &#39;?&#39;) + `callback=${funcName}`
+    }
+
+    if (os.ios &amp;&amp; versionCompare(os.version, &#39;9.0&#39;) &gt;= 0) {
+      window.location.href = scheme
+    } else {
+      var $node = document.createElement(&#39;iframe&#39;)
+      $node.style.display = &#39;none&#39;
+      $node.src = scheme
+      var body = document.body || document.getElementsByTagName(&#39;body&#39;)[0]
+      body.appendChild($node)
+      setTimeout(function () {
+        body.removeChild($node)
+        $node = null
+      }, 10)
+    }
+  }
+  var $ = {
+    share: function (opts, callback) {
+      var defaultOpts = {
+        url: location.href,
+        title: &#39;三水清&#39;,
+        content: &#39;最好的前端公众号&#39;,
+        icon_url: &#39;http://baidu.com/icon.png&#39;
+      }
+      opts = Object.assign(defaultOpts, opts)
+      invoke(&#39;share&#39;, &#39;dialog&#39;, opts, callback)
+    }
+  }
+  window._InjectJS_ = $
+}(window, document))
+
+</code></pre>
+<p><code>jssdk.in</code>代码示例：</p>
+<pre><code class="js">window.jssdk = {
+    share: _InjectJS_.share
+}
+</code></pre>
+<p>页面调用：</p>
+<pre><code class="js">jssdk.share({url: &#39;http://js8.in&#39;}, (err, data) =&gt; {
+  if (!err) {
+    if (data.errno === 1) {
+      alert(&#39;失败&#39;)
+    }else if (data.errno === 2) {
+      alert(&#39;取消&#39;)
+    }else {
+      alert(data.media) // 分享的平台id，比如webxin_timeline
+    }
+  }
+})
+</code></pre>
+<p>这样<code>jssdk</code>调用<code>inject.js</code>写法，看似多此一举，实则很巧妙，试想一下下面的场景：</p>
+<ol>
+<li>客户端某个版本分享能力升级，需要做兼容</li>
+<li>某版本分享能力有bug，会引起crash，不能在此版本调用</li>
+<li>分享成功之后的回调需要做鉴权，防止恶意刷分享行为</li>
+<li>JSBridge有scheme调起换成jsinterface的调起（参考本系列JSBridge文章）</li>
+</ol>
+<p>如果这些代码都写在<code>jssdk.js</code>，那么随着版本的积累，代码会越来越臃肿，并且所有版本的端能力都集中在<code>jssdk.js</code>，很不利于管理，历史的包袱也甩不掉。</p>
+<h2 id="inject-js的注入时机">inject.js的注入时机</h2><p>因为<code>inject.js</code>的设计机制，所以我们希望<code>inject.js</code>能够越早注入越好，这样我们在页面head使用<code>jssdk.js</code> 就不会找不到对象了！</p>
+<p>我们知道安卓WebView中可以通过<code>webview.loadUrl(&quot;javascript:xxx”)</code>的方式来调用js里面的代码，那么，我们也可以利用<code>webview.loadUrl(&quot;javascript:xxx”);</code>的方式来加载注入一段 js 代码 。</p>
+<p>安卓WebView 需要通过<code>webView.setWebViewClient(new MyWebClient());</code>的方式来监听网页加载的各个周期方法回调，那么我们只需要在<code>onPageFinished(WebView view, String url)</code> 中注入提前设置好的js 即可</p>
+<p>在iOS中也有对应的时间点：<code>webViewDidFinishLoad</code>和<code>didCreateJavaScriptContext</code></p>
+<p>我们能够找到的注入时机有限，为了保证jssdk代码在调用的时候，已经注入成功<code>inject.js</code>，我们只能实现类似<code>DOMContentLoaded</code>这样的<code>ready</code>方法回调，使用jssdk的时候，全部写在<code>jssdk.ready()</code>内（类似<code>$(document).ready</code>），当页面<code>inject.js</code>注入成功则抛出<code>ready</code>事件，然后积累的事件栈依次出栈执行。</p>
+<h2 id="总结">总结</h2><p>本文介绍了hybrid开发中为webview实现一个jssdk，介绍了<code>inject.js</code>的注入时机，<code>inject.js</code>除了端能力的调用，还可以和客户端实现授权（如：微信的接入授权需要申请appid和token），同时还可以针对所有的调起指令和回调进行安全校验，屏蔽非法的调用和回调，本文只实现了最简单的调用，这些高级的设计后面文章有机会再介绍，今天敲完收工搬家过节 😆</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>拖稿了好久的「Hybrid APP开发系列」又更新了~<br>今天继续写JSSDK</p>
+</blockquote>
+<h2 id="为什么会有JSSDK">为什么会有JSSDK</h2><p>我之前文章介绍了通过 JSBridge 实现页面和NA的相互调用，并且介绍了模板本地包的开发和后台维护系统。今天介绍的是JSSDK，通过 JSSDK 可以实现：</p>
+<ol>
+<li>抹平JSBridge的平台实现差异</li>
+<li>对齐端能力，内部消化版本差异</li>
+<li>sdk封装后的代码更加符合前端习惯</li>
+<li>权限控制、鉴权、对外开放，实现生态建设</li>
+</ol>
+<blockquote>
+<p>关于sdk的代码级别的设计，可以参考文章：《JSSDK设计指南》</p>
+</blockquote>
+<p>如果做过微信页面开发的，应该都知道<code>wx.js</code>，这就是微信的JSSDK，在微信内需要调用微信的端能力就需要引入这个js。</p>
+<h2 id="JSSDK的设计">JSSDK的设计</h2><p>JSSDK的设计包括两部分：</p>
+<ol>
+<li>随着每个NA客户端版本内置的js，称为：<code>inject.js</code>，他的主要作用是封装JSBridge逻辑，通过随版更新实现减少端能力的版本分裂，降低整个sdk的代码复杂性。<code>inject.js</code>是一段js代码，当客户端加载一个页面的时候，由客户端在适当的时机注入到webview内执行，执行后的代码就会有给webview增加js方法，例如微信的<code>_WeixinJSBridge</code>，类比chrome开发插件当中的<code>content_scripts</code>，可以在<code>document_start</code> 、<code>document_end</code>等时机进行执行。</li>
+<li>云端JS，即实际暴漏给开发者使用的js，称为：<code>jssdk.js</code>，这个是真正开发者使用的sdk文件，通过<code>script</code>外链引入，例如<code>wx.js</code>，这个js文件通过和<code>inject.js</code>进行交换，完成端能力的调用、鉴权和客户端事件监听等操作</li>
+</ol>
+<p><img src="/uploads/2017/04/12.png" alt=""></p>]]>
+    
+    </summary>
+    
+      <category term="hybrid" scheme="http://js8.in/tags/hybrid/"/>
+    
+      <category term="javascript" scheme="http://js8.in/tags/javascript/"/>
+    
+      <category term="架构" scheme="http://js8.in/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[记一次Vue项目的重构]]></title>
+    <link href="http://js8.in/2017/05/09/%E8%AE%B0%E4%B8%80%E6%AC%A1Vue%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%87%8D%E6%9E%84/"/>
+    <id>http://js8.in/2017/05/09/记一次Vue项目的重构/</id>
+    <published>2017-05-09T02:38:35.000Z</published>
+    <updated>2018-07-02T03:35:18.000Z</updated>
+    <content type="html"><![CDATA[<p>上周没有更新原创技术文章，原因是忙着重构一个新接手的项目，此项目因为项目技术负责人离职，虽然投入人力持续增多，前端达到4人，后端3人，但因为新参与的童鞋对代码结构和业务的理解，导致项目开发了一个多月，还有一堆问题，达不到上线要求，接手项目之后，对项目业务场景和代码进行简单的了梳理，决定重构。重构不是个人冲动，而是的的确确存在各种大大小小的问题：</p>
+<ol>
+<li>接口太碎。项目本身按照vue组件化开发，但是页面每个组件独自请求自己的数据，比如：首页由轮播图、各种列表和用户信息展现组成，导致首页从上到下7~8个模块，每个模块都各自发自己的请求，访问首页需要同时发出8个ajax请求</li>
+<li>vuex的store太乱，大家按照组件去开发，各自跟后端兑接口、联调，但是没有人来统筹安排，导致大量重复工作，而且存在接口重复开发问题；接口多了store的命名就太乱，action和mutation中的业务逻辑代码太多，而不同页面需要不同的数据格式，则导致：1. 或者在mutation当中对数据进行重新整理，2. 或者新开个接口，这样就造成接口越来越多，mutation部分代码越来越重。</li>
+<li>一开始设计或者沟通有误。比如：用户信息相关的接口，需要传入用户id（uid），而不是通过登录cookie从passport获取；第三方接口需要用户信息，竟然请求的时候将cookie发给对方（幸好cookie是http only的，没有调通被我及时发现）</li>
+<li>重复代码太多，抽象能力太差。一份代码在多个地方复制，导致代码改来改去最后都不知道哪里改了哪里没改</li>
+<li>命名太乱，包括url、方法名之类，还有错别字，getAdcontent（用户地址信息），getmaildetail（用户地址信息）</li>
+<li>研发人员缺乏全局意识，只管自己的代码，而不关心整个流程。由于前后投入人较多，没人对整个项目有把控，只能面向自己的需求编程。比如：积分获取页面，获取成功之后，联调成功，但是实际在积分获取列表页面却没有相关的记录信息；在比如：任何用户都可以领走别人的奖品，原因后端没做奖品是否是当前登录用户获取的校验</li>
+<li>问题定位能力不够，遇见问题一调就是半天，找不到根本问题</li>
+</ol>
+<p>介绍下项目背景：</p>
+<blockquote>
+<p>此项目是一个积分项目，一些页面需要用户登录，页面主要包括：首页、任务+列表、商品+列表、个人信息和记录以及其他类（说明和规则等）<br>项目用Vue+yog2编写，ajax请求部分使用vue resource</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="架构改造">架构改造</h2><p>整个项目还是用Vue+yog2来写，针对进入页面分为两种情况：</p>
+<ol>
+<li>第一次通过网站URL进入某个页面，我称为：「首次后端渲染」</li>
+<li>非首次已经进入页面URL后，用户点击链接在项目内跳页，我称之为：「非首次跳转」</li>
+</ol>
+<p>整个流程整理如下：<br>￼<br><img src="/uploads/2017/05/vue.jpg" alt=""></p>
+<h3 id="后端node_Server代码部分">后端node Server代码部分</h3><p>代码流程如下：</p>
+<pre><code>router → middleware → page/api action → model → ral请求数据
+</code></pre><p>其中在action部分，专门写了个<code>baseAction</code>函数，封装了重复的代码，使用时传入用于获取数据的model方法和处理数据的方法即可。</p>
+<p>render部分，针对页面第一次请求需要将数据放在HTML片段中返回的优化（为什么不用vue ssr，可以看下历史公众号文章《Vue SSR 从入门到Case Study》）。详细代码如下：</p>
+<p><strong> client.tpl </strong> 部分代码：</p>
+<p><img src="/uploads/2017/05/1.png" alt=""><br>￼<br><strong> baseAction 部分实现chunked </strong><br>￼<br><img src="/uploads/2017/05/2.png" alt=""></p>
+<h3 id="Client_Vue部分代码">Client Vue部分代码</h3><p>client主要流程是：</p>
+<pre><code>vue router → created时期 判断是否有页面数据 → 提交mutation（有数据），dispatch action（异步拉取数据）→ state触发修改，页面dom生成
+</code></pre><p>这部分流程图主要展现是vuex和vue resource部分的代码，通过dispatch action，触发vue resource的异步请求，等返回数据则commit mutation。</p>
+<h3 id="后端渲染+SPA单页应用">后端渲染+SPA单页应用</h3><p>经过改造后整个流程变成：</p>
+<ol>
+<li>「<strong>首次后端渲染</strong>」：此时需要后端渲染主要HTML+页面数据，利用chunked，先将不依赖后端数据部分返给浏览器，页面数据和后面的HTML拿到数据后再返给浏览器。<code>client.tpl</code>被「一分为二」：HTML[0] + HTML[1]<ol>
+<li>将页面通用的css和js lib库，放在HTML[0]中，首先返回，浏览器先解析下载</li>
+<li>业务代码初始化代码放在HTML[1]， 等到获取到后台API数据一起返回</li>
+</ol>
+</li>
+<li>「<strong>非首次跳转</strong>」：这是一个单页应用的流程，用户点击链接，实际走的是vue的router，然后出发vue页面渲染，URL是通过history pushState mode更改实际URL，这时候如果强刷或者复制url在浏览器打开，又走「首次后端渲染」<ol>
+<li>vue页面渲染需要的数据是通过vue-resource发起ajax请求，拿到数据之后commit mutation改变state</li>
+</ol>
+</li>
+</ol>
+<h3 id="vuex梳理">vuex梳理</h3><p>之前代码每个组件都单独ajax请求自己的数据，导致vuex的module特别多特别乱，而且后端api接口太多太碎，不好维护。最后开发的童鞋自己都在群里抱怨，找个action或者mutation都不知道在哪个文件内，需要搜代码。。</p>
+<h4 id="首先做规定，明确什么时候使用vuex：">首先做规定，明确什么时候使用vuex：</h4><blockquote>
+<p>页面view相关的数据才使用vuex来管理，页面ajax（例如加载更多）不要使用vuex</p>
+</blockquote>
+<h4 id="然后，收敛vuex_module">然后，收敛vuex module</h4><p>收敛是根据业务页面做的，前文提到：</p>
+<blockquote>
+<p>页面主要包括：首页、任务+列表、商品+列表、个人信息和记录以及其他类（说明和规则等）</p>
+</blockquote>
+<p>其中需要数据的有：首页、任务（详情、列表）、商品（详情、列表）和个人中心四个。</p>
+<p>改造前module：<br>￼<br><img src="/uploads/2017/05/4.png" alt=""></p>
+<p>改造后module针对业务梳理的四个大页面内容，保留了四个：<br>￼<br><img src="/uploads/2017/05/5.png" alt=""></p>
+<h4 id="减少mutation数据处理逻辑">减少mutation数据处理逻辑</h4><p>复用后端接口数据格式，减少mutation数据处理逻辑</p>
+<p>改造前很多mutation存在下面的代码（注意箭头部分）：<br>￼<br><img src="/uploads/2017/05/6.png" alt=""></p>
+<p>其中这个循环主要做两件事情：修改<code>type</code>、修改<code>img_url</code>为<code>url</code>，实际根本没有必要：</p>
+<ul>
+<li>修改<code>type</code>：实际这已经是页面view的逻辑了，在vue的模板用个容易判断更合适</li>
+<li>修改<code>img_url</code>为<code>url</code>：这里实际是产品的封面图，改成<code>url</code>反而更不合适了</li>
+</ul>
+<p>代码可以直接用<code>item</code>即可！</p>
+<h3 id="API显性声明">API显性声明</h3><p>之前所有的api都是走了一个<code>proxy</code>，通过node转发一下，直接到了后台API接口，代码如下：<br>￼<br><img src="/uploads/2017/05/8.png" alt=""></p>
+<p>看似很方便甚至有点暗爽的实现，实则带来了下面的问题：</p>
+<ol>
+<li>接口非显性声明，降低可控性，造成没法枚举有多少接口，各个接口需要什么参数，增加维护成本</li>
+<li>安全性！后台这个服务是完全暴漏给了前端，如果存在敏感的接口，前端js就可以直接透传利用</li>
+</ol>
+<p>改造后的代码放在model层，供「首次后端渲染」和「非首次单页」ajax请求使用：</p>
+<p><img src="/uploads/2017/05/yog2-model.png" alt=""><br>￼</p>
+<h2 id="优化">优化</h2><p>除了做代码重构改造外，还在间隙中做了一些优化，这里记录一下：</p>
+<h3 id="后端渲染使用chunked">后端渲染使用chunked</h3><p>详见本文「后端node server部分代码」和「后端渲染+SPA」</p>
+<h3 id="数据复用">数据复用</h3><p>很多页面设计会在首页和列表页面存在有产品的title、图片和简单的一些meta，例如下图：</p>
+<p><img src="/uploads/2017/05/10.png" alt=""><br>￼<br>点击链接进去详情页面可以直接利用，这部分数据我们做了复用。</p>
+<p>实现方法是：页面点击的时候，将该条数据内容commit给下一个页面的mutation。</p>
+<h3 id="缓存">缓存</h3><p>缓存在node和前端Ajax API多有，后端node主要缓存的是首页，因为首页需要请求4个接口（接口梳理后），其中三个接口是跟用户登录态无关的，这三个接口可以用lru-cache缓存起来。</p>
+<p>前端的ajax api缓存是在<code>get</code>请求增加的，可以根据实际情况用，根据url作为key，使用sessionStorage存储（同时cache类自己实现了缓存时间）</p>
+<p><img src="/uploads/2017/05/12.png" alt=""><br>￼</p>
+<h2 id="技巧">技巧</h2><p>除了优化外，我在介绍下两个技巧：单页切换view的loading和统一的错误处理。</p>
+<p>在单页跳转内，下一个view需要ajax获取数据，然后才能渲染，这时候需要加载个loading显示（或者做个切换动效）。</p>
+<blockquote>
+<p>原理是：</p>
+<ol>
+<li>利用eventBus，在router中添加两个事件<code>closeLoading</code>和<code>vue.action.error</code>，分别用于「关闭loading」和「展现页面数据错误的错误页」</li>
+<li>loading展现在router的<code>beforeEach</code>的钩子内实现，loading的事件在vuex的action获取数据成功之后发送</li>
+<li>错误的触发有vuex 的 action / mutation 来发送事件</li>
+</ol>
+</blockquote>
+<p><img src="/uploads/2017/05/3.png" alt=""><br>￼<br>eventBus也不用自己写，可以直接用Vue实例的<code>$on</code>、<code>$emit</code>、<code>$once</code>等就够了，代码如下：</p>
+<pre><code class="js">import Vue from &#39;vue&#39;
+export default new Vue()
+</code></pre>
+<h2 id="总结">总结</h2><ol>
+<li>项目开发中一定要有大局意识，虽然现在项目多是分组件来的开发方式，但是开发前要跟大家交代清楚约定、规范，什么该做什么不该做；</li>
+<li>技术负责人多 check 代码，防止错误的道路上越行越远；</li>
+<li>要有全局意识，关注整个流程，不要只看到自己的「一亩三分地」，比如：在某个商品页面，购买/兑换成功了，不要认为没有问题了，可能记录页面还没有展现（后台接口没有入库）；</li>
+<li>Don’t repeat yourself！看见重复代码就浑身难受，「抽象」能力是工程师的基本能力。</li>
+<li>增强debug能力，发现问题直觉就能判断出来哪个环境，然后针对性debug</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>上周没有更新原创技术文章，原因是忙着重构一个新接手的项目，此项目因为项目技术负责人离职，虽然投入人力持续增多，前端达到4人，后端3人，但因为新参与的童鞋对代码结构和业务的理解，导致项目开发了一个多月，还有一堆问题，达不到上线要求，接手项目之后，对项目业务场景和代码进行简单的了梳理，决定重构。重构不是个人冲动，而是的的确确存在各种大大小小的问题：</p>
+<ol>
+<li>接口太碎。项目本身按照vue组件化开发，但是页面每个组件独自请求自己的数据，比如：首页由轮播图、各种列表和用户信息展现组成，导致首页从上到下7~8个模块，每个模块都各自发自己的请求，访问首页需要同时发出8个ajax请求</li>
+<li>vuex的store太乱，大家按照组件去开发，各自跟后端兑接口、联调，但是没有人来统筹安排，导致大量重复工作，而且存在接口重复开发问题；接口多了store的命名就太乱，action和mutation中的业务逻辑代码太多，而不同页面需要不同的数据格式，则导致：1. 或者在mutation当中对数据进行重新整理，2. 或者新开个接口，这样就造成接口越来越多，mutation部分代码越来越重。</li>
+<li>一开始设计或者沟通有误。比如：用户信息相关的接口，需要传入用户id（uid），而不是通过登录cookie从passport获取；第三方接口需要用户信息，竟然请求的时候将cookie发给对方（幸好cookie是http only的，没有调通被我及时发现）</li>
+<li>重复代码太多，抽象能力太差。一份代码在多个地方复制，导致代码改来改去最后都不知道哪里改了哪里没改</li>
+<li>命名太乱，包括url、方法名之类，还有错别字，getAdcontent（用户地址信息），getmaildetail（用户地址信息）</li>
+<li>研发人员缺乏全局意识，只管自己的代码，而不关心整个流程。由于前后投入人较多，没人对整个项目有把控，只能面向自己的需求编程。比如：积分获取页面，获取成功之后，联调成功，但是实际在积分获取列表页面却没有相关的记录信息；在比如：任何用户都可以领走别人的奖品，原因后端没做奖品是否是当前登录用户获取的校验</li>
+<li>问题定位能力不够，遇见问题一调就是半天，找不到根本问题</li>
+</ol>
+<p>介绍下项目背景：</p>
+<blockquote>
+<p>此项目是一个积分项目，一些页面需要用户登录，页面主要包括：首页、任务+列表、商品+列表、个人信息和记录以及其他类（说明和规则等）<br>项目用Vue+yog2编写，ajax请求部分使用vue resource</p>
+</blockquote>]]>
+    
+    </summary>
+    
+      <category term="Node" scheme="http://js8.in/tags/Node/"/>
+    
+      <category term="重构" scheme="http://js8.in/tags/%E9%87%8D%E6%9E%84/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Hybrid APP开发：模板包管理平台]]></title>
+    <link href="http://js8.in/2017/04/19/Hybrid%20APP%E5%BC%80%E5%8F%91%EF%BC%9A%E6%A8%A1%E6%9D%BF%E5%8C%85%E7%AE%A1%E7%90%86%E5%B9%B3%E5%8F%B0/"/>
+    <id>http://js8.in/2017/04/19/Hybrid APP开发：模板包管理平台/</id>
+    <published>2017-04-19T01:38:35.000Z</published>
+    <updated>2018-07-02T05:17:19.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>大上周文章提到了Hybrid的模板本地化解决方案，本文介绍下模板包的管理平台。</p>
+</blockquote>
+<h2 id="管理平台功能">管理平台功能</h2><p>模板包的管理平台主要功能包括：</p>
+<ol>
+<li>自动编译</li>
+<li>自动增量</li>
+<li>上传包</li>
+<li>推送下发</li>
+<li>提测</li>
+<li>小流量&amp;灰度：按客户端id下发、小流量</li>
+<li>数据收集：收敛，速度，监控</li>
+</ol>
+<a id="more"></a>
+<h2 id="整体架构和流程图">整体架构和流程图</h2><p><img src="/uploads/2017/04/11.jpg" alt=""></p>
+<h3 id="部分细节讲解">部分细节讲解</h3><ol>
+<li>通过git hook，当打tag的时候，会触发编译，编译完成后，会对接模板数据库，打出三个增量包（为什么三个，看「模板本地化」文章）</li>
+<li>回滚实际是重新拿上一个版本的全量包生成新的版本号和签名，然后入库</li>
+<li>模板包下发，可以根据客户端id（用户id）进行针对性下发，还可以根据IP地域、运营商、百分比等方式灰度下发，提测其实是定向的一种</li>
+<li>模板包下发日志和数据，都回传到日志系统，统一采集分析，生成数据报表</li>
+<li>模板收敛率统计有两种方法：<ol>
+<li>模板下发接口统计的当前版本号数据</li>
+<li>模板代码请求业务方api获取数据，携带的模板版本号数据</li>
+<li>这两种方式统计的收敛率数据不一样</li>
+</ol>
+</li>
+<li>模板包失败统计是通过客户端上报的，可以详细列出哪个环节问题，比如是下载问题？解压问题？还是签名校验失败？</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>大上周文章提到了Hybrid的模板本地化解决方案，本文介绍下模板包的管理平台。</p>
+</blockquote>
+<h2 id="管理平台功能">管理平台功能</h2><p>模板包的管理平台主要功能包括：</p>
+<ol>
+<li>自动编译</li>
+<li>自动增量</li>
+<li>上传包</li>
+<li>推送下发</li>
+<li>提测</li>
+<li>小流量&amp;灰度：按客户端id下发、小流量</li>
+<li>数据收集：收敛，速度，监控</li>
+</ol>]]>
+    
+    </summary>
+    
+      <category term="hybrid" scheme="http://js8.in/tags/hybrid/"/>
+    
+      <category term="javascript" scheme="http://js8.in/tags/javascript/"/>
+    
+      <category term="架构" scheme="http://js8.in/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Vue SSR从入门到Case Study]]></title>
+    <link href="http://js8.in/2017/04/13/Vue%20SSR%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0Case%20Study/"/>
+    <id>http://js8.in/2017/04/13/Vue SSR从入门到Case Study/</id>
+    <published>2017-04-13T08:29:05.000Z</published>
+    <updated>2018-07-02T05:29:49.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>最近两个项目同时开发，使用了Vue2的SSR，这样后端渲染页面首屏可以加快页面呈现，增加SEO和用户体验，但是项目上线后却发现了严重的性能问题，于是在三天内两次重大调整，最后只能放弃Vue SSR，本文从Vue SSR实现开始，逐渐复盘整个事件。</p>
+</blockquote>
+<p>两周前就预告了要写一篇Vue SSR的文章，但是没想到上周四上线之后，周六放量之后发现性能问题，这周一到周三，做了两次重大调整，最终还是放弃了SSR，并且做了这次事件复盘。</p>
+<h2 id="技术选型">技术选型</h2><p>调研Vue已经很久了，随着Vue2正式发布，使用Vue来做项目又燃起了希望，不是为了一时的技术理想和情怀（了解我的人都知道，我不是这样的人），主要是出于下面几方面考虑：</p>
+<ol>
+<li>用artTemplate+Sass+JS做的components方案已经做了很久了，沉淀了很多组件，随着Node服务开始上线，一直想在此基础上做同构，而公司Node框架Yog2的view层选择偏向于Smarty模板的Swig，修改比较麻烦</li>
+<li>既然改不了，那么要换不如直接选择新的components方案，这次最强烈需求是：组件化和支持SSR，而Vue2之后支持SSR</li>
+<li>这次两个项目同时进行，而且仅仅给两周的开发时间，组件化有效提高工作效率，可以把通用的组件抽象出来，多个页面之间业务组件复用率也很高，而且业务组件在后续的运营活动也可以直接复用</li>
+<li>手百产品形态复杂，页面即在手百内使用又有手百外使用，手百内页面被多个Webview隔开，不适合SPA形式，而手百外适合SPA形式，所以一套代码需要适配两种情况，Vue 可以适应这两种方式</li>
+<li>Vue的SPA形式可以方便进行PWA和Hybrid改造（继续关注本公众号Hybrid系列）</li>
+</ol>
+<p>所以，最后决定：上Vue！<strong>技术栈：Vue2+Yog2</strong>。</p>
+<p>再介绍下两个项目：</p>
+<ul>
+<li>项目A是老项目进行重构，产品需求要跟功能全部保留，架构跑通使用的是Vue2.1，所以A项目代码相对复杂，一直没有使用Vue2.2</li>
+<li>项目B是新项目，开始使用Vue2.1，上线后发现已经有Vue2.2，于是升级Vue2.2，并且把项目目录结构调整一番，Webpack config等都可配</li>
+</ul>
+<h2 id="Vue_SSR入门到上线">Vue SSR入门到上线</h2><p>先看下Vue SSR的实现流程图：</p>
+<p><img src="/uploads/2017/vue-ssr/1.jpg" alt=""></p>
+<p>简单解释一下：</p>
+<ol>
+<li>app.js是Server和Client公用的</li>
+<li>webpack会根据server-entry.js和client-entry.js打包出来两个文件：server-bundle和client-bundle</li>
+<li>server-bundle用于后端渲染（2.1是js文件，2.2变成json，引入更加方便）</li>
+</ol>
+<p>但是这张图没有说明在调用API接口方面，前后端是怎么公用代码的。前端走的是Ajax请求，后端走的是http请求（百度内部是RAL接口服务管理），结合上图补充完整的代码执行流程图如下：</p>
+<p><img src="/uploads/2017/vue-ssr/2.jpg" alt=""></p>
+<a id="more"></a>
+<h3 id="webpack区分接口请求方式">webpack区分接口请求方式</h3><p>在浏览器内使用ajax请求，而在服务端需要调用内部API请求或者直接读取存储（RAL）。ajax请求到达服务端依次经过：action层、model层，最后走到还是API请求或者读取数据（这里重点读三遍。。）。</p>
+<p>这里我们将服务端和客户端API的请求方法写在不同的文件内，但是封装暴漏的接口都是一样的（接口模式）。在webpack里面，针对server和client提供不同的alias：</p>
+<p><img src="/uploads/2017/vue-ssr/3.jpg" alt=""><br><img src="/uploads/2017/vue-ssr/4.jpg" alt=""></p>
+<p>这样<code>require(‘api/demo’)</code>的时候，会区分开server和client。</p>
+<p>server内直接使用yog2 modal内的获取数据方法，比如：<br><img src="/uploads/2017/vue-ssr/5.jpg" alt=""></p>
+<p>而client内，直接使用ajax请求：<br><img src="/uploads/2017/vue-ssr/6.jpg" alt=""></p>
+<h3 id="Vue内使用Vuex来获取数据">Vue内使用Vuex来获取数据</h3><p>即下图的流程：</p>
+<p><img src="/uploads/2017/vue-ssr/7.jpg" alt=""></p>
+<p>在渲染的时候，prefetch阶段通过dispatch触发Store的Action（Action内允许异步），Action内调用<code>api/demo</code> 获取数据成功后commit mutation，这样整个数据就跑通了。</p>
+<h3 id="server-js">server.js</h3><p>server.js是第一次渲染使用的入口action，核心代码如下：</p>
+<pre><code class="js">//vue2.2
+const vueServerRender = require(&#39;vue-server-renderer&#39;);
+const bundle = require(&#39;../vue-ssr-bundle.json&#39;);
+const renderer = vueServerRender.createBundleRenderer(bundle, {
+    template: &#39;&lt;!--vue-ssr-outlet--&gt;&#39;,
+    cache: require(&#39;lru-cache&#39;)({
+        max: 1000,
+        maxAge: 1000 * 60 * 15
+    })
+})
+// 先渲染tpl(swig模板)，内容类似vue ssr demo的index.html
+// 这里渲染使用chunk，先输出不依赖数据的头部html
+res.render(&#39;page/index.tpl&#39;, { isSendSpeedCode }, (err, html) =&gt; {
+    if (!err) {
+        var htmls = html.split(&#39;&lt;!--vue-ssr-outlet--&gt;&#39;)
+        //先渲染头部html
+        res.write(htmls[0])
+
+        // swig渲染时间
+        var time1 = Date.now()
+        const renderStream = renderer.renderToStream(context)
+        renderStream.on(&#39;data&#39;, chunk =&gt; {
+            // 边解析，边渲染html
+            res.write(chunk)
+        })
+        renderStream.on(&#39;end&#39;, () =&gt; {
+
+            if (isSendSpeedCode) {
+                // 统计vue 渲染时间
+                var time2 = Date.now()
+                var code = `
+                    &lt;script&gt;if(window.alog){
+                        alog(&#39;speed.set&#39;, &#39;p_swig&#39;, ${time1 - time0});
+                        alog(&#39;speed.set&#39;, &#39;p_vue&#39;, ${time2 - time1});
+                    }&lt;/script&gt;
+                `
+                res.write(code)
+            }
+            // 渲染尾部html
+            res.end(htmls[1])
+        }).on(&#39;error&#39;, errorHandler)
+    } else {
+        errorHandler(err)
+    }
+})
+</code></pre>
+<h3 id="Webpack和FIS3两次编译">Webpack和FIS3两次编译</h3><p>webpack是vue「全家桶」的后遗症，项目太急没办法去掉。我们项目的目录结构如下：<br><img src="/uploads/2017/vue-ssr/9.jpg" alt=""></p>
+<p>项目需要两次打包：</p>
+<ol>
+<li>第一次是webpack，webpack把<code>vue-src</code>文件夹内容根据<code>server-entry</code>和<code>client-entry</code>打包出来，分别放进yog2的client和server对应的文件，之后<code>vue-src</code>在执行环境就不需要了</li>
+<li>第二次是FIS3的打包，会按照Yog2的规范release出来可以上线的内容</li>
+</ol>
+<blockquote>
+<p>这里有个细节：webpack打包出来的静态资源路径需要跟FIS3打包的静态资源路径一致，不然就没法通过FIS3进行静态资源定位，比如替换为CDN地址。<br>由于vue2.2打出来的server-bundle是json格式文件，所以FIS无法将json内的静态资源进行统一管理，需要webpack判断生产环境直接替换为CDN地址</p>
+</blockquote>
+<h3 id="遇见的其他问题和技巧">遇见的其他问题和技巧</h3><h4 id="client代码在server上跑">client代码在server上跑</h4><p>手百的通用库Bdbox是client代码，代码中有一些<code>window</code>全局变量的使用，而我们知道Node是没有<code>window</code>的，在Node执行SSR的时候，会报错，比如下面的代码：</p>
+<pre><code class="js">// 自执行
+isAndroid: /(Android);?[\s\/]+([\d.]+)?/.test(navigator.userAgent)
+</code></pre>
+<p>有两种改法：</p>
+<ol>
+<li>把<code>.isAndroid</code>由属性变成方法：<code>.isAndroid()</code>，放到<code>mount</code>内执行</li>
+<li>给vue-server-renderer传入带有<code>navigator.userAgent</code>的context</li>
+</ol>
+<h4 id="利用resolve-alias">利用resolve.alias</h4><p>目录结构深了，尤其是Vue里面还需要调用yog model的代码，会各种<code>../../</code>很蛋疼，可以利用alias简化写法：</p>
+<p><img src="/uploads/2017/vue-ssr/0.jpg" alt=""></p>
+<p>需要注意的是<code>static</code>的写法是：<code>&lt;img src=“~static/img/logo.png”</code></p>
+<h4 id="利用Yog2_的_Mock功能进行测试">利用Yog2 的 Mock功能进行测试</h4><p>订好接口请求参数和返回数据格式之后，后端RD进行API的编写同时，我们可以利用Yog2的Mock功能，对ral返回的数据进行假数据测试，实现后端和前端RD解耦，大大提高开发效率。</p>
+<h2 id="Vue_SSR从上线到Case_Study">Vue SSR从上线到Case Study</h2><p>现在来复盘下整个事件：</p>
+<ol>
+<li>4月5日，完成代码开发，全功能提测，开始倒腾上线，晚上第一次上线成功，基本功能回归没问题，</li>
+<li>紧接着几次bug修复上线，6号周四上线日，基本没有问题了</li>
+<li>4月7日开始APP审核通过，放量开始，这时候发现随着流量上升，服务器扛不住了</li>
+<li>8日（周六）紧急添加实例，周末算是硬扛过去了</li>
+<li>10（周一）排查原因，发现内存可能存在泄漏和性能问题，增加打点统计后端渲染时间，但是VM相对来说是黑盒，性能不好排查</li>
+<li>11日（周二）增加lru-cache，细化组件缓存，下午上线后，晚上发现内存曲线更加严重，于是晚上10点回滚lru和组件缓存代码，随版本收敛影响，流量继续上涨，增加机器实例</li>
+<li>12日（周三）采取降级方案，第一次进入页面将API数据放到以变量形式放到页面，然后增加beforeCreate阶段代码，将页面数据直接commit给mutation进行渲染，曲线开始平缓</li>
+<li>13日（周四）观察一晚曲线没有问题，中午开始缩容（下线实例）</li>
+</ol>
+<p>从周一到周三经过两次大的调整，终于服务稳定了，其中代码review阶段，我们也发现了很多代码不规范的现象。下面来说下我们使用vue ssr的一些压测等数据。</p>
+<h3 id="单实例QPS、内存和CPU数据">单实例QPS、内存和CPU数据</h3><p>从上线之后，内存积累到一定时间就飙升，内存飙升同时，CPU也进行飙升，具体曲线如下：</p>
+<p><img src="/uploads/2017/vue-ssr/11.jpg" alt=""><br><img src="/uploads/2017/vue-ssr/12.jpg" alt=""></p>
+<p>从12日（周三19点）上线之后，就开始平稳了，13日中午缩容后，CPU稍有上扬。</p>
+<p>同期QPS的数据如下：<br><img src="/uploads/2017/vue-ssr/13.jpg" alt=""></p>
+<p>可见，qps并没有多少，而且闲事都不超过10qps，但是内存一直积累上升。而当13日（周四中午）缩容之后，QPS已经开始上升到30，从同期CPU和内存来看，并没有任何压力~</p>
+<blockquote>
+<p>至于为什么会出现这种情况，经过线下实验观察，压测过程中，内存达到GC的极限后就开始回收，这个时间点和曲线一致。</p>
+</blockquote>
+<h3 id="ab压测数据">ab压测数据</h3><p>同一个实例，1内核4G内存，采用20个并发，请求1000次来做压力测试</p>
+<p><strong>对于使用Vue SSR的程序：</strong><br><img src="/uploads/2017/vue-ssr/14.jpg" alt=""></p>
+<p><strong>对于不使用Vue SSR，但是后端数据获取后吐在页面的程序：</strong><br><img src="/uploads/2017/vue-ssr/15.jpg" alt=""></p>
+<p>从数据来看，Vue SSR 20个并发的时候每秒请求、响应时长等数据已经很不好了，而非Vue SSR还是很不错的，同时观察同期内存和CPU数据，可见非Vue SSR还可以继续压下去，而Vue SSR去出现了峰值陡升。</p>
+<p><strong>再看看Nuxtjs的表现</strong><br>在我的air笔记本上面，用Nuxt的demo进行本机压测（1000次，20并发），数据如下：<br><img src="/uploads/2017/vue-ssr/16.jpg" alt=""></p>
+<h3 id="Vue_SSR时间数据">Vue SSR时间数据</h3><p>10日上线SSR抽样统计数据来看，数据一直在230ms~250ms之间波动，而抛出后端接口请求时间，大概70ms，渲染时间在150ms+，挺不理想的。<br><img src="/uploads/2017/vue-ssr/17.jpg" alt=""></p>
+<h3 id="总结">总结</h3><p>Vue SSR肯定要比纯字符串模板渲染要慢，从数据来看，SSR性能却太离谱，而且因为采用vm的方式执行，存在一定的内存泄漏（具体原因还在研究），建议去掉vm之后再测试。</p>
+<p>至于组件缓存，我们增加之后，因为lru-cache本身就是内存缓存，内存回收更加频繁</p>
+<h2 id="简单介绍下降级方案">简单介绍下降级方案</h2><p>降级策略是：保证前端使用vue代码，将第一次数据由node在后台获取，然后吐在页面<code>window._INIT_DATA_</code>，将数据抛给store使用。</p>
+<p>数据抛给store方案有两种：</p>
+<ol>
+<li>修改前端fetch库（ajax）发起ajax之前判断数据已经有了，则直接使用</li>
+<li>view组件内增加<code>beforeCreate</code>时机，将数据提交给store</li>
+</ol>
+<h2 id="case_study总结">case study总结</h2><ol>
+<li>从产品需求出发，做技术要循序渐进，别一次「加满」</li>
+<li>做技术不要人云亦云，适合自己的就是最好的</li>
+<li>后端新项目做好压测！！做好预案！！</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>最近两个项目同时开发，使用了Vue2的SSR，这样后端渲染页面首屏可以加快页面呈现，增加SEO和用户体验，但是项目上线后却发现了严重的性能问题，于是在三天内两次重大调整，最后只能放弃Vue SSR，本文从Vue SSR实现开始，逐渐复盘整个事件。</p>
+</blockquote>
+<p>两周前就预告了要写一篇Vue SSR的文章，但是没想到上周四上线之后，周六放量之后发现性能问题，这周一到周三，做了两次重大调整，最终还是放弃了SSR，并且做了这次事件复盘。</p>
+<h2 id="技术选型">技术选型</h2><p>调研Vue已经很久了，随着Vue2正式发布，使用Vue来做项目又燃起了希望，不是为了一时的技术理想和情怀（了解我的人都知道，我不是这样的人），主要是出于下面几方面考虑：</p>
+<ol>
+<li>用artTemplate+Sass+JS做的components方案已经做了很久了，沉淀了很多组件，随着Node服务开始上线，一直想在此基础上做同构，而公司Node框架Yog2的view层选择偏向于Smarty模板的Swig，修改比较麻烦</li>
+<li>既然改不了，那么要换不如直接选择新的components方案，这次最强烈需求是：组件化和支持SSR，而Vue2之后支持SSR</li>
+<li>这次两个项目同时进行，而且仅仅给两周的开发时间，组件化有效提高工作效率，可以把通用的组件抽象出来，多个页面之间业务组件复用率也很高，而且业务组件在后续的运营活动也可以直接复用</li>
+<li>手百产品形态复杂，页面即在手百内使用又有手百外使用，手百内页面被多个Webview隔开，不适合SPA形式，而手百外适合SPA形式，所以一套代码需要适配两种情况，Vue 可以适应这两种方式</li>
+<li>Vue的SPA形式可以方便进行PWA和Hybrid改造（继续关注本公众号Hybrid系列）</li>
+</ol>
+<p>所以，最后决定：上Vue！<strong>技术栈：Vue2+Yog2</strong>。</p>
+<p>再介绍下两个项目：</p>
+<ul>
+<li>项目A是老项目进行重构，产品需求要跟功能全部保留，架构跑通使用的是Vue2.1，所以A项目代码相对复杂，一直没有使用Vue2.2</li>
+<li>项目B是新项目，开始使用Vue2.1，上线后发现已经有Vue2.2，于是升级Vue2.2，并且把项目目录结构调整一番，Webpack config等都可配</li>
+</ul>
+<h2 id="Vue_SSR入门到上线">Vue SSR入门到上线</h2><p>先看下Vue SSR的实现流程图：</p>
+<p><img src="/uploads/2017/vue-ssr/1.jpg" alt=""></p>
+<p>简单解释一下：</p>
+<ol>
+<li>app.js是Server和Client公用的</li>
+<li>webpack会根据server-entry.js和client-entry.js打包出来两个文件：server-bundle和client-bundle</li>
+<li>server-bundle用于后端渲染（2.1是js文件，2.2变成json，引入更加方便）</li>
+</ol>
+<p>但是这张图没有说明在调用API接口方面，前后端是怎么公用代码的。前端走的是Ajax请求，后端走的是http请求（百度内部是RAL接口服务管理），结合上图补充完整的代码执行流程图如下：</p>
+<p><img src="/uploads/2017/vue-ssr/2.jpg" alt=""></p>]]>
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://js8.in/tags/javascript/"/>
+    
+      <category term="Vue" scheme="http://js8.in/tags/Vue/"/>
+    
+      <category term="Node" scheme="http://js8.in/tags/Node/"/>
+    
+      <category term="SSR" scheme="http://js8.in/tags/SSR/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Hybrid APP开发：模板本地化]]></title>
+    <link href="http://js8.in/2017/04/06/Hybrid%20APP%E5%BC%80%E5%8F%91%EF%BC%9A%E6%A8%A1%E6%9D%BF%E6%9C%AC%E5%9C%B0%E5%8C%96/"/>
+    <id>http://js8.in/2017/04/06/Hybrid APP开发：模板本地化/</id>
+    <published>2017-04-06T03:38:35.000Z</published>
+    <updated>2018-07-02T05:17:31.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>上次文章介绍了Hybrid开发中常用到的Web和NA的通信方案：JSBridge，通过比较之后，最终推荐安卓和iOS通用的scheme协议，可以保证APP内和外都可以使用，今天开始正式介绍整个Hybrid架构内容。就像本系列「开篇语」提到的，这里的Hybrid是「狭义的Hybrid」，而不是所有的NA套个webapp就是Hybrid。</p>
+</blockquote>
+<h2 id="好的架构不是随波逐流，应该经得起考研">好的架构不是随波逐流，应该经得起考研</h2><p>Hybrid技术体系是一套很多技术组成的完整知识架构。拿手百Hybrid方案，包括规范/约定、开发、联调、服务支撑等整个开发流程，而随着PWA之类「新」技术的产生又在考研技术架构面向未来的设计能力，所以手百Hybrid还在不断完善，注意是不断完善，不是推到重来！手百Hybrid技术整体架构如下：</p>
+<p><img src="/uploads/2017/04/1.jpg" alt=""><br>￼</p>
+<p>接下来系列会围绕本架构图中重要的部分依次展开，全面的介绍Hybrid开发知识，本文介绍模板本地化开发方案。</p>
+<p>所谓「模板本地化」，就是将Web页面内置到APP内，随版发布上线，然后通过云端接口实现更新，再直白一点：将H5网站的页面预先放到客户端发版，然后云端更新新版本。</p>
+<p>这个方案好处在于：</p>
+<ul>
+<li>本地化模板提高页面打开速度，减少用户等待时间</li>
+<li>模板可更新，版本控制更方便可控，收敛快</li>
+<li>Web页面和NA内置代码实现一套代码，减少开发成本</li>
+<li>上手成本小，开发就是实际开发Web（H5）页面，通过构建工具，生成Web页面和NA模板包不同的代码</li>
+<li>标准H5代码，迁移成本小，通过Node和构建工具，可以做到H5版本前后同构，将来还可以不改代码的前提下适配PWA</li>
+</ul>
+<p>本文提到的JSBridge调起协议是统一使用<code>hybrid://</code>开头，只是提供思路和介绍整体Hybrid模板包架构和用到的技术，不涉及到具体代码，<strong>但是文章保证干货和诚意都满满</strong>😄。</p>
+<h2 id="模板本地化实现方案">模板本地化实现方案</h2><p>本文会介绍两种模板本地化方案，分别是：依赖客户端拦截器（proxy）的方案一；完全无域名限制的方案二，两个方案的实现流程如下：<br><img src="/uploads/2017/04/2.jpg" alt=""><br>￼</p>
+<a id="more"></a>
+<p>通过流程图来看，方案一比方案二多了拦截器。</p>
+<ul>
+<li><p><strong>方案一</strong>是「可感知」的，根据本地缓存的模板包域名（可下发、可完全根据缓存的模板域名）进行过滤，如果本地有则读取本地缓存，如果本地没有则还是访问线上（无损）。</p>
+</li>
+<li><p><strong>方案二</strong> 是「预置型」的方案，只有发版时候规定的某些页面或者频道（插件）开通了Hybrid功能，才能使用Hybrid模板包缓存。</p>
+</li>
+</ul>
+<h2 id="模板包设计方案">模板包设计方案</h2><p>根据上面提到的两种方案，对应的模板包打包内容也不一样。具体包内容目录结构如下所示：<br><img src="/uploads/2017/04/3.jpg" alt=""><br>￼</p>
+<h2 id="两种方案对比">两种方案对比</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>方案一：拦截器</th>
+<th>方案二：无拦截器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cookie</td>
+<td>带域名符合http规范</td>
+<td>需要native支持</td>
+</tr>
+<tr>
+<td>入口开放</td>
+<td>方便，无需发版</td>
+<td>需要发版</td>
+</tr>
+<tr>
+<td>NA开发成本</td>
+<td>拦截器开发</td>
+<td>浏览器能力对齐</td>
+</tr>
+<tr>
+<td>开发联调成本</td>
+<td>较低</td>
+<td>较高</td>
+</tr>
+<tr>
+<td>webapp改造成本</td>
+<td>方便</td>
+<td>不方便</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>域名限制</td>
+<td>需要独立控制</td>
+</tr>
+<tr>
+<td>打包方案</td>
+<td>按照网站目录打包</td>
+<td>按照插件/频道打包</td>
+</tr>
+<tr>
+<td>扩展性</td>
+<td>依照PWA模式扩展能力</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>方案一相对来说客户端开发量较大，而且拦截域名太多会有性能问题，但是优点也相对较多一些，具体需要自己权衡，<strong>本系列本意是扫盲和普及Hybrid开发知识，尽量全面的介绍Hybrid技术，不针对某种方案深入展开，后续讨论内容也是如此</strong>。</p>
+<h2 id="浏览器能力对齐">浏览器能力对齐</h2><p>模板本地化之后，客户端实际是通过<code>file://</code>协议访问本地模板，这样会导致跟域名相关的操作和方法需要客户端提供端能力支持，目前最重要的是一下几个：</p>
+<ul>
+<li>http请求：如果在file协议下直接请求http[s]会引起跨域（Tips：跨域的几种情况有哪些？</li>
+<li>cookie操作：域名没了，cookie怎么办？session也是cookie的实现</li>
+<li>localstorage/sessionstorage：这俩是根据域名划分存储空间和读写的</li>
+</ul>
+<p>这些浏览器的基本能力需要依靠客户端为页面提供端能力来补齐。<strong>浏览器根据域名做了限制的端能力，是遵守「同源策略」，所以在补齐端能力的时候，应该考虑进去「同源策略」，不能无节制的开通端能力</strong></p>
+<h3 id="同源策略">同源策略</h3><p>考虑到同源策略，每个模板包会对应一个域名限制（系列文章中上一篇提到过JSBridge的安全鉴权问题），两种方案分别对应的同源策略解决方案是：</p>
+<ul>
+<li>方案一拦截器：代理的域名就是要限制的域名范围</li>
+<li>方案二无拦截器：在package.json/manifest.json中添加域名权限申请，比如<code>domain:xxx.baidu.com</code></li>
+</ul>
+<h3 id="http请求">http请求</h3><p>根据本系列上篇JSBridge的最佳实践结合常用的请求方式，设计http请求的接口如下：</p>
+<ul>
+<li>GET：hybrid://http/get?url=<a href="http://baidu.com&amp;query={key1:value1,key2:value2}" target="_blank" rel="external">http://baidu.com&amp;query={key1:value1,key2:value2}</a></li>
+<li>POST：hybrid://http/post?url=<a href="http://baidu.com&amp;data={key1:value1,key2:value2}" target="_blank" rel="external">http://baidu.com&amp;data={key1:value1,key2:value2}</a></li>
+</ul>
+<p>从协议上来看，post和get并没有差异，但是hybrid的JSBridge协议设计是基于URL schema协议的，所以会有长度限制，对于简单的post操作使用这个协议就可以，但是对于post的data太大的情况下（不考虑上传文件等多媒体类POST操作，这方面可以通过后面文章提到的device API增强解决），需要提供</p>
+<h3 id="cookie操作">cookie操作</h3><p>为了防止网站cookie被恶意修改，很多网站已经使用httponly的方式来操作cookie，这种情况下cookie其实是没有必要通过前端使用js操作的，而且在<code>file://</code>协议下发送<code>http[s]://</code>API请求，http协议也会带上域名和路径下的cookie，所以cookie的操作我是不建议开端能力的。但是凡事都有但是。。。cookie操作还是设计上吧：</p>
+<pre><code>hybrid://cookie/[get/set/delete]?name=value,expire=xxx;name2=value2,path=/
+</code></pre><h3 id="浏览器缓存">浏览器缓存</h3><p>浏览器缓存的设计参考web storage的key-value存储设计，然后增加过期时间，类似memcached这类内存缓存，因为value是string类型，所以不像redis那样支持多种存储类型格式。</p>
+<pre><code>hybrid://cache/save?key=xxx&amp;value=xxx&amp;callback=xxx[&amp;expire=xxx]
+hybrid://cache/get?key=xxx&amp;callback=xxx
+hybrid://cache/delete?key=xxx&amp;callback=xxx
+</code></pre><h2 id="构建工具">构建工具</h2><p>为了保证后续一套代码，在不同的构建流程打出不一样的模板包（比如H5版本和hybrid版本），构建过程不再是简单的压缩资源，而是根据打包类型对组件进行有选择性的pick，这里我们使用 <code>FIS3</code>，根据不同的 <code>media</code> 打出不一样的包。例如：</p>
+<pre><code class="js">fis.media(&#39;hybrid&#39;).match(…)
+fis.media(&#39;webapp&#39;).match(…)
+</code></pre>
+<p>详细用法请查看fis.baidu.com ，这里不再展开。</p>
+<h3 id="为什么要用pick？">为什么要用pick？</h3><p>我们的H5代码和Hybrid的代码都在一起，完全组件化之后，除了Hybrid的差异化的功能性组件，其他组件都是可以通用的。这些差异化的组件包括：</p>
+<ul>
+<li>上一章节提到的Http、cache和cookie这类跟域名相关的代码，我们分别封装了Hybrid内和H5版本，比如Http都叫Fetch，但是内部实现：hybrid是调用NA接口，H5是Fetch+ajax</li>
+<li>浏览和导航类：比如跳转/打开新页面，NA内是打开一个新的webview，H5是 <code>location</code> 跳转或直接A标签</li>
+<li>端能力和增强类组件：同样是大图浏览器，为了更好的交互，NA上做了增强，H5是纯web实现</li>
+</ul>
+<p>这些差异性的代码都封装在不同的组件内，通过设计模式中的「接口模式」对外暴漏一样的接口和使用方法。</p>
+<p>这种设计，可以更好的提高业务同事学习和编写程序的成本，同时统一的组件化管理方便单元测试和联调，（<strong>划重点：等本系列联调部分会再重提这种设计的好处，那时候会发现这设计太赞了！</strong>）</p>
+<h3 id="代码pick怎么实现？">代码pick怎么实现？</h3><p>这里安利集鹄大叔的jdists（有对应的fis插件）：<a href="https://github.com/zswang/jdists" target="_blank" rel="external">https://github.com/zswang/jdists</a></p>
+<p>通过jdists可以通过注释的方式对代码进行区域化裁剪和联调功能，比如下面代码可以通过fis3的media来触发trigger，从而在不同的条件下暴漏不同的代码区域：</p>
+<pre><code class="js">/*&lt;debug&gt;*/
+console.log(debug);
+/*&lt;/debug&gt;*/
+
+/*&lt;jdists trigger=&quot;hybrid&quot;&gt;
+var fetch = require(&#39;na/fetch&#39;)
+&lt;/jdists&gt;*/
+
+/*&lt;jdists trigger=&quot;webapp&quot;&gt;
+var fetch = require(&#39;web/fetch&#39;)
+&lt;/jdists&gt;*/
+</code></pre>
+<h3 id="构建模板包">构建模板包</h3><p>除了代码pick之外，构建工具还要和模板包管理平台配合，增加额外的文件生成（比如生成版本号、签名、diff包）做到完全自动化，然后包管理平台去拉取构建工具生成的zip包，上传到CDN平台，在数据库创建一条记录，关于模板包管理平台的内容，在下一篇文章详细介绍。</p>
+<h2 id="模板更新和容错策略">模板更新和容错策略</h2><p>模板包设计好了之后，就需要考虑下发和更新的流程。除了考虑模板的更新，还需要考虑到容错机制，保证模板包升级不断出现问题或者某些极端情况下，服务可用。</p>
+<h3 id="模板更新">模板更新</h3><p>模板更新时机是很讲究的，不同的APP产品可以利用的时机可能不一样，目前针对手百产品合适的时机有：</p>
+<ul>
+<li>APP冷热启动</li>
+<li>接口检测</li>
+<li>频道异步检查，当打开某个Hybrid频道后台开始更新</li>
+<li>页面主动检测</li>
+<li>推送</li>
+</ul>
+<p>综合来说，不管怎样的更新时机，都逃不出两种更新的途径：</p>
+<ol>
+<li>通过专门的NA更新接口上传本地版本号，server下发最新版本信息，完全有NA完成模板包更新</li>
+<li>通过页面JS接口主动检测进行更新</li>
+</ol>
+<p>第一种途径，比如冷热启动、接口和频道异步都是通过上行请求将APP内单个或者多个频道的当前模板版本号上传给server，server根据模板维护cms推送过来的最新版本挨个频道依次比较版本号，如果版本号有更新，就下发对应的最新流量包地址和校验信息。</p>
+<p>而页面主动检测包括两种：</p>
+<ol>
+<li>在页面发起请求的API接口中带有当前的版本号，如果接口判断有更新，则下发对应的更新包信息（下载地址和校验信息），然后页面js通过NA接口通知客户端更新</li>
+<li>页面js直接调用NA接口强制进行一次单独的检测，这样客户端会带着版本号走专门的接口只进行模板版本的更新检测，然后走NA的更新流程</li>
+</ol>
+<h3 id="容错机制">容错机制</h3><p>当得知某个版本号存在不可修复的bug，需要紧急容错，可以通过server下发对应的command（app调起协议，也是一种schema）来指定在某个版本（模板版本、客户端版本）或者版本号范围内不调用Hybrid，而直接访问H5页面，达到快速止损。</p>
+<blockquote>
+<p>举例说明：新闻列表是NA实现的，新闻的详情页是Hybrid的做的，所以Hybrid的上游是NA做的list，Hybrid详情页是通过NA的列表调起展现的。NA的list数据和调起协议（command）是由server下发的，如果server下发的是调起Hybrid页面，那么用户点击list打开Hybrid详情页；当Hybrid版本在某些情况下有问题（比如在某些客户端版本上有bug或者直接Hybrid某版本包就有bug），那么Server下发给NA调起详情页的Command就变成直接打开H5 webapp，而不是打开Hybrid，从而将有问题的Hybrid切换到线上H5，达到容错止损。</p>
+</blockquote>
+<h4 id="版本包回滚">版本包回滚</h4><p>除了server端止损之外，我们还设计了回滚机制，在包管理平台，可以将任意一个已经上线的版本包作为回滚包，然后生成新的版本号进行下发回滚。</p>
+<h4 id="客户端回滚">客户端回滚</h4><p>客户端在安装更新包之前，先将老的版本包进行备份，然后开始安装，如果安装过程遇见问题，比如覆盖失败，或者空间不够等各种问题，就需要删除之前的安装操作，将备份包重新解压，保证整个安装过程是完整的，而不是安装一半。</p>
+<h2 id="提高模板包的更新成功率">提高模板包的更新成功率</h2><p>针对模板包的收敛率率，除了更新时机之外，还应该从链路优化和包体积方面进行优化。</p>
+<p>具体策略如下所列：</p>
+<ul>
+<li>针对模板包做专门的通信线路和协议优化<ul>
+<li>使用CDN就近存储</li>
+<li>断点续传</li>
+<li>分块下载</li>
+<li>重试策略</li>
+</ul>
+</li>
+<li>减小包体积<ul>
+<li>增量更新包设计</li>
+</ul>
+</li>
+</ul>
+<h2 id="增量包设计">增量包设计</h2><p>增量包的设计一般有两种方式，可以根据不同的场景和开发周期进行选择：</p>
+<ol>
+<li>按文件diff进行增量下发</li>
+<li>按二进制包进行增量下发</li>
+</ol>
+<h3 id="按文件diff进行增量">按文件diff进行增量</h3><p>这种方式对于打包工具来说很简单，而且客户端没有开发工作量。</p>
+<p>客户端拿到模板更新包是整体覆盖安装的，覆盖安装的意思是：遇见新的文件就直接新增，遇见重名的文件就直接覆盖安装。这就有点像前端静态资源管理，可以打md5进行增量，可以同名覆盖。</p>
+<p>我们做法是当发版的时候，编译工具打出一个全量包，然后从版本库中找到最近的3次版本包，对文件进行遍历，找出diff，然后形成<code>Vn-Vn+1</code>的diff包，而这一切都是自动维护的。</p>
+<blockquote>
+<p>我什么是最近3个版本包做diff，而不是全部？</p>
+</blockquote>
+<p>因为如果全部随着发版越来越多，diff包会呈现指数增长，增加维护成本；而且模板收敛好了，两个之前老版本的量就很小了，没有必要为这些版本做增量包；再说全量包也不会大到哪里去嘛~</p>
+<h3 id="按二进制包进行增量下发">按二进制包进行增量下发</h3><p>这种方式是将模板zip包，根据bsdiff差分算法打出不同的patch，然后将下发给客户端，客户端再加上上一个版本的包生成新的全量包。</p>
+<p>两种方式各有利弊，实际应用要权衡成本和收益。</p>
+<h2 id="模板包安全">模板包安全</h2><p>模板包在下发的过程中，会遇见被篡改的问题，而且包如果不完整，也会对Hybrid模板包的完整性和功能构成威胁。</p>
+<p>首先整个模板包的更新接口和模板包zip的CDN都是使用<strong>HTTPS</strong>。另外在包安全性方面我们分别做了两个校验：</p>
+<ol>
+<li>模板完整性检测</li>
+<li>模板合法性校验</li>
+</ol>
+<p>结合整个更新流程（客户端和server交互部分）来讲下：<br>￼<br><img src="/uploads/2017/04/4.png" alt=""></p>
+<p>在server升级接口会返回两个最重要的字段：<code>md5</code>和<code>signature</code>。</p>
+<ul>
+<li>md5用于校验zip的完整性，保证zip是完整的，可解压的；</li>
+<li>signature是签名，签名算法是结合私钥、请求参数、版本号、客户端特征值和模板包的md5等组合计算的，签名算法是保证了包的安全性；这样即使包被劫持替换，不知道签名算法也不会通过校验。<br>￼<br><img src="/uploads/2017/04/5.jpg" alt=""><h2 id="写在最后">写在最后</h2>知识是相通的，要学会举一反三，文章为了通俗易懂，很多技术介绍根据前端常见的场景做了类比。只要有心，涉猎范围够广，你会发现：</li>
+</ul>
+<ol>
+<li>写过chrome扩展的对于模板本地化方案是不是似曾相识？</li>
+<li>如果觉得和开发chrome扩展类似，能不能利用chrome的调试功能进行调试？</li>
+<li>而模板本地化方案又跟PWA是不是可以通用？</li>
+<li>PWA解决的痛点是什么？和本文的模板本地化方案怎么快速切换？</li>
+</ol>
+<p>这些问题都值得深入思考，且听后续文章慢慢道来~</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>上次文章介绍了Hybrid开发中常用到的Web和NA的通信方案：JSBridge，通过比较之后，最终推荐安卓和iOS通用的scheme协议，可以保证APP内和外都可以使用，今天开始正式介绍整个Hybrid架构内容。就像本系列「开篇语」提到的，这里的Hybrid是「狭义的Hybrid」，而不是所有的NA套个webapp就是Hybrid。</p>
+</blockquote>
+<h2 id="好的架构不是随波逐流，应该经得起考研">好的架构不是随波逐流，应该经得起考研</h2><p>Hybrid技术体系是一套很多技术组成的完整知识架构。拿手百Hybrid方案，包括规范/约定、开发、联调、服务支撑等整个开发流程，而随着PWA之类「新」技术的产生又在考研技术架构面向未来的设计能力，所以手百Hybrid还在不断完善，注意是不断完善，不是推到重来！手百Hybrid技术整体架构如下：</p>
+<p><img src="/uploads/2017/04/1.jpg" alt=""><br>￼</p>
+<p>接下来系列会围绕本架构图中重要的部分依次展开，全面的介绍Hybrid开发知识，本文介绍模板本地化开发方案。</p>
+<p>所谓「模板本地化」，就是将Web页面内置到APP内，随版发布上线，然后通过云端接口实现更新，再直白一点：将H5网站的页面预先放到客户端发版，然后云端更新新版本。</p>
+<p>这个方案好处在于：</p>
+<ul>
+<li>本地化模板提高页面打开速度，减少用户等待时间</li>
+<li>模板可更新，版本控制更方便可控，收敛快</li>
+<li>Web页面和NA内置代码实现一套代码，减少开发成本</li>
+<li>上手成本小，开发就是实际开发Web（H5）页面，通过构建工具，生成Web页面和NA模板包不同的代码</li>
+<li>标准H5代码，迁移成本小，通过Node和构建工具，可以做到H5版本前后同构，将来还可以不改代码的前提下适配PWA</li>
+</ul>
+<p>本文提到的JSBridge调起协议是统一使用<code>hybrid://</code>开头，只是提供思路和介绍整体Hybrid模板包架构和用到的技术，不涉及到具体代码，<strong>但是文章保证干货和诚意都满满</strong>😄。</p>
+<h2 id="模板本地化实现方案">模板本地化实现方案</h2><p>本文会介绍两种模板本地化方案，分别是：依赖客户端拦截器（proxy）的方案一；完全无域名限制的方案二，两个方案的实现流程如下：<br><img src="/uploads/2017/04/2.jpg" alt=""><br>￼</p>]]>
+    
+    </summary>
+    
+      <category term="hybrid" scheme="http://js8.in/tags/hybrid/"/>
+    
+      <category term="javascript" scheme="http://js8.in/tags/javascript/"/>
+    
+      <category term="架构" scheme="http://js8.in/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[在腾讯工作是怎样一种感受]]></title>
+    <link href="http://js8.in/2017/03/28/%E5%9C%A8%E8%85%BE%E8%AE%AF%E5%B7%A5%E4%BD%9C%E6%98%AF%E6%80%8E%E6%A0%B7%E4%B8%80%E7%A7%8D%E6%84%9F%E5%8F%97/"/>
+    <id>http://js8.in/2017/03/28/在腾讯工作是怎样一种感受/</id>
+    <published>2017-03-28T15:25:54.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<p>最近消息是之前待过的腾讯OMG事业群换老大了，结合之前后台有朋友留言说多谈谈工作经历和趣闻，今天谈谈腾讯的见闻和观感</p>
+<p>背景：本人12~13年在腾讯北京OMG部门工作过，当时在银科大厦，正值腾讯微博发力和腾讯视频起步阶段，当时微信已经是明星产品，本文见闻和观感基于本人经历。</p>
+<p>本文思绪有些乱，偏意识流。。</p>
+<h2 id="员工关怀">员工关怀</h2><p>敢说腾讯员工关怀做的是工作过公司当中最好的，没有之一，先列几个印象深刻的事情。</p>
+<ol>
+<li>北京当时刚刚开张的image（爱马哥）印象店，里面各种体验和玩偶，公司也会组织一些玩偶涂鸦活动，做的好的直接在image店展示。</li>
+<li>公司前台和保安都是外包公司（其实多数这样），但是和员工关系很融洽。每层前台都可以领药、口罩、雨伞，可以让妹子给洗眼镜，洗完擦干净双手送上，个人感觉比一些公司扔个超声波清洗机，但是没几个人会用</li>
+<li>如果公司搞活动会一个一个办公区搞，办理一些行政人事的事情也不会跨办公区，甚至不需要从银科跑到第三极，这个如果在百度就会有体会，除了大厦和科技园很多事情办理不了。。</li>
+<li>「班车文化」：这是腾讯最引以为豪的事情之一，据说深圳班车数量和深圳公交数量有的一比，如果不坐班车貌似还有80块钱每月的补助（如果没发可能作为团建费用了）。这里的班车是送员工回家的真班车，不是地铁摆渡车哦~</li>
+<li>加班有专门合作的餐厅，晚上八点保安会推车发加班餐；加班自己报备，可以变现和调休，节假日三倍工资</li>
+<li>还有个很有意思的事情是快递要过安检<a id="more"></a>
+<h3 id="入职">入职</h3>首先拿到offer之后，会收到一封邮件，让你起英文名字，腾讯内部是直接称呼英文名字比较多的，邮箱也是英文名字开头，记得当时是需要起三个名字，如果最上面被占用会依次往下找。有点像阿里起花名，但是不知道谁先发起的。腾讯内部称为兄弟姐妹（Q哥Q妹），就像百度称为同学一样，都是对企业文化的一种暗示。</li>
+</ol>
+<p>记得我入职当天是在银科大厦，入职会发电脑和两个QQ公仔，电脑不需要自己搬，会有专人或者快递（不在银科）送到工位。两个公仔是为了做员工培训使用的。</p>
+<p>入职之后会有三天<strong>脱产</strong>的培训，任何人都要参加，因为是必须在试用期参加完的，如果耽误不能如期参加，当地办公区又没有入职培训，就需要去深圳或者其他办公区参加，机票报销，可见腾讯是多么重视员工的入职培训（听说阿里也是脱产），当时组里还真有个哥们买机票去了深圳参加培训。</p>
+<p>入职培训内容大概包括：公司规定政策和文化学习（需要考试、考的好的有公仔奖励），团队融合，访问老人。</p>
+<p>访问老人是很有意义的一个活动，两个一组，找个老同事或者牛人，访问他们在腾讯的感受，成长经验之类的问题，对方不能拒绝，访问结束后会把公仔送给这位被访问的同事。</p>
+<h3 id="离职">离职</h3><p>好聚好散。离职体验也很好，办完手续之后，会有专门的HR跟你做离职面试。离职面试大概就是一些网上都能找到的问题：比如为什么离职、将来会不会回来、会不会推荐朋友（腾讯伯乐做的很好，靠同事前同事推荐的员工很多），这个下次有时间详细说下怎么做离职面试。</p>
+<p>离职当天的离职面试还不是最终的，HR可能是出于离职当时的情况，离职同事不可能吐槽一些事情，所以过一段时间（大概2~3个月，记不清），会有专门HR电话找你沟通，继续做一个访谈，很走心。</p>
+<p>值得提的是，离职时，没有修的年假是可以抵现金的（现在不清楚）。离职之后还可以关注微信公众号，绑定工号，有一些离职福利，比如去年的「188」大红包。当时页面会有一些在腾讯工作过的数据和大事件，还挺煽情的~</p>
+<h3 id="活动">活动</h3><p>腾讯活动非常多，每个季度都会有大型活动。</p>
+<h4 id="水果节">水果节</h4><p>比如每年一次的水果节（荔枝节），起源是每年那个时候深圳荔枝熟了，深圳总部会空运过来新鲜的荔枝给各办公区员工，后来发展成水果节（貌似这个名字），当天可以申请荔枝、樱桃之类的订制水果。</p>
+<h4 id="司龄日">司龄日</h4><p>腾讯司龄日是11.11，光棍节。。。会在image和办公区各种活动，当天也会有各种玩偶和公仔，很热闹。</p>
+<h4 id="传统节日">传统节日</h4><p>中国传统节日：粽子节和月饼节，会有订制的粽子和月饼，听说是当年业绩最好的部门出钱的，订制的礼品都很有产品特色，不是随便买个五芳斋粽子月饼了事。我现在好保留着当年印有腾讯logo的收纳盒和Qzone的音乐盒。</p>
+<h4 id="两会&amp;圣诞晚会&amp;年会">两会&amp;圣诞晚会&amp;年会</h4><p>每年12月靠近圣诞节会有重要的「两会」，小马哥和Martin会在深圳总部做公司当年的回顾和新年展望。</p>
+<p>每年必办的是圣诞晚会，外地的可以分配名额参加，当天基本是包机了。。。</p>
+<p>腾讯圣诞晚会在当地也很出名，当年我参加的时候，深圳地铁站很多宣传海报，而且选的是开放的体育场，深圳市民可以在外围围观。体育场入场会有公益义卖活动，腾讯的公益做的很好，企业的社会责任感很强。</p>
+<h4 id="饮春茗">饮春茗</h4><p>腾讯春节会比国家法定节日多出来两天（前一天，后一天），初八就是著名的开工利是，老大们会准备不同面值的红包，排队领红包经常上新闻头条就不说了。</p>
+<p>当天领完红包就是「饮春茗」，中午找个高大上的地方吃一顿饭，然后可以回家了~ 当时我们吃饭地方是苏州街的「白家大院」</p>
+<h3 id="企业文化宣传">企业文化宣传</h3><p>企业文化宣传更接近底气，不是什么新产品海报和「政治文章」，更多的是介绍无名的一线员工，比如当时宣传材料很长时间是一线的编辑员工访谈。</p>
+<h3 id="其他福利">其他福利</h3><ul>
+<li><strong>买房无息贷款</strong>：这个是很早腾讯就有了，12年已经很多同事靠当时30w的无息贷款买了房子（在职期间，组里三位同事），回想下现在的房价。。。听说现在好像提升到70w了</li>
+<li>Q币卡：每月会发Q币充值卡，所以各种会员。。</li>
+<li>内部会有各种领会员、卡之类的活动。</li>
+</ul>
+<h2 id="员工状态">员工状态</h2><p>腾讯员工素质很高（虽然出现过各种门。。），大牛很多，整体给人感觉是比较低调和踏实，会发现公司内部大牛分享很多，但是公司外部的大牛分享比较少，比如很少见张小龙这种人在外面分享，但是却可以在公司内持续做7个小时的分享，可能跟老板的风格有关系。</p>
+<p>员工素质方面，公司从入职到日常都在避免一些陋习，养成好习惯：</p>
+<ol>
+<li>逆行电梯：传闻是小马哥发现在合租办公楼的大厦，吃饭时间会有很多人逆行电梯，就是本来是往下走，但是开了电梯一看人都满了，而上行的电梯却是空的，于是很多人就先坐上行的电梯，然后到大顶层往下走。小马哥发现之后，认为其他公司可以，但是腾讯员工不行，于是宣传一段时间之后，腾讯员工都形成了很好的习惯</li>
+<li>环保意识：公司规定打印要用两面，贴报销单要用废纸；晚上电脑屏幕不关会有保安哥哥贴纸条，三次以上会通知主管；电脑不关机要申请</li>
+</ol>
+<p>公司每月（好像是这个频率）会又一次「瑞雪活动」，重点选一个不好的行为在公司上下进行宣传杜绝，比如：开会效率这类事情。</p>
+<p><strong>讲真，我当时在腾讯很少开会。。。*</strong></p>
+<h3 id="高压线">高压线</h3><p>腾讯内部员工很清廉，公司有明文规定的「高压线」，所谓高压线就是很多明文规定的不能做的事情，比如小到虚假报销，听HR说有人因为丢了200块钱的车票换了其他车票而被开除。</p>
+<p>当然这可能是为了宣传效果，但是当时我的主管拿到广告商的一箱冰红茶都说要报备，不然会被查，可见内部对于腐败是多么的重视。</p>
+<p>高压线还有个有意思的规定是：为了保持内部关系的简单化，腾讯员工之间不能结婚，如果结婚必须一人离职（杜拉拉升职记啊），不过后来改成夫妻不能在一个部门，还有一些敏感职位不能夫妻同在公司，比如人事。</p>
+<h2 id="工作">工作</h2><p>说了很多员工福利的事情，码字比较多了，简单说下工作，因为工作基本互联网公司都差不多，没什么好说的，但是腾讯有两个比较大的特点还是可以聊聊的</p>
+<h3 id="产品主导">产品主导</h3><p>腾讯的产品经理要负责很多事情，从产品原型、交互到后期推广运营都要亲自撸袖子上。PM很多时候是全面手，我当时在的部门PM一个人带三地的研发团队（上海、北京、深圳），自己出原型、交互、到处飞做宣传，其他部门可能有专门的交互工程师（UE），但是整体产品会用心的用自己的产品，推广自己的产品</p>
+<h3 id="精细化、微创新">精细化、微创新</h3><p>腾讯之前都快成了抄袭的代名词，但是无论在产品还是在技术上面，腾讯的微创新和精细化做的都很好，很多功能点并不是拍脑袋决定的，而是做了调研；另外在细节上也做了很多事情，甚至做到极致。</p>
+<h2 id="缺点">缺点</h2><p>有大公司病，内部也有斗争，深圳本部好部门多，比较吃香</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>最近消息是之前待过的腾讯OMG事业群换老大了，结合之前后台有朋友留言说多谈谈工作经历和趣闻，今天谈谈腾讯的见闻和观感</p>
+<p>背景：本人12~13年在腾讯北京OMG部门工作过，当时在银科大厦，正值腾讯微博发力和腾讯视频起步阶段，当时微信已经是明星产品，本文见闻和观感基于本人经历。</p>
+<p>本文思绪有些乱，偏意识流。。</p>
+<h2 id="员工关怀">员工关怀</h2><p>敢说腾讯员工关怀做的是工作过公司当中最好的，没有之一，先列几个印象深刻的事情。</p>
+<ol>
+<li>北京当时刚刚开张的image（爱马哥）印象店，里面各种体验和玩偶，公司也会组织一些玩偶涂鸦活动，做的好的直接在image店展示。</li>
+<li>公司前台和保安都是外包公司（其实多数这样），但是和员工关系很融洽。每层前台都可以领药、口罩、雨伞，可以让妹子给洗眼镜，洗完擦干净双手送上，个人感觉比一些公司扔个超声波清洗机，但是没几个人会用</li>
+<li>如果公司搞活动会一个一个办公区搞，办理一些行政人事的事情也不会跨办公区，甚至不需要从银科跑到第三极，这个如果在百度就会有体会，除了大厦和科技园很多事情办理不了。。</li>
+<li>「班车文化」：这是腾讯最引以为豪的事情之一，据说深圳班车数量和深圳公交数量有的一比，如果不坐班车貌似还有80块钱每月的补助（如果没发可能作为团建费用了）。这里的班车是送员工回家的真班车，不是地铁摆渡车哦~</li>
+<li>加班有专门合作的餐厅，晚上八点保安会推车发加班餐；加班自己报备，可以变现和调休，节假日三倍工资</li>
+<li>还有个很有意思的事情是快递要过安检]]>
+    
+    </summary>
+    
+      <category term="随笔" scheme="http://js8.in/tags/%E9%9A%8F%E7%AC%94/"/>
+    
+      <category term="人生感悟" scheme="http://js8.in/categories/%E4%BA%BA%E7%94%9F%E6%84%9F%E6%82%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Hybrid 开发：JsBridge - Web和客户端双向通信]]></title>
+    <link href="http://js8.in/2017/03/16/Hybrid%20%E5%BC%80%E5%8F%91%EF%BC%9AJsBridge%20-%20Web%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1/"/>
+    <id>http://js8.in/2017/03/16/Hybrid 开发：JsBridge - Web和客户端双向通信/</id>
+    <published>2017-03-16T02:38:35.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>Hybrid开发中，web页面往往会跟native进行交互，而JSBridge就是web页面和native进行通信的桥梁，通过JSBridge可以实现web调用native的方法，native可以通过<code>webview.loadUrl</code>之类的方法，将<code>javascript:xxx</code>代码放在页面执行，这有点类似在浏览器地址栏直接输入：<code>javascript:xxx</code></p>
+</blockquote>
+<p>本文较长，先把目录列出来：</p>
+<ul>
+<li>JSBridge多种形式<ul>
+<li>js Interface 直接注入到window对象</li>
+<li>改写浏览器原有对象：alert/console/prompt</li>
+<li>URL scheme</li>
+</ul>
+</li>
+<li>唤起APP技术<ul>
+<li>intent</li>
+<li>localserver</li>
+<li>scheme：deeplink/applink/Universal link</li>
+<li>smart app banner</li>
+</ul>
+</li>
+<li>JSBridge安全</li>
+<li>JSBridge的最佳实践<ul>
+<li>协议规范</li>
+<li>回调函数</li>
+<li>预留升级/统计能力</li>
+<li>简单JSBridge调用封装</li>
+</ul>
+</li>
+</ul>
+<h2 id="JSBridge多种形式">JSBridge多种形式</h2><p>web和native进行通信，方法有很多，接下来一一列举一下JSBridge的多种形式，及其利弊。</p>
+<h3 id="JavaScriptInterface">JavaScriptInterface</h3><p>JSInterface是安卓4.2-官方推荐的解决方案，原理是通过WebView提供的<code>addJavascriptInterface</code>方法给浏览器<code>window</code>注入一个命名空间，然后给Web增加一些可以操作Java的反射。</p>
+<pre><code class="java">// Android java代码
+mWebView.addJavascriptInterface(new Class(), &#39;android&#39;);  
+
+public class Class(){
+  @JavascriptInterface
+  public void method(){
+
+  }
+} 
+// js 代码
+window.android.method();
+</code></pre>
+<p>JSInterface在4.2之前的版本都可以，但是存在严重的安全隐患，容易被利用提权，从而调用各种Java的类和权限，甚至页面可以挂马。在我们实际产品（手机百度）开始阶段，用过这个方法，不过现在已经不使用了。</p>
+<a id="more"></a>
+<h3 id="改写浏览器原有对象">改写浏览器原有对象</h3><p>这个方法主要是通过修改原来浏览器的<code>window</code>某些方法，然后拦截固定规则的参数，然后分发给Java对应的方法去处理。这里常用的是以下四个方法：</p>
+<ul>
+<li>alert，可以被webview的<code>onJsAlert</code>监听</li>
+<li>confirm，可以被webview的<code>onJsConfirm</code>监听</li>
+<li>console.log，可以被webview的<code>onConsoleMessage</code>监听</li>
+<li>prompt，可以被webview的<code>onJsPrompt</code>监听</li>
+</ul>
+<p>prompt简单举例说明，Web页面通过调用<code>prompt()</code>方法，安卓客户端通过监听<code>onJsPrompt</code>事件，拦截传入的参数，如果参数符合一定协议规范，那么就解析参数，扔给后续的Java去处理。这种协议规范，最好是跟iOS的协议规范一样，这样跨端调起协议是一致的，但具体实现不一样而已。比如：<code>hybrid://action?arg1=1</code> 这样的协议，而其他格式的<code>prompt</code>参数，是不会监听的，即除了<code>hybrid://action?arg1=1</code> 这样的规范协议，<code>prompt</code>还是原来的<code>prompt</code>。</p>
+<p>这四个方法也是各有利弊，比如：</p>
+<ul>
+<li><code>alert</code>/<code>console.log</code>是调试最常用的，如果你要看看协议是不是写错了，但是传入协议却被拦截了。。</li>
+<li><code>confirm</code>和<code>prompt</code>都带返回值，<code>prompt</code>是四个里面唯一可以自定义返回值，可以做同步的交互，要比写各种回调更「顺」，但是一旦串行调用了，就要骂爹了</li>
+</ul>
+<p><code>prompt</code>是我们目前安卓用的比较多的JSBridge解决方案。</p>
+<h3 id="URL_scheme">URL scheme</h3><p>这个叫法不是特别贴切，scheme是URI的一种格式，上文提到的<code>hybrid://action?arg1=1</code> 就是一个scheme协议，这里说的scheme（或者schema）泛指安卓和iOS的schema协议，因为它通用。</p>
+<p>安卓和iOS都可以通过拦截跳页URL请求，然后解析这个scheme协议，符合约定规则的就扔个Native的方法处理。安卓和iOS分别用到拦截URL请求的方法是：</p>
+<ul>
+<li>安卓：shouldOverrideUrlLoading方法</li>
+<li>iOS：UIWebView的delegate函数</li>
+</ul>
+<h2 id="唤起APP技术">唤起APP技术</h2><p>上文介绍到的JSBridge是在APP内的Web页面跟APP进行交换，还有一种特别多的需求，就是在APP外（浏览器、微信等）调起APP自己，给APP进行导流。这时候就要用到APP的唤起技术。这里有一下几种方法：</p>
+<ul>
+<li>intent：安卓</li>
+<li>localserver：安卓</li>
+<li>Universal links：iOS 9+</li>
+<li>Deep link/Applink：安卓</li>
+<li>smart app banner：iOS</li>
+</ul>
+<h3 id="安卓intent">安卓intent</h3><p>intent格式示例如下：</p>
+<pre><code class="txt">intent:
+   HOST/URI-path // Optional host 
+   #Intent; 
+      package=[string]; 
+      action=[string]; 
+      category=[string]; 
+      component=[string]; 
+      scheme=[string]; 
+      S.xxx=xxx
+   end;
+</code></pre>
+<ul>
+<li>第一部分：host和path是跟url无异</li>
+<li>第二部分：#intent到end是完整的intent，包含了调起的app包名，action等是常用的配置项</li>
+</ul>
+<p>因为Intent不仅仅是调起APP，而是安卓客户端内部模块通信也会用，所以权限很大，一般浏览器都给封掉了，💔</p>
+<h3 id="安卓localserver">安卓localserver</h3><p>这是一个黑科技😈，早前安卓允许在本地启动一个本地server，这个server是在后台守候的，通过这个localserver都可以进行各种需求：app间通信、app调起、收集数据、基础服务。百度的moplus就是这样的一个localserver。</p>
+<p>举例说明：启动一个本地server，端口号是：<code>8888</code>，那么在手机上，网页就可以通过：<code>http://127.0.0.1:8888</code> 访问这个server，server接收到请求就可以进行一些native的操作，对于需要回调数据的，就通过返回请求内容来执行，比如：</p>
+<ol>
+<li>获取个定位信息，js执行<code>$.get(&#39;http://127.0.0.1:8888/getGeoLocation?callback=cbname&#39;)</code></li>
+<li>server收到请求之后，调用native方法，获取GPS的定位信息，然后将数据通过response：<code>window.cbname&amp;&amp;cbname({xxx})</code>给页面返回定位数据</li>
+</ol>
+<p>如果控制不好权限，因为localserver是一直后台守候的，容易被利用，比如提权获取通讯录、甚至给通讯录发短信、容易造成蠕虫攻击，感兴趣的可以搜下moplus的文章。另外安卓各种安全软件，都会清理内存和后台程序，很容易被干掉进程。浏览器也会封杀本地server调起，碰见127.0.0.1的请求就直接拦截。</p>
+<h3 id="Universal_links_/_Deep_link_/_Applink">Universal links / Deep link / Applink</h3><p>这三个是官方推荐的调起方法，调起协议格式也是可以统一的，比如前文提到的<code>hybrid://action?arg1=xxx</code>这类scheme协议就是。这样可以统一安卓和iOS调起和JSBridge通信。</p>
+<p>其实简单来说，这三个出发点是想给应用做分发，但是如果用户手机没有安装这个APP，那么就调起失败，这时候直接不管不问，肯定体验不好，而且浪费了点击资源，那么做成分发吧！将调起协议做成一个调起页面，放到一个域名下，点击这个URL就可以打开这个页面，页面执行代码调起APP，如果调起失败就展现APP的介绍，做分发。</p>
+<p>Universal links / Deep link / Applink，就是这样的一个过程，通过这个域名授权，把URL分发给APP进行处理，唯一不同的是：如果用户安装了APP，那么就不用打开这个分发页面了。</p>
+<h3 id="Universal_Links">Universal Links</h3><p>iOS 9新出的一个功能，需要在App内声明一个https域名（ul.test.com），然后在该网站根目录放置apple-app-site-association文件，文件指明了转发规则，例如：</p>
+<pre><code>{
+  &quot;applinks&quot;: {
+    &quot;apps&quot;: [],
+    &quot;details&quot;: [
+      {
+        &quot;appID&quot;: “xxx.com.baidu.SomeApp”,
+        &quot;paths&quot;: [&quot;*&quot;]
+      }
+    ]
+  }
+}
+</code></pre><p>当APP安装成功之后，会下载这个文件，明确知道遇见<code>ul.test.com</code>的域名的URL时候，会把这个URL扔给你的APP，让你去解析，APP拿到这个URL就可以解析出来需要做什么事情。</p>
+<p>Universal Link是iOS 9+的底层实现，所以在任何地方都可以直接调起APP，不受微信这类封闭APP的限制。</p>
+<h3 id="Deep_link_/_Applink">Deep link / Applink</h3><p>Deep link 是安卓一开始推出的，主要用于搜索调起APP，后来推出 Applink，实际是Deep link的升级版。</p>
+<p>这里需要提到微信的APPlink，毕竟微信作为SuperApp，是很大的分发资源，微信有自己的分发方法，安卓内可以申请微信的APPlink，跟Universal link一样，也是一个域名下面的URL，符合一定规则就由微信（ios是底层系统）扔个对应的域名APP进行解析。</p>
+<h4 id="smart_app_banner">smart app banner</h4><p>在页面的head中添加下面meta，在Safari浏览器中就会出现下面的banner</p>
+<pre><code class="html">&lt;meta name=&quot;apple-itunes-app&quot; content=&quot;app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL&quot;&gt;
+</code></pre>
+<p><img src="http://upload-images.jianshu.io/upload_images/263551-4f807d9fa671a5f7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/620" alt=""></p>
+<h2 id="JSBridge安全">JSBridge安全</h2><p>在APP内JSBridge可以实现Web和Native的通信，但是如果APP打开一个恶意的页面，页面可以任意调用JSBridge方法，获取各种隐私的数据，就会引起安全问题。</p>
+<p>JSBridge的安全有两个方法：通过Native进行白名单配置，通过Server云端授权。Server的云端授权这块，放到后续JSSDK的设计部分进行详细讲解。本文主要说下通过Native的方式来控制JSBridge的安全。</p>
+<p>假设JSBridge的协议格式如下：</p>
+<pre><code>hybrid://action/method?arg1=xxx&amp;arg2=xxx
+</code></pre><p>可以通过下面方式进行安全设置：</p>
+<ol>
+<li>配置某些方法的使用范围，比如固定的Webview，固定的domain</li>
+<li>通过正则来设置细化的权限，比如：baidu.com网页可以使用<code>*</code>，hao123.com可以使用：<code>hybrid://hao123/*</code></li>
+</ol>
+<h2 id="JSBridge的最佳实践">JSBridge的最佳实践</h2><p>介绍了这么多，什么是最佳实践的JSBridge呢？结合文章内容，要求JSBridge做到以下几点：</p>
+<ul>
+<li>官方认可，不走「歪门邪道」</li>
+<li>跨平台通用</li>
+<li>APP内和APP外规范通用</li>
+<li>安全可靠</li>
+<li>约定大于配置的原则</li>
+</ul>
+<p>综合上文介绍的内容，JSBridge的最佳实践是：</p>
+<ol>
+<li>协议规范都使用：<code>hybrid://action/method?arg1=xxx&amp;arg2=xxx</code></li>
+<li>iOS使用Universal Link和UIWebview的delegate</li>
+<li>安卓使用shouldOverrideUrlLoading和Applink</li>
+</ol>
+<h3 id="规范和约定">规范和约定</h3><p>先贴个URL scheme的图片，理解下URL的组成部分：</p>
+<p><img src="http://img.my.csdn.net/uploads/201203/3/16423_13307557171Ru7.png" alt=""></p>
+<p>约定我们的规范如下：</p>
+<pre><code>yourappscheme://module/action?arg1=x&amp;arg2=x&amp;ios_version=xxx&amp;andr_version=xxx&amp;upgrade=1/0&amp;callback=xxx&amp;sendlog=1/0
+</code></pre><ul>
+<li>整体小写</li>
+<li>yourappscheme：就是你的scheme，可辨识，别冲突，通过这个可以进行Universal Link和Applink的分发</li>
+<li>module和action：某个模块组件的某个方法</li>
+<li><code>?</code>后面是querystring，这里预定了几个特殊的参数：<ul>
+<li><code>ios_version/andr_version</code>：非必须，iOS和安卓的最小版本，即本协议从哪个版本开始支持的，低版本不支持则忽略，配合upgrade使用进行APP升级</li>
+<li>upgrade：是否强制升级，即当版本低于设置的ios/andr_version是否弹出提示用户升级的对话框（yourappscheme已经可以调起app，只不过功能可能因为版本低不支持，这时候可以引导用户升级）</li>
+<li>callback：异步回调函数，下面详细树下callback的最佳实践</li>
+<li>sendlog：调起后是否打点发送日志</li>
+</ul>
+</li>
+</ul>
+<p>举例：</p>
+<pre><code># 账号相关
+## 打开用户个人主页
+fb://account/userprofile?id=xxx
+## 打开登录界面
+fb://account/login?callback=xxx
+# 工具类
+## 获取定位
+fb://utils/getgeolocation?callback=xx
+</code></pre><h4 id="callback的设计">callback的设计</h4><p>当native操作成功之后，会将处理结束后的结果或者数据通过<code>callback</code>回调传给Web，当然有成果就又失败，<code>callback</code>的参数设计有两种方式：</p>
+<h5 id="错误优先">错误优先</h5><p>即下面的回调方法格式：</p>
+<pre><code class="js">function callback(error, data){
+  if(error){
+    throw error
+  }
+  console.log(data)
+}
+</code></pre>
+<h5 id="JSON_API式">JSON API式</h5><p>即回调方法只接收一个JSON对象，JSON格式如下：</p>
+<pre><code class="js">{
+  error_code: 0,
+  data: {}
+}
+</code></pre>
+<h4 id="预留升级/日志能力">预留升级/日志能力</h4><p>做APP开发经常会遇见下面的问题：</p>
+<ol>
+<li>功能/端能力是从某个版本开始的，低版本用不了，但是scheme还是会调起APP（APP懵逼。。</li>
+<li>对于低版本，PM希望提示用户升级</li>
+<li>统计调起成功率，分发次数之类的统计需求</li>
+</ol>
+<p>scheme的querystring部分由 <code>ios_version/andr_version</code>和upgrade这三个成对的参数，可以解决升级问题，sendlog解决日志统计问题。</p>
+<ul>
+<li><code>ios_version/andr_version</code>：是标示该协议的最低支持版本，如果低于这个版本可能因为功能并未实现而能识别。</li>
+<li>upgrade：是是否强制低版本弹出升级对话框</li>
+<li>sendlog：当为1的时候，则发送调起成功失败之类的统计需求</li>
+</ul>
+<h3 id="简单JSBridge调用封装">简单JSBridge调用封装</h3><p>简单封装下JSBridge调用的方法，参数如下：</p>
+<ul>
+<li>module：类名称，如果account</li>
+<li>action：具体操作方法，如login</li>
+<li>args：非必须，协议参数，支持string和对象</li>
+<li>callback：非必须，回调单独提出来，方便全局方法命名</li>
+</ul>
+<p>具体代码如下</p>
+<pre><code class="js">function invoke (module, action, args, callback) {
+  let scheme = `yourappscheme://${module}/${action}?`
+  if (isFunction(args)) {
+    callback = args
+    args = null
+  }
+  // 处理下参数
+  if (isString(args)) {
+    scheme += args
+  } else if (isObject(args)) {
+    each(args, (k, v) =&gt; {
+      if (isObject(v) || isArray(v)) {
+        v = JSON.stringify(v)
+      }
+      scheme += `${k}=${v}`
+    })
+  }
+  // callback独立传，方便全局函数名命名
+  if (isFunction(callback)) {
+    var funcName = &#39;_jsbridge_cb_&#39; + getId()
+    window[funcName] = function () {
+      callback.apply(window, ([]).slice.call(arguments, 0))
+    }
+    scheme += (!~scheme.indexOf(&#39;?&#39;) ? &#39;&amp;&#39; : &#39;?&#39;) + `callback=${funcName}`
+  }
+
+  if (os.ios &amp;&amp; versionCompare(os.version, &#39;9.0&#39;) &gt;= 0) {
+    window.location.href = scheme
+  } else {
+    var $node = document.createElement(&#39;iframe&#39;)
+    $node.style.display = &#39;none&#39;
+    $node.src = scheme
+    var body = document.body || document.getElementsByTagName(&#39;body&#39;)[0]
+    body.appendChild($node)
+    setTimeout(function () {
+      body.removeChild($node)
+      $node = null
+    }, 10)
+  } 
+}
+</code></pre>
+<h2 id="打完收工">打完收工</h2><p>今天写的有点多，介绍了JSBridge常用的方法，然后介绍了APP外如何唤起APP，还介绍了scheme协议，最后比较了优缺点，做个最佳实践。希望有用~</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>Hybrid开发中，web页面往往会跟native进行交互，而JSBridge就是web页面和native进行通信的桥梁，通过JSBridge可以实现web调用native的方法，native可以通过<code>webview.loadUrl</code>之类的方法，将<code>javascript:xxx</code>代码放在页面执行，这有点类似在浏览器地址栏直接输入：<code>javascript:xxx</code></p>
+</blockquote>
+<p>本文较长，先把目录列出来：</p>
+<ul>
+<li>JSBridge多种形式<ul>
+<li>js Interface 直接注入到window对象</li>
+<li>改写浏览器原有对象：alert/console/prompt</li>
+<li>URL scheme</li>
+</ul>
+</li>
+<li>唤起APP技术<ul>
+<li>intent</li>
+<li>localserver</li>
+<li>scheme：deeplink/applink/Universal link</li>
+<li>smart app banner</li>
+</ul>
+</li>
+<li>JSBridge安全</li>
+<li>JSBridge的最佳实践<ul>
+<li>协议规范</li>
+<li>回调函数</li>
+<li>预留升级/统计能力</li>
+<li>简单JSBridge调用封装</li>
+</ul>
+</li>
+</ul>
+<h2 id="JSBridge多种形式">JSBridge多种形式</h2><p>web和native进行通信，方法有很多，接下来一一列举一下JSBridge的多种形式，及其利弊。</p>
+<h3 id="JavaScriptInterface">JavaScriptInterface</h3><p>JSInterface是安卓4.2-官方推荐的解决方案，原理是通过WebView提供的<code>addJavascriptInterface</code>方法给浏览器<code>window</code>注入一个命名空间，然后给Web增加一些可以操作Java的反射。</p>
+<pre><code class="java">// Android java代码
+mWebView.addJavascriptInterface(new Class(), &#39;android&#39;);  
+
+public class Class(){
+  @JavascriptInterface
+  public void method(){
+
+  }
+} 
+// js 代码
+window.android.method();
+</code></pre>
+<p>JSInterface在4.2之前的版本都可以，但是存在严重的安全隐患，容易被利用提权，从而调用各种Java的类和权限，甚至页面可以挂马。在我们实际产品（手机百度）开始阶段，用过这个方法，不过现在已经不使用了。</p>]]>
+    
+    </summary>
+    
+      <category term="hybrid" scheme="http://js8.in/tags/hybrid/"/>
+    
+      <category term="javascript" scheme="http://js8.in/tags/javascript/"/>
+    
+      <category term="架构" scheme="http://js8.in/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[怎么进行一场好的面试：面试官篇]]></title>
+    <link href="http://js8.in/2017/03/10/%E6%80%8E%E4%B9%88%E8%BF%9B%E8%A1%8C%E4%B8%80%E5%9C%BA%E5%A5%BD%E7%9A%84%E9%9D%A2%E8%AF%95%EF%BC%9A%E9%9D%A2%E8%AF%95%E5%AE%98%E7%AF%87/"/>
+    <id>http://js8.in/2017/03/10/怎么进行一场好的面试：面试官篇/</id>
+    <published>2017-03-10T02:38:35.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<p>上次写了一篇文章「<a href="./2017/02/28/怎样准备一场面试：候选人篇/">怎样准备一场面试：候选人篇</a>」，今天的文章是姊妹篇：「面试官篇」，本文会结合自身做面试官和候选人的体验，简单说下我心目中的合格面试官是怎样的。</p>
+<h2 id="端正态度">端正态度</h2><p><strong>面试官最大的任务是帮助团队挑选符合条件的候选人</strong>。所以，面试官找的是将来一起合作共事的人，<strong>应该尽最大努力去发现候选人的优点</strong>，引导候选人正常发挥。</p>
+<p>面试官也是公司和团队的门面，面试整个过程应该体现出职业化的一面，给候选人留下好的印象，即使候选人不是合适人选，但是给候选人留个好印象，对于面试官个人和团队都有深远的意义。（谁还没个牛逼的朋友。</p>
+<p>不要盛气凌人！不要盛气凌人！不要盛气凌人！</p>
+<blockquote>
+<p>不知道为什么，越大的公司越不喜欢给面试官做个基本培训，很多面试官技术不错，但是职业化做的不一定很好<br>有个朋友吐槽某厂高P面试，大冬天天打飞的跑南方湿冷城市，面试官迟到几个小时不说，晚上7点多到了，夹着个surface支起来就看电脑，头都不抬，前后面试不超过半个小时，技术问题都没几个。。好吧，尊重人是再高的Level做到的基本素质，该朋友对此厂一生黑。。</p>
+</blockquote>
+<h2 id="准备工作">准备工作</h2><p>面试官收到面试通知的时候，应该清楚的知道时间、地点，并且了解候选人的情况，了解团队要求的级别和工作范围是什么。如果是交叉面试或者跨团队面试，了解JD之外，还要跟Team Leader沟通下，至少知道TL心中的合适人选是样子的。</p>
+<p>根据JD要求，结合候选人的简历，初步准备问题，有必要可以提前准备笔试题。</p>
+<a id="more"></a>
+<h2 id="面试过程">面试过程</h2><p>按时参加，遇见变动亲自沟通协调。面试过程一般包含下面几个方面：</p>
+<ol>
+<li>自我介绍</li>
+<li>基础知识考察</li>
+<li>项目能力考察</li>
+<li>软实力考察</li>
+<li>给候选人提问的机会</li>
+</ol>
+<p>整个过程中，面试官应该认真倾听，发掘候选人的优点。</p>
+<blockquote>
+<p>狼厂中午会发水果，曾经遇见过一个面试官见保洁发了水果之后，然后就屁颠屁颠的跑去领水果，还是只给自己。。候选人心里肯定十万头草泥马。<br>被面试的时候，特别反感面试官心不在焉，你在脑子飞转认真思考/回答问题，他在啪啦啪啦的敲键盘，偶尔还走神，让你重复一遍。。。</p>
+</blockquote>
+<p>技术问题应该由浅至深，不要一开始就发难候选人，容易造成抵触，后面项目能力多了解候选人在项目中的角色是什么。哪些是候选人真正参与的，有什么技术难点，方案是谁定的。<strong>别听忽悠！这年头拿别人东西说成自己的人多了去了。</strong></p>
+<p>软实力考察也是很重要的。很多时候，很难招到合适的人，尤其是应届生，<strong>更多的应该看候选人的学习能力，看潜力和可塑性，管理者更关注是管理成本。</strong>谁都不想找个「大爷」或者刺头进来。</p>
+<h2 id="做好交接和纪要">做好交接和纪要</h2><p>面试结束后，跟下一位面试官做好交接和沟通，将自己问到的问题和候选人的回答都总结一下跟下一面试官讲清楚，防止出现下一面继续问上一面的问题（好尴尬。</p>
+<p>面试后纪要也是要有的，专业HR会收集面试纪要，统计面试成功率，根据纪要的<br>情况调整找简历的方式和提高筛选简历的能力。</p>
+<p>面别人也是学习的过程，会了解到不同项目的背景和技术选型，遇见的困难，多交一个朋友，多帮助一个候选人发现自身问题。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>上次写了一篇文章「<a href="./2017/02/28/怎样准备一场面试：候选人篇/">怎样准备一场面试：候选人篇</a>」，今天的文章是姊妹篇：「面试官篇」，本文会结合自身做面试官和候选人的体验，简单说下我心目中的合格面试官是怎样的。</p>
+<h2 id="端正态度">端正态度</h2><p><strong>面试官最大的任务是帮助团队挑选符合条件的候选人</strong>。所以，面试官找的是将来一起合作共事的人，<strong>应该尽最大努力去发现候选人的优点</strong>，引导候选人正常发挥。</p>
+<p>面试官也是公司和团队的门面，面试整个过程应该体现出职业化的一面，给候选人留下好的印象，即使候选人不是合适人选，但是给候选人留个好印象，对于面试官个人和团队都有深远的意义。（谁还没个牛逼的朋友。</p>
+<p>不要盛气凌人！不要盛气凌人！不要盛气凌人！</p>
+<blockquote>
+<p>不知道为什么，越大的公司越不喜欢给面试官做个基本培训，很多面试官技术不错，但是职业化做的不一定很好<br>有个朋友吐槽某厂高P面试，大冬天天打飞的跑南方湿冷城市，面试官迟到几个小时不说，晚上7点多到了，夹着个surface支起来就看电脑，头都不抬，前后面试不超过半个小时，技术问题都没几个。。好吧，尊重人是再高的Level做到的基本素质，该朋友对此厂一生黑。。</p>
+</blockquote>
+<h2 id="准备工作">准备工作</h2><p>面试官收到面试通知的时候，应该清楚的知道时间、地点，并且了解候选人的情况，了解团队要求的级别和工作范围是什么。如果是交叉面试或者跨团队面试，了解JD之外，还要跟Team Leader沟通下，至少知道TL心中的合适人选是样子的。</p>
+<p>根据JD要求，结合候选人的简历，初步准备问题，有必要可以提前准备笔试题。</p>]]>
+    
+    </summary>
+    
+      <category term="面试" scheme="http://js8.in/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="经验" scheme="http://js8.in/tags/%E7%BB%8F%E9%AA%8C/"/>
+    
+      <category term="经验之谈" scheme="http://js8.in/categories/%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[怎样准备一场面试：候选人篇]]></title>
+    <link href="http://js8.in/2017/02/28/%E6%80%8E%E6%A0%B7%E5%87%86%E5%A4%87%E4%B8%80%E5%9C%BA%E9%9D%A2%E8%AF%95%EF%BC%9A%E5%80%99%E9%80%89%E4%BA%BA%E7%AF%87/"/>
+    <id>http://js8.in/2017/02/28/怎样准备一场面试：候选人篇/</id>
+    <published>2017-02-28T02:38:35.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>本文不是面经，只是通过一些细节增加面试的成功率，帮助候选人找到合适的团队和公司。面霸跳过此文</p>
+</blockquote>
+<ul>
+<li>首先端正态度，认真对待每一次面试，不要浪费你和别人的时间；</li>
+<li>其次，不要觉得低人一等，面试是双向选择的，自信很重要。</li>
+</ul>
+<h2 id="仔细阅读JD">仔细阅读JD</h2><p><strong>JD=job description</strong>，是指职位描述。往往很多候选人和发布JD的HR/Team Leader 忽略了JD的作用，好的JD传达出来很多信息：</p>
+<ul>
+<li>这是一个怎样的团队</li>
+<li>技术栈是怎样的</li>
+<li>需要什么样的人加入</li>
+<li>候选人加入团队做什么</li>
+</ul>
+<p>如果喜欢做JD的项目，认可团队，技术栈也没问题，就可以投递简历；<strong>JD中提到的技术栈（要求）和项目也是面试的重点，可以针对性的做准备。</strong></p>
+<a id="more"></a>
+<h2 id="约个双方都舒服的面试时间">约个双方都舒服的面试时间</h2><p>如果HR打电话预约面试时间，记得一定要约个双方都舒服的时间，宁愿请假也要安排好面试时间。</p>
+<p>有个case，前几天有个朋友说为了给公司招人，晚上住公司附近酒店，原因是候选人为了早上能不耽误现在公司的工作，想在10点之前按时上班，预约的面试时间是早上8点。想想面试官为了早上八点来面试自己掏钱住酒店，心里多少头草泥马。。。当然朋友比较专业，没有任何怨言，结果8点到了面试并不顺利，中途候选人接到电话说有事情就跑了，是的跑了。。。</p>
+<p>面试时间很重要，提前十分钟到面试地点，熟悉下环境，做个登记之类的，留下个守时的好印象。</p>
+<h2 id="面试准备">面试准备</h2><p>上面提到的JD和面试时间都是相对于面试过程不太重要的细节，面试当中的表现才是最重要的。所以提前准备好面试可能问到的问题，毕竟这才是面试官真正关心的。</p>
+<h3 id="了解部门和团队">了解部门和团队</h3><p>了解部门做的事情，团队用的技术栈，前文提到这部分信息从JD当中就可以看到，如果JD并没有这些信息，那么可以根据面试的部门搜索下，总会找到一些零星的信息，如果实在没有任何信息，就准备岗位需要的通用技术</p>
+<h3 id="了解面试官">了解面试官</h3><p>通过邀请电话或者面试邀请邮件，可以找到面试官信息。通过这些信息查找面试官技术博客、github等，了解面试官最近关注的技术和擅长的技术，往往面试官会在面试的过程中问自己擅长的技术。</p>
+<h3 id="项目思维导图">项目思维导图</h3><p>基础知识来自于自己平时的储备，一般对着一本系统的书籍或者自己平时的笔记过一遍即可，但是提到自己做到的项目是没有固定的复习套路的，而且围绕项目可以衍生出来各种问题，都需要了解，项目讲清楚对于候选人也特别重要。基础是固定的，任何人经过一段时间都可以学完的，但是项目经历是实打实的经验。</p>
+<p>对于项目的复习和准备，我建议是列思维导图，针对自己重点需要讲的项目，列出用到的技术点（知识点），介绍背景，项目上线后的收益，已经后续的优化点。这是第一层</p>
+<p>第二层就是针对技术点（知识点）做各种发散的问题。</p>
+<h3 id="面试中出现的常规问题">面试中出现的常规问题</h3><p>对于面试中出现的常规问题要做好准备，比如：介绍下自己，为什么跳槽，面试最后一般会问有什么要问的。</p>
+<h4 id="介绍自己">介绍自己</h4><p>介绍自己切忌从自己大学实习一直到最新公司开始介绍，这些在简历当中都有，最好的介绍自己就是铺垫自己的技术特长，做的项目，引导面试官问自己的准备的问题。</p>
+<h4 id="为什么跳槽">为什么跳槽</h4><p>跳槽前肯定想了很多原因，最终才走出这一步，不管现在工作怎样，<strong>切忌抱怨，不要吐槽自己的东家</strong>。 多从自身发展找原因，比如：自己遇见了天花板，希望找个更好的发展机会；想做xx事情。</p>
+<h4 id="有什么要问的">有什么要问的</h4><p>这是个很重要的问题，你可以反问面试官了解团队情况，团队做的业务，本职位具体做的工作，工作的规划，甚至一些数据（可能有些问题不会直面回答）。</p>
+<h2 id="面试后的总结和思考">面试后的总结和思考</h2><ul>
+<li>面试完了多总结自己哪里做的不好，哪里做的好，都记录下来，后续扬长避短</li>
+<li>通过面试肯定亲身体会到了公司团队文化、面试官体现出来的技术能力、专业性以及职位将来所做的事情，跟自己预期是否有gap，多个offer的话多做对比</li>
+</ul>
+<h2 id="总结">总结</h2><p>每次面试应该都有所收获，毕竟花费了时间和精力。即使面不上也可以知道自己哪方面做的不好，继续加强。</p>
+<p>话说朋友圈有个朋友，几乎每个季度都会出去面试一圈，一是为了了解自己感兴趣的公司或者团队现在做的是什么事情，二是为了找到自己的不足和对齐薪资。</p>
+<p>最后，面试是个双向选择的事情，工作也是一种提升自己的方式，做人最重要的是开心，要不要我给你。。。JTL</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>本文不是面经，只是通过一些细节增加面试的成功率，帮助候选人找到合适的团队和公司。面霸跳过此文</p>
+</blockquote>
+<ul>
+<li>首先端正态度，认真对待每一次面试，不要浪费你和别人的时间；</li>
+<li>其次，不要觉得低人一等，面试是双向选择的，自信很重要。</li>
+</ul>
+<h2 id="仔细阅读JD">仔细阅读JD</h2><p><strong>JD=job description</strong>，是指职位描述。往往很多候选人和发布JD的HR/Team Leader 忽略了JD的作用，好的JD传达出来很多信息：</p>
+<ul>
+<li>这是一个怎样的团队</li>
+<li>技术栈是怎样的</li>
+<li>需要什么样的人加入</li>
+<li>候选人加入团队做什么</li>
+</ul>
+<p>如果喜欢做JD的项目，认可团队，技术栈也没问题，就可以投递简历；<strong>JD中提到的技术栈（要求）和项目也是面试的重点，可以针对性的做准备。</strong></p>]]>
+    
+    </summary>
+    
+      <category term="面试" scheme="http://js8.in/tags/%E9%9D%A2%E8%AF%95/"/>
+    
+      <category term="经验" scheme="http://js8.in/tags/%E7%BB%8F%E9%AA%8C/"/>
+    
+      <category term="经验之谈" scheme="http://js8.in/categories/%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[前端资源动态渲染模式介绍之seed篇]]></title>
+    <link href="http://js8.in/2016/07/24/%E5%89%8D%E7%AB%AF%E8%B5%84%E6%BA%90%E5%8A%A8%E6%80%81%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D%E4%B9%8Bseed%E7%AF%87/"/>
+    <id>http://js8.in/2016/07/24/前端资源动态渲染模式介绍之seed篇/</id>
+    <published>2016-07-24T08:59:26.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<p>前面两篇文章（<a href="/2016/06/24/前端资源动态渲染模式介绍之概览篇/" title="前端资源动态渲染模式介绍之概览篇">前端资源动态渲染模式介绍之概览篇</a> 和 <a href="/2016/07/12/前端资源动态渲染模式介绍之combo篇/" title="前端资源动态渲染模式介绍之combo篇">前端资源动态渲染模式介绍之combo篇</a>）介绍了combo模式，今天重点介绍下seed模式，seed模式是一种利用js动态解析页面模块依赖，而且结合localstorage和combo 服务，实现的一种速度更快的加载方式。</p>
+<h2 id="seed模式特点">seed模式特点</h2><ul>
+<li>结合打包工具，实现页面依赖管理，seedjs不需要维护整站（整个项目）的resourcemap，combo需要使用后台语言维护<code>map.json</code></li>
+<li>结合localstorage，将模块缓存到ls，方便全站（单域名）下公用，下载过模块避免二次请求</li>
+<li>对于更新的，没有下载过的模块，拼成combo url，一次加载，避免多次请求</li>
+</ul>
+<h2 id="如何实现seed模式">如何实现seed模式</h2><p>要实现seed模式，要修改模块定义和引入函数，例如AMD中的<code>define</code>和<code>require</code>，结合打包工具，实现静态资源依赖表<code>resourcemap</code>（例如fis中的map.json）的字段自定义</p>
+<h3 id="对define函数进行改造">对<code>define</code>函数进行改造</h3><p>首先对<code>define</code>函数进行改造，增加参数传入md5：<code>define(id, factory, md5)</code> ，使其将factory源码和版本号存入localstorage，文件的md5值，可以结合打包工具实现，fis中的<code>file</code>对象有个方法是<code>file.getHash()</code> 可以获取md5值，这个值还需要存入<code>resourcemap</code>，用于比较缓存中的version和下发的<code>resourcemap</code>是否一致，如果不一致则需要重新拉最新版本。</p>
+<p>localstorage中缓存的内容是factory的源码，加上version(hash)：</p>
+<pre><code class="js">//代码示例如下
+//找到resourcemap中的id
+var map = resouceMap[id];
+//拼缓存的数据
+var content = {
+    version: map.hash,
+    //code是factory的内容
+    code: factory.toString()
+}
+localStorage[id] = JSON.stringify(content)
+</code></pre>
+<h3 id="对resourcemap的改造">对<code>resourcemap</code>的改造</h3><p>这个很简单，增加个字段：<code>hash</code></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>唯一id</td>
+</tr>
+<tr>
+<td>uri</td>
+<td>线上cdn完整url</td>
+</tr>
+<tr>
+<td>hash</td>
+<td>文件md5</td>
+</tr>
+<tr>
+<td>deps</td>
+<td>依赖的模块</td>
+</tr>
+</tbody>
+</table>
+<h3 id="对文件进行改造">对文件进行改造</h3><p>为了防止每个页面都是用全局的<code>resourcemap</code>（fis的map.json），对于单个页面文件需要输出自己的依赖关系表<code>resourcemap</code>，减少页面的大小，这部分工作也是通过打包工具实现的。</p>
+<p>打包工具将每个页面的依赖关系遍历出来，然后输出到每个页面，例如fis3的做法是：<a href="http://fis.baidu.com/fis3/docs/lv3.html#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84%E8%A1%A8" target="_blank" rel="external">http://fis.baidu.com/fis3/docs/lv3.html#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84%E8%A1%A8</a></p>
+<h3 id="对require函数的改造">对<code>require</code>函数的改造</h3><p><code>require</code>函数是获取模块依赖关系，没有的则加载模块，优先加载依赖的模块，等依赖模块加载完毕后，再遍历向上加载，保证模块代码执行的时候，该模块依赖的模块都已经加载完毕。</p>
+<a id="more"></a>
+<p>在seed模式中，<code>require</code>发现一个模块没有执行，需要加载之前，应该先去localstorage中读取代码，如果有这个模块的代码，并且<code>version</code>跟<code>resourcemap</code>的值一致，那么就可以不加载，直接将localstorage的代码拼成<code>define</code>函数执行，如果version不一致或者localstorage中不存在require的模块id缓存，那么就收集该模块在<code>resourcemap</code>中的uri，等到依赖遍历完毕后，拼成combo url，一次性加载，避免挨个加载等候回调的窘相。</p>
+<pre><code class="js">//执行ls中的模块代码如下
+//如果在ls中，需要校验依赖是否都已经defined
+var mod;
+if (ls &amp;&amp; (mod = ls[id])) {
+    mod = JSON.parse(mod);
+    var childHash = map.hash;
+    //mod.v就是version
+    if (childHash &amp;&amp; mod.code &amp;&amp; mod.v === childHash) {
+        var s = document.createElement(&#39;script&#39;);
+        s.appendChild(document.createTextNode(&#39;Bdbox.define(&quot;&#39; + id + &#39;&quot;,&#39; + mod.code + &#39;)&#39;));
+        document.head.appendChild(s);
+    }
+}
+</code></pre>
+<p>combo url拼接的时候，可以设置combo root url和max_files，用于替换cdn地址和最大合并文件的数量</p>
+<h3 id="流程图如下">流程图如下</h3><p>下面流程图中，页面用到了<code>moduleA</code>的一个模块，<code>moduleA</code>模块依赖两个模块：<code>moduleB</code>和<code>moduleC</code>，页面的流程如下<br><img src="/img/posts/seed.png" alt="seed模式流程图"></p>
+<h2 id="扩展阅读">扩展阅读</h2><ul>
+<li><a href="/2016/06/24/前端资源动态渲染模式介绍之概览篇/" title="前端资源动态渲染模式介绍之概览篇">前端资源动态渲染模式介绍之概览篇</a></li>
+<li><a href="/2016/07/12/前端资源动态渲染模式介绍之combo篇/" title="前端资源动态渲染模式介绍之combo篇">前端资源动态渲染模式介绍之combo篇</a></li>
+<li><a href="/2016/07/24/前端资源动态渲染模式介绍之seed篇/" title="前端资源动态渲染模式介绍之seed篇">前端资源动态渲染模式介绍之seed篇</a>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>前面两篇文章（<a href="/2016/06/24/前端资源动态渲染模式介绍之概览篇/" title="前端资源动态渲染模式介绍之概览篇">前端资源动态渲染模式介绍之概览篇</a> 和 <a href="/2016/07/12/前端资源动态渲染模式介绍之combo篇/" title="前端资源动态渲染模式介绍之combo篇">前端资源动态渲染模式介绍之combo篇</a>）介绍了combo模式，今天重点介绍下seed模式，seed模式是一种利用js动态解析页面模块依赖，而且结合localstorage和combo 服务，实现的一种速度更快的加载方式。</p>
+<h2 id="seed模式特点">seed模式特点</h2><ul>
+<li>结合打包工具，实现页面依赖管理，seedjs不需要维护整站（整个项目）的resourcemap，combo需要使用后台语言维护<code>map.json</code></li>
+<li>结合localstorage，将模块缓存到ls，方便全站（单域名）下公用，下载过模块避免二次请求</li>
+<li>对于更新的，没有下载过的模块，拼成combo url，一次加载，避免多次请求</li>
+</ul>
+<h2 id="如何实现seed模式">如何实现seed模式</h2><p>要实现seed模式，要修改模块定义和引入函数，例如AMD中的<code>define</code>和<code>require</code>，结合打包工具，实现静态资源依赖表<code>resourcemap</code>（例如fis中的map.json）的字段自定义</p>
+<h3 id="对define函数进行改造">对<code>define</code>函数进行改造</h3><p>首先对<code>define</code>函数进行改造，增加参数传入md5：<code>define(id, factory, md5)</code> ，使其将factory源码和版本号存入localstorage，文件的md5值，可以结合打包工具实现，fis中的<code>file</code>对象有个方法是<code>file.getHash()</code> 可以获取md5值，这个值还需要存入<code>resourcemap</code>，用于比较缓存中的version和下发的<code>resourcemap</code>是否一致，如果不一致则需要重新拉最新版本。</p>
+<p>localstorage中缓存的内容是factory的源码，加上version(hash)：</p>
+<pre><code class="js">//代码示例如下
+//找到resourcemap中的id
+var map = resouceMap[id];
+//拼缓存的数据
+var content = {
+    version: map.hash,
+    //code是factory的内容
+    code: factory.toString()
+}
+localStorage[id] = JSON.stringify(content)
+</code></pre>
+<h3 id="对resourcemap的改造">对<code>resourcemap</code>的改造</h3><p>这个很简单，增加个字段：<code>hash</code></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>唯一id</td>
+</tr>
+<tr>
+<td>uri</td>
+<td>线上cdn完整url</td>
+</tr>
+<tr>
+<td>hash</td>
+<td>文件md5</td>
+</tr>
+<tr>
+<td>deps</td>
+<td>依赖的模块</td>
+</tr>
+</tbody>
+</table>
+<h3 id="对文件进行改造">对文件进行改造</h3><p>为了防止每个页面都是用全局的<code>resourcemap</code>（fis的map.json），对于单个页面文件需要输出自己的依赖关系表<code>resourcemap</code>，减少页面的大小，这部分工作也是通过打包工具实现的。</p>
+<p>打包工具将每个页面的依赖关系遍历出来，然后输出到每个页面，例如fis3的做法是：<a href="http://fis.baidu.com/fis3/docs/lv3.html#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84%E8%A1%A8">http://fis.baidu.com/fis3/docs/lv3.html#%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84%E8%A1%A8</a></p>
+<h3 id="对require函数的改造">对<code>require</code>函数的改造</h3><p><code>require</code>函数是获取模块依赖关系，没有的则加载模块，优先加载依赖的模块，等依赖模块加载完毕后，再遍历向上加载，保证模块代码执行的时候，该模块依赖的模块都已经加载完毕。</p>]]>
+    
+    </summary>
+    
+      <category term="资源管理" scheme="http://js8.in/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="渲染模式" scheme="http://js8.in/tags/%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[前端资源动态渲染模式介绍之combo篇]]></title>
+    <link href="http://js8.in/2016/07/12/%E5%89%8D%E7%AB%AF%E8%B5%84%E6%BA%90%E5%8A%A8%E6%80%81%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D%E4%B9%8Bcombo%E7%AF%87/"/>
+    <id>http://js8.in/2016/07/12/前端资源动态渲染模式介绍之combo篇/</id>
+    <published>2016-07-12T12:59:26.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<p>今天继续介绍前端资源动态渲染模式中的combo模式，combo模式是利用静态服务器的combo服务，结合静态分析页面使用的js或者css文件，然后动态输出combo url地址的方式。</p>
+<h2 id="静态资源combo服务">静态资源combo服务</h2><p>公司静态集群使用的是nginx服务，nginx有个concat模块可以将url进行打包。使用它之后，需要合并输出的静态资源需要在<code>??</code>两个问号后面加<code>,</code>逗号隔开，例如：</p>
+<pre><code>http://baidu.com??style1.css,style2.css
+http://box.bdimg.com/life/js??script1.js,script2.js
+</code></pre><p>当然这种合并的文件数也是有限的，如果超过默认或者设置的最大文件数，服务就会报错，可以通过修改<code>nginx.conf</code>的配置进行修改：</p>
+<pre><code class="config">location /static/ {
+    concat on;
+    concat_max_files 20;
+}
+</code></pre>
+<h2 id="combo渲染模式">combo渲染模式</h2><p>前文介绍过基本原理，现在就拿smarty模板的<code>{% require name="life:js/demo" %}</code>说下具体的代码实现步骤，其他语言参考即可，我们还有个node版本的，node我们采用了yog2框架，其实是一样的，如果是直接php，其实就是个引入的函数而已（从第二步开始）</p>
+<ol>
+<li>执行<code>{% require name="life:js/demo" %}</code>，进入smarty的扩展语法require标签的实现</li>
+<li>实际执行的是 <code>Resource.class</code>的load函数：<code>Resource::load(&#39;life:js/demo&#39;)</code></li>
+<li>load函数根据传入的id（life:js/demo），读取<code>life-map.json</code>（fis生成的静态资源表），根据id找到类似下面的内容：<pre><code class="json">&quot;life:js/demo&quot;:{
+&quot;uri&quot;:&quot;http://s.box.bdimg.com/lf/js/demo_defb566.js&quot;,
+&quot;type&quot;:&quot;js&quot;,
+&quot;deps&quot;:[&quot;common:bdbox/template&quot;],
+&quot;rUri&quot;:&quot;/static/lf/js/demo_defb566.js&quot;,
+&quot;hash&quot;: &quot;defb566&quot;
+}
+</code></pre>
+</li>
+</ol>
+<a id="more"></a>
+<p>解释下：</p>
+<ul>
+<li>uri：是线上cdn的地址</li>
+<li>deps：是依赖的模块id数组，会循环遍历查找</li>
+<li>rUri：是我们独有的，增加fis插件实现的，相对路径</li>
+<li>hash：独有，fis插件实现，7位md5值，可以看成版本号，后面seed模式使用</li>
+</ul>
+<ol start="4">
+<li>将找到的内容压入数组<code>$arrStaticCollection</code></li>
+<li>页面结束的时候，执行<code>Resource</code>的<code>render</code>方法，传入渲染模式：combo/seed/inline/tag等</li>
+<li>render函数根据不同的模式进行不同的操作，然后输出内容</li>
+</ol>
+<h3 id="Resource_class的核心代码">Resource class的核心代码</h3><pre><code class="php">class Resouce {
+    // 这里是combo的前缀url，用占位符，在node打包的时候根据实际配置替换
+    const COMBO_SERVER_URL = &#39;&lt;!--[COMBO_SEVER_URL]--&gt;&#39;;
+    // 最大合并的文件数
+    const COMBO_MAX_COUNT = 15;
+    // 收集的数组
+    private static $arrStaticCollection = array();
+
+    public static function load($id){
+
+    }
+    public static function render($type){
+        if($type==&#39;combo&#39;){
+            // 只写下js的方法
+            $arrURIs = &amp; self::$arrStaticCollection[&#39;js&#39;];
+            foreach ($arrURIs as $val) {
+                if ($val[&#39;uri&#39;] === self::$framework[&#39;uri&#39;]) {
+                    continue;
+                }
+                if(isset($val[&#39;remote&#39;]) &amp;&amp; $val[&#39;remote&#39;]){
+                    //碰见线上url，先输出现有的combo
+                    if (!empty($jsComboArr)) {
+                        $html .= self::getComboHtml(&#39;js&#39;, $jsComboArr);
+                        //重设为空
+                        $jsComboArr = array();
+                    }
+                    $html .= &#39;&lt;script src=&quot;&#39;.$val[&#39;uri&#39;].&#39;&quot;&gt;&lt;/script&gt;&#39; . PHP_EOL;
+                }else{
+                    //获取combo的url，根据uri进行同路径替换
+                    $strPath = self::parseComboURI(self::getComboUrl(), $val[&#39;uri&#39;], $val[&#39;rUri&#39;]);
+
+                    $jsComboArr[] = $strPath;
+                }
+
+            }
+        }
+    }
+}
+</code></pre>
+<h2 id="静态combo方法">静态combo方法</h2><p>上面说的是动态combo，即通过php这些动态语言，边分析边使用combo，适合多平台，多判断的情况，缺点是：需要动态读取map.json分析需要合并那些文件。如果是简单的静态服务，一开始就合并起来，那么可以使用<code>fis3-postpackager-loader</code> 这个模块，我已经提交了pr：<a href="https://github.com/fex-team/fis3-postpackager-loader/pull/49/files" target="_blank" rel="external">https://github.com/fex-team/fis3-postpackager-loader/pull/49/files</a></p>
+<p>使用方法：</p>
+<pre><code>fis.match(&#39;::packager&#39;, {
+  postpackager: fis.plugin(&#39;loader&#39;, {
+    renderMode: {
+      &#39;type&#39;: &#39;combo&#39;, //默认是tag
+      comboMaxFiles: 15, //最大combo文件
+      prefixer: &#39;//xxxx??&#39; //combo服务器地址，或者function
+    }
+  })
+});
+</code></pre><p>有别于allinone模式，会页面用到的静态资源合并到一个文件，这个是把用到的文件合并为一个combo URL。</p>
+<h2 id="扩展阅读">扩展阅读</h2><ul>
+<li><a href="/2016/06/24/前端资源动态渲染模式介绍之概览篇/" title="前端资源动态渲染模式介绍之概览篇">前端资源动态渲染模式介绍之概览篇</a></li>
+<li><a href="/2016/07/12/前端资源动态渲染模式介绍之combo篇/" title="前端资源动态渲染模式介绍之combo篇">前端资源动态渲染模式介绍之combo篇</a></li>
+<li><a href="/2016/07/24/前端资源动态渲染模式介绍之seed篇/" title="前端资源动态渲染模式介绍之seed篇">前端资源动态渲染模式介绍之seed篇</a>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天继续介绍前端资源动态渲染模式中的combo模式，combo模式是利用静态服务器的combo服务，结合静态分析页面使用的js或者css文件，然后动态输出combo url地址的方式。</p>
+<h2 id="静态资源combo服务">静态资源combo服务</h2><p>公司静态集群使用的是nginx服务，nginx有个concat模块可以将url进行打包。使用它之后，需要合并输出的静态资源需要在<code>??</code>两个问号后面加<code>,</code>逗号隔开，例如：</p>
+<pre><code>http://baidu.com??style1.css,style2.css
+http://box.bdimg.com/life/js??script1.js,script2.js
+</code></pre><p>当然这种合并的文件数也是有限的，如果超过默认或者设置的最大文件数，服务就会报错，可以通过修改<code>nginx.conf</code>的配置进行修改：</p>
+<pre><code class="config">location /static/ {
+    concat on;
+    concat_max_files 20;
+}
+</code></pre>
+<h2 id="combo渲染模式">combo渲染模式</h2><p>前文介绍过基本原理，现在就拿smarty模板的<code>{% require name="life:js/demo" %}</code>说下具体的代码实现步骤，其他语言参考即可，我们还有个node版本的，node我们采用了yog2框架，其实是一样的，如果是直接php，其实就是个引入的函数而已（从第二步开始）</p>
+<ol>
+<li>执行<code>{% require name="life:js/demo" %}</code>，进入smarty的扩展语法require标签的实现</li>
+<li>实际执行的是 <code>Resource.class</code>的load函数：<code>Resource::load(&#39;life:js/demo&#39;)</code></li>
+<li>load函数根据传入的id（life:js/demo），读取<code>life-map.json</code>（fis生成的静态资源表），根据id找到类似下面的内容：<pre><code class="json">&quot;life:js/demo&quot;:{
+&quot;uri&quot;:&quot;http://s.box.bdimg.com/lf/js/demo_defb566.js&quot;,
+&quot;type&quot;:&quot;js&quot;,
+&quot;deps&quot;:[&quot;common:bdbox/template&quot;],
+&quot;rUri&quot;:&quot;/static/lf/js/demo_defb566.js&quot;,
+&quot;hash&quot;: &quot;defb566&quot;
+}
+</code></pre>
+</li>
+</ol>]]>
+    
+    </summary>
+    
+      <category term="资源管理" scheme="http://js8.in/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="渲染模式" scheme="http://js8.in/tags/%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[JavaScript sdk(jssdk)设计指南]]></title>
+    <link href="http://js8.in/2016/06/29/javascript%20sdk(jssdk)%E8%AE%BE%E8%AE%A1%E6%8C%87%E5%8D%97/"/>
+    <id>http://js8.in/2016/06/29/javascript sdk(jssdk)设计指南/</id>
+    <published>2016-06-28T22:42:06.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<p>今天看到一篇《<a href="http://www.zcfy.cc/original/403" target="_blank" rel="external">javascript sdk设计指南</a>》，内容篇幅比较多，很多实际是问题的枚举，但是信息量太大，所以我结合之前做微博开放平台和运营活动平台的经验，说下jssdk的设计和一些核心问题的解决方案。</p>
+<p>一个jssdk一般是指提供给第三方人员使用的一段js，通过这个js实现一些平台化产品提供的服务，比如<a href="http://jssdk.sinaapp.com/" target="_blank" rel="external">微博的jssdk</a>。整个jssdk的设计有一下几个核心问题：</p>
+<ul>
+<li>代码如何被使用页面接入</li>
+<li>如何实现跨域通信</li>
+<li>如何实现优雅api的设计</li>
+<li>公共资源的使用</li>
+<li>代码组件化</li>
+</ul>
+<p>先说第一个问题</p>
+<h2 id="代码如何被使用页面接入">代码如何被使用页面接入</h2><p>这个问题涉及到几个小问题需要讨论：</p>
+<ul>
+<li>命名空间</li>
+<li>样式冲突</li>
+<li>版本维护</li>
+<li>appid等参数的传入</li>
+</ul>
+<h3 id="命名空间">命名空间</h3><p>在「<strong>命名空间</strong>」部分，需要做到<code>不污染环境，保护好自己</code>，即不要对本来的页面造成命名的破坏，只是用一个命名空间，又要考虑到第三方页面的复杂性，防止跟错综复杂的命名空间冲突。</p>
+<p>要做到这点，需要我们在命名空间命名的时候多注意下，尽量不要使用业内通用的命名方法，比如驼峰，名字尽量起的怪一些，偏一些，一般，要么使用<code>_</code>开头（甚至多个），要么使用项目代号这些不太被别人想到的名字，嗯，我记得有人命名空间用<code>av</code>，很好呀！</p>
+<p>还有一种方式是动态的命名空间，在url中带上<code>namespace=xxx</code>，本节结束后面会统一给出示例</p>
+<h3 id="样式冲突">样式冲突</h3><p>除了js命名空间问题，如果jssdk带有UI组件，那么还需要考虑css的样式冲突问题，这里不用多说，记住以下几点：</p>
+<ul>
+<li>一些复杂的widget可以使用iframe方式引入</li>
+<li>不使用id</li>
+<li>使用带前缀的class命名，前面用一个class最好包裹</li>
+<li>自己做reset！</li>
+<li>跟js相关的class要有特殊的约定（比如<code>_J-xxx</code> ）或者使用<code>data-id</code>代替</li>
+</ul>
+<p>其实利用sass、less这些预编译语言很容易</p>
+<p>例如下面的代码：</p>
+<pre><code class="sass">$name: avUI;
+
+.#{$name}__dialog{
+    @include reset();
+    .#{$name}__dialog__header{
+        color: white;
+    }
+}
+</code></pre>
+<h3 id="版本维护">版本维护</h3><p>版本维护的目的是保证代码最新，功能最全，而不用每次做了升级，通知所有使用的第三方开发者把自己页面的代码挨个更换。所以这里版本维护不应该暴漏给使用者，比如在url使用版本号，到了2.0版本，通知使用方替换，这是不合理的，总有些公司或者人不配合的。最好的方法是设计的时候就要考虑到这个问题。</p>
+<p>一般有两种比较好的方式：</p>
+<ul>
+<li>小拖大，动拖静：即第三方引入的js是一个动态的，或者没有缓存没有cdn的，然后由它带出后面的cdn</li>
+<li>隔段时间动态创建script</li>
+</ul>
+<p>推荐使用「小拖大，动拖静」，后面介绍组件化也要使用这个方式来按需加载代码</p>
+<h4 id="小拖大，动拖静">小拖大，动拖静</h4><p>核心代码示例</p>
+<pre><code class="js">(function(){
+    .....
+    var url = &#39;最新版本cdn的地址&#39;;
+    load(url);
+}())
+</code></pre>
+<h4 id="隔段时间动态创建script">隔段时间动态创建script</h4><p>代码示例：</p>
+<pre><code class="js">(function () {
+    var s = document.createElement(&#39;script&#39;);
+    s.type = &#39;text/javascript&#39;;
+    var t = +new Date;
+    t -= %864E5;
+    s.src = &#39;http://xxx.com/sdk.js?t=&#39;+t;
+    var x = document.getElementsByTagName(&#39;script&#39;)[0];
+    x.parentNode.insertBefore(s, x);
+  })();
+</code></pre>
+<a id="more"></a>
+<h3 id="appid等参数的传入">appid等参数的传入</h3><p>一般在引入sdkjs代码的时候需要加参数或者版本号，比如开放平台需要配置<code>appid</code>，所以url写法是：<br><code>sdk.js?appid=xxxx&amp;namespace=xxx</code> 。jssdk需要拿到url中的这些参数，方法有以下两种比较通用的：</p>
+<ul>
+<li>给script标签增加特殊属性，例如<code>&lt;script src=&quot;path/sdk.js?appid=123&quot; id=&quot;_jssdk&quot;&gt;</code> </li>
+<li>使用查找script标签方式：<pre><code class="js">//get url args function
+function parserUrl(){
+  var scripts = document.getElementsByTagName(&quot;script&quot;),
+      len = scripts.length,
+      url;
+  if (len &gt; 0) {
+      for (var i = 0; i &lt; len; i++) {
+          if (scripts[i].src.indexOf(&quot;path/to/sdk.js&quot;) !== -1) {
+              return scripts[i].src.split(&quot;?&quot;).pop();
+          }
+      }
+  }
+}
+</code></pre>
+</li>
+</ul>
+<p>所以appid，namespace这些都可以解析出来</p>
+<h2 id="如何实现跨域通信">如何实现跨域通信</h2><p>对于不在一个域名下的第三方页面引入的jssdk少不了的是跨域请求，这块移动上可以直接使用<code>postMessage</code>方法，将来可以使用xhr2+CORS，相兼容IE，可以参考《<a href="http://js8.in/tags/%E8%B7%A8%E5%9F%9F/">三水清跨域tag</a>》的内容，这里不做过多介绍</p>
+<h2 id="如何实现优雅api的设计">如何实现优雅api的设计</h2><p>这里的api指的是开放平台提供的http接口，一般都会有一些标准的规范，比如：</p>
+<ul>
+<li>获取用户信息：<a href="http://domain.com/api/getUserInfo.json" target="_blank" rel="external">http://domain.com/api/getUserInfo.json</a></li>
+<li>更新用户信息：<a href="http://domain.com/api/updateUserInfo.json" target="_blank" rel="external">http://domain.com/api/updateUserInfo.json</a></li>
+</ul>
+<p>我们设计这个函数接口的时候，应该充分考虑到将来server接口的增加，所以应该做成通用的服务，比如我们设计个<code>sdkjs.api</code>方法，接受四个参数：url\data\callback\method，默认如果data是函数就后面参数自动前提。</p>
+<pre><code class="js">api: function(url, data, callback, method) {
+    var _args = $.toArray(arguments),
+        _callback = _args[2] || $.emptyFn;
+
+    if (_args.length &lt; 3) {
+        throw Error(&quot;api arguments length wrong&quot;);
+    }
+
+    if (!$.isString(_args[0]) || !$.isObject(_args[1]) || !$.isFunction(_callback)) {
+        throw Error(&quot;api arguments format error&quot;);
+    }
+
+    var _cbid = 0;
+
+    if ($.isFunction(_callback)) {
+        _cbid = _CallbackManager.add(_callback);
+    }
+    //跨域发起请求
+    xDomain.send(&quot;api&quot;, {
+        url: _args[0],
+        data: _args[1],
+        method: _args[3] || &quot;get&quot;,
+        _cbid: _cbid
+    });
+    return back;
+}
+</code></pre>
+<h2 id="公共资源的使用">公共资源的使用</h2><p>公共资源的使用，指的是一些跟宿主环境共享的资源，比如cookie、localstorage这些，使用的时候应该做前缀处理，尽量不污染宿主页面环境，同时保证不被轻易的删除。</p>
+<h2 id="代码组件化">代码组件化</h2><p>代码的组织在一些带有UI的jssdk中使用较多，比如按需加载某个UI模块。这时候就充分利用到了第一节提到的「小拖大，动拖静」的引入方式，一开始小文件我们叫seed，里面有UI组件和sdk主代码的url，seed.js加载后，先加载sdk的核心js文件，然后如果使用某个UI组件，就按需加载。</p>
+<pre><code class="js">var MAP = {
+    core: [&#39;sdk-core.js&#39;],
+    ui: {
+        loginDialog: [&#39;path/loginDialog.css&#39;, &#39;path/loginDialog.js&#39;]
+    }
+}
+load(MAP.core);
+
+//使用
+SDKJS.ready(function($){
+    //$实际是SDKJS
+    $.use(&#39;loginDialog&#39;, function(loginDialog){
+        loginDialog(xxxxx);
+    })
+});
+</code></pre>
+<p>其中<code>.use</code>方法，有些类似<code>require</code>方法，起到按需加载的功能。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天看到一篇《<a href="http://www.zcfy.cc/original/403">javascript sdk设计指南</a>》，内容篇幅比较多，很多实际是问题的枚举，但是信息量太大，所以我结合之前做微博开放平台和运营活动平台的经验，说下jssdk的设计和一些核心问题的解决方案。</p>
+<p>一个jssdk一般是指提供给第三方人员使用的一段js，通过这个js实现一些平台化产品提供的服务，比如<a href="http://jssdk.sinaapp.com/">微博的jssdk</a>。整个jssdk的设计有一下几个核心问题：</p>
+<ul>
+<li>代码如何被使用页面接入</li>
+<li>如何实现跨域通信</li>
+<li>如何实现优雅api的设计</li>
+<li>公共资源的使用</li>
+<li>代码组件化</li>
+</ul>
+<p>先说第一个问题</p>
+<h2 id="代码如何被使用页面接入">代码如何被使用页面接入</h2><p>这个问题涉及到几个小问题需要讨论：</p>
+<ul>
+<li>命名空间</li>
+<li>样式冲突</li>
+<li>版本维护</li>
+<li>appid等参数的传入</li>
+</ul>
+<h3 id="命名空间">命名空间</h3><p>在「<strong>命名空间</strong>」部分，需要做到<code>不污染环境，保护好自己</code>，即不要对本来的页面造成命名的破坏，只是用一个命名空间，又要考虑到第三方页面的复杂性，防止跟错综复杂的命名空间冲突。</p>
+<p>要做到这点，需要我们在命名空间命名的时候多注意下，尽量不要使用业内通用的命名方法，比如驼峰，名字尽量起的怪一些，偏一些，一般，要么使用<code>_</code>开头（甚至多个），要么使用项目代号这些不太被别人想到的名字，嗯，我记得有人命名空间用<code>av</code>，很好呀！</p>
+<p>还有一种方式是动态的命名空间，在url中带上<code>namespace=xxx</code>，本节结束后面会统一给出示例</p>
+<h3 id="样式冲突">样式冲突</h3><p>除了js命名空间问题，如果jssdk带有UI组件，那么还需要考虑css的样式冲突问题，这里不用多说，记住以下几点：</p>
+<ul>
+<li>一些复杂的widget可以使用iframe方式引入</li>
+<li>不使用id</li>
+<li>使用带前缀的class命名，前面用一个class最好包裹</li>
+<li>自己做reset！</li>
+<li>跟js相关的class要有特殊的约定（比如<code>_J-xxx</code> ）或者使用<code>data-id</code>代替</li>
+</ul>
+<p>其实利用sass、less这些预编译语言很容易</p>
+<p>例如下面的代码：</p>
+<pre><code class="sass">$name: avUI;
+
+.#{$name}__dialog{
+    @include reset();
+    .#{$name}__dialog__header{
+        color: white;
+    }
+}
+</code></pre>
+<h3 id="版本维护">版本维护</h3><p>版本维护的目的是保证代码最新，功能最全，而不用每次做了升级，通知所有使用的第三方开发者把自己页面的代码挨个更换。所以这里版本维护不应该暴漏给使用者，比如在url使用版本号，到了2.0版本，通知使用方替换，这是不合理的，总有些公司或者人不配合的。最好的方法是设计的时候就要考虑到这个问题。</p>
+<p>一般有两种比较好的方式：</p>
+<ul>
+<li>小拖大，动拖静：即第三方引入的js是一个动态的，或者没有缓存没有cdn的，然后由它带出后面的cdn</li>
+<li>隔段时间动态创建script</li>
+</ul>
+<p>推荐使用「小拖大，动拖静」，后面介绍组件化也要使用这个方式来按需加载代码</p>
+<h4 id="小拖大，动拖静">小拖大，动拖静</h4><p>核心代码示例</p>
+<pre><code class="js">(function(){
+    .....
+    var url = &#39;最新版本cdn的地址&#39;;
+    load(url);
+}())
+</code></pre>
+<h4 id="隔段时间动态创建script">隔段时间动态创建script</h4><p>代码示例：</p>
+<pre><code class="js">(function () {
+    var s = document.createElement(&#39;script&#39;);
+    s.type = &#39;text/javascript&#39;;
+    var t = +new Date;
+    t -= %864E5;
+    s.src = &#39;http://xxx.com/sdk.js?t=&#39;+t;
+    var x = document.getElementsByTagName(&#39;script&#39;)[0];
+    x.parentNode.insertBefore(s, x);
+  })();
+</code></pre>]]>
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://js8.in/tags/javascript/"/>
+    
+      <category term="跨域" scheme="http://js8.in/tags/%E8%B7%A8%E5%9F%9F/"/>
+    
+      <category term="jssdk" scheme="http://js8.in/tags/jssdk/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[前端资源动态渲染模式介绍之概览篇]]></title>
+    <link href="http://js8.in/2016/06/24/%E5%89%8D%E7%AB%AF%E8%B5%84%E6%BA%90%E5%8A%A8%E6%80%81%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D%E4%B9%8B%E6%A6%82%E8%A7%88%E7%AF%87/"/>
+    <id>http://js8.in/2016/06/24/前端资源动态渲染模式介绍之概览篇/</id>
+    <published>2016-06-24T08:59:26.000Z</published>
+    <updated>2018-06-13T06:03:04.000Z</updated>
+    <content type="html"><![CDATA[<p>在手百我们使用了一种动态管理静态资源的方式，在开发中通常打包工具在打包构建的时候根据页面依赖将所有的js或者css打成一个<code>app.js</code>或者<code>app.css</code>，这样的打包方式我们称之为「静态打包」，因为只能在项目发布构建的过程中一次性将页面用到的js或者css打包成一个文件，上完线之后就不能在拆分。</p>
+<p>这种「静态打包」的方式有个弊端：如果在多个view的页面，是不能够充分利用不同页面之间的公用代码（模块）。于是加强版就是在线统计一个网站（项目）模块依赖和公用的代码，然后设置一个阈值，利用统计的数据，分析出多个页面高频使用的公共代码，再下次上线的时候，将这部分代码打包在一起。这种方式百度内部也有类似的解决方案，但是这种方案也没有充分发挥出细粒度模块的作用，而且实现相对来说比较麻烦，需要长期数据统计支持。</p>
+<p>今天我介绍下手百中我们实现的一种动态管理静态资源的方式，我将它称之为「前端资源动态渲染模式」，简称「渲染模式」。这种方式是基于手百现有业务出发的，解决了手百不同平台（安卓、ios、winphone）的代码差异，而且充分利用缓存、combo服务，做到可配方便调试的目的。</p>
+<h2 id="前端资源动态渲染模式特点">前端资源动态渲染模式特点</h2><blockquote>
+<p>代码永远只写一份，不需要编写特殊逻辑</p>
+</blockquote>
+<p>我们实现的渲染模式，对于代码开发者来说，不需要做特殊的逻辑编写，只需要按照正常编码要求来写代码，剩下的就交给打包工具和上线流程，对于初学者不需要任何的学习门槛，而且支持本地静态资源和外部静态资源混用。</p>
+<blockquote>
+<p>能够根据不同平台，不同后端业务逻辑，动态打包不同代码</p>
+</blockquote>
+<p>后端业务逻辑不通，则需要的js或者css文件不通，之前的做法是一个js里面包含了所有的代码逻辑，现在只需要如下代码：</p>
+<pre><code class="smarty">{% if($isiOS) %}
+    {% require name="life:ios/invoke.js" %}
+{%else%}
+    {% require name="life:android/invoke.js" %}
+{% endif%}
+</code></pre>
+<p>这个是动态逻辑解析后的执行，所以编译阶段的静态打包是完全解决不了这个问题的。</p>
+<blockquote>
+<p>结合combo服务或者localstorage做缓存优化</p>
+</blockquote>
+<p>利用静态资源的combo服务和浏览器的localstorage存储，我们可以把渲染模式进一步优化，最简单的方式是combo渲染模式，动态分析完页面依赖之后，将url拼接成combo url一次输出<br><a id="more"></a></p>
+<blockquote>
+<p>多种渲染模式，可以适用不同的应用业务场景</p>
+</blockquote>
+<p>在不同的业务场景下，需要的代码组织形式不同，比如2G下，应该尽量少的http请求，这时候需要inline模式，将js和css分别放在<code>&lt;script&gt;</code> 和 <code>&lt;style&gt;</code> 标签内，而我们写代码不需要这样写，还是使用正常的<code>{%require %}</code> 语法</p>
+<blockquote>
+<p>可结合用户设备特征，自动智能选择不同的渲染模式</p>
+</blockquote>
+<p>对于不同的用户、设备和网络环境，能够自动识别出来最适合的渲染模式，例如对于2G用户，推荐使用http请求少的inline模式，对于3G、4G用户能够使用combo模式，对于支持localstorage的用户使用seed模式，这些修改只需要在父模板设置渲染模式即可：</p>
+<pre><code class="smarty">{%if $network==='slow'%}
+    {%html rendermode='inline'%}
+{%elseif $isSuportLS%}
+    {%html rendermode='seed'%}
+{%else%}
+    {%html rendermode='combo'%}
+{%endif%}
+</code></pre>
+<h2 id="技术要点">技术要点</h2><p>下面列下大概的技术要点：</p>
+<ol>
+<li>利用项目发布阶段生成的静态资源依赖管理表，fis对应的是<code>map.json</code>，里面有每个静态资源的信息，可以利用打包工具，对这个表进行扩展，增加想要的信息，比如release之后的cdn url，发布上线后到路径，文件的MD5值</li>
+<li>利用smarty扩展（本质是php的某个函数），将页面需要的静态资源收集起来</li>
+<li>页面html输出的时候，需要将需要根据不同渲染模式，读取<code>map.json</code>内静态资源配置，比如combo需要读取去掉combo url的cdn url，拼接最终的url；tag模式需要单个的cdn url；seed需要读取MD5值；inline需要知道线上部署的路径，可以读取出来文件内容塞到<code>&lt;script&gt;</code>或<code>&lt;style&gt;</code>标签内</li>
+</ol>
+<h2 id="小结">小结</h2><p>本篇文章主要从总体对动态渲染模式做了介绍，基于smarty的语言扩展实现的动态解析依赖关系，充分利用网络环境、用户设备特性和server服务实现最优的性能优化和静态资源代码管理方式。如果是其他动态语言，可以参考本文的思想进行改造实验。接下来两篇文章重点介绍现在手百使用的两种渲染模式：combo和seed。</p>
+<h2 id="扩展阅读">扩展阅读</h2><ul>
+<li><a href="/2016/06/24/前端资源动态渲染模式介绍之概览篇/" title="前端资源动态渲染模式介绍之概览篇">前端资源动态渲染模式介绍之概览篇</a></li>
+<li><a href="/2016/07/12/前端资源动态渲染模式介绍之combo篇/" title="前端资源动态渲染模式介绍之combo篇">前端资源动态渲染模式介绍之combo篇</a></li>
+<li><a href="/2016/07/24/前端资源动态渲染模式介绍之seed篇/" title="前端资源动态渲染模式介绍之seed篇">前端资源动态渲染模式介绍之seed篇</a>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在手百我们使用了一种动态管理静态资源的方式，在开发中通常打包工具在打包构建的时候根据页面依赖将所有的js或者css打成一个<code>app.js</code>或者<code>app.css</code>，这样的打包方式我们称之为「静态打包」，因为只能在项目发布构建的过程中一次性将页面用到的js或者css打包成一个文件，上完线之后就不能在拆分。</p>
+<p>这种「静态打包」的方式有个弊端：如果在多个view的页面，是不能够充分利用不同页面之间的公用代码（模块）。于是加强版就是在线统计一个网站（项目）模块依赖和公用的代码，然后设置一个阈值，利用统计的数据，分析出多个页面高频使用的公共代码，再下次上线的时候，将这部分代码打包在一起。这种方式百度内部也有类似的解决方案，但是这种方案也没有充分发挥出细粒度模块的作用，而且实现相对来说比较麻烦，需要长期数据统计支持。</p>
+<p>今天我介绍下手百中我们实现的一种动态管理静态资源的方式，我将它称之为「前端资源动态渲染模式」，简称「渲染模式」。这种方式是基于手百现有业务出发的，解决了手百不同平台（安卓、ios、winphone）的代码差异，而且充分利用缓存、combo服务，做到可配方便调试的目的。</p>
+<h2 id="前端资源动态渲染模式特点">前端资源动态渲染模式特点</h2><blockquote>
+<p>代码永远只写一份，不需要编写特殊逻辑</p>
+</blockquote>
+<p>我们实现的渲染模式，对于代码开发者来说，不需要做特殊的逻辑编写，只需要按照正常编码要求来写代码，剩下的就交给打包工具和上线流程，对于初学者不需要任何的学习门槛，而且支持本地静态资源和外部静态资源混用。</p>
+<blockquote>
+<p>能够根据不同平台，不同后端业务逻辑，动态打包不同代码</p>
+</blockquote>
+<p>后端业务逻辑不通，则需要的js或者css文件不通，之前的做法是一个js里面包含了所有的代码逻辑，现在只需要如下代码：</p>
+<pre><code class="smarty">{% if($isiOS) %}
+    {% require name="life:ios/invoke.js" %}
+{%else%}
+    {% require name="life:android/invoke.js" %}
+{% endif%}
+</code></pre>
+<p>这个是动态逻辑解析后的执行，所以编译阶段的静态打包是完全解决不了这个问题的。</p>
+<blockquote>
+<p>结合combo服务或者localstorage做缓存优化</p>
+</blockquote>
+<p>利用静态资源的combo服务和浏览器的localstorage存储，我们可以把渲染模式进一步优化，最简单的方式是combo渲染模式，动态分析完页面依赖之后，将url拼接成combo url一次输出<br>]]>
+    
+    </summary>
+    
+      <category term="资源管理" scheme="http://js8.in/tags/%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="渲染模式" scheme="http://js8.in/tags/%E6%B8%B2%E6%9F%93%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="前端开发" scheme="http://js8.in/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+</feed>

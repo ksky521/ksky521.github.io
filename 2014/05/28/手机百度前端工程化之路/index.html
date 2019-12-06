@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>手机百度前端工程化之路 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文将围绕我半年来在移动前端工程化做的一些工作做的总结，主要从 localstorage缓存和版本号管理 ， 模块化 ， 静态资源渲染方式 三个方面总结手机百度前端一年内沉淀的解决方案，希望对大家移动开发有所帮助。
+一年前存在的问题可能因为之前项目节奏紧，人力不足原因，一部分phper承担了前端的工作，于是暴漏了一些问题。
+粗暴的一刀切从第一次在厂子写代码开始，就被前辈告诉移动页面，所以的静态资源">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手机百度前端工程化之路">
+<meta property="og:url" content="http://js8.in/2014/05/28/手机百度前端工程化之路/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="本文将围绕我半年来在移动前端工程化做的一些工作做的总结，主要从 localstorage缓存和版本号管理 ， 模块化 ， 静态资源渲染方式 三个方面总结手机百度前端一年内沉淀的解决方案，希望对大家移动开发有所帮助。
+一年前存在的问题可能因为之前项目节奏紧，人力不足原因，一部分phper承担了前端的工作，于是暴漏了一些问题。
+粗暴的一刀切从第一次在厂子写代码开始，就被前辈告诉移动页面，所以的静态资源">
+<meta property="og:image" content="http://js8.in/img/posts/20151128_2.png">
+<meta property="og:image" content="http://js8.in/img/posts/20151128_3.png">
+<meta property="og:image" content="http://js8.in/img/posts/20151128_5.png">
+<meta property="og:image" content="http://js8.in/img/posts/20151128_6.png">
+<meta property="og:image" content="http://bcs.duapp.com/mbuweb/2014-05-23_225322.png">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手机百度前端工程化之路">
+<meta name="twitter:description" content="本文将围绕我半年来在移动前端工程化做的一些工作做的总结，主要从 localstorage缓存和版本号管理 ， 模块化 ， 静态资源渲染方式 三个方面总结手机百度前端一年内沉淀的解决方案，希望对大家移动开发有所帮助。
+一年前存在的问题可能因为之前项目节奏紧，人力不足原因，一部分phper承担了前端的工作，于是暴漏了一些问题。
+粗暴的一刀切从第一次在厂子写代码开始，就被前辈告诉移动页面，所以的静态资源">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-手机百度前端工程化之路" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2014/05/28/手机百度前端工程化之路/" class="article-date">
+  	<time datetime="2014-05-28T00:30:49.000Z" itemprop="datePublished">2014年5月28日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      手机百度前端工程化之路
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webapp/">webapp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能优化/">性能优化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/手机开发/">手机开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动前端/">移动前端</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文将围绕我半年来在移动前端工程化做的一些工作做的总结，主要从 <strong>localstorage缓存和版本号管理</strong> ， <strong>模块化</strong> ， <strong>静态资源渲染方式</strong> 三个方面总结手机百度前端一年内沉淀的解决方案，希望对大家移动开发有所帮助。</p>
+<h2 id="一年前存在的问题">一年前存在的问题</h2><p>可能因为之前项目节奏紧，人力不足原因，一部分phper承担了前端的工作，于是暴漏了一些问题。</p>
+<h3 id="粗暴的一刀切">粗暴的一刀切</h3><p>从第一次在厂子写代码开始，就被前辈告诉移动页面，所以的静态资源都要内嵌，即写在<code>script</code>和<code>style</code>内，这样的好处是，网络情况不好的时候，减少http请求。因为2G等网络不稳定的情况下，多开一个http请求，对手机资源消耗是巨大的，比如我们在手机信号不好的地方，访问网络，耗电量会急剧增高。</p>
+<p>但是随着3G，甚至4G的普及，实际统计显示，手机百度上2G用户不到30%，所以上面提到的这种<code>一刀切</code>的方案是不妥的。</p>
+<h3 id="不成规矩">不成规矩</h3><p>第二个问题是没有规范和模块化的问题。大家写码都是 <strong>意识流</strong> ，除了都是用<code>zepto.js</code>之外，没有沉淀下模块。碰到以前写过的代码，都是<code>ctrl+c</code> + <code>ctrl+v</code>。这种粗放的方式，虽然可以暂时解决问题，但是当出现之前的一段代码不能满足需求的时候（比如新版app发布，之前的代码需要做兼容和升级），需要遍历所有的代码，挨个修改，麻烦！</p>
+<a id="more"></a>
+<h3 id="高度耦合的工作流程">高度耦合的工作流程</h3><p>第三个问题是前端角色问题，现在组内的开发是前后端分离的，使用smarty模板，因为产品是hybridAPP，所以较传统前端，增加了客户端RD的联调成本。前端几乎都是在联调和等待的状态，跟后端联调smarty数据接口和客户端联调js接口。有时候必须要等接口出来联调通过了之后，才能继续写码，造成了人力的浪费。如何解放前端人力，解决开发联调耦合的问题迫在眉睫。</p>
+<h2 id="引入FIS解决方案">引入FIS解决方案</h2><p><strong>FIS</strong> 是厂子用的一套前端集成解决方案，从开发、调试到打包上线各个环节都覆盖了。用成龙大哥的话就是：“抱着试一试的心态，后来发现很黑很亮很柔。。。不管自己用，还推荐给其他团队使用。”</p>
+<p><a href="http://fex.baidu.com/" target="_blank" rel="external">Fex</a>那边很多文章在说FIS，我自己也写过一篇《<a href="http://mweb.baidu.com/p/fis%E5%92%8Cfisp%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97.html" target="_blank" rel="external">FIS和FISP的使用心得</a>》，所以这里就不赘余，直接重点说下我基于FIS做的一些解决方案。</p>
+<h2 id="解决联调成本">解决联调成本</h2><p>第一部分提到的高度耦合的工作流程，分别使用fis本地联调和chrome扩展来切断phper、crd跟fe的联调线路，达到提前自测，提前跑通整个流程。</p>
+<h3 id="FIS本地调试">FIS本地调试</h3><p>FIS的本地调试功能可以用于解决phper和FEer的问题，分别有模拟smarty模板数据，模拟Ajax接口等功能。我们将rewrite规则和联调的模拟数据，分别写在了<code>server.conf</code>和<code>test文件夹</code>下</p>
+<p>关于FIS的本地联调工作，就不多说了，<a href="http://fis.baidu.com/userdoc/%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95#toc_11" target="_blank" rel="external">FIS的官网文档有详细的说明</a></p>
+<h3 id="chrome扩展模拟webview接口">chrome扩展模拟webview接口</h3><p>为了解决客户端注入js接口的方法，我们通过chrome扩展来实现了。通过chrome的content script方式，在页面渲染之前提前注入模拟webview的js，这样页面在下载渲染的时候在调用js接口就不会报错。</p>
+<p>除了模拟webview接口之外，还将手机百度APP开发中常用的工具，和调试功能都集成到这个chrome扩展中。总体的效果如下图：</p>
+<p><img src="/img/posts/20151128_2.png" alt="注入js模拟手机百度客户端js接口界面"></p>
+<p><img src="/img/posts/20151128_3.png" alt="选项页面之配置手机百度user-agent"></p>
+<p><img src="/img/posts/20151128_5.png" alt="icon点击popup页面，自动生成当前url二维码，方便手机访问"></p>
+<p><img src="/img/posts/20151128_6.png" alt=""></p>
+<p>chrome扩展的开发过程中，遇见了很多困难，最后通过查资料一一解决了，整个工具开发就用了一个周末的时间，之后是零零碎碎的需求。因为更新比较频繁，还引入了自动检测更新的功能。</p>
+<h2 id="内嵌静态资源做localstorage缓存">内嵌静态资源做localstorage缓存</h2><p>因为上面说的原因，页面用到的静态资源都是嵌入到页面中，这种渲染的方式我们叫做<strong>inline模式</strong>。</p>
+<p>inline模式每次都下发全量代码的方式的确蛋疼，影响页面速度。不难想到后来大家都用了localstorage来缓存inline的代码，这种渲染方式可以叫：<code>localstorage+inline</code>的方式。</p>
+<p>手机上的 webview 对 html5 的 localstorage做了不错的支持，经过我们抽样统计，手机百度的搜索结果页面用户中，大约有76%支持localstorage。嗯，做localstorage缓存。</p>
+<h3 id="localstorage缓存解决方案">localstorage缓存解决方案</h3><p>现在有很多localstorage的解决方案，是每次都下发一个版本号信息的config文件，页面加载完毕后，拿着这个config文件跟缓存的localstorage文件校验版本号，发现有有更新，则二次拉取新的内容，再缓存新内容和新版本号到localstorage。</p>
+<p>在移动上，我们想避免这次二次拉取，于是我们采用cookie的方式来存储版本号信息，这样一次访问，http请求头会将cookie带到后端，后端直接判断版本号，并且下发代码。</p>
+<p>具体方案如下：</p>
+<ul>
+<li>使用cookie记录localstorage版本号信息</li>
+<li>上线时通过打包工具，将所有需要缓存的文件依次计算md5值之和string，然后对string取md5作为版本号</li>
+<li>用户访问页面的时候，将cookie带给后端程序，判断两个版本号是否相等，如果不相等就下发全量代码</li>
+<li>前端负责判断localstorage支持情况，不支持则写一个特定cookie值，支持则写入localstorage版本号</li>
+<li>cookie过期时间是一周</li>
+</ul>
+<p>当然，这种解决方案相对简单，相信很多移动前端团队也在使用，也会有人说：“我们都用外链。” 前面说了，我们产品网络比较复杂，只能为了2G用户做了妥协</p>
+<h3 id="上面解决方案的问题">上面解决方案的问题</h3><p>上线之后，因为页面内嵌的js和css都缓存到localstorage，页面大小变小了，的确用户访问速度有了很大的提高。嗯，看上去很好~</p>
+<p>但是，这又是一个 <strong>一刀切</strong> 的方案：</p>
+<ul>
+<li>业务层代码和基础层代码级别一样：像zepto这种一年更新一次都算多的基础层代码，会因为业务逻辑代码频发更改而重新下发</li>
+<li>对于一个域名只有一个页面的页面是个好办法，页面多了，公共的代码就少了</li>
+<li>对于一个版本号来说，不能将所有的页面缓存代码都控制住，最后的结果就是在不停的权衡究竟缓存的是什么</li>
+</ul>
+<p>现在也许部分童鞋就想到了，为啥不多存几个版本号cookie，那样不就可以多缓存一些代码吗？</p>
+<p>cookie多了，http请求头会变大，http请求头太大，会对速度产生很大影响，当cookie总量超过800字节，速度会陡升，加上我们用的域名很多兄弟团队都在使用，如果放开口子任其发展，最后一定会一发不可收拾。</p>
+<p>PS：年前参与一个速度优化项目，其中一个优化方式就是减少cookie，减少请求头中的cookie，在慢速网络的速度提升有明显提高！</p>
+<p>ok，继续探索……</p>
+<h3 id="localstorage细粒度缓存">localstorage细粒度缓存</h3><p>上面的localstorage版本号解决方案，是将md5值存在一个cookie，一个md5值32位，即使使用一半也16位，加上cookie的key，怎么也要20个字节以上，我们能不能利用20~100个字节，尽量缓存更多的缓存文件版本号信息呢？</p>
+<p>于是我们开始了localstorage版本号细化的工作。</p>
+<ol>
+<li>梳理可以缓存的静态资源，将文件分为：基础层、通用层和业务逻辑层，缓存的主要是基础层和通用层的代码</li>
+<li>指定cookie的value值格式，为了缓存更多的版本号信息，我们不再使用md5做版本号信息，而是规定了下面的格式：jA-V_cB-V，即jA和cB代表缓存的文件名，保持两位（j代表js，c代表css，t代表前端js模板文件，）；V代表版本号，保持一位，版本号是36进制的，当版本号要超过一位时，从0开始重新记录；按照每周上线一次的情况，cookie时间是一周，36个版本号可以够我们用的</li>
+<li>需要缓存的文件统一放在一个路径下管理</li>
+</ol>
+<p>这样做了之后，就是用脚本做缓存文件自动更新版本号了，开始想到的是通过svn hook的方式，当有新的ci时，计算md5值，写入一个版本号config文件。上线时比较线上config和svn中的config，如果不一样就升版本号。但是每次ci都做一次的方式又多此一举、略显蛋疼，最终的方案是在上线脚本中做了一些工作，没有使用svn hook：</p>
+<ol>
+<li>对缓存文件路径下的文件做md5，生成一张map</li>
+<li>去线上拉取最新的版本号config文件，跟第一步生成的map做比较，不一样则版本升高</li>
+</ol>
+<h3 id="localstorage多维度缓存">localstorage多维度缓存</h3><p>上面的解决方案还是不够完美，总感觉存的东西还是少，所以又做了一个 <strong>多维度cookie版本方案</strong> 。</p>
+<p>我们把cookie看成可以两个维度来存储： <strong>域名</strong> 和 <strong>路径</strong> 。</p>
+<h4 id="举例">举例</h4><p>域名A.baidu.com下，有三个产品：新闻、视频和小说，分别放在三个path：</p>
+<ul>
+<li>A.baidu.com/news</li>
+<li>A.baidu.com/video</li>
+<li>A.baidu.com/novel</li>
+</ul>
+<p>那么新闻、视频和小说，各自有各自的通用代码，比如：通用样式，通用js组件。这样我们在设置cookie的时候指定相应的path，则可以实现多维度缓存</p>
+<h3 id="开启localstorage缓存">开启localstorage缓存</h3><p>为了实现localstorage的缓存，我们增加了<code>FISLocalstorage</code>类来处理cookie，下发缓存代码，将FIS扩展smarty的 <code>&lt;%html%&gt;</code> 标签进行了修改，增加了<code>localstorage</code>属性，即下面代码就可以将页面开启缓存：</p>
+<pre><code class="smarty">&lt;%html localstorage=&quot;true&quot;%&gt;
+//something~
+&lt;%/html%&gt;
+</code></pre>
+<h3 id="模块化">模块化</h3><p>为了解决重复代码的问题，我们开始结合FIS来做模块化，像seajs、requirejs这些CMD、AMD框架，是后加载的，即用什么就拉取什么，属于异步模块。js为了实现异步模块，而大量的代码在处理模块依赖关系。在移动上，我们不希望这样，我们希望在后端维护模块的依赖关系，当我require一个模块的时候，会按照依赖关系，依次输出。</p>
+<p>我写了一个Bdbox的AMD规范的模块化基础库，然后在FIS编译时，包裹AMD的<code>define</code>外层，并且可以生成一张加载资源表，当使用<code>&lt;%widget%&gt;</code>、<code>&lt;%require%&gt;</code>和<code>&lt;%script%&gt;标签内使用require</code>这些smarty扩展标签时，会通过php来动态维护模块依赖。</p>
+<p>关于FIS的模块化和静态资源管理，厂子FIS开发团队同学有一篇文章《<a href="http://fex.baidu.com/blog/2014/04/fis-static-resource-management" target="_blank" rel="external">如何高效地管理网站静态资源</a>》</p>
+<h3 id="模块化举例">模块化举例</h3><p>现在页面要引入 <code>moduleA</code> 模块，而 <code>moduleA</code> 依赖于 <code>moduleB</code> 和 <code>moduleC</code> ，<code>moduleB</code> 和 <code>moduleC</code> 又有自己的依赖模块，如果不先输出 <code>moduleB</code> 和 <code>moduleC</code> 的依赖模块，直接执行 <code>moduleA</code> 的 <code>define</code> 函数会报错的，因为 <code>moduleA</code> 模块依赖的<code>moduleB</code> 和 <code>moduleC</code> 还没有达到 <code>ready</code> 的状态。</p>
+<p>有时候甚至更加复杂的依赖关系：<br><img src="http://bcs.duapp.com/mbuweb/2014-05-23_225322.png" alt="moduleA的依赖关系"></p>
+<p>这时候通过《<a href="http://fex.baidu.com/blog/2014/04/fis-static-resource-management" target="_blank" rel="external">如何高效地管理网站静态资源</a>》文章提到的，FIS编译后会得到的模块依赖关系表：<code>map.json</code>，来做动态模块依赖管理。</p>
+<p>通过修改fis编译脚本，将模块依赖文件内容放到<code>map.json</code>中，当使用smarty扩展语法标签的时，php会自动读取<code>map.json</code>，然后将依赖解析出来，提前将moduleA依赖的模块都在其 <code>code&gt;define</code> 之前引入，所以下面的两种代码写法：</p>
+<pre><code class="smarty">&lt;%require name=&quot;common:bdbox/moduleA&quot;%&gt;`
+&lt;%*或者*%&gt;
+&lt;%script%&gt;
+    var moduleA = require(&#39;common:bdbox/moduleA&#39;);
+&lt;%/script%&gt;
+</code></pre>
+<p>实际输出的html代码是：</p>
+<pre><code class="html">&lt;script&gt;
+    define(&#39;common:bdbox/moduleB&#39;, function(){
+        //A依赖模块B
+    });
+    define(&#39;common:bdbox/moduleC&#39;, function(){
+        //A依赖模块C
+    });
+    define(&#39;common:bdbox/moduleA&#39;, function(){
+        //模块A
+        var C = require(&#39;common:bdbox/moduleC&#39;);
+        var B = require(&#39;common:bdbox/moduleA&#39;);
+    });
+    var moduleA = require(&#39;common:bdbox/moduleA&#39;);
+&lt;/script&gt;
+</code></pre>
+<p>对于不是模块的js或者css文件，如果使用了<code>&lt;%require%&gt;</code>，则主动使用<code>file_get_contents</code>来读取内容。</p>
+<h3 id="Q_&amp;_A">Q &amp; A</h3><ul>
+<li>为啥不直接用seajs和requirejs？<ul>
+<li>太大，逻辑复杂，不适合移动页面</li>
+</ul>
+</li>
+<li>为啥不用FIS自己的modjs，而自己重复造轮子？<ul>
+<li>Bdbox不仅仅是个AMD库，还是一个基础库，维护命名空间和工具类</li>
+</ul>
+</li>
+<li>为什么命名不是标准的AMD规范？<ul>
+<li>命名中的<code>common:bdbox/moduleA</code>，common是命名空间，一个项目会由很多页面模块（此模块是产品template模块，不是前端模块）组成，通过命名空间可以快速定位对应的map.json， 而<code>bdbox/moduleA</code>是实际的AMD模块名</li>
+</ul>
+</li>
+</ul>
+<h2 id="静态资源引入模式">静态资源引入模式</h2><p>上面所有的关于静态资源管理的解决方案，都是围绕 <strong>一刀切</strong> 的方案在做优化，而没有利用http本身的cache，实际上：在3G、wifi甚至4G的环境中，http cache的方案，在易用性和兼容性上面要比<code>localstorage+inline</code>内嵌静态资源的方式要好。</p>
+<p>而且从手机百度真实的用户网络类型统计来说，3G+wifi已经达到75%以上，如果能结合wise团队提供的ip测速库和公司的CDN服务，会有一种更好的解决方案，进一步来说，如果可以根据网络类型和用户真实网络速度，自由选择在<code>localstorage+inline</code>和CDN方案之间切换就更好了。于是我们做到了！一种新的渲染方式出现了：<code>CDN+combo</code>。</p>
+<p>再说这种渲染方式之前，先梳理下上面提到的一些名词：</p>
+<ul>
+<li><strong>inline模式</strong> ：即所有的静态资源都内嵌到页面，最古老的一刀切方案</li>
+<li><strong>tag模式</strong> ：即使用script和link标签，引入外链的js和css，pc上面常用，2G满网速不适合</li>
+<li><strong>localstorage+inline模式</strong> ：<code>一刀切</code>的优化版，将inline的公共静态资源利用html5 的localstorage缓存做本地存储</li>
+<li><strong>CDN+combo模式</strong> ：即利用tag模式，将资源外链，结合CDN和http cache做好缓存，combo提供模块化代码的打包合并服务</li>
+</ul>
+<p>好，继续那模块化说的moduleA模块依赖moduleB和moduleC来说，经过 <strong>tag模式</strong> ，会输出下面的html：</p>
+<pre><code class="html">&lt;script src=&quot;http://xxx/bdbox/moduleC.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;http://xxx/bdbox/moduleB.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;http://xxx/bdbox/moduleA.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    var moduleA = require(&#39;common:bdbox/moduleA&#39;);
+&lt;/script&gt;
+</code></pre>
+<p>这样模块化的代码经常成了网页的瓶颈，因为模块化存在，造成了更多的外链！下面我们需要一个CDN+combo服务，来合并http请求。</p>
+<p>因为smarty的扩展语法，结合之前生成的<code>map.json</code>，我们实现了模块化依赖关系后端自动处理依赖，然后选择最合理的输出顺序。这时候我们不是直接输出对应的tag或者inline内容，而是将它合并到一个combo服务对应的URL，统一输出！</p>
+<pre><code class="html">&lt;script src=&quot;cdn-combo-server?file=bdbox/moduleC,bdbox/moduleB,bdbox/moduleA&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h3 id="渲染模式智能切换">渲染模式智能切换</h3><p>如何根据用户网络环境智能切换渲染方式呢？我继续改造了smarty的<code>&lt;%html%&gt;</code>标签，添加属性<code>rendermode</code>，通过wise测速库和手机百度客户端传给我们的网络类型，选择不同的rendermode方式：</p>
+<pre><code class="smarty">&lt;%if ($slow_network || $nettype==&#39;2G&#39;) &amp;&amp; $support_localstorage %&gt;
+    &lt;%html rendermode=&quot;inline&quot; localstorage=&quot;true&quot;%&gt;
+&lt;%elseif $fast_network%&gt;
+    &lt;%html rendermode=&quot;combo&quot;%&gt;
+&lt;%else%&gt;
+    &lt;%html rendermode=&quot;inline&quot;%&gt;
+&lt;%/if%&gt;
+//……
+&lt;%/html%&gt;
+</code></pre>
+<h2 id="拆分父子模板">拆分父子模板</h2><p>上面的方案，我们如果逐个页面去写代码，改方案，想想就蛋疼，所以我们拆分了父子模板，从框架本身来分，一个module对应一个父模板，其他子模板使用smarty的extends标签实现继承关系。</p>
+<p>经过模板拆分后，子模板专注于做业务，父模板专注于做解决方案，而且也方便了抽样和统计。</p>
+<h2 id="其他">其他</h2><ul>
+<li>规范方面，已经整理了详细的编码规范和js常见编码问题；</li>
+<li>引入jslint和csshint对代码质量进行把控</li>
+<li>前端文档，在js代码中增加jsdoc规范的注释，自动通过jsdoc生成前端文档</li>
+</ul>
+<h2 id="总结">总结</h2><ul>
+<li>FIS带给我们一整套的前端继承解决方案，是上面所有解决方案的骨架</li>
+<li>开发流程上，通过工具来解耦，减少联调等待时间，提高前端工作效率</li>
+<li>父子模板拆分，有利于父模板做解决方案</li>
+<li>拒绝一刀切的解决方案，做可扩展的解决方案</li>
+<li>最后，我们把上面所有的解决方案都放在一个单独的前端common模块中</li>
+</ul>
+<p>试想一下，如果2015年，用户都用上了4G，那么我们需要将父模板的rendermode改成 <code>rendermode=&quot;combo&quot;</code> 就可以全部切到 <code>CDN+combo</code> 的渲染方式上，这得减少了多少工作量啊:)</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/12/06/手机百度localstorage细粒度缓存介绍/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          手机百度localstorage细粒度缓存介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/12/31/kindle-paperwhite2-越狱后优化/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">kindle paperwhite2 越狱后优化</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="手机百度前端工程化之路" data-title="手机百度前端工程化之路" data-url="http://js8.in/2014/05/28/手机百度前端工程化之路/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

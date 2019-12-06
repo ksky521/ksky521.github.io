@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CSS+jQuery实现滑动幻灯片实例详解 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天我看见一个比较不错的jQuery幻灯片教程，比我之前的文章《两个简单的jQuery幻灯片实例》写的更为详细，并且有框架布局的演示图片，特地转载来，部分英文不翻译了，很简单的~
+HTML部分代码Start with having a wrapping container div called _main_view_, and two sections nested inside called _">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS+jQuery实现滑动幻灯片实例详解">
+<meta property="og:url" content="http://js8.in/2010/02/08/cssjquery实现滑动幻灯片实例详解/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="今天我看见一个比较不错的jQuery幻灯片教程，比我之前的文章《两个简单的jQuery幻灯片实例》写的更为详细，并且有框架布局的演示图片，特地转载来，部分英文不翻译了，很简单的~
+HTML部分代码Start with having a wrapping container div called _main_view_, and two sections nested inside called _">
+<meta property="og:image" content="http://js8.in/uploads/2010/02/1.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2010/02/1.jpg">
+<meta property="og:image" content="http://www.sohtanaka.com/web-design/examples/image-slider/sample1.jpg">
+<meta property="og:image" content="http://www.sohtanaka.com/web-design/examples/image-slider/sample2.jpg">
+<meta property="og:image" content="http://www.sohtanaka.com/web-design/examples/image-slider/sample3.jpg">
+<meta property="og:image" content="http://www.sohtanaka.com/web-design/examples/image-slider/sample4.jpg">
+<meta property="og:image" content="http://www.sohtanaka.com/web-design/examples/image-slider/sample5.jpg">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS+jQuery实现滑动幻灯片实例详解">
+<meta name="twitter:description" content="今天我看见一个比较不错的jQuery幻灯片教程，比我之前的文章《两个简单的jQuery幻灯片实例》写的更为详细，并且有框架布局的演示图片，特地转载来，部分英文不翻译了，很简单的~
+HTML部分代码Start with having a wrapping container div called _main_view_, and two sections nested inside called _">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-cssjquery实现滑动幻灯片实例详解" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2010/02/08/cssjquery实现滑动幻灯片实例详解/" class="article-date">
+  	<time datetime="2010-02-08T10:18:01.000Z" itemprop="datePublished">2010年2月8日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CSS+jQuery实现滑动幻灯片实例详解
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络技术/">网络技术</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天我看见一个比较不错的<strong>jQuery幻灯片</strong>教程，比我之前的文章《<a href="http://js8.in/462.html" title="两个简单的jQuery幻灯片实例">两个简单的jQuery幻灯片实例</a>》写的更为详细，并且有框架布局的演示图片，特地转载来，部分英文不翻译了，很简单的~</p>
+<h3 id="HTML部分代码">HTML部分代码</h3><p>Start with having a wrapping container div called _main_view_, and two sections nested inside called _image_reel_ and <em>paging.</em> The _image_reel _will contain the sliding images, and <em>paging</em> contains the paging controls. Take a look at the image below for a visual.</p>
+<blockquote>
+</blockquote>
+<p><code>`</code>html”&gt;&lt;div class=”main_view</p>
+<blockquote>
+<pre><code>&lt;div class=&quot;window&quot;&gt;
+    &lt;div class=&quot;image_reel&quot;&gt;
+        [![](reel_1.jpg)](#)
+        [![](reel_2.jpg)](#)
+        [![](reel_3.jpg)](#)
+        [![](reel_4.jpg)](#)
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paging&quot;&gt;
+    [1](#)
+    [2](#)
+    [3](#)
+    [4](#)
+&lt;/div&gt;
+</code></pre><p><code>`</code><br><a href="http://js8.in/mywork/jq_slider/"><img src="/uploads/2010/02/1.jpg" alt="css+jQuery实现滑动幻灯片实例教程" title="css+jQuery实现滑动幻灯片实例教程"></a><br><a id="more"></a></p>
+</blockquote>
+<h3 id="CSS部分代码">CSS部分代码</h3><p>Take a look at the comments below for an explanation of the styles.</p>
+<blockquote>
+</blockquote>
+<pre><code class="css">/*--Main Container--*/
+&gt; .main_view {
+&gt;     float: left;
+&gt;     position: relative;
+&gt; }
+&gt; /*--Window/Masking Styles--*/
+&gt; .window {
+&gt;     height:286px;    width: 790px;
+&gt;     overflow: hidden; /*--Hides anything outside of the set width/height--*/
+&gt;     position: relative;
+&gt; }
+&gt; .image_reel {
+&gt;     position: absolute;
+&gt;     top: 0; left: 0;
+&gt; }
+&gt; .image_reel img {float: left;}
+&gt; 
+&gt; /*--Paging Styles--*/
+&gt; .paging {
+&gt;     position: absolute;
+&gt;     bottom: 40px; right: -7px;
+&gt;     width: 178px; height:47px;
+&gt;     z-index: 100; /*--Assures the paging stays on the top layer--*/
+&gt;     text-align: center;
+&gt;     line-height: 40px;
+&gt;     background: url(paging_bg2.png) no-repeat;
+&gt;     display: none; /*--Hidden by default, will be later shown with jQuery--*/
+&gt; }
+&gt; .paging a {
+&gt;     padding: 5px;
+&gt;     text-decoration: none;
+&gt;     color: #fff;
+&gt; }
+&gt; .paging a.active {
+&gt;     font-weight: bold;
+&gt;     background: #920000;
+&gt;     border: 1px solid #610000;
+&gt;     -moz-border-radius: 3px;
+&gt;     -khtml-border-radius: 3px;
+&gt;     -webkit-border-radius: 3px;
+&gt; }
+&gt; .paging a:hover {font-weight: bold;}
+</code></pre>
+<h3 id="JS部分代码">JS部分代码</h3><p>The following script contains comments explaining which jQuery actions are being performed.<br><strong>1.Setting up the Image Slider</strong><br>Start by showing the paging and activating the first link. Then we will calculate and adjust the width of the _image_reel _according to how many slides there are.</p>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">//Show the paging and activate its first link
+&gt; $(&quot;.paging&quot;).show();
+&gt; $(&quot;.paging a:first&quot;).addClass(&quot;active&quot;);
+&gt; 
+&gt; //Get size of the image, how many images there are, then determin the size of the image reel.
+&gt; var imageWidth = $(&quot;.window&quot;).width();
+&gt; var imageSum = $(&quot;.image_reel img&quot;).size();
+&gt; var imageReelWidth = imageWidth * imageSum;
+&gt; 
+&gt; //Adjust the image reel to its new size
+&gt; $(&quot;.image_reel&quot;).css({&#39;width&#39; : imageReelWidth});
+</code></pre>
+<p><strong>2.Setting up the Slider Function and Timer</strong><br>We first create the function for the slide event by itself (<em>rotate</em>). Then create another function (<em>rotateSwitch</em>) that will rotate and repeat that slide event (rotate).</p>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">//Paging  and Slider Function
+&gt; rotate = function(){
+&gt;     var triggerID = $active.attr(&quot;rel&quot;) - 1; //Get number of times to slide
+&gt;     var image_reelPosition = triggerID * imageWidth; //Determines the distance the image reel needs to slide
+&gt; 
+&gt;     $(&quot;.paging a&quot;).removeClass(&#39;active&#39;); //Remove all active class
+&gt;     $active.addClass(&#39;active&#39;); //Add active class (the $active is declared in the rotateSwitch function)
+&gt; 
+&gt;     //Slider Animation
+&gt;     $(&quot;.image_reel&quot;).animate({
+&gt;         left: -image_reelPosition
+&gt;     }, 500 );
+&gt; 
+&gt; }; 
+&gt; 
+&gt; //Rotation  and Timing Event
+&gt; rotateSwitch = function(){
+&gt;     play = setInterval(function(){ //Set timer - this will repeat itself every 7 seconds
+&gt;         $active = $(&#39;.paging a.active&#39;).next(); //Move to the next paging
+&gt;         if ( $active.length === 0) { //If paging reaches the end...
+&gt;             $active = $(&#39;.paging a:first&#39;); //go back to first
+&gt;         }
+&gt;         rotate(); //Trigger the paging and slider function
+&gt;     }, 7000); //Timer speed in milliseconds (7 seconds)
+&gt; };
+&gt; 
+&gt; rotateSwitch(); //Run function on launch
+</code></pre>
+<p>Take a look at this <a href="http://jquery-howto.blogspot.com/2009/04/ajax-update-content-every-x-seconds.html" target="_blank" rel="external">tutorial</a> for an explanation of how the timer (<em>setInterval</em>) works.</p>
+<p><strong>3.Hover and Click Events</strong><br>In case the user wants to view the slide for a longer period of time, we will allow the slider to stop when it is hovered. Another thing to consider is we should reset the timer each time the paging is clicked. This will prevent unexpected slide switches and allow for a smoother experience.</p>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">//On Hover
+&gt; $(&quot;.image_reel a&quot;).hover(function() {
+&gt;     clearInterval(play); //Stop the rotation
+&gt; }, function() {
+&gt;     rotateSwitch(); //Resume rotation timer
+&gt; });    
+&gt; 
+&gt; //On Click
+&gt; $(&quot;.paging a&quot;).click(function() {
+&gt;     $active = $(this); //Activate the clicked paging
+&gt;     //Reset Timer
+&gt;     clearInterval(play); //Stop the rotation
+&gt;     rotateSwitch(); // Resume rotation timer
+&gt;     rotate(); //Trigger rotation immediately
+&gt;     return false; //Prevent browser jump to link anchor
+&gt; });
+</code></pre>
+<p><a href="/uploads/2010/02/1.jpg"><img src="/uploads/2010/02/1.jpg" alt="css+jQuery实现滑动幻灯片实例教程" title="css+jQuery实现滑动幻灯片实例教程"></a></p>
+<p><a href="http://js8.in/mywork/jq_slider/">查看演示</a></p>
+<h3 id="一些网站实例">一些网站实例</h3><p>Below are some sites that use similar techniques, check them out for inspiration!</p>
+<p><a href="http://www.netdreams.co.uk/" target="_blank" rel="external"><img src="http://www.sohtanaka.com/web-design/examples/image-slider/sample1.jpg" alt="Automatic Image Slider CSS jQuery"></a></p>
+<p><a href="http://tutorial9.com/" target="_blank" rel="external"><img src="http://www.sohtanaka.com/web-design/examples/image-slider/sample2.jpg" alt="Automatic Image Slider CSS jQuery"></a></p>
+<p><a href="http://radiumlabs.com/" target="_blank" rel="external"><img src="http://www.sohtanaka.com/web-design/examples/image-slider/sample3.jpg" alt="Automatic Image Slider CSS jQuery"></a></p>
+<p><a href="http://www.bigspaceship.com/" target="_blank" rel="external"><img src="http://www.sohtanaka.com/web-design/examples/image-slider/sample4.jpg" alt="Automatic Image Slider CSS jQuery"></a></p>
+<p><a href="http://electricpulp.com/" target="_blank" rel="external"><img src="http://www.sohtanaka.com/web-design/examples/image-slider/sample5.jpg" alt="Automatic Image Slider CSS jQuery"></a></p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2010/02/09/javascript事件触发列表与详解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Javascript事件触发列表与详解
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/02/07/less—让css如此简单/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Less—让CSS如此简单</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="cssjquery实现滑动幻灯片实例详解" data-title="CSS+jQuery实现滑动幻灯片实例详解" data-url="http://js8.in/2010/02/08/cssjquery实现滑动幻灯片实例详解/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

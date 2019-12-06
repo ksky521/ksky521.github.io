@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hybrid APP开发：JSSDK | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="拖稿了好久的「Hybrid APP开发系列」又更新了~今天继续写JSSDK
+
+为什么会有JSSDK我之前文章介绍了通过 JSBridge 实现页面和NA的相互调用，并且介绍了模板本地包的开发和后台维护系统。今天介绍的是JSSDK，通过 JSSDK 可以实现：
+
+抹平JSBridge的平台实现差异
+对齐端能力，内部消化版本差异
+sdk封装后的代码更加符合前端习惯
+权限控制、鉴权、对外开放，实现生态建">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hybrid APP开发：JSSDK">
+<meta property="og:url" content="http://js8.in/2017/05/26/Hybrid APP开发：JSSDK/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="拖稿了好久的「Hybrid APP开发系列」又更新了~今天继续写JSSDK
+
+为什么会有JSSDK我之前文章介绍了通过 JSBridge 实现页面和NA的相互调用，并且介绍了模板本地包的开发和后台维护系统。今天介绍的是JSSDK，通过 JSSDK 可以实现：
+
+抹平JSBridge的平台实现差异
+对齐端能力，内部消化版本差异
+sdk封装后的代码更加符合前端习惯
+权限控制、鉴权、对外开放，实现生态建">
+<meta property="og:image" content="http://js8.in/uploads/2017/04/12.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/04/13.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2017/04/14.jpg">
+<meta property="og:updated_time" content="2018-07-02T05:17:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hybrid APP开发：JSSDK">
+<meta name="twitter:description" content="拖稿了好久的「Hybrid APP开发系列」又更新了~今天继续写JSSDK
+
+为什么会有JSSDK我之前文章介绍了通过 JSBridge 实现页面和NA的相互调用，并且介绍了模板本地包的开发和后台维护系统。今天介绍的是JSSDK，通过 JSSDK 可以实现：
+
+抹平JSBridge的平台实现差异
+对齐端能力，内部消化版本差异
+sdk封装后的代码更加符合前端习惯
+权限控制、鉴权、对外开放，实现生态建">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Hybrid APP开发：JSSDK" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/26/Hybrid APP开发：JSSDK/" class="article-date">
+  	<time datetime="2017-05-26T11:28:35.000Z" itemprop="datePublished">2017年5月26日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hybrid APP开发：JSSDK
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hybrid/">hybrid</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/架构/">架构</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>拖稿了好久的「Hybrid APP开发系列」又更新了~<br>今天继续写JSSDK</p>
+</blockquote>
+<h2 id="为什么会有JSSDK">为什么会有JSSDK</h2><p>我之前文章介绍了通过 JSBridge 实现页面和NA的相互调用，并且介绍了模板本地包的开发和后台维护系统。今天介绍的是JSSDK，通过 JSSDK 可以实现：</p>
+<ol>
+<li>抹平JSBridge的平台实现差异</li>
+<li>对齐端能力，内部消化版本差异</li>
+<li>sdk封装后的代码更加符合前端习惯</li>
+<li>权限控制、鉴权、对外开放，实现生态建设</li>
+</ol>
+<blockquote>
+<p>关于sdk的代码级别的设计，可以参考文章：《JSSDK设计指南》</p>
+</blockquote>
+<p>如果做过微信页面开发的，应该都知道<code>wx.js</code>，这就是微信的JSSDK，在微信内需要调用微信的端能力就需要引入这个js。</p>
+<h2 id="JSSDK的设计">JSSDK的设计</h2><p>JSSDK的设计包括两部分：</p>
+<ol>
+<li>随着每个NA客户端版本内置的js，称为：<code>inject.js</code>，他的主要作用是封装JSBridge逻辑，通过随版更新实现减少端能力的版本分裂，降低整个sdk的代码复杂性。<code>inject.js</code>是一段js代码，当客户端加载一个页面的时候，由客户端在适当的时机注入到webview内执行，执行后的代码就会有给webview增加js方法，例如微信的<code>_WeixinJSBridge</code>，类比chrome开发插件当中的<code>content_scripts</code>，可以在<code>document_start</code> 、<code>document_end</code>等时机进行执行。</li>
+<li>云端JS，即实际暴漏给开发者使用的js，称为：<code>jssdk.js</code>，这个是真正开发者使用的sdk文件，通过<code>script</code>外链引入，例如<code>wx.js</code>，这个js文件通过和<code>inject.js</code>进行交换，完成端能力的调用、鉴权和客户端事件监听等操作</li>
+</ol>
+<p><img src="/uploads/2017/04/12.png" alt=""></p>
+<a id="more"></a>
+<p>￼</p>
+<h3 id="inject-js_和_jssdk-js工作机制">inject.js 和 jssdk.js工作机制</h3><p>￼<br><img src="/uploads/2017/04/13.jpg" alt=""></p>
+<p><code>inject.js</code>是客户端和<code>jssdk</code>的「翻译官」，他接受页面<code>jssdk</code>的方法调用，将调用的命令解析成客户端可以理解的「语言」（JSBridge）然后传给客户端，同时当客户端有事件/回调响应的时候，也通过<code>inject.js</code>进行分发/回调。</p>
+<h2 id="举例：NA分享能力">举例：NA分享能力</h2><p>例如，客户端实现了一个分享面板的UI组件，开放给web页面可以调用，这时候需要调用NA的端能力，JS需要将分享的：icon_url、title、content、link、type甚至订制的NA面板信息等传给NA，NA开始弹出这个面板，用户进入NA层进行交互；</p>
+<p>当用户分享成功、失败、取消等事件发生的时候，需要回调JS代码，用户由回到了web页面，NA回调了JS callback，JS实现后续的逻辑。</p>
+<p><img src="/uploads/2017/04/14.jpg" alt=""><br>￼</p>
+<p>jsbridge为：<code>demoapp://share/dialog?title=三水清&amp;link=http://js8.in&amp;icon_url=xxx&amp;content=我发现一个很有用的前端公众号</code></p>
+<p><code>inject.js</code>代码封装如下：</p>
+<pre><code class="js">;(function (window, document) {
+
+  function invoke (module, action, args, callback) {
+    let scheme = `demoapp://${module}/${action}?`
+    if (isFunction(args)) {
+      callback = args
+      args = null
+    }
+    // 处理下参数
+    if (isString(args)) {
+      scheme += args
+    } else if (isObject(args)) {
+      each(args, (k, v) =&gt; {
+        if (isObject(v) || isArray(v)) {
+          v = JSON.stringify(v)
+        }
+        scheme += `${k}=${v}`
+      })
+    }
+    // callback独立传，方便全局函数名命名
+    if (isFunction(callback)) {
+      var funcName = &#39;_jsbridge_cb_&#39; + getId()
+      window[funcName] = function () {
+        callback.apply(window, ([]).slice.call(arguments, 0))
+      }
+      scheme += (!~scheme.indexOf(&#39;?&#39;) ? &#39;&amp;&#39; : &#39;?&#39;) + `callback=${funcName}`
+    }
+
+    if (os.ios &amp;&amp; versionCompare(os.version, &#39;9.0&#39;) &gt;= 0) {
+      window.location.href = scheme
+    } else {
+      var $node = document.createElement(&#39;iframe&#39;)
+      $node.style.display = &#39;none&#39;
+      $node.src = scheme
+      var body = document.body || document.getElementsByTagName(&#39;body&#39;)[0]
+      body.appendChild($node)
+      setTimeout(function () {
+        body.removeChild($node)
+        $node = null
+      }, 10)
+    }
+  }
+  var $ = {
+    share: function (opts, callback) {
+      var defaultOpts = {
+        url: location.href,
+        title: &#39;三水清&#39;,
+        content: &#39;最好的前端公众号&#39;,
+        icon_url: &#39;http://baidu.com/icon.png&#39;
+      }
+      opts = Object.assign(defaultOpts, opts)
+      invoke(&#39;share&#39;, &#39;dialog&#39;, opts, callback)
+    }
+  }
+  window._InjectJS_ = $
+}(window, document))
+
+</code></pre>
+<p><code>jssdk.in</code>代码示例：</p>
+<pre><code class="js">window.jssdk = {
+    share: _InjectJS_.share
+}
+</code></pre>
+<p>页面调用：</p>
+<pre><code class="js">jssdk.share({url: &#39;http://js8.in&#39;}, (err, data) =&gt; {
+  if (!err) {
+    if (data.errno === 1) {
+      alert(&#39;失败&#39;)
+    }else if (data.errno === 2) {
+      alert(&#39;取消&#39;)
+    }else {
+      alert(data.media) // 分享的平台id，比如webxin_timeline
+    }
+  }
+})
+</code></pre>
+<p>这样<code>jssdk</code>调用<code>inject.js</code>写法，看似多此一举，实则很巧妙，试想一下下面的场景：</p>
+<ol>
+<li>客户端某个版本分享能力升级，需要做兼容</li>
+<li>某版本分享能力有bug，会引起crash，不能在此版本调用</li>
+<li>分享成功之后的回调需要做鉴权，防止恶意刷分享行为</li>
+<li>JSBridge有scheme调起换成jsinterface的调起（参考本系列JSBridge文章）</li>
+</ol>
+<p>如果这些代码都写在<code>jssdk.js</code>，那么随着版本的积累，代码会越来越臃肿，并且所有版本的端能力都集中在<code>jssdk.js</code>，很不利于管理，历史的包袱也甩不掉。</p>
+<h2 id="inject-js的注入时机">inject.js的注入时机</h2><p>因为<code>inject.js</code>的设计机制，所以我们希望<code>inject.js</code>能够越早注入越好，这样我们在页面head使用<code>jssdk.js</code> 就不会找不到对象了！</p>
+<p>我们知道安卓WebView中可以通过<code>webview.loadUrl(&quot;javascript:xxx”)</code>的方式来调用js里面的代码，那么，我们也可以利用<code>webview.loadUrl(&quot;javascript:xxx”);</code>的方式来加载注入一段 js 代码 。</p>
+<p>安卓WebView 需要通过<code>webView.setWebViewClient(new MyWebClient());</code>的方式来监听网页加载的各个周期方法回调，那么我们只需要在<code>onPageFinished(WebView view, String url)</code> 中注入提前设置好的js 即可</p>
+<p>在iOS中也有对应的时间点：<code>webViewDidFinishLoad</code>和<code>didCreateJavaScriptContext</code></p>
+<p>我们能够找到的注入时机有限，为了保证jssdk代码在调用的时候，已经注入成功<code>inject.js</code>，我们只能实现类似<code>DOMContentLoaded</code>这样的<code>ready</code>方法回调，使用jssdk的时候，全部写在<code>jssdk.ready()</code>内（类似<code>$(document).ready</code>），当页面<code>inject.js</code>注入成功则抛出<code>ready</code>事件，然后积累的事件栈依次出栈执行。</p>
+<h2 id="总结">总结</h2><p>本文介绍了hybrid开发中为webview实现一个jssdk，介绍了<code>inject.js</code>的注入时机，<code>inject.js</code>除了端能力的调用，还可以和客户端实现授权（如：微信的接入授权需要申请appid和token），同时还可以针对所有的调起指令和回调进行安全校验，屏蔽非法的调用和回调，本文只实现了最简单的调用，这些高级的设计后面文章有机会再介绍，今天敲完收工搬家过节 😆</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/26/用Node抓站（一）：怎么写出自己满意的代码/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          用Node抓站（一）：怎么写出自己满意的代码
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/09/记一次Vue项目的重构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记一次Vue项目的重构</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Hybrid APP开发：JSSDK" data-title="Hybrid APP开发：JSSDK" data-url="http://js8.in/2017/05/26/Hybrid APP开发：JSSDK/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

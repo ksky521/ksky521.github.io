@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用Node抓站（三）：防止被封 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="抓取如果抓取的太快太频繁会被源站封IP，本文会介绍下通过限流、限速和使用代理的方式来防止被封
+
+上篇文章，抓取「电影天堂」最新的170部电影，在抓取首页电影list之后，会同时发出170个请求抓取电影的详情页，这样在固定时间点集中爆发式的访问页面，很容易在日志中被找出来，而且并发请求大了，很可能会中网站的防火墙之类的策略，IP被加到黑名单就悲剧了
+限流&amp;amp;限速先说下限流的方法，将批量的并发请">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Node抓站（三）：防止被封">
+<meta property="og:url" content="http://js8.in/2017/08/19/用Node抓站（三）：防止被封/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="抓取如果抓取的太快太频繁会被源站封IP，本文会介绍下通过限流、限速和使用代理的方式来防止被封
+
+上篇文章，抓取「电影天堂」最新的170部电影，在抓取首页电影list之后，会同时发出170个请求抓取电影的详情页，这样在固定时间点集中爆发式的访问页面，很容易在日志中被找出来，而且并发请求大了，很可能会中网站的防火墙之类的策略，IP被加到黑名单就悲剧了
+限流&amp;amp;限速先说下限流的方法，将批量的并发请">
+<meta property="og:image" content="http://js8.in/img/posts/spider1.png">
+<meta property="og:image" content="http://js8.in/img/posts/spider2.png">
+<meta property="og:updated_time" content="2018-06-26T03:45:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Node抓站（三）：防止被封">
+<meta name="twitter:description" content="抓取如果抓取的太快太频繁会被源站封IP，本文会介绍下通过限流、限速和使用代理的方式来防止被封
+
+上篇文章，抓取「电影天堂」最新的170部电影，在抓取首页电影list之后，会同时发出170个请求抓取电影的详情页，这样在固定时间点集中爆发式的访问页面，很容易在日志中被找出来，而且并发请求大了，很可能会中网站的防火墙之类的策略，IP被加到黑名单就悲剧了
+限流&amp;amp;限速先说下限流的方法，将批量的并发请">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-用Node抓站（三）：防止被封" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/19/用Node抓站（三）：防止被封/" class="article-date">
+  	<time datetime="2017-08-19T08:59:26.000Z" itemprop="datePublished">2017年8月19日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用Node抓站（三）：防止被封
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓取/">抓取</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>抓取如果抓取的太快太频繁会被源站封IP，本文会介绍下通过限流、限速和使用代理的方式来防止被封</p>
+</blockquote>
+<p>上篇文章，抓取「电影天堂」最新的170部电影，在抓取首页电影list之后，会同时发出170个请求抓取电影的详情页，这样在固定时间点集中爆发式的访问页面，很容易在日志中被找出来，而且并发请求大了，很可能会中网站的防火墙之类的策略，IP被加到黑名单就悲剧了</p>
+<h2 id="限流&amp;限速">限流&amp;限速</h2><p>先说下<strong>限流</strong>的方法，将批量的并发请求，分成多次固定请求个数，等上一次抓取结束后，再开始下一次抓取，直到全部抓取结束。</p>
+<p>这里我使用<code>async</code>模块限制并发次数，<code>async</code>主要有：集合、流程和工具三大类方法，这里我使用<code>eachLimit(arr, limit, iterator, [callback])</code>，所有修改是上篇文章的<code>fetchContents</code>方法，该方法接受抓取到的170个文章的url list，这次通过<code>eachLimit</code>将170个url按照3个一组并发，依次执行，具体代码如下：</p>
+<pre><code class="js">function fetchContents (urls) {
+  return new Promise((resolve, reject) =&gt; {
+    var results = []
+    async.eachLimit(urls, 3, (url, callback) =&gt; {
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        results.push(d)
+        callback()
+      }, () =&gt; {
+        callback()
+      })
+    }, () =&gt; {
+      resolve(results)
+    })
+  })
+}
+</code></pre>
+<p>限流只是控制了一次并发的请求数，并没有让抓取程序慢下来，所以还需要<strong>限速</strong>，在限流的基础上限速就变得很简单，只需要在执行<code>eachLimit</code>的<code>callback</code>的时候，加上个<code>Timer</code>就好了，为了方便查看限速的效果，每次抓取成功之后，都<code>console.log</code>显示时间，所以改完的代码如下：</p>
+<pre><code class="js">function fetchContents (urls) {
+  return new Promise((resolve, reject) =&gt; {
+    var results = []
+    async.eachLimit(urls, 3, (url, callback) =&gt; {
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        var time = moment().format(‘HH:MM:ss&#39;)
+        console.log(`${url}===&gt;success, ${time}`)
+        results.push(d)
+        setTimeout(callback, 2e3)
+      }, () =&gt; {
+        callback()
+      })
+    }, () =&gt; {
+      resolve(results)
+    })
+  })
+}
+</code></pre>
+<p>效果如下：<br>￼<br><img src="/img/posts/spider1.png" alt=""></p>
+<h2 id="避免重复抓取">避免重复抓取</h2><p>因为一些网站更新比较慢，我们写的抓取程序在定时脚本任务（crontab）跑的时候，可能网站还没有更新，如果不做处理会造成资源的浪费，尤其国内不少VPS都是有流量限制的，不做控制，真金白银就打水漂了。。</p>
+<a id="more"></a>
+<p>继续拿「电影天堂」最新更新的内容进行抓取，如果假设每五分钟执行一次抓取脚本，那么需要记录下已经抓取过的文章（电影），这里我简单处理一下，通过一个<code>_fetchedList.json</code>的文件，记录抓取完的文章（电影）。具体思路如下：</p>
+<ol>
+<li>抓取每个电影详情页成功后，将抓取到的url放入一个数组Array</li>
+<li>等全部抓取结束，将这个数组Array，写到文件<code>_fetchedList.json</code></li>
+<li>下次抓取的时候，require这个<code>_fetchedList.json</code>，得到数组Array，抓取之前判断要抓取的url是否在这个数组内</li>
+<li>数组保持长度是300（170个电影够用了），保证先入先出，即超过300长度将最早的移出</li>
+</ol>
+<p>具体代码讲解如下：</p>
+<h5 id="引入抓取的记录文件">引入抓取的记录文件</h5><pre><code class="js">var fs = require(&#39;fs-extra&#39;)
+var path = require(&#39;path&#39;)
+var uniqueArray = []
+const UNIQUE_ARRAY_URL = &#39;./_fetchedList.json&#39;
+try {
+  uniqueArray = require(UNIQUE_ARRAY_URL)
+} catch (e) {
+}
+</code></pre>
+<h5 id="改造url处理函数，过滤下url数组，已经抓取过的就不要抓取了">改造url处理函数，过滤下url数组，已经抓取过的就不要抓取了</h5><pre><code class="js">function dealListData (data) {
+  return new Promise((resolve, reject) =&gt; {
+    var urls = _.get(data, &#39;items&#39;)
+    if (urls) {
+      urls = urls.map(url =&gt; {
+        return &#39;http://www.dytt8.net&#39; + url
+      }).filter(url =&gt; {
+        return uniqueArray.indexOf(url) === -1
+      })
+      // 如果为空就reject
+      urls.length ? resolve(urls) : reject(&#39;empty urls&#39;)
+    } else {
+      reject(urls)
+    }
+  })
+}
+</code></pre>
+<h5 id="增加一个处理方法，保持uniqueArray长度是300，不要无限增加">增加一个处理方法，保持<code>uniqueArray</code>长度是300，不要无限增加</h5><pre><code class="js">function addUniqueArray (url) {
+  uniqueArray.push(url)
+  if (uniqueArray.length &gt; 300) {
+    // 超长就删掉多余的
+    uniqueArray.shift()
+  }
+}
+</code></pre>
+<h5 id="在抓取完之后，记录新的uniqueArray数组内容到json文件：">在抓取完之后，记录新的<code>uniqueArray</code>数组内容到<code>json</code>文件：</h5><pre><code class="js">fetchList().then(dealListData).then(fetchContents).then((d) =&gt; {
+  console.log(d, d.length)
+  // json落地
+  fs.writeJson(path.join(__dirname, UNIQUE_ARRAY_URL), uniqueArray)
+}).catch((e) =&gt; {
+  console.log(e)
+})
+</code></pre>
+<h2 id="代理">代理</h2><p>为了迷惑被抓取的网站，除了伪装User-Agent等方法，最重要的是使用代理服务，如果有钱的主可以买代理，然后用，对于我们做demo，那就直接抓取代理吧！下面代码是抓取快代理网站的代理代码：</p>
+<pre><code class="js">var spider = require(&#39;../lib/spider&#39;)
+
+function fetchProxy () {
+  return spider({
+    url: &#39;http://www.kuaidaili.com/proxylist/1/&#39;
+  }, {
+    selector: &#39;#index_free_list tbody tr&#39;,
+    handler: function ($tr, $) {
+      var proxy = []
+      $tr.find(&#39;td&#39;).each(function (i) {
+        proxy[i] = $(this).html().trim()
+      })
+      if (proxy[0] &amp;&amp; proxy[1] &amp;&amp; /\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}/.test(proxy[0]) &amp;&amp; /\d{2,6}/.test(proxy[1])) {
+      } else {
+        // console.log(proxy);
+      }
+      return proxy
+    }
+  })
+}
+
+fetchProxy().then(data =&gt; {
+  console.log(data.map(p =&gt; p.join(&#39;,&#39;)))
+})
+</code></pre>
+<p><img src="/img/posts/spider2.png" alt=""><br>￼</p>
+<p>抓取之后的代理不一定直接就可以用，还需要测试下代理是否可以访问成功我们要抓取的网站，先写个<code>checkProxy(proxy)</code>的方法，用于检测使用传入的proxy是否抓取成功：</p>
+<pre><code class="js">function checkProxy (proxy) {
+  return spider({
+    url: &#39;http://www.dytt8.net/index.htm&#39;,
+    proxy: proxy,
+    timeout: 5e3,
+    decoding: &#39;gb2312&#39;
+  }, {
+    items: {
+      selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+    }
+  })
+}
+</code></pre>
+<p>然后将从快代理网站抓取到的代理一次传入进去：</p>
+<pre><code class="js">fetchProxy().then(data =&gt; {
+  var len = data.length
+  var succArray = []
+  data.forEach(p =&gt; {
+    checkProxy(`http://${p[0]}:${p[1]}`).then(() =&gt; {
+      succArray.push(p)
+    }).finally(done).catch(e =&gt; void (e))
+  })
+
+  function done () {
+    len--
+    if (len === 0) {
+      console.log(succArray)
+    }
+  }
+})
+</code></pre>
+<p>这里最后<code>console.log</code>出来的就是通过代理抓取成功的代理，可以存入到数据库，以后抓取使用。</p>
+<h4 id="代理的维护">代理的维护</h4><p>最后在简单说下代理的维护，抓取到了代理，因为是免费的，一般过一段时间就会不能用了，所以在使用的时候，可以将代理放到一个数据库中维护，数据库中有字段：<code>succCount</code>和<code>failCount</code> 用于记录每次使用该代理成功和失败的次数。每次使用代理抓取的时候，要有个反馈机制，如果成功就<code>succCount</code> +1 ，失败就<code>failCount</code> +1。当失败次数过多的时候，这个代理就不要再使用了。</p>
+<h2 id="后语">后语</h2><p>本系列写到第三篇了，后面还会有一些常见问题解答。周末看到一篇用Python抓知乎导出txt或者markdown的文章，以后手痒就会放出番外篇 😁</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/06/JS写小游戏「跳一跳」外挂之Canvas图像识别/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          JS写小游戏「跳一跳」外挂之Canvas图像识别
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/14/用Node抓站（二）：Promise使代码更优雅/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">用Node抓站（二）：Promise使代码更优雅</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="用Node抓站（三）：防止被封" data-title="用Node抓站（三）：防止被封" data-url="http://js8.in/2017/08/19/用Node抓站（三）：防止被封/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

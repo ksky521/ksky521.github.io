@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>为什么我们的业务适合用Node？ | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文从业务场景来谈谈为什么选择Node，以及前端写后端代码需要补足的短板。
+
+这些日子一直在做Node方面的尝试，或多或少会收到周围的异样的目光甚至背后的质疑，于是促使我好好思考为什么我在做Node。网上搜下「为什么要用Node」，找到的文章多数是介绍Node多么多么牛逼，无非是从Node本身特性来说，比如：并发、事件驱动、非阻塞I/O、单线程、流、社区生态……诸如此类，很少谈业务场景。我是「实用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么我们的业务适合用Node？">
+<meta property="og:url" content="http://js8.in/2017/07/28/为什么我们的业务适合用Node/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="本文从业务场景来谈谈为什么选择Node，以及前端写后端代码需要补足的短板。
+
+这些日子一直在做Node方面的尝试，或多或少会收到周围的异样的目光甚至背后的质疑，于是促使我好好思考为什么我在做Node。网上搜下「为什么要用Node」，找到的文章多数是介绍Node多么多么牛逼，无非是从Node本身特性来说，比如：并发、事件驱动、非阻塞I/O、单线程、流、社区生态……诸如此类，很少谈业务场景。我是「实用">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为什么我们的业务适合用Node？">
+<meta name="twitter:description" content="本文从业务场景来谈谈为什么选择Node，以及前端写后端代码需要补足的短板。
+
+这些日子一直在做Node方面的尝试，或多或少会收到周围的异样的目光甚至背后的质疑，于是促使我好好思考为什么我在做Node。网上搜下「为什么要用Node」，找到的文章多数是介绍Node多么多么牛逼，无非是从Node本身特性来说，比如：并发、事件驱动、非阻塞I/O、单线程、流、社区生态……诸如此类，很少谈业务场景。我是「实用">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-为什么我们的业务适合用Node" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/28/为什么我们的业务适合用Node/" class="article-date">
+  	<time datetime="2017-07-28T15:25:54.000Z" itemprop="datePublished">2017年7月28日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      为什么我们的业务适合用Node？
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文从业务场景来谈谈为什么选择Node，以及前端写后端代码需要补足的短板。</p>
+</blockquote>
+<p>这些日子一直在做Node方面的尝试，或多或少会收到周围的异样的目光甚至背后的质疑，于是促使我好好思考为什么我在做Node。网上搜下「为什么要用Node」，找到的文章多数是介绍Node多么多么牛逼，无非是从Node本身特性来说，比如：并发、事件驱动、非阻塞I/O、单线程、流、社区生态……诸如此类，很少谈业务场景。<br>我是「实用主义」者，说过：<strong>脱离业务场景谈架构都是耍流氓</strong>。因为个人是从一线业务做起的，经过几年对业务的思考，我觉得可以从业务场景来说说为什么我们的业务更适合用Node。</p>
+<h2 id="从业务场景说起">从业务场景说起</h2><p>现在我们的业务模块化越来越普遍，很少有业务比较纯粹只有链接一个数据库就可以搞定，往往前台业务后面会有N多的API服务做支撑。比如：下面两种情况在我们实际开发中经常遇见：</p>
+<ol>
+<li>某个页面需要的数据来自两个以上接口，而两个接口来自不同的团队/部门，比如：用户信息来自账号部门，而UGC数据来自业务部门</li>
+<li>某个页面存在接口依赖，需要先调用接口A，然后根据接口A数据调取接口B，比如：个性化推荐，往往需要根据某些维度请求推荐系统拿到推荐数据的ID，至于内容，需要拿ID根据页面需要去获取具体元数据</li>
+</ol>
+<p>上面两种情况，站在后台开发的角度来看，我们业务模块要分开要独立，而站在前端的角度来看，这些数据都是一个页面需要的，前端希望是一个接口给我返回。这是一个开始。。</p>
+<p>当然后台开发，比如PHP也有并发请求的解决方案，好（上）心的后台工程师，会帮助在后台统一合并请求处理成一份数据或者接口，然后扔给页面使用。比如在实际开发中，我们的前端会写（并且维护）一个<code>Template.class.php</code>（我敢说我们80%的后台工程师都没看过这个代码。。），在View层使用，然后在Action当中将数据传给View层做渲染，下面的代码：</p>
+<pre><code class="php">$this-&gt;render(&#39;xxx/xx.tpl&#39;, $tplData);
+</code></pre>
+<p>这样增加的沟通成本，降低了开发效率。为了一个页面，需要前端根据页面想要的数据，和后台沟通页面的数据格式，然后后台工程师找他们后面的API模块要数据、处理数据。这个过程中会有一些「灰色地带」，不好明确谁做更合适，完全靠自觉。</p>
+<p>往往开发的时候会想各种方法来解耦，比如：引入后台模板（smarty之类），然后约定数据格式，前端根据数据格式来写Mock接口，写后台模板的前端就叫「大前端」；再Low一点的团队，会采取前端做好页面扔给后台工程师「套页面」，比如：PHP代码写HTML，各种<code>&lt;?php echo xxx;?&gt;</code>，代码很不友好，后台工程师幸福感也急剧下降。</p>
+<p>还有一种做法是，干脆后台沦为「代理服务器」，收到请求我转给后面的API，拿到数据我返回给前端页面，做成可以「跨域」的接口，所以就成了好多webapp。</p>
+<p>另外，站在后台工程师的个人发展来看，可能他们觉得：这些「包接口」的重复性工作，跟自己的晋升和技术发展又有毛线关系呢？</p>
+<p>说道这里，肯定有人心里在嘀咕：这是你们大公司才有的问题，我们小公司不会有这样的问题！那我下面再从技术方面来说。<br><a id="more"></a></p>
+<h2 id="从技术方面说起">从技术方面说起</h2><p>从性能优化、工程化、解决方案这三个开发中最最常见的方面来说明为什么前端的事情前端做更合适。</p>
+<h3 id="性能优化">性能优化</h3><p>前端页面是重要的载体，出现问题或者页面体验不好会对用户造成直接的伤害（我们都是背锅侠）。页面性能这些问题显然是前端的头等大事，但是这些事情跟后台工程师关系多大呢？当你发现该优化的项目都优化完了，剩下的优化项目就需要跟后台工程师一起优化了，而这时候再去push后台工程师一起参与前端优化项目。</p>
+<h3 id="工程化方案">工程化方案</h3><p>除了前端页面的性能优化这种项目，还会有一些工程化的工作，帮助提高前端的开发效率和体验，但实际上只有前端是搞不定的，比如：</p>
+<ol>
+<li>根据打包工具做的resourcemap，实现页面静态资源的CDN地址合并（combo）输出和分开输出（调试阶段）</li>
+<li>扩展Smarty语法，实现模板组件化</li>
+<li>模拟后台数据接口，输出假数据渲染的页面</li>
+</ol>
+<p>这些工程化的工作本身前端自己理解的很清楚，但是后台工程师会有多少了解呢？怎么不可能让对前端不了解的后台工程师参与进来呢？解释要做什么就花费不少时间。</p>
+<h3 id="解决方案">解决方案</h3><p>再说解决方案，简单点如果我们要实现页面chunked输出，将动态和静态数据分开，不依赖接口数据的数据首先展现（比如首屏的Nav），那么也要依赖后台工程师的代码。再大一点，我们上个类似Bigpipe的方案，那么对后台的依赖和改造更大。</p>
+<h3 id="技术这些问题怎么办？">技术这些问题怎么办？</h3><p>上面的这些诉求，有两种方案：前端自己撸袖子来搞，他们或者是直接写类似PHP来实现，或者是写不伦不类的Smarty扩展代码；再者就是可以出一个「技术产品经理」，专门立项来搞这些项目，由「技术产品经理」来协调两边需求，避免「鸡同鸭讲」。可是业务部门项目压力是非常大的，很少有这样的项目，而专门做技术的团队呢，又很难深入业务，往往高高在上，搞出来的东西要么不合实际、要么太高新尖端，导致水土不服，强推起来，业务团队哀声哉道。<strong>我也说过：脱离业务的架构都是耍流氓</strong>。。</p>
+<h2 id="为什么用Node">为什么用Node</h2><p>根据上面说的，大概得出使用Node有下面的好处：</p>
+<ol>
+<li>天然的事件驱动可以用于处理并发</li>
+<li>降低前后端协作成本，提高开发效率</li>
+<li>职责分明，前端的问题前端er自己负责，自己解决</li>
+<li>前后端同构，前端解决方案同步到Server-side</li>
+<li>有利于前后端同学的个人发展</li>
+</ol>
+<h2 id="什么业务场景使用Node">什么业务场景使用Node</h2><p>同时，大概得出什么样子的业务场景使用Node：</p>
+<ol>
+<li>页面需求大，从样式到性能都一直迭代</li>
+<li>后端接口丰富，页面数据资源方多</li>
+<li>纯渲染，对安全性要求不高，无计算能力</li>
+<li>最后，最重要的是团队的能力（<strong>我还说过：脱离团队的架构都是耍流氓</strong>。。）</li>
+</ol>
+<h2 id="对Node的质疑">对Node的质疑</h2><p>当谈到「我们要用Node」，往往会遭到如下具体的质疑（注意是具体，不是纯怼）：</p>
+<ol>
+<li>稳定性：主要是单线程异常处理</li>
+<li>异步回调导致程序复杂度提高，不利于调试</li>
+<li>和后台接口的对接能力</li>
+<li>工作流程：代码部署、上线</li>
+<li>运维支持：接入、容量管理、日志、监控等</li>
+<li>Node版本升级太快了，NPM包靠谱吗？</li>
+</ol>
+<p>先说这些前面三个问题： </p>
+<ol>
+<li>稳定性：选择的Node框架对异常处理要友好，进程守候有forever/pm2这些包可以帮我们，目前已经成熟，而且Node也越来越完善和稳定</li>
+<li>调试：现在用前端流程的IDE很容易调试</li>
+<li>后台接口通信协议如果过于复杂，可以通过C的Node模块来解决，PHP不也是吗？</li>
+</ol>
+<p>后面两个问题主要是跟公司运维能力有关系：</p>
+<ol>
+<li>工作流程：目前百度内部的工作流程做的很好，从代码提交到打包编译和上线都是一整套解决方案，而每个环节之间只需要按照约定进行输入输出即可</li>
+<li>运维：百度内部的ORP是很好的PaaS解决方案，提供了虚拟化的实例，Node代码部署在实例上，通过统一的nginx反向代理分发给不同端口号的实例处理，支持资源弹性调度，日志只需要按照约定放在某个文件夹，可以配置采集任务，进行采集和监控</li>
+</ol>
+<p>所以我们厂子内部已经为Node大规模使用在流程和运维方面已经做好了准备。</p>
+<p>最后说下Node生态问题，Node版本的确升级很快，但是只关注LTS版本，等发版一段时间之后跟进更新即可，目前百度内部的Node Runtime是6.10版本，听说很快就要生7.0了。对于框架和业务代码用到的NPM包，完全可以做版本指定，也可以做自动测试，跑过了case则提交进master，随着下个版本回归上线。</p>
+<h2 id="前端写后台代码会有什么问题？">前端写后台代码会有什么问题？</h2><p>不管怎样，我们用Node已经变得顺理成章，但是我们也要知道自己的不足，拓宽自己的视野。</p>
+<p>首先是[‘green’ 后台思想]，在前端开发中，我们的代码是跑在每个用户自己的浏览器里面，代码之间是隔离的，所以不管你代码写的好坏，只要是说的过去，就不会有大的问题，比如：偶尔内存泄漏一下，似乎也影响不大。但是server的代码是长久执行下去的，不是用户走了就释放的，所以一个小的内存泄漏，长时间下去也会引起大的问题。再比如：浏览器的JS你可以偶尔使用个全局变量（少写个var），但是如果在Node的代码，将用户相关的个性数据放在<code>global</code>，那么当下个请求过来，而代码还没有处理完当前请求，会导致自己用的数据不是当前用户的，碰到这种问题，只能把个性化的数据一层层的传下去。还有缺乏优化意识或者过度优化，该用缓存的时候不用，不该用的时候乱用。</p>
+<p>再举个case，看下面的代码：</p>
+<pre><code class="js">module.exports = function (ip) {
+  var ipfinder = require(&#39;ipfinder&#39;);
+  ipfinder.loadData(&#39;ip.data&#39;);
+  return ipfinder.findSync(ip);
+}
+</code></pre>
+<p>这个是数据实时分析项目的一段类似的代码，ipfinder是我写的一个IP查找库，<code>ipfinder.loadData(&#39;ip.data’);</code>会引入一个二进制的ip数据库，这个比较消耗资源，写在<code>module.exports</code>是没有必要的，每次执行module都加载一遍，很费资源，拿到<code>module.exports</code>之外，程序的CPU从99%降到了5%….</p>
+<p>第二个是[‘green’ 安全意识]，之前在「Vue项目重构」中提到<code>proxy.js</code>的代码弊端，就是缺乏安全意识导致的。前端写后台程序，因为缺乏安全意识，往往在接口设计、页面片段拼接等方面犯错误，比如：接口设计的过于简单，缺乏校验，容易导致CSRF攻击，如果有数据库操作，手动拼接SQL语句容易导致SQL注入。</p>
+<p>最后是[‘green’ 运维知识]，前端工程师写Node服务，就不在简单的对浏览器负责，而还应该对服务器负责，服务器的稳定性、各种监控指标都应该有所了解，对于<strong>机房配置</strong>、<strong>资源调配</strong>、<strong>运维架构</strong>、<strong>服务架构</strong>都应该了熟于心，避免出现线上事故了自己还不知道从哪里排查的窘态。</p>
+<p>当然你可能会说，刚刚开始接触是可以允许犯错的，但是要知道：[‘red’ 技术的调整是不应该损害产品服务的]。以上三点内容需要刚刚转Node开发的前端工程师注意加强学习，能力越大责任越大！开始时候可能会犯错和抓瞎，该请教就请教，时间长了能够点亮新的技能点~</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/04/Web前端页面劫持和反劫持/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Web前端页面劫持和反劫持
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/26/用Node抓站（一）：怎么写出自己满意的代码/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">用Node抓站（一）：怎么写出自己满意的代码</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="为什么我们的业务适合用Node" data-title="为什么我们的业务适合用Node？" data-url="http://js8.in/2017/07/28/为什么我们的业务适合用Node/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

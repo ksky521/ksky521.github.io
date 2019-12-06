@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>自己写的一个轻量级javascript框架的设计模式 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="公司一直使用jQuery框架，一些小的项目还是觉得jQuery框架太过于强大了，于是自己周末有空琢磨着写个自己的框架。谈到js的设计模式，不得不说说js的类继承机制，javascript不同于PHP可以轻松的实现类继承，不过javascript的类继承方法还是有的，常见的有构建函数、原型扩展、综合……，也有一些专门写类的函数，例如jQuery的作者有个类继承函数。关于类继承写法可以简单看看这篇文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自己写的一个轻量级javascript框架的设计模式">
+<meta property="og:url" content="http://js8.in/2011/03/14/自己写的一个轻量级javascript框架的设计模式/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="公司一直使用jQuery框架，一些小的项目还是觉得jQuery框架太过于强大了，于是自己周末有空琢磨着写个自己的框架。谈到js的设计模式，不得不说说js的类继承机制，javascript不同于PHP可以轻松的实现类继承，不过javascript的类继承方法还是有的，常见的有构建函数、原型扩展、综合……，也有一些专门写类的函数，例如jQuery的作者有个类继承函数。关于类继承写法可以简单看看这篇文章">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自己写的一个轻量级javascript框架的设计模式">
+<meta name="twitter:description" content="公司一直使用jQuery框架，一些小的项目还是觉得jQuery框架太过于强大了，于是自己周末有空琢磨着写个自己的框架。谈到js的设计模式，不得不说说js的类继承机制，javascript不同于PHP可以轻松的实现类继承，不过javascript的类继承方法还是有的，常见的有构建函数、原型扩展、综合……，也有一些专门写类的函数，例如jQuery的作者有个类继承函数。关于类继承写法可以简单看看这篇文章">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-自己写的一个轻量级javascript框架的设计模式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2011/03/14/自己写的一个轻量级javascript框架的设计模式/" class="article-date">
+  	<time datetime="2011-03-13T17:15:39.000Z" itemprop="datePublished">2011年3月14日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自己写的一个轻量级javascript框架的设计模式
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>公司一直使用jQuery框架，一些小的项目还是觉得jQuery框架太过于强大了，于是自己周末有空琢磨着写个自己的框架。谈到js的设计模式，不得不说说js的类继承机制，javascript不同于PHP可以轻松的实现类继承，不过javascript的类继承方法还是有的，常见的有构建函数、原型扩展、综合……，也有一些专门写类的函数，例如jQuery的作者有个类继承函数。关于类继承写法可以简单看看<a href="http://kevlindev.com/tutorials/javascript/inheritance/index.htm" target="_blank" rel="external">这篇文章</a>。</p>
+<p>我自己写的框架也不知道叫什么名字，刚开始写的时候随手写了个W（姓拼音，之前写过jQuery弹出框插件<a href="http://js8.in/wbox-jquery">wBox</a>），现在写这篇文章重新整理了一下思想，换了YQ（名字拼音，你懂的~）。</p>
+<h3 id="核心代码">核心代码</h3><p>框架设计的时候尽量做到了支持链式写法，也就是返回<code>this</code>，可以$(selector).handler1().handler2()……无限写下去，只要不是有返回值的就可以继续。包括了event，dom，css，还有fadeIn，fadeOut动画（因为再重构<a href="http://love.js8.in" target="_blank" rel="external">爱墙</a>[html5+css3]版，所有顺手加上了这个功能）。如果配合sizzle选择器就更牛了！</p>
+<p>下面说说框架的核心代码，等完善了之后跟新版html5爱墙一起放出，主要的代码如下：<br><a id="more"></a></p>
+<pre><code class="javascript">
+(function(window,document){
+    var DOC = document,YQ = window.$ = function(selector){
+        if(!selector){
+            return YQ.elems
+        }
+        typeof selector === &#39;string&#39; &amp;&amp; (selector = getElements(selector));//简单的判断是dom对象，还是字符串，字符串则开始选择器
+        return superElems(selector);
+    }
+    function superElems(elems){
+        if(elems){
+            if(elems.nodeType){//判断是否为DOM
+                if(typeof elems.getAttribute !==&quot;unknown&quot;){
+                    var temp = elems;
+                    elems = [];
+                    elems[0] = temp;//把本身作为超级对象的第一个，其他方法进行扩展
+                    for(var i in YQ.elems){
+                        //扩展对象，保留已有的方法
+                        typeof elems[i] === &quot;undefined&quot; &amp;&amp; (elems[i] = YQ.elems[i])
+                    }
+                }
+            }else{//如果为对象，则对对象进行扩展
+                elems = YQ.extend(elems,YQ.elems);
+            }
+        }
+        return elems;
+    }
+    function getElements(selector){
+        //伟大的选择器，可以使用sizzle
+        var dom = DOC.getElementById(selector);//……
+        return dom;
+    }
+    YQ.tool = {
+        isFunction:function(obj){//简单的判断是否为函数
+            return obj &amp;&amp; typeof obj ===&quot;function&quot;;
+        }
+    }
+    //此处为超级对象一些扩展
+    YQ.elems = {
+        each:function(dom,callback){//强大的each
+            if(YQ.tool.isFunction(dom)){
+                arguments.callee.call(this,this,dom);
+            }else{
+                for (var i = 0, len = dom.length; i &lt; len; i++) {
+                    callback.call(dom, i, dom[i]);
+                }
+            }
+            return this;
+        },
+        find:function(selector){
+            var doms = [];
+            this.each(function(i,dom){
+                doms.push(YQ.DOM.find(selector,dom));
+            })
+            return superElems(doms);
+        }
+    }
+    YQ.each = window.Array.prototype.each = YQ.elems.each;//扩展Array
+    YQ.extend = function(subClass,baseClass){
+        for(var i in baseClass){
+            subClass[i] = baseClass[i];
+        }
+        return subClass;
+    }
+    YQ.AJAX = {}
+    YQ.CSS = {
+        names:{
+            &#39;float&#39;:&#39;cssFloat&#39;,//区分cssFloat or styleFloat
+            opacity:&#39;opacity&#39;
+            //……
+        }
+    }
+    YQ.browser = {
+        isIE:&#39;&#39;,
+        isFirefox:&#39;&#39;,
+        version:&#39;3.6&#39;
+        //……
+    }
+    YQ.event = {
+        names:{
+            mousewheel:YQ.browser?&quot;DOMMouseScroll&quot;:&quot;mousewheel&quot;
+        },
+        fix:function(e){
+            if(e &amp;&amp; e.clone) return e;//如果已经处理了，直接返回
+            e = window.event || e;//event是全局变量
+            var fixE = {
+                clone:true,
+                stop:function(){//冒泡
+                    if(e&amp;&amp;e.stopPropagation){
+                        e.stopPropagation();
+                    }else{
+                        e.cancleBubble = true
+                    }
+                },
+                prevent:function(){//默认动作
+                    if(e &amp;&amp; e.preventDefault){
+                        e.preventDefault();
+                    }else{
+                        e.returnValue = false;
+                    }
+                },
+                target:e.target || e.srcElement,
+                x:e.clientX || e.pageX,
+                Y:e.clientY || e.pageY,
+                //鼠标滚轮事件统一处理
+                wheel:e.wheelDelta/120 || -e.detail/3
+            }
+            return fixE;
+        }
+    }
+    YQ.DOM = {
+        find:function(selector,parentDom){
+            //do something
+        }
+    }
+})(window,document);
+</code></pre>
+<h3 id="简单的分析">简单的分析</h3><p>代码中的注释还算详细，结合注释就可以看懂，下面我再啰嗦几句，高手飘过，欢迎拍砖……<br>总得来看是个匿名函数，定义了全局变量$（似乎都喜欢美元，如果有喜欢的人民币的，下次加上），函数里面有个YQ的对象，有很多function，包括一些私有的。</p>
+<p>使用$可以作为选择器，如果为空，则返回YQ.elems对象，选择后的DOM根据YQ.elems进行扩展，最后得到的就是注释里面说的superElems（此处创建superElems方法参考了下jRaiser），跟jQuery的superElems类似，绑定了很多方法，可以方便的进行操作，YQ的方法可以通过YQ.elems扩展到选择器选择的对象上去，而选择器主要的函数getElements，可以使用sizzle，这样就方便了dom操作，不过sizzle似乎也是代码太多，此处将来会支持简单的标签,#ID,.class,标签+class选择器。</p>
+<p>另外框架中中对一些Array，string进行了扩展，例如上面的Array.each方法，YQ.elems.each是重量级的函数方法，可以支持superElems的遍历（返回本身），还可以支持简单数组的遍历。</p>
+<p>框架中还对一些兼容性进行了处理，例如YQ.event.fix处理事件，css中处理float</p>
+<p>基本就这些了，今天就先说核心的部分，其实通过这段代码已经很清晰的了解到这个框架的思想了，后续继续给力的coding，补充扩展……<br>目前为止，框架不到800行代码，包括了常见的jQuery方法，压缩后不到9k，gzip 4.5K~</p>
+<h3 id="写在最后">写在最后</h3><p>本想写一系列的文章，可是敲了几个字又不知道说啥，今后学习下司徒正美追求短小精悍的博文~呵呵</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2011/03/14/转变代码思路：js浏览器判断方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          转变代码思路：js浏览器判断方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2011/03/03/如何写出高质量的javascript代码/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">如何写出高质量的Javascript代码</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="自己写的一个轻量级javascript框架的设计模式" data-title="自己写的一个轻量级javascript框架的设计模式" data-url="http://js8.in/2011/03/14/自己写的一个轻量级javascript框架的设计模式/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用ZeroClipboard解决跨浏览器复制到剪贴板的问题 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="导言之前在开发普加09年国庆中秋祝福页面复制链接功能时，遇见在Firefox，Chrome，Opera，Safari能复制链接的兼容性问题，而在近期上线的普加地图产品中使用的是Flash的flashvars来传入参数来解决了这个问题。其实开发中经常会用到复制的功能，在 IE 下通过JavaScript的window.clipboardData.setData可以简单实现复制到剪贴板功能。最后终于找">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用ZeroClipboard解决跨浏览器复制到剪贴板的问题">
+<meta property="og:url" content="http://js8.in/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="导言之前在开发普加09年国庆中秋祝福页面复制链接功能时，遇见在Firefox，Chrome，Opera，Safari能复制链接的兼容性问题，而在近期上线的普加地图产品中使用的是Flash的flashvars来传入参数来解决了这个问题。其实开发中经常会用到复制的功能，在 IE 下通过JavaScript的window.clipboardData.setData可以简单实现复制到剪贴板功能。最后终于找">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用ZeroClipboard解决跨浏览器复制到剪贴板的问题">
+<meta name="twitter:description" content="导言之前在开发普加09年国庆中秋祝福页面复制链接功能时，遇见在Firefox，Chrome，Opera，Safari能复制链接的兼容性问题，而在近期上线的普加地图产品中使用的是Flash的flashvars来传入参数来解决了这个问题。其实开发中经常会用到复制的功能，在 IE 下通过JavaScript的window.clipboardData.setData可以简单实现复制到剪贴板功能。最后终于找">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-使用zeroclipboard解决跨浏览器复制到剪贴板的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/" class="article-date">
+  	<time datetime="2009-12-23T17:48:06.000Z" itemprop="datePublished">2009年12月24日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用ZeroClipboard解决跨浏览器复制到剪贴板的问题
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络技术/">网络技术</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="导言">导言</h3><p>之前在开发<a href="http://www.pujia.com" target="_blank" rel="external">普加</a>09年国庆中秋祝福页面复制链接功能时，遇见在Firefox，Chrome，Opera，Safari能复制链接的<strong>兼容性</strong>问题，而在近期上线的<a href="http://ditu.pujia.com/preview" target="_blank" rel="external">普加地图</a>产品中使用的是Flash的<strong>flashvars</strong>来传入参数来解决了这个问题。其实开发中经常会用到复制的功能，在 IE 下通过JavaScript的<strong>window.clipboardData.setData</strong>可以简单实现复制到剪贴板功能。最后终于找到了终极解决方式：使用jhuckaby写的Zero Clipboard的js类库。此方法利用 Flash完成进行复制内容到剪贴板，所以只要浏览器装有Flash 就可以复制内容。</p>
+<h3 id="Zero_Clipboard的实现原理">Zero Clipboard的实现原理</h3><p><strong>Zero Clipboard </strong>利用透明的Flash让其漂浮在复制按钮之上，这样其实点击的不是按钮而是 Flash ，这样将需要的内容传入Flash，再通过Flash的复制功能把传入的内容复制到<strong>剪贴板</strong>。</p>
+<h3 id="Zero_Clipboard的安装方法">Zero Clipboard的安装方法</h3><p>其实也不算安装啦，就是使用前的准备工作。<br>首先需要下载 Zero Clipboard的压缩包，解压后把文件夹中两个文件：ZeroClipboard.js 和 ZeroClipboard.swf 放入到你的项目中。<br>Zero Clipboard : [<a href="http://code.google.com/p/zeroclipboard/" target="_blank" rel="external">项目主页</a>] [<a href="http://code.google.com/p/zeroclipboard/downloads/list" target="_blank" rel="external">zip下载</a>] [<a href="http://bowser.macminicolo.net/~jhuckaby/zeroclipboard/" target="_blank" rel="external">在线演示</a>]<br><a id="more"></a><br>然后把在你要使用复制功能的页面中引入Zero Clipboard的js文件：ZeroClipboard.js<br>如下代码：</p>
+<pre><code class="html">&lt;script type=&quot;text/javascript&quot; src=&quot;ZeroClipboard.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>注意：以上 ZeroClipboard.js, ZeroClipboard.swf需要放在同一路径下。如果不在同一路径，可使用ZeroClipboard.setMoviePath( “Flash路径” );来设置ZeroClipboard.swf 地址</p>
+<h3 id="Zero_Clipboard实现简单跨浏览器复制">Zero Clipboard实现简单<strong>跨浏览器</strong>复制</h3><pre><code class="javascript">var clip = new ZeroClipboard.Client(); // 新建一个对象
+clip.setHandCursor( true ); // 设置鼠标为手型
+clip.setText(&quot;哈哈&quot;); // 设置要复制的文本。
+// 注册一个 button，参数为 id。点击这个 button 就会复制。
+//这个 button 不一定要求是一个 input 按钮，也可以是其他 DOM 元素。
+clip.glue(&quot;copy-botton&quot;); // 和上一句位置不可调换
+</code></pre>
+<p>这样，这样基本功能实现了，点击按钮就可以复制设置好的文本了。你可能注意到了，待复制的文本是固定的，如果想要动态改变的怎么办，比如复制一个输入框中的内容。不用担心，下面会讲到的。</p>
+<h4 id="Zero_Clipboard的高级功能">Zero Clipboard的高级功能</h4><p><strong>1、reposition() 方法</strong></p>
+<p>因为按钮上漂浮有一个 Flash 按钮，所以当页面大小发生变化时，Flash 按钮可能会错位，这样就点不着了。 不要紧，Zero Clipboard 提供了一个 reposition() 方法，可以重新计算 Flash 按钮的位置。我们可以将它绑定到 resize 事件上。如下面代码是在jQuery下实现的resize事件重新设置按钮位置：&gt; </p>
+<pre><code class="javascript">$(window).resize(function(){
+    clip.reposition();
+});
+</code></pre>
+<p><strong>2、hide() 和 show() 方法</strong></p>
+<p>这两个方法可以隐藏和显示 Flash 按钮 。其中 show() 方法会调用 reposition() 方法。</p>
+<p><strong>3、setCSSEffects() 方法</strong></p>
+<p>当鼠标移到按钮上或点击时，由于有 Flash 按钮的遮挡，所以像 css “:hover”, “:active” 等伪类可能会失效。setCSSEffects() 方法就是解决这个问题。首先我们需要将伪类改成类，比如：</p>
+<pre><code class="css">#copy-botton:hover{
+   border-color:#FF6633;
+}
+// 可以改成下面的 &quot;:hover&quot; 改成 &quot;.hover&quot;
+#copy-botton.hover{
+   border-color:#FF6633;
+}
+</code></pre>
+<p>我们可以调用 clip.setCSSEffects( true ); 这样 Zero Clipboard 会自动为我们处理：将类 .hover 当成伪类 :hover 。</p>
+<p><strong>4、getHTML() 方法</strong></p>
+<p>如果你想自己实例一个 Flash ，不用 Zero Clipboard 的附着方法，那么这个方法就可以帮上忙了。它接受两个参数，分别为 Flash 的宽度和高度。返回的是 Flash 对应的 HTML 代码。例如：</p>
+<pre><code class="javascript">
+var html = clip.getHTML( 150, 20 );
+</code></pre>
+<p>你可以用 innerHTML 或直接 document.write(); 进行输出。<br>以下是测试输出的组装完毕的HTML 代码：</p>
+<pre><code class="html">&lt;embed id=&quot;ZeroClipboardMovie_1&quot; src=&quot;zeroclipboard/ZeroClipboard.swf&quot; loop=&quot;false&quot; menu=&quot;false&quot; quality=&quot;best&quot; bgcolor=&quot;#ffffff&quot; width=&quot;150&quot; height=&quot;20&quot; name=&quot;ZeroClipboardMovie_1&quot; align=&quot;middle&quot; allowScriptAccess=&quot;always&quot; allowFullScreen=&quot;false&quot; type=&quot;application/x-shockwave-flash&quot; pluginspage=&quot;http://www.macromedia.com/go/getflashplayer&quot; flashvars=&quot;id=1&amp;width=150&amp;height=20&quot; wmode=&quot;transparent&quot; /&gt;
+</code></pre>
+<p>IE 的 Flash JavaScript 通信接口上有一个 bug 。你必须插入一个 object 标签到一个已存在的 DOM 元素中。并且在写入 innerHTML 之前请确保该元素已经 appendChild 方法插入到 DOM 中。</p>
+<h3 id="Zero_Clipboard_事件处理">Zero Clipboard 事件处理</h3><p><strong>Zero Clipboard</strong> 提供了一些事件，你可以自定义函数处理这些事件。Zero Clipboard 事件处理函数为 addEventListener(); 例如当 Flash 完全载入后会触发一个事件 “load” 。</p>
+<pre><code class="javascript">
+clip.addEventListener( &quot;load&quot;, function(client) {
+    alert(&quot;Flash 加载完毕！&quot;);
+});
+</code></pre>
+<p>Zero Clipboard 会将 clip 对象作为参数传入。即上例中的 “client” 。<br>还有 “load” 也可以写成 “onLoad”，其他的事件也可以这样。<br>其他事件还包括：</p>
+<ul>
+<li>mouseOver 鼠标移上事件</li>
+<li>mouseOut 鼠标移出事件</li>
+<li>mouseDown 鼠标按下事件</li>
+<li>mouseUp 鼠标松开事件</li>
+<li>complete 复制成功事件</li>
+</ul>
+<p>其中 mouseOver 事件和 complete 事件比较常用。<br>前面说过，如果需要动态改变待复制的内容，那 mouseOver 事件就可以派上用场了。例如需要动态复制一个 id 为 test 的输入框中的值，我们可以在鼠标 over 的时候重新设置值。</p>
+<pre><code class="javascript">
+clip.addEventListener( &quot;mouseOver&quot;, function(client) {
+    var test = document.getElementById(&quot;test&quot;);
+    client.setText( test.value ); // 重新设置要复制的值
+});
+//复制成功：
+clip.addEventListener( &quot;complete&quot;, function(){
+    alert(&quot;复制成功！&quot;);
+});
+</code></pre>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2009/12/25/javascript跨浏览器的添加删除事件绑定函数/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          JavaScript跨浏览器的添加删除事件绑定函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2009/12/18/ie6-png图片不透明问题的解决方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">IE6 PNG图片不透明问题的解决方法</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="使用zeroclipboard解决跨浏览器复制到剪贴板的问题" data-title="使用ZeroClipboard解决跨浏览器复制到剪贴板的问题" data-url="http://js8.in/2009/12/24/使用zeroclipboard解决跨浏览器复制到剪贴板的问题/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

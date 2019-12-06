@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JS写小游戏「跳一跳」外挂之Canvas图像识别 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="17年结尾的时候微信发布新版重点推出了「小游戏」概念，H5的游戏再次火了起来，新版微信开屏的游戏就是「跳一跳」游戏可玩度很高，网上也出现了各种语言版本的外挂，前几天看到一篇用nodejs搭建的外挂，需要手动点击截屏图片来判断当前和下一步的位置然后跳转，于是就起了用Canvas来实现图像的想法，后面有实现了自动跳转，算是齐活了。今天来完整说下图像识别。
+
+代码都放到了：https://github.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS写小游戏「跳一跳」外挂之Canvas图像识别">
+<meta property="og:url" content="http://js8.in/2018/01/06/JS写小游戏「跳一跳」外挂之Canvas图像识别/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="17年结尾的时候微信发布新版重点推出了「小游戏」概念，H5的游戏再次火了起来，新版微信开屏的游戏就是「跳一跳」游戏可玩度很高，网上也出现了各种语言版本的外挂，前几天看到一篇用nodejs搭建的外挂，需要手动点击截屏图片来判断当前和下一步的位置然后跳转，于是就起了用Canvas来实现图像的想法，后面有实现了自动跳转，算是齐活了。今天来完整说下图像识别。
+
+代码都放到了：https://github.">
+<meta property="og:image" content="http://js8.in/img/posts/jump-game/1.png">
+<meta property="og:image" content="http://js8.in/img/posts/jump-game/2.png">
+<meta property="og:image" content="http://js8.in/img/posts/jump-game/3.png">
+<meta property="og:image" content="http://js8.in/img/posts/jump-game/4.png">
+<meta property="og:image" content="http://js8.in/img/posts/jump-game/5.png">
+<meta property="og:image" content="http://js8.in/img/posts/jump-game/6.png">
+<meta property="og:image" content="http://js8.in/img/posts/jump-game/7.png">
+<meta property="og:updated_time" content="2018-07-02T05:30:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS写小游戏「跳一跳」外挂之Canvas图像识别">
+<meta name="twitter:description" content="17年结尾的时候微信发布新版重点推出了「小游戏」概念，H5的游戏再次火了起来，新版微信开屏的游戏就是「跳一跳」游戏可玩度很高，网上也出现了各种语言版本的外挂，前几天看到一篇用nodejs搭建的外挂，需要手动点击截屏图片来判断当前和下一步的位置然后跳转，于是就起了用Canvas来实现图像的想法，后面有实现了自动跳转，算是齐活了。今天来完整说下图像识别。
+
+代码都放到了：https://github.">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-JS写小游戏「跳一跳」外挂之Canvas图像识别" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/06/JS写小游戏「跳一跳」外挂之Canvas图像识别/" class="article-date">
+  	<time datetime="2018-01-06T15:25:54.000Z" itemprop="datePublished">2018年1月6日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS写小游戏「跳一跳」外挂之Canvas图像识别
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏/">游戏</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/练手/">练手</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>17年结尾的时候微信发布新版重点推出了「小游戏」概念，H5的游戏再次火了起来，新版微信开屏的游戏就是「跳一跳」游戏可玩度很高，网上也出现了各种语言版本的外挂，前几天看到一篇用nodejs搭建的外挂，需要手动点击截屏图片来判断当前和下一步的位置然后跳转，于是就起了用Canvas来实现图像的想法，后面有实现了自动跳转，算是齐活了。今天来完整说下图像识别。</p>
+<blockquote>
+<p>代码都放到了：<a href="https://github.com/ksky521/wechat-jump-game-hack" target="_blank" rel="external">https://github.com/ksky521/wechat-jump-game-hack</a> 欢迎自己去尝试</p>
+</blockquote>
+<p>先来看最终效果视频：<a href="https://v.qq.com/x/page/o1331igmskh.html" target="_blank" rel="external">https://v.qq.com/x/page/o1331igmskh.html</a></p>
+<h2 id="Canvas图像处理的原理">Canvas图像处理的原理</h2><p>Canvas可以通过<code>drawImage</code>在上面添加图片，然后通过<code>getImageData</code>方法获取一个<code>imageData</code>对象，此对象包括了<code>data</code>、<code>width</code>和<code>height</code>，其中data为图片width<em>height</em>4长度的数组，每个像素点表现在数组内为：RGBA四个0~255的值，即Red、Green、Blue和Alpha值。</p>
+<p>通过对这个<code>imageData.data</code>进行遍历操作，可以利用图像差值比较找出图片内物体的边缘、物体的中心点，也可以根据图像中某个固定颜色范围的物体，进行匹配，从而找到「小人」的位置。</p>
+<h2 id="颜色值差值比较函数">颜色值差值比较函数</h2><p>先介绍一个函数<code>tolerenceHelper</code>，用来比较颜色差值，即传入需要比较的<code>r</code>、<code>g</code>和<code>b</code>，然后跟对比的<code>rt</code>、<code>gt</code>、<code>bt</code>和差值范围的<code>t</code>进行对比的函数，在范围内则返回<code>true</code>。</p>
+<pre><code class="js">function tolerenceHelper(r, g, b, rt, gt, bt, t) {
+    return r &gt; rt - t &amp;&amp; r &lt; rt + t 
+            &amp;&amp; g &gt; gt - t &amp;&amp; g &lt; gt + t 
+            &amp;&amp; b &gt; bt - t &amp;&amp; b &lt; bt + t;
+}
+</code></pre>
+<h2 id="获取小人当前位置">获取小人当前位置</h2><p>小人获取位置用的方式是差值比较，首先通过截屏中的紫色小人颜色范围，可以大致拿到小人的颜色值为：</p>
+<pre><code class="js">// 小人的颜色值
+const playerR = 40;
+const playerG = 43;
+const playerB = 86;
+</code></pre>
+<a id="more"></a>
+<p>这个值可以从小人的底部中心取色得到。所以找到小人的底部中心点的方式就是，在一定范围内（即<code>tolerenceHelper</code>的t参数，这里取值为16）查找，如果像素点rgb在这个范围内，则加入待选，最后像素点集合中最低点（最大y）的位置就是小人底部中心所在点的y，x为最大和最小宽度的中心位置。为了好理解，我画了图：</p>
+<p><img src="/img/posts/jump-game/1.png" alt=""></p>
+<p>下面三图是<code>t=16</code>、<code>t=26</code>、<code>t=36</code>分别识别的效果，为了便于分辨，我将匹配到的像素点颜色都设置为了红色（rgb=255，0，0）。<br><img src="/img/posts/jump-game/2.png" alt=""><br><img src="/img/posts/jump-game/3.png" alt=""><br><img src="/img/posts/jump-game/4.png" alt=""></p>
+<p>为了准确，防止相近颜色的干扰<code>t=16</code>就够用了，这样小人的底部位置<code>pos</code>就得到了：</p>
+<pre><code class="js">// x, y
+pos[0] = Math.floor((maxX + minX) / 2);
+pos[1] = maxY;
+</code></pre>
+<h3 id="优化">优化</h3><p>很容易一眼就看出来小人不能在图片的顶部和底部，而是在画面的中心区域范围内，所以可以直接从图片高度的<code>height/4</code>~<code>height*3/4</code>的范围内查找，这样可以提高不必要的工作量。</p>
+<h3 id="完整查找小人点代码如下">完整查找小人点代码如下</h3><pre><code class="js">function getCurCenter(data, width, height) {
+    // 小人的颜色值
+    const playerR = 40;
+    const playerG = 43;
+    const playerB = 86;
+
+    let minX = Infinity;
+    let maxX = -1;
+    let maxY = -1;
+    // 找到小人当前的底部位置
+    let pos = [0, 0];
+
+    let startY = Math.floor(height / 4);
+    let endY = Math.floor(height * 3 / 4);
+    for (let x = 0; x &lt; width; x++) {
+        for (let y = startY; y &lt; endY; y++) {
+            let i = y * (width * 4) + x * 4;
+            let r = data[i];
+            let g = data[i + 1];
+            let b = data[i + 2];
+            if (y &gt; pos[1] &amp;&amp; tolerenceHelper(r, g, b, playerR, playerG, playerB, 16)) {
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x);
+                maxY = Math.max(maxY, y);
+            }
+        }
+    }
+    pos[0] = Math.floor((maxX + minX) / 2);
+    pos[1] = maxY;
+    // console.log(`player position (x, y)= (${pos[0]}, ${pos[1]})`);
+    return pos;
+}
+</code></pre>
+<h2 id="获取的跳转位置">获取的跳转位置</h2><p>怎样获取小人下一步跳转的位置呢？</p>
+<p>按照上面的逻辑，我们还是从图片高度的<code>height/4</code>~<code>height*3/4</code>的范围查找，这是我们先取出当前的背景色，然后在高度范围内扫描图片，当出现跟背景色相差很大的第一个点时，这时候就是下一个物体的主颜色值了！如果为四边体之类的，则这个点就是顶点了！</p>
+<p>知道这个物体的主体颜色值，我们就可以以这个值为基准继续扫描，在这个颜色值范围的像素点就是物体的顶面，然后根据顶面像素点坐标<code>minY</code>和<code>maxY</code>得到中心点的坐标（圆形和正方形都是对称的，所以都可以用这个方法）。</p>
+<p>看图理解下：</p>
+<p><img src="/img/posts/jump-game/5.png" alt=""></p>
+<p>下图是将背景色涂红，这样就可以看到识别出来的第一个点就是顶点（圆形一样）</p>
+<p><img src="/img/posts/jump-game/6.png" alt=""><br><img src="/img/posts/jump-game/7.png" alt=""></p>
+<h3 id="优化-1">优化</h3><ol>
+<li>找到顶点之后，下一行肯定不是maxY，一次类推，可以大胆将Y的值增加60个像素，即从顶点往下的60个像素重新开始查找中心点；</li>
+<li>另外可以将Y的查找范围缩小到上一步找到小人的中心点Y值，即y取值为<code>height/4~Math.min(height*3/4, 小人中心Y)</code> ，这样即使maxY我们没有找到，也可以以小人为底取中心点，保证下一步的跳转位置尽量不会超出物体顶面范围。</li>
+<li>我们找的是maxY，所以只要出现了跟顶点像素点颜色一致（范围内）的点，这一行（坐标Y相同，X不同）就不需要查找了，因为查找也没有意义，Y值不变了，所以可以直接<code>break</code>出循环，进行下一个Y的查找</li>
+</ol>
+<h3 id="完整代码">完整代码</h3><pre><code class="js">function getNextCenter(data, width, height, y = -1) {
+    let startY = Math.floor(height / 4);
+    let endY = Math.floor(height * 3 / 4);
+
+    // 去除背景色
+    let startX = startY * width * 4;
+    let r = data[startX],
+        g = data[startX + 1],
+        b = data[startX + 2];
+    let maxY = -1;
+    let apex = [];
+    let pos = [0, 0];
+    // 保证从当前小人位置底部点往上
+    endY = Math.min(endY, y);
+    let endX = width;
+    let gapCount = 0;
+    for (let y = startY; y &lt; endY; y++) {
+        let find = 0;
+        for (let x = 1; x &lt; endX; x++) {
+            let i = y * (width * 4) + x * 4;
+            let rt = data[i];
+            let gt = data[i + 1];
+            let bt = data[i + 2];
+            // 不是默认背景颜色
+            if (!tolerenceHelper(rt, gt, bt, r, g, b, 30)) {
+                if (apex.length === 0) {
+                    if (!tolerenceHelper(data[i + 4], data[i + 5], data[i + 6], r, g, b, 30)) {
+                        //椭圆形找中心，往后找30个像素点
+                        let len = 2;
+                        while (len++ !== 30) {
+                            i += len * 4;
+                            if (tolerenceHelper(data[i + 4], data[i + 5], data[i + 6], r, g, b, 30)) {
+                                break;
+                            }
+                        }
+                        x += len;
+                    }
+                    //找出顶点
+                    apex = [rt, gt, bt, x, y];
+                    pos[0] = x;
+                    // 减少循环范围
+                    endX = x;
+                    break;
+                } else if (tolerenceHelper(rt, gt, bt, apex[0], apex[1], apex[2], 5)) {
+                    //存在顶点了，则根据颜色值开始匹配
+                    maxY = Math.max(maxY, y);
+                    find = x;
+                    break;
+                }
+            }
+        }
+        if (apex.length !== 0 &amp;&amp; !find) {
+            gapCount++;
+        }
+        if (gapCount === 3) {
+            break;
+        }
+    }
+    pos[1] = Math.floor((maxY + apex[4]) / 2);
+    // console.log(points_top, points_left, points_right);
+    console.log(`next position center (x,y)=${pos[0]},${pos[1]}`);
+    return pos;
+}
+</code></pre>
+<h2 id="最后">最后</h2><p>在整个测试的过程中，还尝试了其他的方式，比如先将边缘找出再找中心点，各种尝试，想练手的可以直接改下看看。</p>
+<p>为了调试方便，我将这部分代码单独一个router，可以直接github clone下来代码访问<code>localhost:3000/test</code> ，然后边改边尝试边看效果。</p>
+<p>本篇文章介绍了怎么识别出来图片中「小人」和下一个跳转的位置，下一篇介绍下怎么让「小人」自动跳转过去，敬请期待。</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/08/JS写小游戏「跳一跳」外挂之自己动/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          JS写小游戏「跳一跳」外挂之自己动
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/19/用Node抓站（三）：防止被封/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">用Node抓站（三）：防止被封</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="JS写小游戏「跳一跳」外挂之Canvas图像识别" data-title="JS写小游戏「跳一跳」外挂之Canvas图像识别" data-url="http://js8.in/2018/01/06/JS写小游戏「跳一跳」外挂之Canvas图像识别/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

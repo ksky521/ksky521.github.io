@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>记一次Vue项目的重构 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上周没有更新原创技术文章，原因是忙着重构一个新接手的项目，此项目因为项目技术负责人离职，虽然投入人力持续增多，前端达到4人，后端3人，但因为新参与的童鞋对代码结构和业务的理解，导致项目开发了一个多月，还有一堆问题，达不到上线要求，接手项目之后，对项目业务场景和代码进行简单的了梳理，决定重构。重构不是个人冲动，而是的的确确存在各种大大小小的问题：
+
+接口太碎。项目本身按照vue组件化开发，但是页面每">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次Vue项目的重构">
+<meta property="og:url" content="http://js8.in/2017/05/09/记一次Vue项目的重构/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="上周没有更新原创技术文章，原因是忙着重构一个新接手的项目，此项目因为项目技术负责人离职，虽然投入人力持续增多，前端达到4人，后端3人，但因为新参与的童鞋对代码结构和业务的理解，导致项目开发了一个多月，还有一堆问题，达不到上线要求，接手项目之后，对项目业务场景和代码进行简单的了梳理，决定重构。重构不是个人冲动，而是的的确确存在各种大大小小的问题：
+
+接口太碎。项目本身按照vue组件化开发，但是页面每">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/vue.jpg">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/1.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/2.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/4.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/5.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/6.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/8.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/yog2-model.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/10.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/12.png">
+<meta property="og:image" content="http://js8.in/uploads/2017/05/3.png">
+<meta property="og:updated_time" content="2018-07-02T03:35:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记一次Vue项目的重构">
+<meta name="twitter:description" content="上周没有更新原创技术文章，原因是忙着重构一个新接手的项目，此项目因为项目技术负责人离职，虽然投入人力持续增多，前端达到4人，后端3人，但因为新参与的童鞋对代码结构和业务的理解，导致项目开发了一个多月，还有一堆问题，达不到上线要求，接手项目之后，对项目业务场景和代码进行简单的了梳理，决定重构。重构不是个人冲动，而是的的确确存在各种大大小小的问题：
+
+接口太碎。项目本身按照vue组件化开发，但是页面每">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-记一次Vue项目的重构" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/09/记一次Vue项目的重构/" class="article-date">
+  	<time datetime="2017-05-09T02:38:35.000Z" itemprop="datePublished">2017年5月9日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      记一次Vue项目的重构
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/重构/">重构</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上周没有更新原创技术文章，原因是忙着重构一个新接手的项目，此项目因为项目技术负责人离职，虽然投入人力持续增多，前端达到4人，后端3人，但因为新参与的童鞋对代码结构和业务的理解，导致项目开发了一个多月，还有一堆问题，达不到上线要求，接手项目之后，对项目业务场景和代码进行简单的了梳理，决定重构。重构不是个人冲动，而是的的确确存在各种大大小小的问题：</p>
+<ol>
+<li>接口太碎。项目本身按照vue组件化开发，但是页面每个组件独自请求自己的数据，比如：首页由轮播图、各种列表和用户信息展现组成，导致首页从上到下7~8个模块，每个模块都各自发自己的请求，访问首页需要同时发出8个ajax请求</li>
+<li>vuex的store太乱，大家按照组件去开发，各自跟后端兑接口、联调，但是没有人来统筹安排，导致大量重复工作，而且存在接口重复开发问题；接口多了store的命名就太乱，action和mutation中的业务逻辑代码太多，而不同页面需要不同的数据格式，则导致：1. 或者在mutation当中对数据进行重新整理，2. 或者新开个接口，这样就造成接口越来越多，mutation部分代码越来越重。</li>
+<li>一开始设计或者沟通有误。比如：用户信息相关的接口，需要传入用户id（uid），而不是通过登录cookie从passport获取；第三方接口需要用户信息，竟然请求的时候将cookie发给对方（幸好cookie是http only的，没有调通被我及时发现）</li>
+<li>重复代码太多，抽象能力太差。一份代码在多个地方复制，导致代码改来改去最后都不知道哪里改了哪里没改</li>
+<li>命名太乱，包括url、方法名之类，还有错别字，getAdcontent（用户地址信息），getmaildetail（用户地址信息）</li>
+<li>研发人员缺乏全局意识，只管自己的代码，而不关心整个流程。由于前后投入人较多，没人对整个项目有把控，只能面向自己的需求编程。比如：积分获取页面，获取成功之后，联调成功，但是实际在积分获取列表页面却没有相关的记录信息；在比如：任何用户都可以领走别人的奖品，原因后端没做奖品是否是当前登录用户获取的校验</li>
+<li>问题定位能力不够，遇见问题一调就是半天，找不到根本问题</li>
+</ol>
+<p>介绍下项目背景：</p>
+<blockquote>
+<p>此项目是一个积分项目，一些页面需要用户登录，页面主要包括：首页、任务+列表、商品+列表、个人信息和记录以及其他类（说明和规则等）<br>项目用Vue+yog2编写，ajax请求部分使用vue resource</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="架构改造">架构改造</h2><p>整个项目还是用Vue+yog2来写，针对进入页面分为两种情况：</p>
+<ol>
+<li>第一次通过网站URL进入某个页面，我称为：「首次后端渲染」</li>
+<li>非首次已经进入页面URL后，用户点击链接在项目内跳页，我称之为：「非首次跳转」</li>
+</ol>
+<p>整个流程整理如下：<br>￼<br><img src="/uploads/2017/05/vue.jpg" alt=""></p>
+<h3 id="后端node_Server代码部分">后端node Server代码部分</h3><p>代码流程如下：</p>
+<pre><code>router → middleware → page/api action → model → ral请求数据
+</code></pre><p>其中在action部分，专门写了个<code>baseAction</code>函数，封装了重复的代码，使用时传入用于获取数据的model方法和处理数据的方法即可。</p>
+<p>render部分，针对页面第一次请求需要将数据放在HTML片段中返回的优化（为什么不用vue ssr，可以看下历史公众号文章《Vue SSR 从入门到Case Study》）。详细代码如下：</p>
+<p><strong> client.tpl </strong> 部分代码：</p>
+<p><img src="/uploads/2017/05/1.png" alt=""><br>￼<br><strong> baseAction 部分实现chunked </strong><br>￼<br><img src="/uploads/2017/05/2.png" alt=""></p>
+<h3 id="Client_Vue部分代码">Client Vue部分代码</h3><p>client主要流程是：</p>
+<pre><code>vue router → created时期 判断是否有页面数据 → 提交mutation（有数据），dispatch action（异步拉取数据）→ state触发修改，页面dom生成
+</code></pre><p>这部分流程图主要展现是vuex和vue resource部分的代码，通过dispatch action，触发vue resource的异步请求，等返回数据则commit mutation。</p>
+<h3 id="后端渲染+SPA单页应用">后端渲染+SPA单页应用</h3><p>经过改造后整个流程变成：</p>
+<ol>
+<li>「<strong>首次后端渲染</strong>」：此时需要后端渲染主要HTML+页面数据，利用chunked，先将不依赖后端数据部分返给浏览器，页面数据和后面的HTML拿到数据后再返给浏览器。<code>client.tpl</code>被「一分为二」：HTML[0] + HTML[1]<ol>
+<li>将页面通用的css和js lib库，放在HTML[0]中，首先返回，浏览器先解析下载</li>
+<li>业务代码初始化代码放在HTML[1]， 等到获取到后台API数据一起返回</li>
+</ol>
+</li>
+<li>「<strong>非首次跳转</strong>」：这是一个单页应用的流程，用户点击链接，实际走的是vue的router，然后出发vue页面渲染，URL是通过history pushState mode更改实际URL，这时候如果强刷或者复制url在浏览器打开，又走「首次后端渲染」<ol>
+<li>vue页面渲染需要的数据是通过vue-resource发起ajax请求，拿到数据之后commit mutation改变state</li>
+</ol>
+</li>
+</ol>
+<h3 id="vuex梳理">vuex梳理</h3><p>之前代码每个组件都单独ajax请求自己的数据，导致vuex的module特别多特别乱，而且后端api接口太多太碎，不好维护。最后开发的童鞋自己都在群里抱怨，找个action或者mutation都不知道在哪个文件内，需要搜代码。。</p>
+<h4 id="首先做规定，明确什么时候使用vuex：">首先做规定，明确什么时候使用vuex：</h4><blockquote>
+<p>页面view相关的数据才使用vuex来管理，页面ajax（例如加载更多）不要使用vuex</p>
+</blockquote>
+<h4 id="然后，收敛vuex_module">然后，收敛vuex module</h4><p>收敛是根据业务页面做的，前文提到：</p>
+<blockquote>
+<p>页面主要包括：首页、任务+列表、商品+列表、个人信息和记录以及其他类（说明和规则等）</p>
+</blockquote>
+<p>其中需要数据的有：首页、任务（详情、列表）、商品（详情、列表）和个人中心四个。</p>
+<p>改造前module：<br>￼<br><img src="/uploads/2017/05/4.png" alt=""></p>
+<p>改造后module针对业务梳理的四个大页面内容，保留了四个：<br>￼<br><img src="/uploads/2017/05/5.png" alt=""></p>
+<h4 id="减少mutation数据处理逻辑">减少mutation数据处理逻辑</h4><p>复用后端接口数据格式，减少mutation数据处理逻辑</p>
+<p>改造前很多mutation存在下面的代码（注意箭头部分）：<br>￼<br><img src="/uploads/2017/05/6.png" alt=""></p>
+<p>其中这个循环主要做两件事情：修改<code>type</code>、修改<code>img_url</code>为<code>url</code>，实际根本没有必要：</p>
+<ul>
+<li>修改<code>type</code>：实际这已经是页面view的逻辑了，在vue的模板用个容易判断更合适</li>
+<li>修改<code>img_url</code>为<code>url</code>：这里实际是产品的封面图，改成<code>url</code>反而更不合适了</li>
+</ul>
+<p>代码可以直接用<code>item</code>即可！</p>
+<h3 id="API显性声明">API显性声明</h3><p>之前所有的api都是走了一个<code>proxy</code>，通过node转发一下，直接到了后台API接口，代码如下：<br>￼<br><img src="/uploads/2017/05/8.png" alt=""></p>
+<p>看似很方便甚至有点暗爽的实现，实则带来了下面的问题：</p>
+<ol>
+<li>接口非显性声明，降低可控性，造成没法枚举有多少接口，各个接口需要什么参数，增加维护成本</li>
+<li>安全性！后台这个服务是完全暴漏给了前端，如果存在敏感的接口，前端js就可以直接透传利用</li>
+</ol>
+<p>改造后的代码放在model层，供「首次后端渲染」和「非首次单页」ajax请求使用：</p>
+<p><img src="/uploads/2017/05/yog2-model.png" alt=""><br>￼</p>
+<h2 id="优化">优化</h2><p>除了做代码重构改造外，还在间隙中做了一些优化，这里记录一下：</p>
+<h3 id="后端渲染使用chunked">后端渲染使用chunked</h3><p>详见本文「后端node server部分代码」和「后端渲染+SPA」</p>
+<h3 id="数据复用">数据复用</h3><p>很多页面设计会在首页和列表页面存在有产品的title、图片和简单的一些meta，例如下图：</p>
+<p><img src="/uploads/2017/05/10.png" alt=""><br>￼<br>点击链接进去详情页面可以直接利用，这部分数据我们做了复用。</p>
+<p>实现方法是：页面点击的时候，将该条数据内容commit给下一个页面的mutation。</p>
+<h3 id="缓存">缓存</h3><p>缓存在node和前端Ajax API多有，后端node主要缓存的是首页，因为首页需要请求4个接口（接口梳理后），其中三个接口是跟用户登录态无关的，这三个接口可以用lru-cache缓存起来。</p>
+<p>前端的ajax api缓存是在<code>get</code>请求增加的，可以根据实际情况用，根据url作为key，使用sessionStorage存储（同时cache类自己实现了缓存时间）</p>
+<p><img src="/uploads/2017/05/12.png" alt=""><br>￼</p>
+<h2 id="技巧">技巧</h2><p>除了优化外，我在介绍下两个技巧：单页切换view的loading和统一的错误处理。</p>
+<p>在单页跳转内，下一个view需要ajax获取数据，然后才能渲染，这时候需要加载个loading显示（或者做个切换动效）。</p>
+<blockquote>
+<p>原理是：</p>
+<ol>
+<li>利用eventBus，在router中添加两个事件<code>closeLoading</code>和<code>vue.action.error</code>，分别用于「关闭loading」和「展现页面数据错误的错误页」</li>
+<li>loading展现在router的<code>beforeEach</code>的钩子内实现，loading的事件在vuex的action获取数据成功之后发送</li>
+<li>错误的触发有vuex 的 action / mutation 来发送事件</li>
+</ol>
+</blockquote>
+<p><img src="/uploads/2017/05/3.png" alt=""><br>￼<br>eventBus也不用自己写，可以直接用Vue实例的<code>$on</code>、<code>$emit</code>、<code>$once</code>等就够了，代码如下：</p>
+<pre><code class="js">import Vue from &#39;vue&#39;
+export default new Vue()
+</code></pre>
+<h2 id="总结">总结</h2><ol>
+<li>项目开发中一定要有大局意识，虽然现在项目多是分组件来的开发方式，但是开发前要跟大家交代清楚约定、规范，什么该做什么不该做；</li>
+<li>技术负责人多 check 代码，防止错误的道路上越行越远；</li>
+<li>要有全局意识，关注整个流程，不要只看到自己的「一亩三分地」，比如：在某个商品页面，购买/兑换成功了，不要认为没有问题了，可能记录页面还没有展现（后台接口没有入库）；</li>
+<li>Don’t repeat yourself！看见重复代码就浑身难受，「抽象」能力是工程师的基本能力。</li>
+<li>增强debug能力，发现问题直觉就能判断出来哪个环境，然后针对性debug</li>
+</ol>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/26/Hybrid APP开发：JSSDK/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Hybrid APP开发：JSSDK
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/19/Hybrid APP开发：模板包管理平台/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hybrid APP开发：模板包管理平台</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="记一次Vue项目的重构" data-title="记一次Vue项目的重构" data-url="http://js8.in/2017/05/09/记一次Vue项目的重构/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

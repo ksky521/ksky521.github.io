@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用Node抓站（二）：Promise使代码更优雅 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文主要目的是通过抓取「电影天堂」的最新电影名称和下载地址，展现如何抓取列表之后，继续抓取正文内容
+
+使用《用Node抓站（一）》（没看过的可以翻看下本公众号的历史文章）当中写的spider.js 代码可以直接用下面的代码把列表抓出来：
+var spider = require(&amp;#39;../lib/spider&amp;#39;)
+
+spider({
+  url: &amp;#39;http://www.dy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Node抓站（二）：Promise使代码更优雅">
+<meta property="og:url" content="http://js8.in/2017/08/14/用Node抓站（二）：Promise使代码更优雅/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="本文主要目的是通过抓取「电影天堂」的最新电影名称和下载地址，展现如何抓取列表之后，继续抓取正文内容
+
+使用《用Node抓站（一）》（没看过的可以翻看下本公众号的历史文章）当中写的spider.js 代码可以直接用下面的代码把列表抓出来：
+var spider = require(&amp;#39;../lib/spider&amp;#39;)
+
+spider({
+  url: &amp;#39;http://www.dy">
+<meta property="og:updated_time" content="2018-06-25T03:33:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Node抓站（二）：Promise使代码更优雅">
+<meta name="twitter:description" content="本文主要目的是通过抓取「电影天堂」的最新电影名称和下载地址，展现如何抓取列表之后，继续抓取正文内容
+
+使用《用Node抓站（一）》（没看过的可以翻看下本公众号的历史文章）当中写的spider.js 代码可以直接用下面的代码把列表抓出来：
+var spider = require(&amp;#39;../lib/spider&amp;#39;)
+
+spider({
+  url: &amp;#39;http://www.dy">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-用Node抓站（二）：Promise使代码更优雅" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/14/用Node抓站（二）：Promise使代码更优雅/" class="article-date">
+  	<time datetime="2017-08-14T08:59:26.000Z" itemprop="datePublished">2017年8月14日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用Node抓站（二）：Promise使代码更优雅
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node/">Node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓取/">抓取</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本文主要目的是通过抓取「电影天堂」的最新电影名称和下载地址，展现如何抓取列表之后，继续抓取正文内容</p>
+</blockquote>
+<p>使用《用Node抓站（一）》（没看过的可以翻看下本公众号的历史文章）当中写的<code>spider.js</code> 代码可以直接用下面的代码把列表抓出来：</p>
+<pre><code class="js">var spider = require(&#39;../lib/spider&#39;)
+
+spider({
+  url: &#39;http://www.dytt8.net/index.htm&#39;,
+  decoding: &#39;gb2312&#39;
+}, (err, data, body, req) =&gt; {
+  if (!err) {
+    console.log(data)
+  }
+}, {
+  items: {
+    selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+  }
+})
+</code></pre>
+<p>这里不同的是涉及到一个编码问题，「电影天堂」用的是<code>gb2312</code>编码，需要转成<code>utf8</code>，不然抓的内容会乱码。我扩展了<code>request</code>模块的参数增加了<code>decoding</code>：因为<code>encoding</code>被占用了，而且为了转码方便，我将<code>encoding</code>设为<code>null</code>，这样出来的数据就是<code>Buffer</code>，可以直接用<code>iconv-lite</code>之类的进行转码，涉及到编码问题不是本文讨论内容，就不多说了。</p>
+<p>抓取列表后，发现title是被截断的，也要在正文页面抓取一下；继续写抓取下载地址和电影title的代码：</p>
+<pre><code class="js">spider({
+  url: &#39;http://www.dytt8.net/index.htm&#39;,
+  decoding: &#39;gb2312&#39;
+}, (err, data, body, req) =&gt; {
+  if (!err) {
+    if (data &amp;&amp; data.items) {
+      var urls = data.items
+      urls.forEach(function (url) {
+        url = &#39;http://www.dytt8.net&#39; + url
+        spider({url: url, decoding: &#39;gb2312&#39;}, (e, d) =&gt; {
+          if (!e) {
+            console.log(d)
+          }
+        }, {
+          url: {
+            selector: &#39;#Zoom table td a!text&#39;
+          },
+          title: {
+            selector: &#39;.title_all h1!text&#39;
+          }
+        })
+      })
+    }
+  }
+}, {
+  items: {
+    selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+  }
+})
+</code></pre>
+<p>看上去挺简单的，但是回调好多啊。。。</p>
+<p>处理这种异步回调可以使用Promise！</p>
+<a id="more"></a>
+<h2 id="Promise">Promise</h2><p>Promise是CommonJS提出来的这一种规范，有多个版本，在ES6当中已经纳入规范，原生支持Promise 对象，非ES6环境可以用类似Bluebird、Q这类库来支持。</p>
+<p>Promise可以将回调变成链式调用写法，流程更加清晰，代码更加优雅。</p>
+<p>简单归纳下Promise：三个状态、两个过程、一个方法，3-2-1</p>
+<ul>
+<li>三个状态：pending、fulfilled、rejected</li>
+<li>两个过程：<ul>
+<li>pending→fulfilled（resolve）</li>
+<li>pending→rejected（reject）</li>
+</ul>
+</li>
+<li>一个方法：then</li>
+</ul>
+<p>当然还有其他概念，比如：<code>catch</code>、<code>Promise.all/race</code>这里就不展开了。</p>
+<h2 id="代码的Promise改造">代码的Promise改造</h2><p>了解了Promise之后，先把<code>spider.js</code>改成Promise的</p>
+<pre><code class="js">return new Promise((resolve, reject) =&gt; {
+  opts.callback = function (error, response, body) {
+    if (!error) {
+      body = iconv.decode(body, opts.decoding || &#39;utf8&#39;)
+      // 处理json
+      try {
+        body = JSON.parse(body)
+      } catch (e) {
+      }
+      var data = parser(body, handlerMap)
+      callback(error, data, response)
+      resolve(data, response)
+    } else {
+      callback(error, body, response)
+      reject(error)
+    }
+  }
+  request(opts)
+})
+</code></pre>
+<p>这里<code>Promise</code>是个类，接受一个函数，函数参数是两个函数：<code>resolve</code>和<code>reject</code>，当成功的时候<code>resolve(结果)</code>，当失败的时候<code>reject(原因)</code></p>
+<p>完成<code>spider.js</code>改造之后，使用<code>spider</code>抓取代码变成了下面这样：</p>
+<pre><code class="js">spider({
+  url: &#39;http://www.dytt8.net/index.htm&#39;,
+  decoding: &#39;gb2312&#39;
+}, {
+  items: {
+    selector: &#39;.co_area2 .co_content2 ul a!attr:href&#39;
+  }
+}).then(function (data) {
+  // 第一页成功
+  if (data &amp;&amp; data.items) {
+    var urls = data.items
+    urls.forEach(function (url) {
+      url = &#39;http://www.dytt8.net&#39; + url
+      // 遍历开始抓取第二页面
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        console.log(d)
+      })
+    })
+  }
+})
+</code></pre>
+<p>上面的代码能够实现需求，但是没有充分利用<code>Promise</code>的链式写法，还是出现了回调，没有专注程序流程，看上去还是乱糟糟的。</p>
+<h2 id="Promise的链式调用"><code>Promise</code>的链式调用</h2><p>提到链式调用，最多的是<code>jQuery</code>的写法：<code>$(document).click(handler).addClass()….</code>。</p>
+<p>这里简单代码实现一个可以链式调用的类，方便大家举一反三：</p>
+<pre><code class="js">
+class M {
+  constructor (number) {
+    this.number = number
+  }
+  add (n) {
+    this.number += n
+    return this
+  }
+  sub (n) {
+    this.number -= n
+    return this
+  }
+  result () {
+    return this.number
+  }
+}
+
+var m = new M(1)
+m.add(2).sub(3).result()
+</code></pre>
+<p>在Promise中，每个<code>then</code>或者<code>catch</code> 返回的都是一个Promise对象，所以可以继续用<code>then</code>/<code>catch</code>，而且每次<code>then</code>都是上一次<code>then</code>的<code>return</code>结果，如果没有<code>return</code>那么就是<code>undefined</code>，例如下面：</p>
+<pre><code class="js">var resolve = Promise.resolve(1)
+
+resolve.then((d) =&gt; {
+  console.log(`第1个：${d}`) // 1
+}).then((d) =&gt; {
+  console.log(`第2个：${d}`) // undefined
+})
+</code></pre>
+<p>而如果<code>return</code> 则是<code>return</code>后的结果：</p>
+<pre><code class="js">var resolve = Promise.resolve(1)
+
+resolve.then((d) =&gt; {
+  console.log(`第1个：${d}`) // 1
+  return 2 // 2
+}).then((d) =&gt; {
+  console.log(`第2个：${d}`) //2
+})
+</code></pre>
+<p>上面的代码和下面的代码实现一样，建议每个<code>then</code>都返回一个Promise对象</p>
+<pre><code class="js">var resolve = Promise.resolve(1)
+
+resolve.then((d) =&gt; {
+  console.log(`第1个：${d}`)
+  return Promise.resolve(2)
+}).then((d) =&gt; {
+  console.log(`第2个：${d}`)
+})
+</code></pre>
+<p>了解了上面的知识之后，我将整个流程划分为三部分：获取列表<code>fetchList</code>，处理列表数据<code>dealListData</code>和获取正文内容<code>fetchContents</code></p>
+<p>然后将三个相互关联串行的流程，通过<code>then</code>串联起来：</p>
+<pre><code class="js">fetchList().then(dealListData).then(fetchContents).then((d) =&gt; {
+  console.log(d, d.length)
+}).catch((e) =&gt; {
+  console.log(e)
+})
+</code></pre>
+<p>再来看下特殊处理的<code>fetchContents</code>，因为传进来的是一堆需要抓取的正文页面的url，如果我们使用<code>Promise.all</code>这个方法，其中一个正文页面抓取失败，就会导致Promise都<code>rejected</code>，则后续<code>then</code>都失败，<strong>Promise状态只会改变一次，而且回调只会执行一次</strong>。我们的需求是正文页面一个抓取失败不要紧，其他的页面继续抓取。所以特殊处理下：</p>
+<pre><code class="js">function fetchContents (urls) {
+  return new Promise((resolve, reject) =&gt; {
+    var count = 0
+    var len = urls.length
+    var results = []
+    while (len--) {
+      var url = urls[len]
+      count++
+      spider({url: url, decoding: &#39;gb2312&#39;}, {
+        url: {
+          selector: &#39;#Zoom table td a!text&#39;
+        },
+        title: {
+          selector: &#39;.title_all h1!text&#39;
+        }
+      }).then((d) =&gt; {
+        results.push(d)
+      }).finally(() =&gt; {
+        count--
+        if (count === 0) {
+          resolve(results)
+        }
+      })
+    }
+  })
+}
+</code></pre>
+<h2 id="总结">总结</h2><p>本文通过抓取「电影天堂」下载地址的实例，粗略的讲解了Promise的使用方法。后面抓取系列文章还会介绍怎么避免封IP等知识，敬请关注本公众号后续文章。</p>
+<p>本文的完整代码，在github/ksky521/mpdemo/ 对应文章名文件夹下可以找到</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/19/用Node抓站（三）：防止被封/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          用Node抓站（三）：防止被封
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/04/Web前端页面劫持和反劫持/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Web前端页面劫持和反劫持</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="用Node抓站（二）：Promise使代码更优雅" data-title="用Node抓站（二）：Promise使代码更优雅" data-url="http://js8.in/2017/08/14/用Node抓站（二）：Promise使代码更优雅/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>jQuery Easing 动画效果扩展 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近断桥残雪部落格的首页文章添加了“点击展开/关闭”文章功能，并且返回顶部、跳到评论等功能进行了动画效果的修改，此次修改使用了jQuery Easing动画效果扩展插件：jQuery Easing Plugin。在jQuery文档中我们可以看到，自定义动画函数.animate()有四个参数：
+
+params (Options) : 一组包含作为动画属性和终值的样式属性和及其值的集合 duratio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery Easing 动画效果扩展">
+<meta property="og:url" content="http://js8.in/2010/01/15/jquery-easing-动画效果扩展/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="最近断桥残雪部落格的首页文章添加了“点击展开/关闭”文章功能，并且返回顶部、跳到评论等功能进行了动画效果的修改，此次修改使用了jQuery Easing动画效果扩展插件：jQuery Easing Plugin。在jQuery文档中我们可以看到，自定义动画函数.animate()有四个参数：
+
+params (Options) : 一组包含作为动画属性和终值的样式属性和及其值的集合 duratio">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery Easing 动画效果扩展">
+<meta name="twitter:description" content="最近断桥残雪部落格的首页文章添加了“点击展开/关闭”文章功能，并且返回顶部、跳到评论等功能进行了动画效果的修改，此次修改使用了jQuery Easing动画效果扩展插件：jQuery Easing Plugin。在jQuery文档中我们可以看到，自定义动画函数.animate()有四个参数：
+
+params (Options) : 一组包含作为动画属性和终值的样式属性和及其值的集合 duratio">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-jquery-easing-动画效果扩展" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2010/01/15/jquery-easing-动画效果扩展/" class="article-date">
+  	<time datetime="2010-01-15T10:21:10.000Z" itemprop="datePublished">2010年1月15日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jQuery Easing 动画效果扩展
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近<strong>断桥残雪部落格</strong>的<a href="http://js8.in" title="断桥残雪部落格首页">首页</a>文章添加了“点击展开/关闭”文章功能，并且返回顶部、跳到评论等功能进行了动画效果的修改，此次修改使用了jQuery Easing动画效果扩展插件：<a href="http://gsgd.co.uk/sandbox/jquery/easing/" title="jQuery Easing动画效果插件" target="_blank" rel="external">jQuery Easing Plugin</a>。在jQuery文档中我们可以看到，自定义动画函数<strong>.animate()</strong>有四个参数：</p>
+<blockquote>
+<p><strong>params </strong>(Options) : 一组包含作为动画属性和终值的样式属性和及其值的集合<br><strong> duration</strong> (String,Number) : (可选) 三种预定速度之一的字符串(“slow”, “normal”, or “fast”)或表示动画时长的毫秒数值(如：1000)<br><strong> easing</strong> (String) : (可选) 要使用的擦除效果的名称(需要插件支持).默认jQuery提供”linear” 和 “swing”.<br><strong> callback</strong> (Function) : (可选) 在动画完成时执行的函数<br>其中参数<strong>easing</strong>默认有两个效果：“linear”和“swing”，如果需要更多就要插件支持了，也就是今天断桥残雪要跟大家分享的插件：<a href="http://gsgd.co.uk/sandbox/jquery/easing/" title="jQuery Easing动画效果插件" target="_blank" rel="external">jQuery Easing Plugin</a>.</p>
+</blockquote>
+<p>在jQuery Easing中设置了easeInElastic、easeOutElastic、easeInOutElastic等共31中不同的效果，应该可以满足大家的需要啦，如果你还想研究下动画移动的效果图，还可以看一下<a href="http://james.padolsey.com/demos/jquery/easing/" target="_blank" rel="external">这篇文章</a>不仅有动画演示，还有图片分析。<a id="more"></a></p>
+<h3 id="引入Easing_js文件">引入Easing js文件</h3><p>要使用jQuery Easing扩展，首先我们要在jQuery之后，引入jQuery Easing Plugin文件，如以下代码</p>
+<blockquote>
+</blockquote>
+<p><code>`</code>html”&gt;&lt;script type=”text/javascript” src=”<a href="http://js8.in/mywork/jquery_easing/easing.js">http://js8.in/mywork/jquery_easing/easing.js</a></p>
+<blockquote>
+<p><br><code>`</code></p>
+</blockquote>
+<h3 id="jQuery_Easing简单教程">jQuery Easing简单教程</h3><p><strong>方法1</strong>、设置jQuery默认动画效果</p>
+<p>jQuery.easing.def = “method”;//如：easeOutExpo</p>
+<p><strong>方法2</strong>、jQuery默认动画</p>
+<p>支持toggle()、slideUp()、slideDown()、show()、hide()等jQuery内置的动画效果</p>
+<p>如以下代码：&gt; </p>
+<pre><code class="javascript">$(element).slideUp({
+&gt;     duration: 1000, 
+&gt;     easing: method, 
+&gt;     complete: callback});
+&gt;
+</code></pre>
+<p><strong>方法3</strong>、使用jQuery自定义动画函数<strong>.animate()</strong></p>
+<p>jQuery 的<strong>.animate()</strong>是自定义动画的函数，如上面所说，有四个参数，而其中<strong>easing</strong>的参数就是我们进行动画效果扩展的方法名称（如easeOutExpo）。最简单的使用方法是：&gt; </p>
+<pre><code class="javascript">$(myElement).animate({
+&gt;     left: 500,
+&gt;     top: 500
+&gt; }, &#39;easeOutExpo&#39;);
+&gt; ```上面的代码就是实现的动画之后以easeOutExpo的方法来进行缓冲（easing），这是animate() easing的基本用法（[点击查看此效果演示DEMO](http://js8.in/mywork/jquery_easing/demo.html)）
+
+[James Padolsey](http://james.padolsey.com)对jQuery1.3.2的**animate**函数进行了修改扩展：&gt; 
+```javascript
+
+&gt; jQuery.fn.animate = (function(_anim){
+&gt;     var jQEasing = jQuery.easing;
+&gt;     return function(prop, duration, easing, callback) {
+&gt;         var props = {}, optall, i, hasEaser = false;
+&gt;         for ( i in prop ) {
+&gt;             if ( jQuery.isArray(prop[i]) ) {
+&gt;                 hasEaser = true;
+&gt;                 props[i] = prop[i][1];
+&gt;                 prop[i] = prop[i][0];
+&gt;             }
+&gt;         }
+&gt;         opt = jQuery.speed(duration, easing, callback);
+&gt;         if (hasEaser) {
+&gt;             opt.step = (function(_step){
+&gt;                 return function(now, fx) {
+&gt;                     var end = fx.end, easeFn;
+&gt;                     if ( easeFn = props[fx.prop] ) {
+&gt;                         fx.now = jQEasing[easeFn]( now/end, now, 0, end, end );
+&gt;                     }
+&gt;                     _step &amp;&amp; _step.call( fx.elem, fx.now, fx );
+&gt;                 };
+&gt;             })(opt.step);
+&gt;         }
+&gt;         opt.complete = opt.old || callback || jQuery.isFunction(easing) &amp;&amp; easing;
+&gt;         return _anim.call( this, prop, opt );
+&gt;     };
+&gt; })(jQuery.fn.animate);
+</code></pre>
+<p>在<strong>jQuery1.4</strong>中这种方式已经<a href="http://github.com/jquery/jquery/commit/93fdbeb963a9c350f807818c7cc99982942a92f3" target="_blank" rel="external">被引入</a>，所以jQuery1.4中不需要添加jQuery的<strong>animate()</strong>扩展，我们就可以使用下面的更加方便代码啦：</p>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">$(myElement).animate({
+&gt;     left: 500,
+&gt;     top: [500, &#39;easeOutBounce&#39;] 
+&gt; }, 1000,&#39;swing&#39;);
+&gt;
+</code></pre>
+<p>上面的代码的效果是，总体上来使用swing的方法来缓冲，而top的时候采用easeOutBounce的方法来缓冲。（<a href="http://js8.in/mywork/jquery_easing/demo2.html">点击查看此效果演示DEMO</a>）</p>
+<h3 id="jQuery1-4_的animate()+Easing">jQuery1.4 的animate()+Easing</h3><p>值得一提的是<a href="http://js8.in/449.html" title="jQuery1.4正式版发布">jQuery 1.4版本</a>中对animate()方法，easing的方法进行了扩展，英语不错的童鞋，可以<a href="http://james.padolsey.com/javascript/easing-in-jquery-1-4a2/" target="_blank" rel="external">点击此处</a></p>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">jQuery(myElement).animate({
+&gt;     left: [500, &#39;swing&#39;],
+&gt;     top: [200, &#39;easeOutBounce&#39;]
+&gt; });
+&gt;
+</code></pre>
+<p>或者：</p>
+<blockquote>
+</blockquote>
+<pre><code class="javascript">jQuery(myElement).animate({
+&gt;     left: 500,
+&gt;     top: 200
+&gt; }, {
+&gt;     specialEasing: {
+&gt;         left: &#39;swing&#39;,
+&gt;         top: &#39;easeOutBounce&#39;
+&gt;     }
+&gt; });
+&gt;
+</code></pre>
+<p>有了上面的Easing扩展效果，已经能够满足了我们日常的动画要求了，<strong>jQuery1.4正式版</strong>也已经发布，添加了很多新的方法函数，但是很多新方法的研究还没有跟入，期待jQuery1.4的新中文文档！</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2010/01/19/21个常用的-php-代码汇总/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          21个常用的 PHP 代码汇总
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/01/14/png在ie6下透明的几种方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">png在IE6下透明的几种方法</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="jquery-easing-动画效果扩展" data-title="jQuery Easing 动画效果扩展" data-url="http://js8.in/2010/01/15/jquery-easing-动画效果扩展/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

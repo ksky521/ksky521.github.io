@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>再探javascript作用域 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="对于javascript作用域的理解，之前整理过两篇文章：《javascript作用域和作用域链》《javascript的词法作用域》。最近读了周爱民老师的《javascript语言精髓》，对javascript作用域有了新的认识，特地整理下思路。
+javascript的作用域广义来分：语法作用域和变量作用域。
+javascript语法作用域javascript语法作用域是讨论代码的组织结构上抽象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再探javascript作用域">
+<meta property="og:url" content="http://js8.in/2012/12/25/再探javascript作用域/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="对于javascript作用域的理解，之前整理过两篇文章：《javascript作用域和作用域链》《javascript的词法作用域》。最近读了周爱民老师的《javascript语言精髓》，对javascript作用域有了新的认识，特地整理下思路。
+javascript的作用域广义来分：语法作用域和变量作用域。
+javascript语法作用域javascript语法作用域是讨论代码的组织结构上抽象">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="再探javascript作用域">
+<meta name="twitter:description" content="对于javascript作用域的理解，之前整理过两篇文章：《javascript作用域和作用域链》《javascript的词法作用域》。最近读了周爱民老师的《javascript语言精髓》，对javascript作用域有了新的认识，特地整理下思路。
+javascript的作用域广义来分：语法作用域和变量作用域。
+javascript语法作用域javascript语法作用域是讨论代码的组织结构上抽象">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-再探javascript作用域" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2012/12/25/再探javascript作用域/" class="article-date">
+  	<time datetime="2012-12-25T09:30:37.000Z" itemprop="datePublished">2012年12月25日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      再探javascript作用域
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/作用域/">作用域</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对于javascript作用域的理解，之前整理过两篇文章：《<a href="/2011/10/25/javascript%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/">javascript作用域和作用域链</a>》《<a href="/2011/08/15/javascript%E7%9A%84%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F/">javascript的词法作用域</a>》。最近读了周爱民老师的《javascript语言精髓》，对<strong>javascript作用域</strong>有了新的认识，特地整理下思路。</p>
+<p>javascript的作用域广义来分：<strong>语法作用域</strong>和<strong>变量作用域</strong>。</p>
+<h2 id="javascript语法作用域">javascript语法作用域</h2><p><strong>javascript语法作用域</strong>是讨论代码的组织结构上抽象，可以理解为讨论的是“圈地”问题，也有书籍中对纯粹的语法作用域称为“静态作用域”。</p>
+<p>语法作用域分四级，下标依次增高</p>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>作用域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>级别一</td>
+<td>表达式</td>
+</tr>
+<tr>
+<td>级别二</td>
+<td>语句/批语句</td>
+</tr>
+<tr>
+<td>级别三</td>
+<td>函数</td>
+</tr>
+<tr>
+<td>级别四</td>
+<td>全局（宿主）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ol>
+<li>同级别可以平行也可以相互嵌套（包含）</li>
+<li>高级别可以嵌套（包含）低级别</li>
+<li>低级别不可以嵌套（包含）高级别作用域；假如低级别嵌套高u别，可以理解成相互平行，例如下面的代码是完全等效的</li>
+</ol>
+</blockquote>
+<pre><code class="javascript">if(true){
+    //
+    function fn(){
+        //
+    }
+}
+
+if(true){
+    //
+}
+function fn(){
+    //
+}
+</code></pre>
+<a id="more"></a>
+<h3 id="批语句作用域">批语句作用域</h3><p>批语句<strong>作用域</strong>的“<code>{}</code>”是用来声明被影响的代码，如果单纯理解为复合语句的“<code>{}</code>”则会报错，例如下面的代码：</p>
+<pre><code class="javascript">try
+    var a = 2;
+catch(e);
+</code></pre>
+<p>批语句作用域包括：<code>try{}catch(e){}finally{}</code>和<code>switch</code></p>
+<pre><code class="javascript">for( var i = 0; i &lt; 10; i++){ } console.log(i);//10
+</code></pre>
+<p>spidermonkey 1.7 添加了let关键字，所以：</p>
+<pre><code class="javascript">for( let i = 0; i &lt; 10; i++){ } console.log(i);//报错，undefined
+</code></pre>
+<h2 id="javascript变量作用域">javascript变量作用域</h2><p>变量的可见性 和 生存周期；即大家常说（或者常被理解）的作用域。</p>
+<p>变量作用域完成对信息的隐蔽，也就是处理“割据”的问题，也有书籍中对执行期的变量作用域为“动态作用域”。</p>
+<p>变量作用域没有语句级别，分为：<strong>表达式</strong>、<strong>函数</strong>和<strong>全局</strong>三个级别。</p>
+<h3 id="表达式">表达式</h3><p>表达式级别作用域，变量创建出来被立即使用。</p>
+<p>表达式级别作用域，都是匿名的。</p>
+<pre><code class="javascript">var date = &#39;date:&#39;+new Date;
+var foo = (100 + function(){
+    return 100
+});
+</code></pre>
+<h3 id="函数">函数</h3><p>局部变量，对内可见；对外不可见</p>
+<h3 id="全局">全局</h3><p>在全局范围内任意声明变量。</p>
+<p>在函数内部不使用<code>var</code> 声明而直接赋值的变量，该变量会被隐式的在全局中声明</p>
+<p>全局变量可以理解为Global对象中的成员，也可以被解释为宿主对象，在浏览器中就是<code>window</code>对象</p>
+<p>显性声明和隐性声明 虽然都是全局变量，但是而这处理规则却不同</p>
+<pre><code class="javascript">var a = 100;
+delete a; //因为dontDelete为false，所以返回false
+a = 100;
+delete a; //因为dontDelete 为true，所以返回true
+</code></pre>
+<h2 id="总结下javascript的作用域">总结下javascript的作用域</h2><blockquote>
+<ol>
+<li>javascript没有块级作用域</li>
+<li>语法作用域不等于变量作用域</li>
+<li>变量的可见性受限于它所在的语法结构的（语法）作用域</li>
+</ol>
+<ul>
+<li>补充：如果语言没有实现相应的变量作用域，那么该变量的可见性会溢出到同级的其他结构中，例如 if、for块级语句</li>
+<li>_特例_：spidermonkey javascript 1.7 let 关键字会实现语句级别的变量作用域</li>
+</ul>
+</blockquote>
+<h3 id="变量声明次序问题">变量声明次序问题</h3><p>javascript不同于C和java语言，javascript是解释执行的语言。语法解析会在执行之前，语法解析会建立一个类似“变量表”的对象，并且赋值为<code>undefined</code>。</p>
+<pre><code class="javascript">if ( !a ){
+    alert(a); //undefined
+    var a = 1;
+}
+alert(a); //1
+</code></pre>
+<h3 id="变量作用域和变量的生存周期">变量作用域和变量的生存周期</h3><p><strong>变量作用域</strong>讨论的是解决变量在哪个范围内存储；生存周期讨论的是代码执行中什么时候创建和释放一个变量。</p>
+<p><strong>创建</strong>：</p>
+<blockquote>
+<ol>
+<li>js引擎做语法分析，发现显性的声明</li>
+<li>js引擎代码执行时，发现隐性的未被创建的变量时</li>
+</ol>
+</blockquote>
+<p><strong>释放</strong>：</p>
+<blockquote>
+<ol>
+<li>js引擎执行到函数结束/退出时，将清除的函数的未被引用的变量</li>
+<li>js引擎执行到全局代码结束，或者引擎卸载和重新载入时，将清除全局的变量和数据引用</li>
+</ol>
+</blockquote>
+<p>所以生存周期包括：函数内局部执行期间，函数外全局执行期间。变量的生存周期创建和释放过程就是内存的占用和释放过程</p>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2012/12/31/js模块并行加载器：mixjs/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          js模块并行加载器：MixJS
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2012/11/08/开源个html5播放器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">开源个html5播放器</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="再探javascript作用域" data-title="再探javascript作用域" data-url="http://js8.in/2012/12/25/再探javascript作用域/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>

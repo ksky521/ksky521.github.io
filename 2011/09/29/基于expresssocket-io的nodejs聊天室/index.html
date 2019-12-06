@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>基于express+socket.io的nodejs聊天室 | 三水清</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前几天晚上边看水浒边写的nodejs的聊天室，前面说了，放假之前要把近日学习nodejs的所有心得整理下，今天就是30号鸟~撒欢~，最后放这个聊天室出来给大家作为学习nodejs的参考示例，希望对大家有用。
+感谢：cnodejs群里的老雷，及其微博上的基友们！顺祝大家长假快乐，顺祝自己明天动车不出轨，顺祝明年不再过节，感慨多了……
+特点聊天室主要功能及其特点：
+
+采用nodejs（屁话）
+expr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于express+socket.io的nodejs聊天室">
+<meta property="og:url" content="http://js8.in/2011/09/29/基于expresssocket-io的nodejs聊天室/index.html">
+<meta property="og:site_name" content="三水清">
+<meta property="og:description" content="前几天晚上边看水浒边写的nodejs的聊天室，前面说了，放假之前要把近日学习nodejs的所有心得整理下，今天就是30号鸟~撒欢~，最后放这个聊天室出来给大家作为学习nodejs的参考示例，希望对大家有用。
+感谢：cnodejs群里的老雷，及其微博上的基友们！顺祝大家长假快乐，顺祝自己明天动车不出轨，顺祝明年不再过节，感慨多了……
+特点聊天室主要功能及其特点：
+
+采用nodejs（屁话）
+expr">
+<meta property="og:updated_time" content="2018-06-13T06:03:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于express+socket.io的nodejs聊天室">
+<meta name="twitter:description" content="前几天晚上边看水浒边写的nodejs的聊天室，前面说了，放假之前要把近日学习nodejs的所有心得整理下，今天就是30号鸟~撒欢~，最后放这个聊天室出来给大家作为学习nodejs的参考示例，希望对大家有用。
+感谢：cnodejs群里的老雷，及其微博上的基友们！顺祝大家长假快乐，顺祝自己明天动车不出轨，顺祝明年不再过节，感慨多了……
+特点聊天室主要功能及其特点：
+
+采用nodejs（屁话）
+expr">
+  
+    <link rel="alternative" href="/atom.xml" title="三水清" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">三水清</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">程序媛鼓励师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/about">关于</a></li>
+				        
+							<li><a href="/slide">分享PPT</a></li>
+				        
+							<li><a href="/welicai">微理财</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/CocoaPods/" style="font-size: 10px;">CocoaPods</a> <a href="/tags/DOM/" style="font-size: 11.11px;">DOM</a> <a href="/tags/IE/" style="font-size: 10px;">IE</a> <a href="/tags/IE6/" style="font-size: 11.11px;">IE6</a> <a href="/tags/Node/" style="font-size: 13.33px;">Node</a> <a href="/tags/Nodejs/" style="font-size: 13.33px;">Nodejs</a> <a href="/tags/PPT/" style="font-size: 13.33px;">PPT</a> <a href="/tags/Promise/" style="font-size: 11.11px;">Promise</a> <a href="/tags/Rem/" style="font-size: 10px;">Rem</a> <a href="/tags/SSR/" style="font-size: 10px;">SSR</a> <a href="/tags/VPS/" style="font-size: 10px;">VPS</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 14.44px;">ajax</a> <a href="/tags/apache/" style="font-size: 10px;">apache</a> <a href="/tags/audio/" style="font-size: 11.11px;">audio</a> <a href="/tags/a标签/" style="font-size: 10px;">a标签</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/chrome/" style="font-size: 12.22px;">chrome</a> <a href="/tags/css/" style="font-size: 16.67px;">css</a> <a href="/tags/debug/" style="font-size: 10px;">debug</a> <a href="/tags/eAccelerator/" style="font-size: 10px;">eAccelerator</a> <a href="/tags/ecmascript/" style="font-size: 12.22px;">ecmascript</a> <a href="/tags/escape/" style="font-size: 10px;">escape</a> <a href="/tags/event/" style="font-size: 10px;">event</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fis/" style="font-size: 10px;">fis</a> <a href="/tags/fisp/" style="font-size: 10px;">fisp</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/handleEvent/" style="font-size: 10px;">handleEvent</a> <a href="/tags/html5/" style="font-size: 12.22px;">html5</a> <a href="/tags/hybrid/" style="font-size: 13.33px;">hybrid</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iframe/" style="font-size: 10px;">iframe</a> <a href="/tags/ios/" style="font-size: 10px;">ios</a> <a href="/tags/iptables/" style="font-size: 10px;">iptables</a> <a href="/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/tags/jssdk/" style="font-size: 10px;">jssdk</a> <a href="/tags/kindle/" style="font-size: 11.11px;">kindle</a> <a href="/tags/linux/" style="font-size: 14.44px;">linux</a> <a href="/tags/livereload/" style="font-size: 10px;">livereload</a> <a href="/tags/livestyle/" style="font-size: 10px;">livestyle</a> <a href="/tags/memcached/" style="font-size: 10px;">memcached</a> <a href="/tags/mixjs/" style="font-size: 10px;">mixjs</a> <a href="/tags/mysql/" style="font-size: 11.11px;">mysql</a> <a href="/tags/name/" style="font-size: 10px;">name</a> <a href="/tags/nginx/" style="font-size: 11.11px;">nginx</a> <a href="/tags/nodejs/" style="font-size: 15.56px;">nodejs</a> <a href="/tags/php/" style="font-size: 17.78px;">php</a> <a href="/tags/session/" style="font-size: 10px;">session</a> <a href="/tags/storage/" style="font-size: 10px;">storage</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/ueditor/" style="font-size: 10px;">ueditor</a> <a href="/tags/uglifyjs/" style="font-size: 10px;">uglifyjs</a> <a href="/tags/vps/" style="font-size: 10px;">vps</a> <a href="/tags/webapp/" style="font-size: 13.33px;">webapp</a> <a href="/tags/webbench/" style="font-size: 10px;">webbench</a> <a href="/tags/websocket/" style="font-size: 10px;">websocket</a> <a href="/tags/web前端开发/" style="font-size: 14.44px;">web前端开发</a> <a href="/tags/windows7技巧/" style="font-size: 10px;">windows7技巧</a> <a href="/tags/wordpress/" style="font-size: 12.22px;">wordpress</a> <a href="/tags/xss/" style="font-size: 12.22px;">xss</a> <a href="/tags/严格模式/" style="font-size: 10px;">严格模式</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/作用域/" style="font-size: 12.22px;">作用域</a> <a href="/tags/前端优化/" style="font-size: 10px;">前端优化</a> <a href="/tags/前端工具/" style="font-size: 14.44px;">前端工具</a> <a href="/tags/加速器/" style="font-size: 10px;">加速器</a> <a href="/tags/劫持/" style="font-size: 10px;">劫持</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/压力测试/" style="font-size: 10px;">压力测试</a> <a href="/tags/右键/" style="font-size: 10px;">右键</a> <a href="/tags/安全/" style="font-size: 11.11px;">安全</a> <a href="/tags/工作/" style="font-size: 10px;">工作</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/性能/" style="font-size: 12.22px;">性能</a> <a href="/tags/性能优化/" style="font-size: 11.11px;">性能优化</a> <a href="/tags/手机开发/" style="font-size: 11.11px;">手机开发</a> <a href="/tags/执行环境/" style="font-size: 10px;">执行环境</a> <a href="/tags/技巧/" style="font-size: 10px;">技巧</a> <a href="/tags/抓取/" style="font-size: 11.11px;">抓取</a> <a href="/tags/抓站/" style="font-size: 10px;">抓站</a> <a href="/tags/播放器/" style="font-size: 10px;">播放器</a> <a href="/tags/效率/" style="font-size: 10px;">效率</a> <a href="/tags/数组/" style="font-size: 10px;">数组</a> <a href="/tags/架构/" style="font-size: 13.33px;">架构</a> <a href="/tags/标签/" style="font-size: 10px;">标签</a> <a href="/tags/模块化/" style="font-size: 11.11px;">模块化</a> <a href="/tags/渲染模式/" style="font-size: 12.22px;">渲染模式</a> <a href="/tags/游戏/" style="font-size: 11.11px;">游戏</a> <a href="/tags/移动前端/" style="font-size: 12.22px;">移动前端</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/练手/" style="font-size: 11.11px;">练手</a> <a href="/tags/经验/" style="font-size: 11.11px;">经验</a> <a href="/tags/网络技术/" style="font-size: 18.89px;">网络技术</a> <a href="/tags/虚拟主机/" style="font-size: 10px;">虚拟主机</a> <a href="/tags/解耦/" style="font-size: 10px;">解耦</a> <a href="/tags/语法限制/" style="font-size: 10px;">语法限制</a> <a href="/tags/资源管理/" style="font-size: 12.22px;">资源管理</a> <a href="/tags/越狱/" style="font-size: 11.11px;">越狱</a> <a href="/tags/跨域/" style="font-size: 13.33px;">跨域</a> <a href="/tags/路径/" style="font-size: 10px;">路径</a> <a href="/tags/软件心得/" style="font-size: 12.22px;">软件心得</a> <a href="/tags/重构/" style="font-size: 10px;">重构</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a> <a href="/tags/面试/" style="font-size: 11.11px;">面试</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.welefen.com/">welefen</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.woiweb.net/">我爱互联网</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">三水清，前端从业者，先后就职于微博、腾讯、百度</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">三水清</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://tp4.sinaimg.cn/2037334587/180/5626160002/1" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">三水清</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">程序媛鼓励师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/about">关于</a></li>
+		        
+					<li><a href="/slide">分享PPT</a></li>
+		        
+					<li><a href="/welicai">微理财</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="//github.com/ksky521" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="//weibo.com/sanshuiqing" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:ksky521@gmail.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-基于expresssocket-io的nodejs聊天室" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2011/09/29/基于expresssocket-io的nodejs聊天室/" class="article-date">
+  	<time datetime="2011-09-29T15:20:24.000Z" itemprop="datePublished">2011年9月29日</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基于express+socket.io的nodejs聊天室
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/">nodejs</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/前端开发/">前端开发</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前几天晚上边看水浒边写的<a href="http://js8.in/tag/nodejs">nodejs</a>的聊天室，前面说了，放假之前要把近日学习nodejs的所有心得整理下，今天就是30号鸟~撒欢~，最后放这个聊天室出来给大家作为学习<strong>nodejs</strong>的参考示例，希望对大家有用。</p>
+<p>感谢：cnodejs群里的老雷，及其<a href="http://weibo.com/sanshuiqing" target="_blank" rel="external">微博</a>上的基友们！顺祝大家长假快乐，顺祝自己明天动车不出轨，顺祝明年不再过节，感慨多了……</p>
+<h3 id="特点">特点</h3><p>聊天室主要功能及其特点：</p>
+<ol>
+<li>采用nodejs（屁话）</li>
+<li>express框架,jade做模板</li>
+<li>socket.io做前后端的websocket通信</li>
+<li>支持session</li>
+<li>支持@私信功能<br>废话不多说了，注意点，基本前面的文章都提到了，下面罗列下：<br>《<a href="http://js8.in/764.html">配置nodejs.exe的windows目录结构</a>》<br>《<a href="http://js8.in/774.html">安装express及配置app.js文件</a>》<br>《<a href="http://js8.in/784.html">使用socket.io和node.js搭建websocket应用</a>》<br>《<a href="http://js8.in/788.html">在Express和Socket.IO中使用session</a>》</li>
+</ol>
+<h3 id="nodejs聊天室下载地址">nodejs聊天室下载地址</h3><p><a href="http://1.nodejsdemo.sinaapp.com/chat/chat.zip" title="基于express+socket.io的聊天室" target="_blank" rel="external">基于express+socket.io的聊天室</a></p>
+<h3 id="聊天室服务器端js代码">聊天室服务器端js代码</h3><a id="more"></a>
+<pre><code class="javascript">//========================变量定义===============================
+/**
+ * modules引入
+ */
+var express = require(&#39;express&#39;),
+    sio = require(&#39;socket.io&#39;),
+    fs=require(&#39;fs&#39;),
+    path = require(&#39;path&#39;)
+    url = require(&#39;url&#39;),
+    parseCookie = require(&#39;connect&#39;).utils.parseCookie,
+    MemoryStore = require(&#39;connect/middleware/session/memory&#39;);
+
+/**
+ * 私人聊天使用session
+ */
+var usersWS = {}, //私人聊天用的websocket
+    storeMemory = new MemoryStore({
+        reapInterval: 60000 * 10
+    });//session store
+//=========================app配置=============================
+/**
+ * app配置
+ */
+var app = module.export = express.createServer();
+
+app.configure(function(){
+    app.use(express.bodyParser());
+    app.use(express.cookieParser());
+    app.use(express.session({
+        secret: &#39;wyq&#39;,
+        store:storeMemory
+    }));
+    app.use(express.methodOverride());
+    app.use(app.router);//要放在bodyParser之后，处理post
+    app.set(&#39;views&#39;, __dirname + &#39;/views&#39;);
+    app.set(&#39;view engine&#39;, &#39;jade&#39;);
+    app.use(express.static(__dirname + &#39;/public&#39;));
+});
+//=================配置socket.io=========================
+/**
+ * 配置socket.io
+ *
+ */
+var io = sio.listen(app);
+//设置session
+io.set(&#39;authorization&#39;, function(handshakeData, callback){
+    // 通过客户端的cookie字符串来获取其session数据
+    handshakeData.cookie = parseCookie(handshakeData.headers.cookie)
+    var connect_sid = handshakeData.cookie[&#39;connect.sid&#39;];
+
+    if (connect_sid) {
+        storeMemory.get(connect_sid, function(error, session){
+            if (error) {
+                // if we cannot grab a session, turn down the connection
+                callback(error.message, false);
+            }
+            else {
+                // save the session data and accept the connection
+                handshakeData.session = session;
+                callback(null, true);
+            }
+        });
+    }
+    else {
+        callback(&#39;nosession&#39;);
+    }
+});
+//=========================URL=============================
+/**
+ * url处理开始鸟~
+ * @param {Object} req
+ * @param {Object} res
+ */
+app.get(&#39;/&#39;,function(req,res){
+
+    if( req.session.name &amp;&amp; req.session.name!==&#39;&#39;){
+        //需要判断下是否已经登录
+        res.redirect(&#39;/chat&#39;);
+    }else{
+        //读取登录页面，要求登录
+        var realpath = __dirname + &#39;/views/&#39; + url.parse(&#39;login.html&#39;).pathname;
+        var txt = fs.readFileSync(realpath);
+        res.end(txt);
+    }
+});
+app.get(&#39;/chat&#39;,function(req,res){
+    if (req.session.name &amp;&amp; req.session.name !== &#39;&#39;) {
+        //需要判断下是否已经登录
+        res.render(&#39;chat&#39;,{name:req.session.name});
+    }else{
+        res.redirect(&#39;/&#39;);
+    }
+})
+app.post(&#39;/chat&#39;,function(req,res){
+    var name = req.body.nick;
+    if(name &amp;&amp; name!==&#39;&#39;){
+        req.session.name = name;//设置session
+        res.render(&#39;chat&#39;,{name:name});
+    }else{
+        res.end(&#39;nickname cannot null&#39;);
+    }
+
+});
+
+//===================socket链接监听=================
+/**
+ * 开始socket链接监听
+ * @param {Object} socket
+ */
+io.sockets.on(&#39;connection&#39;, function (socket){
+    var session = socket.handshake.session;//session
+    var name = session.name;
+    usersWS[name] = socket;
+    var refresh_online = function(){
+        var n = [];
+        for (var i in usersWS){
+            n.push(i);
+        }
+        io.sockets.emit(&#39;online list&#39;, n);//所有人广播
+    }
+    refresh_online();
+
+    socket.broadcast.emit(&#39;system message&#39;, &#39;【&#39;+name + &#39;】回来了，大家赶紧去找TA聊聊~~&#39;);
+
+    //公共信息
+    socket.on(&#39;public message&#39;,function(msg, fn){
+        socket.broadcast.emit(&#39;public message&#39;, name, msg);
+        fn(true);
+    });
+    //私人@信息
+    socket.on(&#39;private message&#39;,function(to, msg, fn){
+        var target = usersWS[to];
+        if (target) {
+            fn(true);
+            target.emit(&#39;private message&#39;, name+&#39;[私信]&#39;, msg);
+        }
+        else {
+            fn(false)
+            socket.emit(&#39;message error&#39;, to, msg);
+        }
+    });
+
+    //掉线，断开链接处理
+    socket.on(&#39;disconnect&#39;, function(){
+        delete usersWS[name];
+        session = null;
+        socket.broadcast.emit(&#39;system message&#39;, &#39;【&#39;+name + &#39;】无声无息地离开了。。。&#39;);
+        refresh_online();
+    });
+
+});
+
+//===========app listen 开始鸟~==========
+app.listen(3000, function(){
+    var addr = app.address();
+    console.log(&#39;app listening on http://127.0.0.1：&#39; + addr.port);
+});
+
+</code></pre>
+
+      
+    </div>
+    
+
+    
+      <div class="social-share" data-mobile-sites="weibo,qq,qzone,tencent"></div>
+
+
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2011/10/18/html5的sessionstorage和localstorage/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          HTMl5的sessionStorage和localStorage
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2011/09/29/在express和socket-io中使用session/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在Express和Socket.IO中使用session</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="基于expresssocket-io的nodejs聊天室" data-title="基于express+socket.io的nodejs聊天室" data-url="http://js8.in/2011/09/29/基于expresssocket-io的nodejs聊天室/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"ksky521"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2019 三水清
+    	</div>
+      	<div class="footer-right">
+      		<a href="//hexo.io/" target="_blank">Hexo</a>  Theme <a href="//github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: false,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="//7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.js" type="text/javascript"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/share.min.css">
+    <script src="/js/share.min.js"></script>
+
+
+
+
+
+
+
+
+
+<!--设置代码高亮-->
+<link rel="stylesheet" href="/css/github.css">
+<script src="/js/highlight.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $('pre code').each(function(i, v){
+        var $t = $(v);
+        var lang = $t.attr('class');
+        try{
+            lang = lang==='shell'?'bash':lang;
+            var data = hljs.highlight(lang, $t[0].textContent);
+        }catch(e){
+            var data = hljs.highlightAuto($t[0].textContent);
+        }
+        var lines = data.value.split('\n');
+        var numbers = [];
+        for (var i = 0, len = lines.length; i < len; i++){
+            if(i===len-1&&$.trim(lines[i])===''){
+                break;
+            }
+            numbers.push('<li>'+(i+1)+'</li>');
+        }
+        if(numbers.length){
+            numbers = '<ul class="hljs-line-number">'+numbers.join('')+'</ul>'
+        }
+        $t.addClass('hljs')[0].innerHTML = numbers+data.value;
+    })
+});
+</script>
+
+  </div>
+</body>
+</html>
